@@ -1,0 +1,208 @@
+{
+  "dataset": "INDOFLOODS",
+  "n_rows": 4548,
+  "n_train": 3638,
+  "n_test": 910,
+  "target": "severe_flood",
+  "target_definition": "Flood Type == 'Severe Flood'",
+  "split": "StratifiedShuffleSplit 80/20 random_state=42; gauge prior and precip z-scores fit on train only",
+  "features_numeric": [
+    "T1d",
+    "T2d",
+    "T3d",
+    "T4d",
+    "T5d",
+    "T6d",
+    "T7d",
+    "T8d",
+    "T9d",
+    "T10d",
+    "T1d_z",
+    "T2d_z",
+    "T3d_z",
+    "T4d_z",
+    "T5d_z",
+    "T6d_z",
+    "T7d_z",
+    "T8d_z",
+    "T9d_z",
+    "T10d_z",
+    "month",
+    "doy",
+    "is_monsoon",
+    "g_prior",
+    "precip_intensity_recent",
+    "precip_frac_recent",
+    "precip_buildup_3_10",
+    "log_T1d",
+    "log_T3d",
+    "log_T7d",
+    "log_T10d",
+    "t10_vs_annual",
+    "t3_vs_wettest",
+    "t1_vs_wettest",
+    "Drainage Area",
+    "Catchment Relief",
+    "Catchment Length",
+    "Sinuosity Index",
+    "Form Factor",
+    "Relief Ratio",
+    "Drainage Density",
+    "Urban percentage",
+    "Population Density",
+    "Road Density",
+    "Annual Mean Temperature",
+    "Annual Precipitation",
+    "Precipitation of Wettest Month",
+    "Precipitation Seasonality",
+    "Precipitation of Wettest Quarter",
+    "Max Temperature of Warmest Month",
+    "Night Light",
+    "2015_HDI",
+    "Stream Order",
+    "Catchment Perimeter",
+    "Compactness Coefficient"
+  ],
+  "features_categorical": [
+    "KoppenGeiger Climate Type",
+    "Land cover",
+    "Soil type",
+    "lithology type"
+  ],
+  "best_model": "random_forest",
+  "model_id": "random_forest_flood_v1",
+  "model_version": "1.1.0",
+  "decision_threshold": 0.49999999999999994,
+  "default_catchment": {
+    "Drainage Area": 915.2797852,
+    "Catchment Relief": 1297.0,
+    "Catchment Length": 59878.34375,
+    "Sinuosity Index": 1.356808782,
+    "Form Factor": 0.325660348,
+    "Relief Ratio": 0.026158858,
+    "Drainage Density": 0.000151348,
+    "Urban percentage": 27.38372093,
+    "Population Density": 547.297098,
+    "Road Density": 414.635135,
+    "Annual Mean Temperature": 25.9632,
+    "Annual Precipitation": 2129.748076,
+    "Precipitation of Wettest Month": 381.073196,
+    "Precipitation Seasonality": 77.22769,
+    "Precipitation of Wettest Quarter": 957.151546,
+    "Max Temperature of Warmest Month": 32.618031,
+    "Night Light": 3.822601,
+    "2015_HDI": 1.0,
+    "Stream Order": 3.0,
+    "Catchment Perimeter": 180577.7031,
+    "Compactness Coefficient": 1.580865264,
+    "KoppenGeiger Climate Type": "Tropical",
+    "Land cover": "No dominant class",
+    "Soil type": "Acrisols",
+    "lithology type": "No dominant class",
+    "GaugeID": "INDOFLOODS-gauge-429"
+  },
+  "default_gauge_id": "INDOFLOODS-gauge-429",
+  "encodings": {
+    "global_prior": 0.35816382627817483,
+    "default_prior": 0.35537190082644626,
+    "precip_global": {
+      "T1d": {
+        "mean": 39.499307343457126,
+        "std": 43.21719512011829
+      },
+      "T2d": {
+        "mean": 70.83885708822925,
+        "std": 72.81777686537879
+      },
+      "T3d": {
+        "mean": 94.77962260663085,
+        "std": 96.31516402233548
+      },
+      "T4d": {
+        "mean": 115.58275495795685,
+        "std": 117.63157180651083
+      },
+      "T5d": {
+        "mean": 135.4554091426094,
+        "std": 137.92779281945283
+      },
+      "T6d": {
+        "mean": 154.94419524404344,
+        "std": 157.5116929290389
+      },
+      "T7d": {
+        "mean": 174.3453716408142,
+        "std": 177.53528943966433
+      },
+      "T8d": {
+        "mean": 192.96945315672153,
+        "std": 196.79456116434923
+      },
+      "T9d": {
+        "mean": 211.42058485665942,
+        "std": 216.14052111898843
+      },
+      "T10d": {
+        "mean": 229.08075718491645,
+        "std": 233.78787863093265
+      }
+    },
+    "default_precip": {
+      "mean": 32.604924602099175,
+      "std": 26.812454587474445
+    },
+    "default_precip_by_col": {
+      "T1d": {
+        "mean": 32.604924602099175,
+        "std": 26.812454587474445
+      },
+      "T2d": {
+        "mean": 51.31409437990082,
+        "std": 39.33394195285135
+      },
+      "T3d": {
+        "mean": 66.07405479002479,
+        "std": 46.092704367485354
+      },
+      "T4d": {
+        "mean": 80.63634848157024,
+        "std": 51.61982109730915
+      },
+      "T5d": {
+        "mean": 97.00842884593389,
+        "std": 55.90104511662593
+      },
+      "T6d": {
+        "mean": 112.06246278019009,
+        "std": 59.3129122053004
+      },
+      "T7d": {
+        "mean": 123.18427994306612,
+        "std": 62.16318578996714
+      },
+      "T8d": {
+        "mean": 134.11375647566115,
+        "std": 63.995872487352024
+      },
+      "T9d": {
+        "mean": 143.81609266973555,
+        "std": 65.55273254759345
+      },
+      "T10d": {
+        "mean": 154.3108349051405,
+        "std": 69.37330841629755
+      }
+    }
+  },
+  "risk_thresholds": {
+    "moderate": 0.35,
+    "high": 0.5,
+    "critical": 0.7
+  },
+  "excluded_leaky_columns": [
+    "Peak Flood Level (m)",
+    "Peak Discharge Q (cumec)",
+    "Flood Volume (cumec)",
+    "Event Duration (days)"
+  ]
+}
