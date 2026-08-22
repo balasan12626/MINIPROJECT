@@ -9,11 +9,33 @@
 5. `PYTHONPATH=. uvicorn backend.main:app --host 0.0.0.0 --port 8000`
 6. `cd frontend && npm install && npm run dev`
 
-## Docker Compose
+## VPS (209.159.153.35 or your server IP)
 
-`docker compose up --build` starts MongoDB, API on `:8000`, and nginx-served UI on `:5173` proxying `/api` and `/ws`.
+1. SSH in: `ssh root@YOUR_VPS_IP`
+2. Ensure port **22**, **5173**, and **8000** are open in the VPS firewall / provider panel.
+3. Run the deploy script (installs Docker if missing, clones repo to `/opt/miniproject`, creates `.env`, starts stack):
 
-Secrets stay in `.env` (gitignored). `.env.example` is the template.
+```bash
+curl -fsSL https://raw.githubusercontent.com/balasan12626/MINIPROJECT/main/scripts/deploy-vps.sh | bash
+```
+
+Or manually:
+
+```bash
+git clone https://github.com/balasan12626/MINIPROJECT.git /opt/miniproject
+cd /opt/miniproject
+cp .env.example .env
+# Edit .env: set GEMINI_API_KEY etc. Never commit .env.
+sed -i 's|MONGODB_URI=.*|MONGODB_URI=mongodb://mongo:27017|' .env
+docker compose up --build -d
+```
+
+MongoDB database `flood_response` and collections/indexes are created automatically when the backend starts (`mongo.ensure_indexes` + `seed_if_empty`).
+
+App URLs after deploy:
+- UI: `http://YOUR_VPS_IP:5173/`
+- API health: `http://YOUR_VPS_IP:8000/api/health`
+
 
 ## Security implemented
 
