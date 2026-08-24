@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { startVoiceAgent, voiceAgentTurn, fetchVoiceAgentStatus } from "../services/api.js";
 
 /**
- * Tamil Voice SOS — asks ONLY name, then auto-assigns ambulance/team + shelter via GPS defaults.
+ * English Voice SOS — asks ONLY name, then auto-assigns ambulance/team + shelter via GPS defaults.
  */
 export default function VoiceSosAgent({ open, onClose, onSubmitted, onDraft }) {
   const [status, setStatus] = useState(null);
@@ -35,11 +35,10 @@ export default function VoiceSosAgent({ open, onClose, onSubmitted, onDraft }) {
       if (cancelled) return;
       setStatus(st);
       if (!st?.available) {
-        setError(st?.message || "GEMINI_API_KEY அமைக்கப்படவில்லை");
+        setError(st?.message || "GEMINI_API_KEY is not configured");
         return;
       }
 
-      // Capture GPS silently — agent will not ask for it
       const gps = await new Promise((resolve) => {
         if (!navigator.geolocation) return resolve(null);
         navigator.geolocation.getCurrentPosition(
@@ -66,7 +65,7 @@ export default function VoiceSosAgent({ open, onClose, onSubmitted, onDraft }) {
         setDraft(start.draft || nextCtx);
         setLines([{ role: "agent", text: start.reply }]);
         setPhase("speaking");
-        speakTamil(start.reply, () => {
+        speakEnglish(start.reply, () => {
           if (!cancelled) startListening();
         });
       } catch (err) {
@@ -83,32 +82,33 @@ export default function VoiceSosAgent({ open, onClose, onSubmitted, onDraft }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
 
-  function pickTamilVoice() {
+  function pickEnglishVoice() {
     const voices = window.speechSynthesis?.getVoices?.() || [];
     return (
-      voices.find((v) => /ta(-|_)IN/i.test(v.lang) || /tamil/i.test(v.name)) ||
-      voices.find((v) => String(v.lang || "").toLowerCase().startsWith("ta")) ||
+      voices.find((v) => /en(-|_)IN/i.test(v.lang)) ||
+      voices.find((v) => /en(-|_)GB/i.test(v.lang)) ||
+      voices.find((v) => /en(-|_)US/i.test(v.lang)) ||
+      voices.find((v) => String(v.lang || "").toLowerCase().startsWith("en")) ||
       null
     );
   }
 
-  function speakTamil(text, onEnd) {
+  function speakEnglish(text, onEnd) {
     if (typeof window === "undefined" || !window.speechSynthesis) {
       onEnd?.();
       return;
     }
     window.speechSynthesis.cancel();
     const u = new SpeechSynthesisUtterance(text);
-    u.lang = "ta-IN";
+    u.lang = "en-IN";
     u.rate = 0.95;
-    const voice = pickTamilVoice();
+    const voice = pickEnglishVoice();
     if (voice) u.voice = voice;
     u.onend = () => onEnd?.();
     u.onerror = () => onEnd?.();
-    // voices may load async
     if (!voice && window.speechSynthesis.getVoices().length === 0) {
       window.speechSynthesis.onvoiceschanged = () => {
-        const v = pickTamilVoice();
+        const v = pickEnglishVoice();
         if (v) u.voice = v;
         window.speechSynthesis.speak(u);
       };
@@ -130,14 +130,14 @@ export default function VoiceSosAgent({ open, onClose, onSubmitted, onDraft }) {
   function startListening() {
     const SR = typeof window !== "undefined" && (window.SpeechRecognition || window.webkitSpeechRecognition);
     if (!SR) {
-      setError("மைக் ஆதரவு இல்லை — Chrome பயன்படுத்தவும், அல்லது கீழே தட்டச்சு செய்யவும்.");
+      setError("Microphone speech recognition is unavailable — use Chrome, or type your name below.");
       setPhase("idle");
       return;
     }
     stopListening();
     const recog = new SR();
     recogRef.current = recog;
-    recog.lang = "ta-IN";
+    recog.lang = "en-IN";
     recog.continuous = false;
     recog.interimResults = true;
     listeningRef.current = true;
@@ -169,7 +169,7 @@ export default function VoiceSosAgent({ open, onClose, onSubmitted, onDraft }) {
     try {
       recog.start();
     } catch (err) {
-      setError(err.message || "மைக் தொடங்கவில்லை");
+      setError(err.message || "Could not start microphone");
       setPhase("idle");
     }
   }
@@ -186,16 +186,16 @@ export default function VoiceSosAgent({ open, onClose, onSubmitted, onDraft }) {
         setDraft(res.draft);
         onDraft?.(res.draft);
       }
-      const reply = res.reply || "தயவு செய்து உங்கள் பெயரைச் சொல்லுங்கள்.";
+      const reply = res.reply || "Please say your full name.";
       setLines((prev) => [...prev, { role: "agent", text: reply }]);
       if (res.assignment) {
         setAssignment(res.assignment);
         setPhase("done");
-        speakTamil(reply, () => {});
+        speakEnglish(reply, () => {});
         if (res.sim) onSubmitted?.(res.sim);
       } else {
         setPhase("speaking");
-        speakTamil(reply, () => startListening());
+        speakEnglish(reply, () => startListening());
       }
     } catch (err) {
       setError(err.message || String(err));
@@ -208,14 +208,14 @@ export default function VoiceSosAgent({ open, onClose, onSubmitted, onDraft }) {
   if (!open) return null;
 
   return (
-    <div className="voice-agent-overlay" role="dialog" aria-modal="true" aria-label="தமிழ் குரல் முகவர்">
+    <div className="voice-agent-overlay" role="dialog" aria-modal="true" aria-label="English Voice Agent">
       <div className="voice-agent-card">
         <div className="status-row">
-          <h2 style={{ margin: 0 }}>தமிழ் குரல் முகவர் — பெயர் மட்டும்</h2>
-          <button type="button" onClick={onClose}>மூடு</button>
+          <h2 style={{ margin: 0 }}>English Voice Agent — name only</h2>
+          <button type="button" onClick={onClose}>Close</button>
         </div>
         <p className="hint">
-          Gemini · தமிழ் · பெயர் மட்டும் கேட்கும் · GPS தானாக எடுக்கப்படும் · ஆம்புலன்ஸ்/தங்குமிடம் தானியங்கி ஒதுக்கீடு
+          Gemini · English · asks for name only · GPS captured automatically · ambulance/shelter auto-assigned
           {status?.model ? ` · ${status.model}` : ""}
         </p>
 
@@ -223,49 +223,49 @@ export default function VoiceSosAgent({ open, onClose, onSubmitted, onDraft }) {
           <span className="voice-orb-ring" />
           <b>
             {phase === "listening"
-              ? "கேட்கிறது…"
+              ? "Listening…"
               : phase === "thinking"
-                ? "முகவர் யோசிக்கிறார்…"
+                ? "Agent thinking…"
                 : phase === "speaking"
-                  ? "முகவர் பேசுகிறார்…"
+                  ? "Agent speaking…"
                   : phase === "done"
-                    ? "SOS பதிவு ஆனது"
-                    : "தயார்"}
+                    ? "SOS registered"
+                    : "Ready"}
           </b>
         </div>
 
         <div className="voice-actions">
           <button type="button" className="primary" disabled={phase === "thinking" || phase === "done"} onClick={startListening}>
-            {phase === "listening" ? "மைக் இயக்கம்" : "பேசுங்கள்"}
+            {phase === "listening" ? "Mic active" : "Speak"}
           </button>
           <button
             type="button"
             onClick={() => {
-              const t = window.prompt("உங்கள் பெயர் (தமிழ்/ஆங்கிலம்)");
+              const t = window.prompt("Your full name (English)");
               if (t) handleUserText(t.trim());
             }}
           >
-            பெயர் தட்டச்சு
+            Type name
           </button>
         </div>
 
         {error ? <div className="unavailable">{error}</div> : null}
 
         <div className="grid-3" style={{ marginTop: 12 }}>
-          <div className="metric"><span>பெயர்</span><b>{draft.citizen_name || assignment?.citizen_name || "—"}</b></div>
+          <div className="metric"><span>Name</span><b>{draft.citizen_name || assignment?.citizen_name || "—"}</b></div>
           <div className="metric"><span>GPS lat</span><b>{draft.lat ?? assignment?.lat ?? "—"}</b></div>
           <div className="metric"><span>GPS lon</span><b>{draft.lon ?? assignment?.lon ?? "—"}</b></div>
-          <div className="metric"><span>நபர்கள்</span><b>{draft.people ?? assignment?.people ?? 2}</b></div>
-          <div className="metric"><span>நீர்</span><b>{draft.water_level_note || assignment?.water_level_note || "—"}</b></div>
-          <div className="metric"><span>நிலை</span><b>{assignment?.ops_status || phase}</b></div>
+          <div className="metric"><span>People</span><b>{draft.people ?? assignment?.people ?? 2}</b></div>
+          <div className="metric"><span>Water</span><b>{draft.water_level_note || assignment?.water_level_note || "—"}</b></div>
+          <div className="metric"><span>Status</span><b>{assignment?.ops_status || phase}</b></div>
         </div>
 
         {assignment ? (
           <div className="voice-assign">
-            <h3>ஒதுக்கீடு (நேரலை)</h3>
-            <div className="metric"><span>ஆம்புலன்ஸ் / குழு</span><b>{assignment.ambulance_or_team}</b></div>
-            <div className="metric"><span>தங்குமிடம்</span><b>{assignment.shelter_name} ({assignment.shelter_id})</b></div>
-            <div className="metric"><span>தூரம்</span><b>{assignment.shelter_distance_km} கி.மீ</b></div>
+            <h3>Assignment (live)</h3>
+            <div className="metric"><span>Ambulance / team</span><b>{assignment.ambulance_or_team}</b></div>
+            <div className="metric"><span>Shelter</span><b>{assignment.shelter_name} ({assignment.shelter_id})</b></div>
+            <div className="metric"><span>Distance</span><b>{assignment.shelter_distance_km} km</b></div>
             <div className="metric"><span>Cluster</span><b>{assignment.cluster_id || "—"}</b></div>
             <p className="hint">{assignment.message}</p>
           </div>
@@ -274,7 +274,7 @@ export default function VoiceSosAgent({ open, onClose, onSubmitted, onDraft }) {
         <div className="voice-transcript">
           {lines.map((l, i) => (
             <div key={i} className={`voice-line ${l.role}`}>
-              <b>{l.role === "agent" ? "முகவர்" : "நீங்கள்"}</b>
+              <b>{l.role === "agent" ? "Agent" : "You"}</b>
               <span>{l.text}</span>
             </div>
           ))}

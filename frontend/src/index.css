@@ -66,6 +66,27 @@ button {
   border-top: 1px solid var(--line);
   margin-top: 8px;
 }
+.sim-mode-tabs {
+  display: flex;
+  gap: 8px;
+  padding: 12px 22px 0;
+  flex-wrap: wrap;
+}
+.sim-mode-tabs button {
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: #0e2a3a;
+  color: var(--text);
+  cursor: pointer;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+}
+.sim-mode-tabs button.active {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: rgba(122, 237, 255, 0.08);
+}
 .scenario-preview {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));

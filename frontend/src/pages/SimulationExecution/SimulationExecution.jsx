@@ -14,6 +14,7 @@ import HistoryChart from "../../charts/HistoryChart.jsx";
 import PdfDownloadButton from "../../components/PdfDownloadButton.jsx";
 import AlgorithmArena from "../../components/AlgorithmArena.jsx";
 import VoiceSosAgent from "../../components/VoiceSosAgent.jsx";
+import IeeeHqrlEmbed from "../../components/IeeeHqrlEmbed.jsx";
 
 export default function SimulationExecution({ runMeta = null }) {
   const [sim, setSim] = useState(null);
@@ -453,7 +454,7 @@ export default function SimulationExecution({ runMeta = null }) {
         </div>
         <div className="actions" style={{ marginTop: 10 }}>
           <button type="button" onClick={useMyLocation}>Use my location</button>
-          <button type="button" className="primary voice-sos-btn" onClick={() => setVoiceOpen(true)}>தமிழ் குரல் முகவர்</button>
+          <button type="button" className="primary voice-sos-btn" onClick={() => setVoiceOpen(true)}>English Voice Agent</button>
           <button className="danger" type="button" disabled={sosBusy} onClick={sendSos}>{sosBusy ? "SENDING SOS…" : "SEND SOS"}</button>
         </div>
       </div>
@@ -478,6 +479,7 @@ export default function SimulationExecution({ runMeta = null }) {
       {feats.algorithm_arena ? (
         <AlgorithmArena enabled onMapPaths={setArenaPaths} />
       ) : null}
+      <IeeeHqrlEmbed sim={sim} runMeta={runMeta} />
       <div className="grid-2">
         <div className="panel">
           <h2>SIMULATION AGENTS</h2>

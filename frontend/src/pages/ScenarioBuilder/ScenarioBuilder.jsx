@@ -179,7 +179,8 @@ export default function ScenarioBuilder({ onStarted }) {
       </div>
       <p className="hint">
         Step 1: click a scenario to fill rainfall, river/dam water, roads, SOS. Step 2: set feature radios ON/OFF.
-        Step 3: click <b>RUN SCENARIO</b> — fresh output appears below (old run is cleared).
+        Step 3: click <b>RUN SCENARIO</b> — fresh output appears below (old run is cleared). Below the map you also get
+        the <b>IEEE HQRL</b> live research panel (dynamic replan + paper benchmark).
       </p>
       <div className="grid-2">
         <div className="panel">

@@ -7,7 +7,7 @@ from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
 from slowapi.util import get_remote_address
 
-from backend.api import agents, emergency, health, live, ml, response, rescue_desk, simulation, sources, voice_agent
+from backend.api import agents, emergency, health, hqrl, live, ml, response, rescue_desk, simulation, sources, voice_agent
 from backend.config import get_settings
 from backend.database import mongo
 from backend.ml.inference import load_models
@@ -59,7 +59,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-for module in (health, live, ml, agents, response, simulation, emergency, sources, rescue_desk, voice_agent):
+for module in (health, live, ml, agents, response, simulation, hqrl, emergency, sources, rescue_desk, voice_agent):
     app.include_router(module.router)
 
 

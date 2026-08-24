@@ -2,7 +2,7 @@ import axios from "axios";
 
 const api = axios.create({
   baseURL: "",
-  timeout: 45000,
+  timeout: 120000,
 });
 
 function isTransientNetwork(err) {
@@ -158,4 +158,57 @@ export async function downloadSimReport() {
 export function formatUnavailable(value, suffix = "") {
   if (value === null || value === undefined || value === "") return "DATA UNAVAILABLE";
   return `${value}${suffix}`;
+}
+
+/* —— IEEE HQRL simulation demo (/simulation only) —— */
+export const hqrlState = () => getJson("/api/simulation/hqrl/state");
+export const hqrlConfigure = (body) => postJson("/api/simulation/hqrl/configure", body);
+export const hqrlStart = () => postJson("/api/simulation/hqrl/start", {});
+export const hqrlReset = () => postJson("/api/simulation/hqrl/reset", {});
+export const hqrlInjectClosure = (road_id = null) =>
+  postJson("/api/simulation/hqrl/inject-closure", { road_id });
+export const hqrlInjectConflict = () => postJson("/api/simulation/hqrl/inject-conflict", {});
+export const hqrlInjectShelterFull = (shelter_id = null) =>
+  postJson("/api/simulation/hqrl/inject-shelter-full", { shelter_id });
+export const hqrlReplan = () => postJson("/api/simulation/hqrl/replan", {});
+export const hqrlAccept = () => postJson("/api/simulation/hqrl/accept", {});
+export const hqrlReject = () => postJson("/api/simulation/hqrl/reject", {});
+export const hqrlFailures = (failures) => postJson("/api/simulation/hqrl/failures", { failures });
+export const hqrlBenchmark = (body = { n_scenarios: 30, seed: 42 }) =>
+  postJson("/api/simulation/hqrl/benchmark", body);
+export const hqrlAblation = (body = { n_scenarios: 20, seed: 42 }) =>
+  postJson("/api/simulation/hqrl/ablation", body);
+export const hqrlPaperPack = () => getJson("/api/simulation/hqrl/paper-pack");
+export async function hqrlExportDownload() {
+  const res = await fetch("/api/simulation/hqrl/export");
+  if (!res.ok) throw new Error("Export unavailable");
+  const blob = await res.blob();
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "hqrl_synthetic_results.json";
+  a.click();
+  URL.revokeObjectURL(url);
+}
+export async function hqrlExportCsv() {
+  const res = await fetch("/api/simulation/hqrl/export.csv");
+  if (!res.ok) throw new Error("CSV export unavailable");
+  const blob = await res.blob();
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "hqrl_benchmark_table.csv";
+  a.click();
+  URL.revokeObjectURL(url);
+}
+export async function hqrlExportTex() {
+  const res = await fetch("/api/simulation/hqrl/export.tex");
+  if (!res.ok) throw new Error("LaTeX export unavailable");
+  const blob = await res.blob();
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "hqrl_table.tex";
+  a.click();
+  URL.revokeObjectURL(url);
 }

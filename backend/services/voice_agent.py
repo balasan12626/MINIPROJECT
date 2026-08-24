@@ -1,4 +1,4 @@
-"""Tamil Gemini voice SOS — ask ONLY the name, then auto-assign team + shelter."""
+"""English Gemini voice SOS — ask ONLY the name, then auto-assign team + shelter."""
 
 from __future__ import annotations
 
@@ -12,15 +12,15 @@ from backend.config import get_settings
 from backend.services.seed import SHELTERS
 from backend.utils.geo import haversine_km, jsonable
 
-SYSTEM = """நீங்கள் டெல்லி யமுனா வெள்ள மீட்பு குரல் முகவர் (Flood Response Voice Agent).
-எப்போதும் தமிழில் மட்டும் பேசுங்கள். சுருக்கமாக (1–2 வாக்கியங்கள்).
+SYSTEM = """You are a Delhi Yamuna flood-response voice agent.
+Always speak in clear English. Keep replies short (1–2 sentences).
 
-உங்கள் ஒரே கேள்வி: அழைப்பாளரின் முழுப் பெயர் மட்டும்.
-பெயர் கிடைத்தவுடன் உடனே submit_flood_sos கருவியை அழைக்கவும்.
-latitude, longitude, people, water depth ஆகியவை சாதன GPS / அமைப்பு இயல்புநிலையில் இருந்து வரும் — அவற்றை கேட்க வேண்டாம்.
+Your only question: ask for the caller's full name.
+As soon as you have the name, call the submit_flood_sos tool.
+Do NOT ask for latitude, longitude, people count, or water depth — those come from device GPS / defaults.
 
-கருவி பதிலுக்குப் பிறகு: ஆம்புலன்ஸ்/மீட்பு குழு + தங்குமிடம் பெயரை தமிழில் தெளிவாகச் சொல்லுங்கள்.
-ஆங்கிலத்தில் கேள்விகள் கேட்க வேண்டாம். பெயர் மட்டும் கேளுங்கள்.
+After the tool response: clearly state the assigned ambulance/rescue team and shelter name in English.
+Ask only for the name.
 """
 
 TOOLS = [
@@ -28,11 +28,11 @@ TOOLS = [
         "functionDeclarations": [
             {
                 "name": "submit_flood_sos",
-                "description": "பெயர் கிடைத்தவுடன் SOS பதிவு செய்து மீட்பு குழு + தங்குமிடம் ஒதுக்கவும்.",
+                "description": "Register SOS once the name is known and assign a rescue team + shelter.",
                 "parameters": {
                     "type": "object",
                     "properties": {
-                        "citizen_name": {"type": "string", "description": "அழைப்பாளரின் முழுப் பெயர்"},
+                        "citizen_name": {"type": "string", "description": "Caller's full name"},
                     },
                     "required": ["citizen_name"],
                 },
@@ -73,9 +73,9 @@ def voice_status() -> dict[str, Any]:
         "available": bool(key),
         "model": s.gemini_model or "gemini-3.6-flash",
         "live_model": s.gemini_live_model or "gemini-3.1-flash-live-preview",
-        "language": "ta-IN",
-        "mode": "name_only_tamil",
-        "message": "தமிழ் குரல் முகவர் தயார்" if key else "Set GEMINI_API_KEY in .env",
+        "language": "en-IN",
+        "mode": "name_only_english",
+        "message": "English voice agent ready" if key else "Set GEMINI_API_KEY in .env",
     }
 
 
@@ -123,49 +123,47 @@ def _sanitize_part(part: Any) -> dict[str, Any] | None:
         return {"functionCall": {"name": fc.get("name"), "args": args}}
     if part.get("functionResponse"):
         fr = part["functionResponse"] or {}
-        resp = fr.get("response")
-        if not isinstance(resp, dict):
-            resp = {"result": resp}
-        return {"functionResponse": {"name": fr.get("name"), "response": resp}}
+        return {
+            "functionResponse": {
+                "name": fr.get("name"),
+                "response": fr.get("response") if isinstance(fr.get("response"), dict) else {"result": fr.get("response")},
+            }
+        }
     return None
 
 
-def _sanitize_contents(contents: list[dict[str, Any]] | None, *, drop_leading_model: bool = True) -> list[dict[str, Any]]:
-    clean: list[dict[str, Any]] = []
+def _sanitize_contents(contents: list[dict[str, Any]], drop_leading_model: bool = True) -> list[dict[str, Any]]:
+    cleaned = []
     for turn in contents or []:
         if not isinstance(turn, dict):
             continue
-        role = turn.get("role")
-        if role not in ("user", "model"):
-            role = "model" if clean and clean[-1].get("role") == "user" else "user"
+        role = turn.get("role") or "user"
         parts = []
         for p in turn.get("parts") or []:
             sp = _sanitize_part(p)
             if sp:
                 parts.append(sp)
-        if not parts:
-            continue
-        clean.append({"role": role, "parts": parts})
+        if parts:
+            cleaned.append({"role": role, "parts": parts})
     if drop_leading_model:
-        while clean and clean[0].get("role") == "model":
-            clean.pop(0)
-    return clean
+        while cleaned and cleaned[0].get("role") == "model":
+            cleaned.pop(0)
+    return cleaned
 
 
-def _model_turn_from_response(data: dict[str, Any]) -> dict[str, Any] | None:
-    raw = ((data.get("candidates") or [{}])[0].get("content")) or {}
-    parts = []
-    for p in raw.get("parts") or []:
+def _model_turn_from_response(data: dict) -> dict[str, Any] | None:
+    cands = data.get("candidates") or []
+    if not cands:
+        return None
+    parts = (((cands[0] or {}).get("content") or {}).get("parts")) or []
+    out = []
+    for p in parts:
         sp = _sanitize_part(p)
         if sp:
-            parts.append(sp)
-    if not parts:
-        txt = _extract_text(data)
-        if txt:
-            parts = [{"text": txt}]
-    if not parts:
+            out.append(sp)
+    if not out:
         return None
-    return {"role": "model", "parts": parts}
+    return {"role": "model", "parts": out}
 
 
 def _merge_ctx(ctx: dict[str, Any] | None) -> dict[str, Any]:
@@ -188,16 +186,13 @@ def _guess_name(text: str) -> str | None:
     t = (text or "").strip()
     if not t:
         return None
-    # English patterns
     m = re.search(r"(?:name is|i am|i'm|my name)\s+([A-Za-z][A-Za-z.\s]{1,40})", t, re.I)
     if m:
         return m.group(1).strip(" .,")
-    # Tamil: "என் பெயர் X" / "பெயர் X"
     m = re.search(r"(?:என்\s*)?பெயர்\s*([^\n,.]{2,40})", t)
     if m:
         return m.group(1).strip(" .,")
-    # If short utterance without question words, treat whole as name
-    bad = ("எத்தனை", "latitude", "longitude", "water", "people", "how many", "where")
+    bad = ("how many", "latitude", "longitude", "water", "people", "where", "எத்தனை")
     if len(t) <= 40 and not any(b in t.lower() for b in bad):
         return t
     return None
@@ -236,12 +231,12 @@ async def _gemini_generate(contents: list[dict], *, with_tools: bool = True) -> 
     raise RuntimeError(last_err or "Gemini unavailable")
 
 
-def _local_tamil_confirm(assignment: dict[str, Any]) -> str:
+def _local_confirm(assignment: dict[str, Any]) -> str:
     return (
-        f"{assignment.get('citizen_name')} அவர்களுக்கான SOS பதிவு ஆனது. "
-        f"மீட்பு குழு: {assignment.get('ambulance_or_team')}. "
-        f"தங்குமிடம்: {assignment.get('shelter_name')} "
-        f"({assignment.get('shelter_distance_km')} கி.மீ)."
+        f"SOS registered for {assignment.get('citizen_name')}. "
+        f"Rescue team: {assignment.get('ambulance_or_team')}. "
+        f"Shelter: {assignment.get('shelter_name')} "
+        f"({assignment.get('shelter_distance_km')} km)."
     )
 
 
@@ -282,7 +277,7 @@ async def _execute_sos(name: str, ctx: dict[str, Any]) -> dict[str, Any]:
         "lat": lat,
         "lon": lon,
         "water_level_note": water,
-        "ambulance_or_team": team or "மீட்பு குழு நிலுவையில்",
+        "ambulance_or_team": team or "Rescue team pending",
         "shelter_id": shelter["shelter_id"],
         "shelter_name": shelter["shelter_name"],
         "shelter_distance_km": shelter["distance_km"],
@@ -290,9 +285,9 @@ async def _execute_sos(name: str, ctx: dict[str, Any]) -> dict[str, Any]:
         "cluster_id": (cit or {}).get("cluster_id") or (log or {}).get("cluster_id"),
         "ops_status": (cit or {}).get("ops_status") or (log or {}).get("status") or "queued",
         "message": (
-            f"{citizen_name} அவர்களுக்கான SOS பதிவு செய்யப்பட்டது. "
-            f"குழு: {team or 'நிலுவை'}. தங்குமிடம்: {shelter['shelter_name']} "
-            f"({shelter['distance_km']} கி.மீ)."
+            f"SOS registered for {citizen_name}. "
+            f"Team: {team or 'pending'}. Shelter: {shelter['shelter_name']} "
+            f"({shelter['distance_km']} km)."
         ),
     }
     return {"ok": True, "assignment": assignment, "sim": jsonable(st)}
@@ -306,10 +301,10 @@ async def handle_turn(
     ctx = _merge_ctx(context)
     contents = _sanitize_contents(history, drop_leading_model=True)
     ctx_note = (
-        f"[அமைப்பு: GPS lat={ctx['lat']}, lon={ctx['lon']}, people={ctx['people']}, "
-        f"water={ctx['water_level_note']}. பெயர் மட்டும் கேட்டு submit_flood_sos அழைக்கவும்.]"
+        f"[System: GPS lat={ctx['lat']}, lon={ctx['lon']}, people={ctx['people']}, "
+        f"water={ctx['water_level_note']}. Ask only for the name, then call submit_flood_sos.]"
     )
-    contents.append({"role": "user", "parts": [{"text": f"{ctx_note}\n\nஅழைப்பாளர்: {user_text}"}]})
+    contents.append({"role": "user", "parts": [{"text": f"{ctx_note}\n\nCaller: {user_text}"}]})
 
     assignment = None
     sim = None
@@ -334,13 +329,13 @@ async def handle_turn(
         if not name:
             return jsonable(
                 {
-                    "reply": "வணக்கம். உங்கள் முழுப் பெயரை மட்டும் சொல்லுங்கள்.",
+                    "reply": "Hello. Please say your full name only.",
                     "history": _sanitize_contents(contents, drop_leading_model=False),
                     "draft": {k: ctx[k] for k in ("lat", "lon", "people", "water_level_note")},
                     "assignment": None,
                     "sim": None,
                     "done": False,
-                    "language": "ta-IN",
+                    "language": "en-IN",
                     "fallback": True,
                     "warning": str(exc)[:200],
                 }
@@ -371,18 +366,14 @@ async def handle_turn(
                     reply = reply2
                     contents.append({"role": "model", "parts": [{"text": reply2}]})
                 else:
-                    reply = _local_tamil_confirm(assignment)
+                    reply = _local_confirm(assignment)
             except Exception:  # noqa: BLE001
-                reply = _local_tamil_confirm(assignment)
+                reply = _local_confirm(assignment)
         else:
-            reply = _local_tamil_confirm(assignment)
+            reply = _local_confirm(assignment)
 
     if not reply:
-        reply = (
-            _local_tamil_confirm(assignment)
-            if assignment
-            else "வணக்கம். உங்கள் முழுப் பெயரை மட்டும் சொல்லுங்கள்."
-        )
+        reply = _local_confirm(assignment) if assignment else "Hello. Please say your full name only."
 
     draft = {"citizen_name": name} if name else {}
     draft.update({k: ctx[k] for k in ("lat", "lon", "people", "water_level_note")})
@@ -395,7 +386,7 @@ async def handle_turn(
             "assignment": assignment,
             "sim": sim,
             "done": bool(assignment),
-            "language": "ta-IN",
+            "language": "en-IN",
             "fallback": not gemini_ok,
         }
     )
@@ -404,10 +395,10 @@ async def handle_turn(
 async def opening_line(context: dict[str, Any] | None = None) -> dict[str, Any]:
     ctx = _merge_ctx(context)
     return {
-        "reply": "வணக்கம். வெள்ள மீட்பு குரல் முகவர் இங்கே. உங்கள் முழுப் பெயரை மட்டும் சொல்லுங்கள்.",
+        "reply": "Hello. This is the flood response voice agent. Please say your full name only.",
         "history": [],
         "draft": {k: ctx[k] for k in ("lat", "lon", "people", "water_level_note")},
         "assignment": None,
         "done": False,
-        "language": "ta-IN",
+        "language": "en-IN",
     }

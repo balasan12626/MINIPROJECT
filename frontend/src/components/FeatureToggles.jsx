@@ -19,7 +19,7 @@ export const FEATURE_DEFS = [
   { key: "shelter_board", label: "Shelter capacity board" },
   { key: "eta_board", label: "ETA per citizen" },
   { key: "medical_triage", label: "Medical triage tags" },
-  { key: "bilingual_radio", label: "Hindi + English radio" },
+  { key: "bilingual_radio", label: "English radio (TTS)" },
   { key: "scenario_compare", label: "Scenario compare" },
   { key: "confidence_band", label: "Confidence band" },
   { key: "false_alarm_drill", label: "False-alarm drill" },
