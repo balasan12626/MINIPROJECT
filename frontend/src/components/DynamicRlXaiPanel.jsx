@@ -64,7 +64,7 @@ export default function DynamicRlXaiPanel({ state }) {
             )}
           </div>
 
-          <h3>PPO candidate scores (bars)</h3>
+          <h3>Heuristic policy candidate scores (bars)</h3>
           <div style={{ height: 150 }}>
             {candRows.length ? (
               <ResponsiveContainer width="100%" height="100%">

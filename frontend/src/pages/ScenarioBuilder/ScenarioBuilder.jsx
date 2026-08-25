@@ -14,6 +14,118 @@ const FALLBACK_NUMERIC = {
   tick_seconds: 2,
 };
 
+/** Built-in catalog so RUN never stays blocked if API catalog fails. */
+const BUILTIN_SCENARIOS = [
+  {
+    id: "multiple_sos",
+    title: "Multiple SOS",
+    story: "Citizen emergency requests spike as water enters residential pockets.",
+    defaults: { ...FALLBACK_NUMERIC, sos_count: 10 },
+  },
+  {
+    id: "heavy_rainfall",
+    title: "Heavy Rainfall",
+    story: "Extreme rainfall increases runoff across the Yamuna floodplain.",
+    defaults: {
+      rainfall_intensity: 72,
+      dam_level: 199.2,
+      river_level: 204.6,
+      road_blockage: 0.22,
+      population: 14000,
+      shelter_capacity_factor: 1,
+      traffic: 0.55,
+      sos_count: 10,
+      ticks: 24,
+      tick_seconds: 2,
+    },
+  },
+  {
+    id: "dam_overflow",
+    title: "Dam Overflow",
+    story: "Upstream barrage storage approaches danger; releases raise river stage.",
+    defaults: {
+      rainfall_intensity: 38,
+      dam_level: 206.5,
+      river_level: 205.2,
+      road_blockage: 0.18,
+      population: 15000,
+      shelter_capacity_factor: 0.95,
+      traffic: 0.5,
+      sos_count: 10,
+      ticks: 24,
+      tick_seconds: 2,
+    },
+  },
+  {
+    id: "river_rise",
+    title: "River Rise",
+    story: "Yamuna stage climbs toward the danger mark.",
+    defaults: {
+      rainfall_intensity: 48,
+      dam_level: 201,
+      river_level: 205.6,
+      road_blockage: 0.2,
+      population: 13000,
+      shelter_capacity_factor: 1,
+      traffic: 0.52,
+      sos_count: 10,
+      ticks: 24,
+      tick_seconds: 2,
+    },
+  },
+  {
+    id: "road_blockage",
+    title: "Road Blockage",
+    story: "Key floodplain corridors lose accessibility.",
+    defaults: {
+      rainfall_intensity: 50,
+      dam_level: 199.5,
+      river_level: 204.8,
+      road_blockage: 0.55,
+      population: 12000,
+      shelter_capacity_factor: 1,
+      traffic: 0.72,
+      sos_count: 8,
+      ticks: 24,
+      tick_seconds: 2,
+    },
+  },
+  {
+    id: "shelter_congestion",
+    title: "Shelter Congestion",
+    story: "East-bank shelters fill; inland capacity absorbs demand.",
+    defaults: {
+      rainfall_intensity: 52,
+      dam_level: 200,
+      river_level: 204.9,
+      road_blockage: 0.25,
+      population: 18000,
+      shelter_capacity_factor: 0.55,
+      traffic: 0.6,
+      sos_count: 12,
+      ticks: 24,
+      tick_seconds: 2,
+    },
+  },
+  {
+    id: "mass_evacuation",
+    title: "Mass Evacuation",
+    story: "Multiple zones require concurrent shelter assignment.",
+    defaults: {
+      rainfall_intensity: 65,
+      dam_level: 202,
+      river_level: 205.4,
+      road_blockage: 0.35,
+      population: 22000,
+      shelter_capacity_factor: 0.8,
+      traffic: 0.68,
+      sos_count: 14,
+      ticks: 28,
+      tick_seconds: 2,
+    },
+  },
+];
+
 const PARAM_LABELS = {
   rainfall_intensity: "Rainfall intensity (mm)",
   dam_level: "Dam / barrage water level (m)",
@@ -62,36 +174,60 @@ function paramsFromDefaults(defaults = {}) {
 
 export default function ScenarioBuilder({ onStarted }) {
   const [scenarios, setScenarios] = useState([]);
-  const [selected, setSelected] = useState("multiple_sos");
+  const [selected, setSelected] = useState("");
   const [params, setParams] = useState(FALLBACK_NUMERIC);
   const [citizens, setCitizens] = useState(() => roster(10));
   const [features, setFeatures] = useState({ ...DEFAULT_FEATURES });
   const [error, setError] = useState("");
+  const [loadError, setLoadError] = useState("");
   const [launching, setLaunching] = useState(false);
   const [pageLoading, setPageLoading] = useState(true);
+  const [ready, setReady] = useState(false);
   const launchLock = useRef(false);
   const current = useMemo(() => scenarios.find((s) => s.id === selected), [scenarios, selected]);
 
-  useEffect(() => {
+  function applyScenarioList(list, note = "") {
+    setScenarios(list);
+    const first = list.find((s) => s.id === "multiple_sos") || list[0];
+    selectScenario(first);
+    setReady(true);
+    setLoadError(note);
+  }
+
+  function loadScenarios() {
     let alive = true;
     setPageLoading(true);
+    setLoadError("");
+    setReady(false);
     fetchScenarios()
       .then((d) => {
         if (!alive) return;
-        const list = d.scenarios || [];
-        setScenarios(list);
-        const first = list.find((s) => s.id === "multiple_sos") || list[0];
-        if (first) selectScenario(first);
+        const list = Array.isArray(d?.scenarios) ? d.scenarios : [];
+        if (!list.length) {
+          applyScenarioList(BUILTIN_SCENARIOS, d?.message || "API catalog empty — using built-in scenarios.");
+          return;
+        }
+        applyScenarioList(list);
+      })
+      .catch((err) => {
+        if (!alive) return;
+        applyScenarioList(
+          BUILTIN_SCENARIOS,
+          `${err?.message || "Failed to load scenarios"} — using built-in catalog.`
+        );
       })
       .finally(() => {
-        if (alive) window.setTimeout(() => setPageLoading(false), 420);
+        if (alive) setPageLoading(false);
       });
     return () => {
       alive = false;
     };
-  }, []);
+  }
+
+  useEffect(() => loadScenarios(), []);
 
   function selectScenario(scenario) {
+    if (!scenario) return;
     const defaults = scenario.defaults || {};
     const nextParams = paramsFromDefaults(defaults);
     const nextCitizens = roster(defaults.sos_count ?? nextParams.sos_count ?? 10);
@@ -143,11 +279,22 @@ export default function ScenarioBuilder({ onStarted }) {
   async function run() {
     if (launchLock.current || !selected) return;
     launchLock.current = true;
+    let finished = false;
+    const finishLaunch = () => {
+      if (finished) return;
+      finished = true;
+      window.clearTimeout(launchTimer);
+      setLaunching(false);
+      launchLock.current = false;
+    };
+    const launchTimer = window.setTimeout(() => {
+      finishLaunch();
+      setError("Launch timed out (~20s). Check API on :8000, hard-refresh, then retry RUN.");
+    }, 20000);
     try {
       setLaunching(true);
       setError("");
       sessionStorage.removeItem("flood_run_theater");
-      // Clear previous run so output below is not stacked from another scenario
       await resetSimulation().catch(() => {});
       const state = await startSimulation({
         scenario: selected,
@@ -162,12 +309,26 @@ export default function ScenarioBuilder({ onStarted }) {
         title: current?.title,
         features,
       });
-      document.getElementById("sim-execution")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      window.setTimeout(() => {
+        document.getElementById("sim-execution")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 60);
+      window.setTimeout(() => {
+        document.getElementById("ieee-hqrl-panel")?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      }, 850);
     } catch (err) {
-      setError(err.message || String(err));
+      const status = err?.response?.status;
+      const detail = err?.response?.data?.detail;
+      if (status === 401) {
+        setError("API rejected the request. Restart the backend, then retry RUN.");
+      } else if (status === 403) {
+        setError("Forbidden — restart backend with auth disabled.");
+      } else if (err?.code === "ECONNABORTED" || String(err?.message || "").toLowerCase().includes("timeout")) {
+        setError("Backend timeout — restart API: python -m uvicorn backend.main:app --host 127.0.0.1 --port 8000");
+      } else {
+        setError(typeof detail === "string" ? detail : detail ? JSON.stringify(detail) : err.message || String(err));
+      }
     } finally {
-      setLaunching(false);
-      launchLock.current = false;
+      finishLaunch();
     }
   }
 
@@ -291,26 +452,50 @@ export default function ScenarioBuilder({ onStarted }) {
           {!citizens.length ? <p className="hint">Queue empty (0). Add people or Reset to 10.</p> : null}
         </div>
         <div className="actions run-scenario-bar">
-          <button className="primary run-scenario-btn" type="button" onClick={run} disabled={launching || !selected || pageLoading}>
+          <button
+            className="primary run-scenario-btn"
+            type="button"
+            onClick={run}
+            disabled={launching || pageLoading || !ready || !selected}
+          >
             <span className="pdf-btn-glow" aria-hidden />
             {launching ? (
               <>
                 <span className="pdf-btn-spinner" aria-hidden />
                 STARTING…
               </>
+            ) : pageLoading ? (
+              "Loading scenarios…"
+            ) : !ready ? (
+              "Scenarios not ready"
             ) : (
               "RUN SCENARIO"
             )}
           </button>
-          <p className="hint run-scenario-hint">Live output appears below this page after the run starts.</p>
+          <p className="hint run-scenario-hint">
+            {ready ? "Scenarios ready ✓ — live output appears below after run." : "Wait until scenarios finish loading."}
+          </p>
         </div>
+        {loadError ? (
+          <div className="error-banner" role="alert">
+            <p>{loadError}</p>
+            <button type="button" className="primary" onClick={() => loadScenarios()}>
+              Retry load
+            </button>
+          </div>
+        ) : null}
+        {error ? (
+          <div className="error-banner" role="alert">
+            <p>{error}</p>
+          </div>
+        ) : null}
       </div>
       {pageLoading ? (
         <div className="page-loader" role="status" aria-live="polite">
-          <div className="page-loader-card">
+          <div className="page-loader-card glass-elevated">
             <span className="run-spinner" />
             <h2>Loading simulation lab</h2>
-            <p className="hint">Preparing scenarios · SOS queue · feature panels</p>
+            <p className="hint">Fetch scenarios → validate → populate controls → enable RUN</p>
             <div className="pdf-progress"><i /></div>
           </div>
         </div>
@@ -328,6 +513,21 @@ export default function ScenarioBuilder({ onStarted }) {
               <li className="on">Start Random Forest / XGBoost</li>
               <li>Scroll to live output below</li>
             </ul>
+            <p className="hint" style={{ marginTop: 12 }}>
+              If this lasts more than ~30s, the API is down or you are not signed in.
+            </p>
+            <button
+              type="button"
+              className="danger"
+              style={{ marginTop: 8 }}
+              onClick={() => {
+                setLaunching(false);
+                launchLock.current = false;
+                setError("Launch cancelled. Sign in as OPERATOR/ADMIN, confirm API on :8000, then retry RUN.");
+              }}
+            >
+              Cancel
+            </button>
           </div>
         </div>
       ) : null}

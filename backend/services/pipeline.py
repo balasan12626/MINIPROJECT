@@ -129,6 +129,9 @@ async def run_pipeline(mode: str = "live", observations: dict[str, Any] | None =
     pred["probability_source"] = blended["probability_source"]
     pred["rainfall_component"] = blended["rainfall_component"]
     pred["stage_component"] = blended["stage_component"]
+    pred["prediction_kind"] = "HYBRID_OPERATIONAL"
+    pred["raw_ml_kind"] = "RAW_ML"
+    pred["hybrid_formula"] = blended.get("formula")
     if observations and observations.get("flood_probability_override") is not None:
         pred["flood_probability"] = max(0.0, min(1.0, float(observations["flood_probability_override"])))
         pred["risk_category"] = risk_category(pred["flood_probability"])

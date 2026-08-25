@@ -3,10 +3,16 @@ export default function ShapBars({ explain, showCounterfactual = true }) {
     return <div className="muted">{explain?.message || "SHAP explanation loads with rainfall."}</div>;
   }
   const maxAbs = Math.max(...(explain.bars || []).map((b) => Math.abs(b.shap_value)), 0.001);
+  const method = explain.method || "SHAP-style feature attribution";
+  const methodBadge = String(method).toLowerCase().includes("treeshap")
+    ? "TreeSHAP"
+    : "SHAP-style feature attribution";
   return (
     <div>
       <p className="muted">
-        {explain.method} on {explain.model_id} · RF P={explain.flood_probability != null ? `${(explain.flood_probability * 100).toFixed(1)}%` : "n/a"} · {explain.risk_category}
+        <span className="data-source-badge src-hist">{methodBadge}</span> on {explain.model_id} · Raw ML P=
+        {explain.flood_probability != null ? `${(explain.flood_probability * 100).toFixed(1)}%` : "n/a"} ·{" "}
+        {explain.risk_category}
       </p>
       {showCounterfactual && explain.counterfactual?.message ? (
         <p className="counterfactual">{explain.counterfactual.message}</p>

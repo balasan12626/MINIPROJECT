@@ -5,6 +5,8 @@ import KpiCard, { ModeBadge } from "../../components/KpiCard.jsx";
 import AgentList, { PipelineFlow } from "../../components/AgentList.jsx";
 import FloodMap from "../../maps/FloodMap.jsx";
 import AgentTalk from "../../components/AgentTalk.jsx";
+import { RiskSplitPanel, AgentExecutionTrace } from "../../components/DataSourceBadge.jsx";
+import DataSourceBadge from "../../components/DataSourceBadge.jsx";
 
 function pct(p) {
   if (p === null || p === undefined) return null;
@@ -58,21 +60,22 @@ export default function LiveCommandCenter() {
       <div className="grid-4">
         <KpiCard label="Rainfall" value={weather.available === false ? null : weather.rainfall_mm} suffix=" mm" sub={weather.source} />
         <KpiCard label="Water / Dam Level" value={dam.available === false && river.available === false ? null : (river.value_m ?? dam.value_m)} suffix=" m" sub={river.station || dam.station} />
-        <KpiCard label="Flood Probability" value={pred.available === false ? null : pct(pred.flood_probability)} sub={pred.model_id} />
+        <KpiCard label="Flood Probability (hybrid)" value={pred.available === false ? null : pct(pred.flood_probability)} sub="Operational risk — not raw RF alone" />
         <KpiCard label="Risk Level" value={pred.risk_category} sub={pred.available === false ? pred.message : null} />
         <KpiCard label="Active Incidents" value={incident.incident_id ? 1 : 0} sub={incident.zone_name} />
         <KpiCard label="Available Shelters" value={extras.shelters.filter((s) => s.status === "open").length || null} />
         <KpiCard label="Rescue Teams" value={extras.teams.length || null} />
         <KpiCard label="Model" value={pred.available === false ? null : pred.model_version} sub={pred.model_id} />
       </div>
+      <RiskSplitPanel prediction={pred.available === false ? null : pred} />
       <div className="grid-2">
-        <div className="panel">
+        <div className="panel glass-panel">
           <h2>LIVE MAP</h2>
           <FloodMap snapshot={{ ...snapshot, all_shelters: extras.shelters, teams: extras.teams, emergencies: extras.emergencies, clusters: clusters?.clusters || snapshot?.clusters || [] }} />
         </div>
         <div>
-          <div className="panel">
-            <h2>LIVE WEATHER</h2>
+          <div className="panel glass-panel">
+            <h2>LIVE WEATHER <DataSourceBadge kind="LIVE API" /></h2>
             {weather.available === false ? <div className="unavailable">{weather.message || "DATA SOURCE UNAVAILABLE"}</div> : (
               <div>
                 <div className="metric"><span>Temperature</span><b>{weather.temperature_c ?? "DATA UNAVAILABLE"} °C</b></div>
@@ -85,30 +88,35 @@ export default function LiveCommandCenter() {
               </div>
             )}
           </div>
-          <div className="panel" style={{ marginTop: 12 }}>
+          <div className="panel glass-panel" style={{ marginTop: 12 }}>
             <h2>LIVE FLOOD RISK</h2>
             {pred.available === false ? <div className="unavailable">{pred.message || "MODEL UNAVAILABLE"}</div> : (
               <div>
                 <div className="value" style={{ fontSize: 42 }}>{pct(pred.flood_probability)}</div>
                 <div className={`badge ${pred.risk_category === "CRITICAL" || pred.risk_category === "HIGH" ? "crit" : "live"}`}>{pred.risk_category}</div>
+                <div className="metric"><span>Hybrid operational P</span><b>{pct(pred.flood_probability)}</b></div>
+                <div className="metric"><span>Raw ML P</span><b>{pred.ml_probability != null ? pct(pred.ml_probability) : "DATA UNAVAILABLE"}</b></div>
+                <div className="metric"><span>Rainfall component</span><b>{pred.rainfall_component != null ? Number(pred.rainfall_component).toFixed(3) : "—"}</b></div>
+                <div className="metric"><span>Stage component</span><b>{pred.stage_component != null ? Number(pred.stage_component).toFixed(3) : "—"}</b></div>
                 <div className="metric"><span>Model</span><b>{pred.model_id}</b></div>
                 <div className="metric"><span>Version</span><b>{pred.model_version}</b></div>
+                <div className="metric"><span>River level source</span><b>{river.source || river.kind || "API proxy / estimate"}</b></div>
                 <div className="metric"><span>Prediction time</span><b>{pred.prediction_timestamp ? new Date(pred.prediction_timestamp).toLocaleString() : "—"}</b></div>
                 <div className="metric"><span>Freshness</span><b>{pred.data_freshness_sec != null ? `${Math.round(pred.data_freshness_sec)} sec ago` : "DATA UNAVAILABLE"}</b></div>
                 <div className="metric"><span>Inference</span><b>{pred.inference_latency_ms != null ? `${pred.inference_latency_ms} ms` : "DATA UNAVAILABLE"}</b></div>
-                <div className="metric"><span>ML model probability</span><b>{pred.ml_probability != null ? pct(pred.ml_probability) : "DATA UNAVAILABLE"}</b></div>
                 <div className="metric"><span>Source</span><b>{pred.probability_source || pred.model_id}</b></div>
               </div>
             )}
           </div>
         </div>
       </div>
+      <AgentExecutionTrace mode="live" />
       <div className="grid-2">
-        <div className="panel">
+        <div className="panel glass-panel">
           <h2>AGENT STATUS</h2>
           <AgentList agents={snapshot?.agents} />
         </div>
-        <div className="panel">
+        <div className="panel glass-panel">
           <h2>PERFORMANCE</h2>
           {!lat.end_to_end ? <div className="unavailable">DATA UNAVAILABLE</div> : (
             <>

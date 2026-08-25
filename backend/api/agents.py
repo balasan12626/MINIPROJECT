@@ -1,12 +1,14 @@
-from fastapi import APIRouter, Header, HTTPException
+from fastapi import APIRouter, HTTPException, Request
 
 from backend.agents.dialogue import last_conversation
 from backend.agents.graph import graph
 from backend.database import mongo
+from backend.deps.auth import RequireOperator
+from backend.rate_limit import limiter
 from backend.schemas.common import ReviewRequest
 from backend.services.decision_engine import evaluate_policy
 from backend.services.pipeline import last_snapshot, run_pipeline
-from backend.utils.security import decode_token
+from backend.utils.geo import jsonable
 from backend.websocket.hub import hub
 
 router = APIRouter()
@@ -61,13 +63,74 @@ async def incident_detail(incident_id: str):
     }}
 
 
+@router.get("/api/agents/execution-trace")
+async def execution_trace(mode: str = "live", limit: int = 30):
+    """Ordered agent steps from persisted events + latest pipeline snapshot (not fabricated)."""
+    import asyncio
+
+    events = []
+    try:
+        events = await asyncio.wait_for(mongo.find_many("agent_events", {}, limit=limit), timeout=3.0) or []
+    except Exception:  # noqa: BLE001
+        events = []
+    snap = last_snapshot(mode if mode in {"live", "simulation"} else "live") or {}
+    progress = snap.get("progress") or snap.get("agent_progress") or []
+    steps = []
+    for ev in reversed(events):
+        steps.append(
+            {
+                "agent": ev.get("agent") or ev.get("agent_id") or "agent",
+                "event": ev.get("event") or ev.get("type"),
+                "observation": ev.get("observation") or ev.get("message"),
+                "action": ev.get("action"),
+                "timestamp": ev.get("timestamp") or ev.get("created_at"),
+                "source": "agent_events",
+            }
+        )
+    for p in progress if isinstance(progress, list) else []:
+        steps.append(
+            {
+                "agent": p.get("stage") or p.get("agent") or "pipeline",
+                "event": "PROGRESS",
+                "observation": p.get("message") or p.get("text"),
+                "action": p.get("action"),
+                "timestamp": p.get("timestamp"),
+                "source": "pipeline_progress",
+            }
+        )
+    # Always include current in-memory agent statuses so the panel is useful even with empty Mongo
+    if not steps:
+        for a in graph.statuses() or []:
+            steps.append(
+                {
+                    "agent": a.get("name") or a.get("agent") or "agent",
+                    "event": a.get("last_event") or a.get("status"),
+                    "observation": a.get("current_action") or a.get("status"),
+                    "action": a.get("current_action"),
+                    "timestamp": a.get("timestamp"),
+                    "source": "agent_status",
+                }
+            )
+    return {
+        "available": bool(steps),
+        "mode": mode,
+        "architecture": [
+            "data",
+            "flood_risk",
+            "planning",
+            "rescue",
+            "alert",
+            "monitoring",
+        ],
+        "honesty": "Events are real Mongo/pipeline/status records when present; empty means no run yet.",
+        "steps": jsonable(steps),
+    }
+
+
 @router.post("/api/policy/review")
-async def review(body: ReviewRequest, authorization: str | None = Header(default=None)):
-    user = body.user
-    if authorization and authorization.lower().startswith("bearer "):
-        payload = decode_token(authorization.split(" ", 1)[1])
-        if payload:
-            user = payload.get("sub") or user
+@limiter.limit("30/minute")
+async def review(request: Request, body: ReviewRequest, user_ctx: RequireOperator):
+    user = user_ctx.get("username") or body.user
     if body.decision.lower() not in {"approve", "reject"}:
         raise HTTPException(400, "decision must be approve or reject")
     doc = {

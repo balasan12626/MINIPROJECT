@@ -15,7 +15,10 @@ from backend.utils.geo import jsonable, utcnow
 from backend.websocket.hub import hub
 
 GROQ_URL = "https://api.groq.com/openai/v1/chat/completions"
+# Prefer current Groq catalog IDs; legacy Llama IDs kept last for older keys.
 GROQ_MODELS = [
+    "openai/gpt-oss-20b",
+    "openai/gpt-oss-120b",
     "llama-3.3-70b-versatile",
     "llama-3.1-8b-instant",
 ]

@@ -1,6 +1,9 @@
-from fastapi import APIRouter, Query
+from fastapi import APIRouter, HTTPException, Query, Request
 
+from backend.deps.auth import RequireOperator
 from backend.ml.inference import model_status, predict_live
+from backend.ml.risk_engine import rainfall_sweep_report
+from backend.rate_limit import limiter
 from backend.schemas.common import PredictionRequest
 from backend.services import weather_service
 from backend.services.pipeline import last_latencies, last_snapshot, run_pipeline
@@ -9,7 +12,9 @@ router = APIRouter()
 
 
 @router.post("/api/ml/predict")
-async def ml_predict(body: PredictionRequest):
+@limiter.limit("60/minute")
+async def ml_predict(request: Request, body: PredictionRequest):
+    """Raw ML only — does not apply hybrid operational risk blending."""
     rain = body.rainfall_24h_mm
     daily = list(body.forecast_daily_mm or [])
     if rain is None:
@@ -18,7 +23,10 @@ async def ml_predict(body: PredictionRequest):
             return {"available": False, "message": "DATA SOURCE UNAVAILABLE and no rainfall provided"}
         if not daily:
             daily = daily_live
-    return predict_live(float(rain), daily, month=body.month)
+    out = predict_live(float(rain), daily, month=body.month)
+    out["prediction_kind"] = "RAW_ML"
+    out["note"] = "This is the trained model probability only. Operational risk uses a separate hybrid engine."
+    return out
 
 
 @router.get("/api/ml/models")
@@ -52,6 +60,17 @@ async def ml_benchmark():
     return {"available": True, "evaluation": status["evaluation"], "metadata": status.get("metadata")}
 
 
+@router.get("/api/ml/rainfall-sweep")
+@limiter.limit("20/minute")
+async def ml_rainfall_sweep(
+    request: Request,
+    river_pct: float = Query(default=80.0),
+    dam_pct: float = Query(default=80.0),
+):
+    """Controlled test: only rainfall changes; report raw ML vs hybrid operational risk."""
+    return rainfall_sweep_report(river_pct=river_pct, dam_pct=dam_pct)
+
+
 @router.get("/api/risk/current")
 async def risk_current():
     snap = last_snapshot("live")
@@ -70,7 +89,8 @@ async def pipeline_live():
 
 
 @router.post("/api/pipeline/refresh")
-async def pipeline_refresh():
+@limiter.limit("20/minute")
+async def pipeline_refresh(request: Request, _user: RequireOperator):
     return await run_pipeline("live")
 
 

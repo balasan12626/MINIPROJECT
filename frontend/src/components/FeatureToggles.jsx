@@ -1,5 +1,5 @@
 export const FEATURE_DEFS = [
-  { key: "explainable_ai", label: "Explainable AI (SHAP)" },
+  { key: "explainable_ai", label: "Explainable AI (SHAP / SHAP-style)" },
   { key: "agent_talk", label: "Agent radio (text)" },
   { key: "vulnerable_first", label: "Vulnerable-first order" },
   { key: "model_disagreement", label: "RF vs XGBoost" },

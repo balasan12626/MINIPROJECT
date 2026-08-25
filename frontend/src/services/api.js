@@ -1,8 +1,19 @@
 import axios from "axios";
+import { getAuthToken } from "./auth.js";
+import { apiUrl, resolveApiOrigin } from "./apiOrigin.js";
 
 const api = axios.create({
-  baseURL: "",
-  timeout: 120000,
+  baseURL: resolveApiOrigin(),
+  timeout: 25000,
+});
+
+api.interceptors.request.use((config) => {
+  const token = getAuthToken();
+  if (token) {
+    config.headers = config.headers || {};
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
 });
 
 function isTransientNetwork(err) {
@@ -10,27 +21,36 @@ function isTransientNetwork(err) {
   const msg = String(err?.message || err?.toString?.() || "").toLowerCase();
   return (
     code === "ERR_NETWORK" ||
-    code === "ECONNABORTED" ||
     msg.includes("network") ||
     msg.includes("network_changed") ||
-    msg.includes("failed to fetch") ||
-    msg.includes("timeout")
+    msg.includes("failed to fetch")
   );
 }
 
 api.interceptors.response.use(
   (res) => res,
   async (err) => {
+    const status = err?.response?.status;
     const cfg = err.config || {};
+    const method = String(cfg.method || "get").toLowerCase();
+    // Never retry auth failures, timeouts, or mutating POSTs — that caused 5+ min "Launching…" hangs
+    if (status === 401 || status === 403 || err?.code === "ECONNABORTED" || method !== "get") {
+      return Promise.reject(err);
+    }
     cfg.__retryCount = cfg.__retryCount || 0;
-    if (cfg.__retryCount < 2 && isTransientNetwork(err)) {
+    if (cfg.__retryCount < 1 && isTransientNetwork(err)) {
       cfg.__retryCount += 1;
-      await new Promise((r) => setTimeout(r, 350 * cfg.__retryCount));
+      await new Promise((r) => setTimeout(r, 400));
       return api.request(cfg);
     }
     return Promise.reject(err);
   }
 );
+
+export async function loginOperator(username, password) {
+  const { data } = await api.post("/api/auth/login", { username, password }, { timeout: 15000 });
+  return data;
+}
 
 export async function getJson(url, fallbackMessage = "DATA UNAVAILABLE") {
   try {
@@ -42,7 +62,7 @@ export async function getJson(url, fallbackMessage = "DATA UNAVAILABLE") {
 }
 
 export async function postJson(url, body) {
-  const { data } = await api.post(url, body);
+  const { data } = await api.post(url, body, { timeout: 30000 });
   return data;
 }
 
@@ -110,7 +130,10 @@ export const rescueRescued = (case_id, rescued = true) =>
 export const resetRescueDesk = () => postJson("/api/rescue-desk/reset", {});
 
 export async function downloadPersonReport(caseId) {
-  const res = await fetch(`/api/rescue-desk/person/${caseId}/report.pdf`);
+  const token = getAuthToken();
+  const res = await fetch(apiUrl(`/api/rescue-desk/person/${caseId}/report.pdf`), {
+    headers: token ? { Authorization: `Bearer ${token}` } : {},
+  });
   if (!res.ok) throw new Error("Person report unavailable");
   const blob = await res.blob();
   const url = URL.createObjectURL(blob);
@@ -123,7 +146,10 @@ export async function downloadPersonReport(caseId) {
 
 export async function downloadSimPersonReport(citizenName) {
   const q = encodeURIComponent(String(citizenName || "").trim());
-  const res = await fetch(`/api/simulation/person-report.pdf?name=${q}`);
+  const token = getAuthToken();
+  const res = await fetch(apiUrl(`/api/simulation/person-report.pdf?name=${q}`), {
+    headers: token ? { Authorization: `Bearer ${token}` } : {},
+  });
   if (!res.ok) {
     let detail = "Person report unavailable";
     try {
@@ -144,7 +170,10 @@ export async function downloadSimPersonReport(citizenName) {
 }
 
 export async function downloadSimReport() {
-  const res = await fetch("/api/simulation/report.pdf");
+  const token = getAuthToken();
+  const res = await fetch(apiUrl("/api/simulation/report.pdf"), {
+    headers: token ? { Authorization: `Bearer ${token}` } : {},
+  });
   if (!res.ok) throw new Error("Report unavailable");
   const blob = await res.blob();
   const url = URL.createObjectURL(blob);
@@ -180,7 +209,7 @@ export const hqrlAblation = (body = { n_scenarios: 20, seed: 42 }) =>
   postJson("/api/simulation/hqrl/ablation", body);
 export const hqrlPaperPack = () => getJson("/api/simulation/hqrl/paper-pack");
 export async function hqrlExportDownload() {
-  const res = await fetch("/api/simulation/hqrl/export");
+  const res = await fetch(apiUrl("/api/simulation/hqrl/export"));
   if (!res.ok) throw new Error("Export unavailable");
   const blob = await res.blob();
   const url = URL.createObjectURL(blob);
@@ -191,7 +220,7 @@ export async function hqrlExportDownload() {
   URL.revokeObjectURL(url);
 }
 export async function hqrlExportCsv() {
-  const res = await fetch("/api/simulation/hqrl/export.csv");
+  const res = await fetch(apiUrl("/api/simulation/hqrl/export.csv"));
   if (!res.ok) throw new Error("CSV export unavailable");
   const blob = await res.blob();
   const url = URL.createObjectURL(blob);
@@ -202,7 +231,7 @@ export async function hqrlExportCsv() {
   URL.revokeObjectURL(url);
 }
 export async function hqrlExportTex() {
-  const res = await fetch("/api/simulation/hqrl/export.tex");
+  const res = await fetch(apiUrl("/api/simulation/hqrl/export.tex"));
   if (!res.ok) throw new Error("LaTeX export unavailable");
   const blob = await res.blob();
   const url = URL.createObjectURL(blob);

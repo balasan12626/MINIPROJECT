@@ -82,7 +82,9 @@ export default function IeeeHqrlEmbed({ sim, runMeta }) {
           setMsg("HQRL live — initial route ready. Use Inject / Replan, then RUN BENCHMARK.");
         }
       } catch (err) {
-        if (alive && mountedRef.current) setMsg(err.message || String(err));
+        if (alive && mountedRef.current) {
+          setMsg(err?.response?.data?.detail || err.message || String(err));
+        }
       }
     })();
     return () => {
@@ -109,7 +111,7 @@ export default function IeeeHqrlEmbed({ sim, runMeta }) {
       } catch (err) {
         if (alive && mountedRef.current) {
           bootRef.current = "";
-          setMsg(err.message || String(err));
+          setMsg(err?.response?.data?.detail || err.message || String(err));
         }
       }
     })();
@@ -319,7 +321,7 @@ export default function IeeeHqrlEmbed({ sim, runMeta }) {
         <div>
           <HqrlNetworkMap map={state.map} selected={state.selected_route} candidates={state.candidates} />
           <div className="hqrl-panel" style={{ marginTop: 10 }}>
-            <h2>PPO candidates (safety later)</h2>
+            <h2>Policy-based route candidates (heuristic — not trained PPO)</h2>
             {(state.candidates || []).map((c) => {
               const ok = c.qubo_pass || c.status === "FEASIBLE" || c.status === "SELECTED";
               return (
@@ -347,7 +349,7 @@ Selected:    ${qubo.selected_route ?? "—"}`}
             </div>
           </div>
           <div className="hqrl-panel">
-            <h2>QAOA / Classical (simulated)</h2>
+            <h2>QAOA simulation / classical (quantum-inspired)</h2>
             <table className="hqrl-table">
               <thead><tr><th>Solver</th><th>Feasible</th><th>ms</th></tr></thead>
               <tbody>

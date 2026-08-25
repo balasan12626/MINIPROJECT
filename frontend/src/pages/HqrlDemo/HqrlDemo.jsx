@@ -26,10 +26,10 @@ const STAGE_LABELS = {
   synthetic_data: "Synthetic Disaster Data",
   reliability_conflict: "Reliability & Conflict",
   dynamic_graph: "Dynamic Road Graph",
-  ppo_candidates: "PPO / RL Candidates",
+  ppo_candidates: "Heuristic policy route scores",
   topk_routes: "Top-K Candidate Routes",
   qubo_filter: "QUBO Safety Filter",
-  qaoa_solver: "QAOA Experimental Solver",
+  qaoa_solver: "QAOA simulation (quantum-inspired)",
   classical_fallback: "Classical QUBO Fallback",
   safety_validation: "Deterministic Safety Validation",
   xai_explanation: "Explainable Decision",
@@ -230,7 +230,7 @@ export default function HqrlDemo() {
             onRun={runBenchmark}
           />
           <p className="hqrl-stack">
-            Stack: React + FastAPI · NetworkX dynamic graph · PPO-style candidate sampling · QUBO filter ·
+            Stack: React + FastAPI · NetworkX synthetic research network · heuristic policy candidate sampling · QUBO filter ·
             Simulated QAOA + classical annealing fallback · XAI cards · reproducible seeds.
             Seed displayed on every experiment: <b>{cfg.seed}</b>
           </p>
@@ -412,7 +412,7 @@ status: ${state.selected_route?.status || "n/a"}`}
           </div>
 
           <div className="hqrl-panel">
-            <h2>PPO candidate routes</h2>
+            <h2>Heuristic policy route candidates (not trained PPO)</h2>
             <p className="hqrl-muted">{state.last_pipeline?.label || "RL generates candidates — safety is enforced later."}</p>
             {(state.candidates || []).map((c) => {
               const ok = c.qubo_pass || c.status === "FEASIBLE" || c.status === "SELECTED";

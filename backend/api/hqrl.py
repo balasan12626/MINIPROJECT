@@ -1,10 +1,12 @@
 """IEEE HQRL demo API — attached under /api/simulation/hqrl/* only."""
 
-from fastapi import APIRouter
+from fastapi import APIRouter, Request
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
 from typing import Any, Optional
 
+from backend.deps.auth import RequireAnalyst, RequireOperator
+from backend.rate_limit import limiter
 from backend.simulation.hqrl_demo import engine
 from backend.utils.geo import jsonable
 from backend.websocket.hub import hub
@@ -51,66 +53,85 @@ async def _emit(state: dict) -> dict:
 
 @router.get("/api/simulation/hqrl/state")
 async def hqrl_state():
-    return jsonable(engine.state())
+    st = jsonable(engine.state())
+    st["network_kind"] = "SYNTHETIC_RESEARCH_NETWORK"
+    st["honesty"] = {
+        "network": "SYNTHETIC",
+        "ppo": "HEURISTIC_POLICY_SCORING",
+        "qaoa": "SIMULATED_QUANTUM_INSPIRED",
+    }
+    return st
 
 
 @router.post("/api/simulation/hqrl/configure")
-async def hqrl_configure(body: HqrlConfigBody):
+@limiter.limit("30/minute")
+async def hqrl_configure(request: Request, body: HqrlConfigBody, _user: RequireOperator):
     return await _emit(engine.configure(**body.model_dump(exclude_none=True)))
 
 
 @router.post("/api/simulation/hqrl/start")
-async def hqrl_start():
+@limiter.limit("30/minute")
+async def hqrl_start(request: Request, _user: RequireOperator):
     return await _emit(engine.start())
 
 
 @router.post("/api/simulation/hqrl/reset")
-async def hqrl_reset():
+@limiter.limit("20/minute")
+async def hqrl_reset(request: Request, _user: RequireOperator):
     return await _emit(engine.reset())
 
 
 @router.post("/api/simulation/hqrl/inject-closure")
-async def hqrl_inject_closure(body: ClosureBody = ClosureBody()):
+@limiter.limit("30/minute")
+async def hqrl_inject_closure(request: Request, body: ClosureBody, _user: RequireOperator):
     return await _emit(engine.inject_road_closure(body.road_id))
 
 
 @router.post("/api/simulation/hqrl/inject-conflict")
-async def hqrl_inject_conflict():
+@limiter.limit("30/minute")
+async def hqrl_inject_conflict(request: Request, _user: RequireOperator):
     return await _emit(engine.inject_sensor_conflict())
 
 
 @router.post("/api/simulation/hqrl/inject-shelter-full")
-async def hqrl_inject_shelter(body: ShelterBody = ShelterBody()):
+@limiter.limit("30/minute")
+async def hqrl_inject_shelter(request: Request, body: ShelterBody, _user: RequireOperator):
     return await _emit(engine.inject_shelter_full(body.shelter_id))
 
 
 @router.post("/api/simulation/hqrl/replan")
-async def hqrl_replan():
+@limiter.limit("30/minute")
+async def hqrl_replan(request: Request, _user: RequireOperator):
     return await _emit(engine.replan())
 
 
 @router.post("/api/simulation/hqrl/accept")
-async def hqrl_accept():
+@limiter.limit("30/minute")
+async def hqrl_accept(request: Request, _user: RequireOperator):
     return await _emit(engine.accept_route())
 
 
 @router.post("/api/simulation/hqrl/reject")
-async def hqrl_reject():
+@limiter.limit("30/minute")
+async def hqrl_reject(request: Request, _user: RequireOperator):
     return await _emit(engine.reject_route())
 
 
 @router.post("/api/simulation/hqrl/failures")
-async def hqrl_failures(body: FailuresBody):
+@limiter.limit("30/minute")
+async def hqrl_failures(request: Request, body: FailuresBody, _user: RequireOperator):
     return await _emit(engine.set_failures(body.failures))
 
 
 @router.post("/api/simulation/hqrl/benchmark")
-async def hqrl_benchmark(body: BenchmarkBody = BenchmarkBody()):
+@limiter.limit("10/minute")
+async def hqrl_benchmark(request: Request, body: BenchmarkBody, _user: RequireAnalyst):
     return await _emit(engine.run_benchmark(body.n_scenarios, body.seed))
 
 
 @router.post("/api/simulation/hqrl/ablation")
-async def hqrl_ablation(body: BenchmarkBody = BenchmarkBody()):
+@limiter.limit("10/minute")
+async def hqrl_ablation(request: Request, body: BenchmarkBody, _user: RequireAnalyst):
     return await _emit(engine.run_ablation(body.n_scenarios, body.seed, store_only=False))
 
 
@@ -155,7 +176,8 @@ async def hqrl_export_tex():
 
 
 @router.post("/api/simulation/hqrl/demo-sequence")
-async def hqrl_demo_sequence():
+@limiter.limit("10/minute")
+async def hqrl_demo_sequence(request: Request, _user: RequireOperator):
     """One-shot scripted IEEE viva sequence (synchronous steps for UI orchestration)."""
     steps: list[dict[str, Any]] = []
     engine.start()
@@ -172,4 +194,9 @@ async def hqrl_demo_sequence():
     steps.append({"step": 6, "name": "replan2", "state": engine.state()})
     final = engine.state()
     await hub.broadcast("hqrl_state", jsonable(final))
-    return jsonable({"steps": [{"step": s["step"], "name": s["name"], "phase": s["state"].get("demo_phase")} for s in steps], "final": final})
+    return jsonable(
+        {
+            "steps": [{"step": s["step"], "name": s["name"], "phase": s["state"].get("demo_phase")} for s in steps],
+            "final": final,
+        }
+    )

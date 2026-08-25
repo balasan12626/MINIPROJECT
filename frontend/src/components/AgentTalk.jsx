@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { confirmRescue } from "../services/api.js";
+import DataSourceBadge from "./DataSourceBadge.jsx";
 
 export default function AgentTalk({ conversation, title = "LIVE AGENT CONVERSATION", onTalked, voiceEnabled = false }) {
   const endRef = useRef(null);
@@ -78,7 +79,17 @@ export default function AgentTalk({ conversation, title = "LIVE AGENT CONVERSATI
           {(conversation.band || "—").toUpperCase()}
         </span>
         <span className="badge">{conversation.policy_hint || "threshold talk"}</span>
-        <span className="muted">{conversation.source === "groq" ? "LLM radio" : conversation.llm_error ? `fallback (${conversation.llm_error})` : "scripted fallback"}</span>
+        {conversation.source === "groq" ? (
+          <DataSourceBadge kind="LLM" title={conversation.model || "Groq"} />
+        ) : (
+          <DataSourceBadge
+            kind="FALLBACK"
+            title={conversation.llm_error ? `Scripted fallback (${conversation.llm_error})` : "Scripted fallback"}
+          />
+        )}
+        <span className="muted">
+          Source: {conversation.source === "groq" ? "LLM" : "SCRIPTED FALLBACK"}
+        </span>
         {(conversation.speakers || []).length ? <span className="muted">{conversation.speakers.join(" ↔ ")}</span> : null}
       </div>
       {conversation.dispatch?.called ? (

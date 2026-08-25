@@ -7,16 +7,22 @@ import ThemeToggle from "./components/ThemeToggle.jsx";
 
 export default function App() {
   return (
-    <div className="app-shell">
-      <header className="topbar">
+    <div className="app-shell eoc-shell">
+      <header className="topbar glass-topbar">
         <div className="brand">
-          <h1>AGENTIC REAL-TIME FLOOD RESPONSE</h1>
-          <p>Live environmental intelligence for flood-risk awareness and coordinated response.</p>
+          <p className="brand-mark">VOYAMIND AI</p>
+          <h1>Flood Response Command Center</h1>
+          <p>Live environmental intelligence · coordinated flood response · IEEE-transparent AI</p>
         </div>
         <div className="topbar-right">
+          <div className="live-pill" title="Operating mode">
+            <span className="live-dot" aria-hidden /> LIVE
+          </div>
           <ThemeToggle />
           <nav className="nav">
-            <NavLink to="/" end>Command Center</NavLink>
+            <NavLink to="/" end>
+              Command Center
+            </NavLink>
             <NavLink to="/response">Response & Evacuation</NavLink>
             <NavLink to="/simulation">Simulation</NavLink>
             <NavLink to="/rescue">Rescue Route</NavLink>

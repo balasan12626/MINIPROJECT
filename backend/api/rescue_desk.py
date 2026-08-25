@@ -1,6 +1,8 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Request
 from fastapi.responses import Response
 
+from backend.deps.auth import RequireOperator
+from backend.rate_limit import limiter
 from backend.services.rescue_desk import desk
 from backend.services.person_report import build_person_pdf
 from backend.utils.geo import jsonable
@@ -14,19 +16,22 @@ async def rescue_state():
 
 
 @router.post("/api/rescue-desk/sos")
-async def rescue_sos(body: dict):
+@limiter.limit("30/minute")
+async def rescue_sos(request: Request, body: dict, _user: RequireOperator):
     return desk.ingest_sos(body or {})
 
 
 @router.post("/api/rescue-desk/sync-simulation")
-async def sync_simulation():
+@limiter.limit("30/minute")
+async def sync_simulation(request: Request, _user: RequireOperator):
     from backend.simulation.engine import engine
 
     return desk.ingest_from_simulation(engine.state())
 
 
 @router.post("/api/rescue-desk/admin/share")
-async def admin_share(body: dict):
+@limiter.limit("30/minute")
+async def admin_share(request: Request, body: dict, _user: RequireOperator):
     case_id = str((body or {}).get("case_id") or "")
     if not case_id:
         raise HTTPException(400, "case_id required")
@@ -34,7 +39,8 @@ async def admin_share(body: dict):
 
 
 @router.post("/api/rescue-desk/ambulance/action")
-async def ambulance_action(body: dict):
+@limiter.limit("60/minute")
+async def ambulance_action(request: Request, body: dict, _user: RequireOperator):
     body = body or {}
     case_id = str(body.get("case_id") or "")
     ambulance_id = str(body.get("ambulance_id") or "")
@@ -45,7 +51,8 @@ async def ambulance_action(body: dict):
 
 
 @router.post("/api/rescue-desk/shelter/confirm")
-async def shelter_confirm(body: dict):
+@limiter.limit("60/minute")
+async def shelter_confirm(request: Request, body: dict, _user: RequireOperator):
     body = body or {}
     case_id = str(body.get("case_id") or "")
     if not case_id:
@@ -54,7 +61,8 @@ async def shelter_confirm(body: dict):
 
 
 @router.post("/api/rescue-desk/rescued")
-async def rescued(body: dict):
+@limiter.limit("60/minute")
+async def rescued(request: Request, body: dict, _user: RequireOperator):
     body = body or {}
     case_id = str(body.get("case_id") or "")
     if not case_id:
@@ -63,7 +71,8 @@ async def rescued(body: dict):
 
 
 @router.post("/api/rescue-desk/reset")
-async def rescue_reset():
+@limiter.limit("20/minute")
+async def rescue_reset(request: Request, _user: RequireOperator):
     return desk.reset()
 
 

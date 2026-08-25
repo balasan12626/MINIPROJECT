@@ -1,6 +1,9 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Request
 from fastapi.responses import Response
+from pydantic import BaseModel
 
+from backend.deps.auth import RequireOperator
+from backend.rate_limit import limiter
 from backend.schemas.common import CitizenSosRequest, RescueOutcomeRequest, SimulationOverrideRequest, SimulationStartRequest
 from backend.simulation.engine import SCENARIOS, engine
 from backend.utils.geo import jsonable
@@ -24,7 +27,8 @@ async def scenarios():
 
 
 @router.post("/api/simulation/start")
-async def start(body: SimulationStartRequest):
+@limiter.limit("30/minute")
+async def start(request: Request, body: SimulationStartRequest, _user: RequireOperator):
     if body.scenario not in SCENARIOS:
         raise HTTPException(400, f"unknown scenario {body.scenario}")
     params = body.model_dump()
@@ -32,22 +36,26 @@ async def start(body: SimulationStartRequest):
 
 
 @router.post("/api/simulation/pause")
-async def pause():
+@limiter.limit("60/minute")
+async def pause(request: Request, _user: RequireOperator):
     return await engine.pause()
 
 
 @router.post("/api/simulation/resume")
-async def resume():
+@limiter.limit("60/minute")
+async def resume(request: Request, _user: RequireOperator):
     return await engine.resume()
 
 
 @router.post("/api/simulation/reset")
-async def reset():
+@limiter.limit("20/minute")
+async def reset(request: Request, _user: RequireOperator):
     return await engine.reset()
 
 
 @router.post("/api/simulation/override")
-async def override(body: SimulationOverrideRequest):
+@limiter.limit("60/minute")
+async def override(request: Request, body: SimulationOverrideRequest, _user: RequireOperator):
     fields = body.model_dump(exclude_none=True)
     if not fields:
         raise HTTPException(400, "provide at least one card value")
@@ -61,7 +69,8 @@ async def override(body: SimulationOverrideRequest):
 
 
 @router.post("/api/rescue/outcome")
-async def rescue_outcome(body: RescueOutcomeRequest):
+@limiter.limit("30/minute")
+async def rescue_outcome(request: Request, body: RescueOutcomeRequest, _user: RequireOperator):
     from backend.agents.dialogue import confirm_rescue, last_conversation
     from backend.database import mongo
     from backend.services.seed import RESCUE_TEAMS
@@ -82,27 +91,32 @@ async def rescue_outcome(body: RescueOutcomeRequest):
 
 
 @router.post("/api/simulation/features")
-async def set_features(body: dict):
+@limiter.limit("60/minute")
+async def set_features(request: Request, body: dict, _user: RequireOperator):
     return await engine.set_features(body.get("features") or body)
 
 
 @router.post("/api/simulation/force-dispatch")
-async def force_dispatch():
+@limiter.limit("20/minute")
+async def force_dispatch(request: Request, _user: RequireOperator):
     return await engine.force_dispatch()
 
 
 @router.post("/api/simulation/ask-agent")
-async def ask_agent(body: dict):
+@limiter.limit("20/minute")
+async def ask_agent(request: Request, body: dict, _user: RequireOperator):
     return await engine.ask_agent(str(body.get("question") or ""))
 
 
 @router.post("/api/simulation/checklist")
-async def checklist(body: dict):
+@limiter.limit("60/minute")
+async def checklist(request: Request, body: dict, _user: RequireOperator):
     return await engine.set_checklist(body.get("checklist") or body.get("items") or [])
 
 
 @router.post("/api/simulation/sos")
-async def simulation_sos(body: CitizenSosRequest):
+@limiter.limit("30/minute")
+async def simulation_sos(request: Request, body: CitizenSosRequest, _user: RequireOperator):
     payload = body.model_dump()
     return await engine.add_citizen_sos(payload)
 
@@ -184,7 +198,6 @@ async def state():
     st = engine.state()
     st["pipeline"] = last_snapshot("simulation")
     st["conversation"] = last_conversation("simulation")
-    # Always sanitize — Mongo ObjectId / datetime must never reach FastAPI encoder
     return jsonable(st)
 
 

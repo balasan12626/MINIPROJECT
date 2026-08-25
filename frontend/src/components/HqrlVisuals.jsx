@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   Area,
   AreaChart,
@@ -38,15 +38,74 @@ const METHOD_SHORT = (m) =>
     .replace("Time-Dependent A*", "A*")
     .replace("Risk-Aware Greedy", "Greedy");
 
-/** Network map with visible road links + selected route highlight. */
+function clientToSvgPoint(svg, clientX, clientY) {
+  if (!svg) return { x: 0, y: 0 };
+  const pt = svg.createSVGPoint();
+  pt.x = clientX;
+  pt.y = clientY;
+  const ctm = svg.getScreenCTM();
+  if (!ctm) return { x: 0, y: 0 };
+  const local = pt.matrixTransform(ctm.inverse());
+  return { x: local.x, y: local.y };
+}
+
+/** Network map with drag-drop nodes + selected route highlight. */
 export function HqrlNetworkMap({ map, selected, candidates = [] }) {
+  const svgRef = useRef(null);
+  const dragRef = useRef(null);
+  const [positions, setPositions] = useState({});
+  const [dragId, setDragId] = useState(null);
+  const [activeId, setActiveId] = useState(null);
+
+  const nodeKey = (map?.nodes || []).map((n) => n.id).join("|");
+
+  // Init / rebuild only when node set changes — keep user drag positions across live polls
+  useEffect(() => {
+    setPositions((prev) => {
+      const next = {};
+      (map?.nodes || []).forEach((n) => {
+        const keep = prev[n.id];
+        next[n.id] = {
+          ...n,
+          x: keep ? Number(keep.x) : Number(n.x) || 0,
+          y: keep ? Number(keep.y) : Number(n.y) || 0,
+        };
+      });
+      return next;
+    });
+  }, [nodeKey, map?.width, map?.height]);
+
+  // Merge non-position fields (pct/status) from live map without moving dragged nodes
+  useEffect(() => {
+    if (!map?.nodes?.length) return;
+    setPositions((prev) => {
+      if (!Object.keys(prev).length) return prev;
+      const next = { ...prev };
+      map.nodes.forEach((n) => {
+        if (!next[n.id]) return;
+        next[n.id] = {
+          ...next[n.id],
+          ...n,
+          x: next[n.id].x,
+          y: next[n.id].y,
+        };
+      });
+      return next;
+    });
+  }, [map]);
+
   const nodeMap = useMemo(() => {
     const m = {};
-    (map?.nodes || []).forEach((n) => {
+    Object.values(positions).forEach((n) => {
       m[n.id] = n;
     });
+    if (!Object.keys(m).length) {
+      (map?.nodes || []).forEach((n) => {
+        m[n.id] = n;
+      });
+    }
     return m;
-  }, [map]);
+  }, [positions, map]);
 
   const selectedRoads = new Set(selected?.roads || []);
   const rejectedRoads = new Set();
@@ -73,10 +132,65 @@ export function HqrlNetworkMap({ map, selected, candidates = [] }) {
   const w = map?.width || 1000;
   const h = map?.height || 640;
 
+  const startDrag = useCallback((e, id) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const p = clientToSvgPoint(svgRef.current, e.clientX, e.clientY);
+    const node = positions[id] || nodeMap[id];
+    if (!node) return;
+    dragRef.current = {
+      id,
+      ox: p.x - Number(node.x),
+      oy: p.y - Number(node.y),
+    };
+    setDragId(id);
+    setActiveId(id);
+    e.currentTarget.setPointerCapture?.(e.pointerId);
+  }, [positions, nodeMap]);
+
+  const moveDrag = useCallback((e) => {
+    const d = dragRef.current;
+    if (!d) return;
+    e.preventDefault();
+    const p = clientToSvgPoint(svgRef.current, e.clientX, e.clientY);
+    const x = Math.max(20, Math.min(w - 20, p.x - d.ox));
+    const y = Math.max(20, Math.min(h - 20, p.y - d.oy));
+    setPositions((prev) => {
+      const cur = prev[d.id];
+      if (!cur) return prev;
+      return { ...prev, [d.id]: { ...cur, x, y } };
+    });
+  }, [w, h]);
+
+  const stopDrag = useCallback((e) => {
+    if (!dragRef.current) return;
+    try {
+      e.currentTarget.releasePointerCapture?.(e.pointerId);
+    } catch {
+      /* ignore */
+    }
+    dragRef.current = null;
+    setDragId(null);
+  }, []);
+
+  const nodesList = Object.keys(positions).length
+    ? Object.values(positions)
+    : map?.nodes || [];
+
   return (
-    <div className="hqrl-map-wrap" style={{ minHeight: 320 }}>
-      <div className="hqrl-map-label">SYNTHETIC · IEEE HQRL · LIVE GRAPH</div>
-      <svg viewBox={`0 0 ${w} ${h}`} role="img" aria-label="Evacuation road network">
+    <div className={`hqrl-map-wrap ${dragId ? "is-dragging" : ""}`} style={{ minHeight: 320 }}>
+      <div className="hqrl-map-label">SYNTHETIC · IEEE HQRL · LIVE GRAPH · drag nodes</div>
+      <svg
+        ref={svgRef}
+        viewBox={`0 0 ${w} ${h}`}
+        role="img"
+        aria-label="Evacuation road network — drag nodes to rearrange"
+        className="hqrl-map-svg"
+        onPointerMove={moveDrag}
+        onPointerUp={stopDrag}
+        onPointerLeave={stopDrag}
+        onPointerCancel={stopDrag}
+      >
         <defs>
           <marker id="hqrl-arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
             <path d="M0,0 L6,3 L0,6 Z" fill="#4aa3ff" />
@@ -90,7 +204,6 @@ export function HqrlNetworkMap({ map, selected, candidates = [] }) {
           </filter>
         </defs>
 
-        {/* Base road network — explicit stroke so links are always visible */}
         {(map?.edges || []).map((e) => {
           const a = nodeMap[e.u];
           const b = nodeMap[e.v];
@@ -122,12 +235,11 @@ export function HqrlNetworkMap({ map, selected, candidates = [] }) {
                 strokeDasharray={dash}
                 opacity={isSel ? 1 : 0.9}
               />
-              <title>{`${e.id}: ${e.u}→${e.v} · ${e.status} · flood=${e.flood} · cong=${e.congestion}`}</title>
+              <title>{`${e.id}: ${e.u}→${e.v} · ${e.status}`}</title>
             </g>
           );
         })}
 
-        {/* Animated selected evacuation path */}
         {selected?.nodes?.length ? (
           <path
             d={pathD(selected.nodes)}
@@ -137,29 +249,48 @@ export function HqrlNetworkMap({ map, selected, candidates = [] }) {
             strokeDasharray="12 8"
             filter="url(#hqrl-glow)"
             markerEnd="url(#hqrl-arrow)"
+            pointerEvents="none"
           >
             <animate attributeName="stroke-dashoffset" from="0" to="40" dur="1.1s" repeatCount="indefinite" />
           </path>
         ) : null}
 
-        {(map?.nodes || []).map((n) => {
+        {nodesList.map((n) => {
           const isShelter = n.kind === "shelter";
           const isZone = n.kind === "zone";
           const onRoute = (selected?.nodes || []).includes(n.id);
           const fill = isShelter ? "#b07cff" : isZone ? "#f4f7fa" : onRoute ? "#5ec8d8" : "#6a9aaa";
           const r = isShelter || isZone ? 13 : 8;
+          const dragging = dragId === n.id;
+          const active = activeId === n.id;
           return (
-            <g key={n.id}>
-              {onRoute ? <circle cx={n.x} cy={n.y} r={r + 5} fill="none" stroke="#4aa3ff" strokeWidth="1.5" opacity="0.7" /> : null}
-              <circle cx={n.x} cy={n.y} r={r} fill={fill} stroke="#0a1218" strokeWidth="2" />
-              <text x={n.x} y={n.y - r - 5} textAnchor="middle" fill="#dff4fa" fontSize="11" fontWeight="600">
+            <g
+              key={n.id}
+              className={`hqrl-node ${dragging ? "dragging" : ""} ${active ? "active" : ""}`}
+              style={{ cursor: dragging ? "grabbing" : "grab" }}
+              onPointerDown={(e) => startDrag(e, n.id)}
+              onClick={() => setActiveId(n.id)}
+            >
+              {onRoute || active ? (
+                <circle cx={n.x} cy={n.y} r={r + 6} fill="none" stroke="#4aa3ff" strokeWidth="1.5" opacity="0.85" />
+              ) : null}
+              <circle
+                cx={n.x}
+                cy={n.y}
+                r={dragging ? r + 2 : r}
+                fill={fill}
+                stroke={active ? "#fff" : "#0a1218"}
+                strokeWidth={active ? 2.5 : 2}
+              />
+              <text x={n.x} y={n.y - r - 5} textAnchor="middle" fill="#dff4fa" fontSize="11" fontWeight="600" pointerEvents="none">
                 {n.id}
               </text>
               {isShelter ? (
-                <text x={n.x} y={n.y + r + 13} textAnchor="middle" fill="#d4b8ff" fontSize="10">
+                <text x={n.x} y={n.y + r + 13} textAnchor="middle" fill="#d4b8ff" fontSize="10" pointerEvents="none">
                   {n.pct ?? 0}% · {n.status}
                 </text>
               ) : null}
+              <title>{`${n.id} · ${n.kind || "node"} — drag to move`}</title>
             </g>
           );
         })}
@@ -171,7 +302,16 @@ export function HqrlNetworkMap({ map, selected, candidates = [] }) {
         <span><i style={{ background: EDGE_STROKE.closed }} /> Closed</span>
         <span><i style={{ background: EDGE_STROKE.selected }} /> Selected route</span>
         <span><i style={{ background: "#b07cff" }} /> Shelter</span>
+        <span className="hqrl-drag-hint">Drag any node to rearrange the graph</span>
       </div>
+      {activeId ? (
+        <div className="hqrl-node-card">
+          <b>{activeId}</b>
+          <span>{nodeMap[activeId]?.kind || "node"}</span>
+          {nodeMap[activeId]?.status ? <span>{nodeMap[activeId].status}</span> : null}
+          {nodeMap[activeId]?.pct != null ? <span>{nodeMap[activeId].pct}% seats used</span> : null}
+        </div>
+      ) : null}
     </div>
   );
 }

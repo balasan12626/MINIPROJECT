@@ -1,6 +1,8 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Request
 from pydantic import BaseModel, Field
 
+from backend.deps.auth import RequireOperator
+from backend.rate_limit import limiter
 from backend.services import voice_agent as va
 
 router = APIRouter()
@@ -30,13 +32,15 @@ async def status():
 
 
 @router.post("/api/voice-agent/start")
-async def start(body: VoiceStartBody = VoiceStartBody()):
+@limiter.limit("30/minute")
+async def start(request: Request, _user: RequireOperator, body: VoiceStartBody = VoiceStartBody()):
     ctx = body.context.model_dump(exclude_none=True) if body.context else {}
     return await va.opening_line(ctx)
 
 
 @router.post("/api/voice-agent/turn")
-async def turn(body: VoiceTurnBody):
+@limiter.limit("60/minute")
+async def turn(request: Request, body: VoiceTurnBody, _user: RequireOperator):
     try:
         ctx = body.context.model_dump(exclude_none=True) if body.context else {}
         return await va.handle_turn(body.history or [], body.text.strip(), ctx)

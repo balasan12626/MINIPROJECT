@@ -1,20 +1,19 @@
 from contextlib import asynccontextmanager
 import asyncio
 import os
-from fastapi import FastAPI, WebSocket, WebSocketDisconnect
+from fastapi import FastAPI, Request, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
-from slowapi import Limiter, _rate_limit_exceeded_handler
+from fastapi.responses import JSONResponse
+from slowapi import _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
-from slowapi.util import get_remote_address
 
 from backend.api import agents, emergency, health, hqrl, live, ml, response, rescue_desk, simulation, sources, voice_agent
 from backend.config import get_settings
 from backend.database import mongo
 from backend.ml.inference import load_models
+from backend.rate_limit import limiter
 from backend.services.seed import seed_if_empty
 from backend.websocket.hub import HEARTBEAT_SEC, hub
-
-limiter = Limiter(key_func=get_remote_address)
 
 
 async def _live_ticker():
@@ -44,20 +43,45 @@ async def lifespan(app: FastAPI):
 
 
 settings = get_settings()
+_docs = settings.api_docs_enabled
 app = FastAPI(
-    title="Agentic Real-Time Flood Response",
-    version="1.0.0",
+    title="Voyamind AI — Flood Response API",
+    version="1.1.0",
     lifespan=lifespan,
+    docs_url="/docs" if _docs else None,
+    redoc_url="/redoc" if _docs else None,
+    openapi_url="/openapi.json" if _docs else None,
 )
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
+
+_origins = settings.cors_list
+if not _origins:
+    _origins = ["http://localhost:5173", "http://127.0.0.1:5173"]
+# Never pair credentials with wildcard origin
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.cors_list or ["*"],
+    allow_origins=_origins,
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allow_headers=["Authorization", "Content-Type", "Accept", "X-Requested-With"],
 )
+
+
+@app.middleware("http")
+async def security_headers(request: Request, call_next):
+    response = await call_next(request)
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    response.headers["X-Frame-Options"] = "DENY"
+    response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+    response.headers["Permissions-Policy"] = "camera=(), microphone=(self), geolocation=()"
+    response.headers["Content-Security-Policy"] = (
+        "default-src 'none'; frame-ancestors 'none'; base-uri 'none'"
+    )
+    if request.url.scheme == "https" or request.headers.get("x-forwarded-proto") == "https":
+        response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
+    return response
+
 
 for module in (health, live, ml, agents, response, simulation, hqrl, emergency, sources, rescue_desk, voice_agent):
     app.include_router(module.router)

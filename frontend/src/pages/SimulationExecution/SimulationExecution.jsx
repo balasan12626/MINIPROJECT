@@ -479,7 +479,9 @@ export default function SimulationExecution({ runMeta = null }) {
       {feats.algorithm_arena ? (
         <AlgorithmArena enabled onMapPaths={setArenaPaths} />
       ) : null}
-      <IeeeHqrlEmbed sim={sim} runMeta={runMeta} />
+      <div id="ieee-hqrl-panel" className="sim-hqrl-anchor">
+        <IeeeHqrlEmbed sim={sim} runMeta={runMeta} />
+      </div>
       <div className="grid-2">
         <div className="panel">
           <h2>SIMULATION AGENTS</h2>

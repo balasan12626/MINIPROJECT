@@ -19,7 +19,7 @@ class Settings(BaseSettings):
     maps_api_key: str = ""
     traffic_api_key: str = ""
     groq_api_key: str = ""
-    groq_model: str = "llama-3.3-70b-versatile"
+    groq_model: str = "openai/gpt-oss-20b"
     gemini_api_key: str = ""
     gemini_model: str = "gemini-3.6-flash"
     gemini_live_model: str = "gemini-3.1-flash-live-preview"
@@ -38,8 +38,23 @@ class Settings(BaseSettings):
     jwt_algorithm: str = "HS256"
     operator_username: str = "operator"
     operator_password: str = "changeme"
+    admin_username: str = "admin"
+    admin_password: str = "changeme"
+    analyst_username: str = "analyst"
+    analyst_password: str = "changeme"
+    viewer_username: str = "viewer"
+    viewer_password: str = "viewer"
 
-    cors_origins: str = "http://localhost:5173,http://127.0.0.1:5173"
+    # development | production
+    app_env: str = "development"
+    enable_api_docs: bool = False
+    # Private IEEE project: auth OFF unless you explicitly set AUTH_REQUIRED=true
+    auth_required: bool = False
+
+    cors_origins: str = (
+        "http://localhost:5173,http://127.0.0.1:5173,"
+        "https://app.voyamindai.online,https://voyamindai.online"
+    )
     model_dir: str = "models"
     model_lazy_load: bool = True
 
@@ -58,6 +73,17 @@ class Settings(BaseSettings):
     @property
     def cors_list(self) -> list[str]:
         return [x.strip() for x in self.cors_origins.split(",") if x.strip()]
+
+    @property
+    def api_docs_enabled(self) -> bool:
+        if self.enable_api_docs:
+            return True
+        return str(self.app_env or "").lower() in {"development", "dev", "local", "test"}
+
+    @property
+    def mutations_need_auth(self) -> bool:
+        """JWT required only when AUTH_REQUIRED=true (off for this private demo)."""
+        return bool(self.auth_required)
 
     @property
     def bbox(self) -> tuple[float, float, float, float]:

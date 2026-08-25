@@ -1,8 +1,11 @@
 /**
  * Shared WebSocket to backend (proxied via Vite /ws → :8000).
+ * On app.voyamindai.online, connects to api.voyamindai.online/ws.
  * Singleton avoids Strict Mode double-mount spam and duplicate sockets
  * from SimulationExecution + useLivePipeline.
  */
+
+import { resolveWsUrl } from "./apiOrigin.js";
 
 const listeners = new Set();
 const statusListeners = new Set();
@@ -15,13 +18,7 @@ let tries = 0;
 let refCount = 0;
 
 function wsUrl() {
-  const proto = window.location.protocol === "https:" ? "wss" : "ws";
-  // Prefer 127.0.0.1 when Vite is bound there — avoids localhost → ::1 mismatch
-  let host = window.location.host;
-  if (host.startsWith("localhost")) {
-    host = host.replace("localhost", "127.0.0.1");
-  }
-  return `${proto}://${host}/ws`;
+  return resolveWsUrl();
 }
 
 function setStatus(status) {
