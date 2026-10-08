@@ -9,6 +9,17 @@ from backend.services.seed import GRAPH_EDGES, GRAPH_NODES, ROADS
 from backend.utils.geo import haversine_km
 
 
+# Free-flow rescue vehicle speed on an open road. Edge weights already inflate
+# distance for traffic + flood exposure, so travel time = weighted km / speed.
+# (Was `cost / 0.35 * 6` = 17 min per km ≈ 3.5 km/h — a walking pace that
+# produced ~536 min ETAs in the Path Contest.)
+RESCUE_SPEED_KMH = 25.0
+
+
+def travel_minutes(weighted_km: float) -> float:
+    return float(weighted_km) / RESCUE_SPEED_KMH * 60.0
+
+
 def _road_lookup(roads: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
     return {r["road_id"]: r for r in roads}
 
@@ -60,7 +71,7 @@ def path_payload(g: nx.Graph, nodes: list[str]) -> dict[str, Any]:
         "coordinates": coords,
         "distance_km": round(dist, 3),
         "cost": round(cost, 4),
-        "travel_time_min": round(cost / 0.35 * 6, 2),
+        "travel_time_min": round(travel_minutes(cost), 2),
         "roads": roads,
     }
 

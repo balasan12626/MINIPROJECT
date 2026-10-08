@@ -1,0 +1,856 @@
+{
+ "sweep": [
+  {
+   "severity": 0.2,
+   "closures": 0,
+   "method": "Static shortest path",
+   "safe": 90.0,
+   "clear": 16.63,
+   "capv": 0.2,
+   "replan_ms": 0.179
+  },
+  {
+   "severity": 0.2,
+   "closures": 0,
+   "method": "Flood-aware A*",
+   "safe": 100.0,
+   "clear": 17.81,
+   "capv": 0,
+   "replan_ms": 0.157
+  },
+  {
+   "severity": 0.2,
+   "closures": 0,
+   "method": "Risk-aware greedy",
+   "safe": 90.0,
+   "clear": 16.63,
+   "capv": 0.2,
+   "replan_ms": 1.132
+  },
+  {
+   "severity": 0.2,
+   "closures": 0,
+   "method": "Proposer only",
+   "safe": 90.0,
+   "clear": 16.63,
+   "capv": 0.2,
+   "replan_ms": 2.253
+  },
+  {
+   "severity": 0.2,
+   "closures": 0,
+   "method": "Proposer + QUBO (SA)",
+   "safe": 100.0,
+   "clear": 17.81,
+   "capv": 0,
+   "replan_ms": 2.435
+  },
+  {
+   "severity": 0.2,
+   "closures": 0,
+   "method": "Proposer + QUBO (QAOA-insp.)",
+   "safe": 100.0,
+   "clear": 17.82,
+   "capv": 0,
+   "replan_ms": 2.665
+  },
+  {
+   "severity": 0.2,
+   "closures": 2,
+   "method": "Static shortest path",
+   "safe": 93.33,
+   "clear": 18.5,
+   "capv": 0.133,
+   "replan_ms": 0.174
+  },
+  {
+   "severity": 0.2,
+   "closures": 2,
+   "method": "Flood-aware A*",
+   "safe": 100.0,
+   "clear": 19.31,
+   "capv": 0,
+   "replan_ms": 0.162
+  },
+  {
+   "severity": 0.2,
+   "closures": 2,
+   "method": "Risk-aware greedy",
+   "safe": 93.33,
+   "clear": 18.48,
+   "capv": 0.133,
+   "replan_ms": 1.054
+  },
+  {
+   "severity": 0.2,
+   "closures": 2,
+   "method": "Proposer only",
+   "safe": 86.67,
+   "clear": 19.07,
+   "capv": 0.2,
+   "replan_ms": 2.262
+  },
+  {
+   "severity": 0.2,
+   "closures": 2,
+   "method": "Proposer + QUBO (SA)",
+   "safe": 100.0,
+   "clear": 19.31,
+   "capv": 0,
+   "replan_ms": 2.421
+  },
+  {
+   "severity": 0.2,
+   "closures": 2,
+   "method": "Proposer + QUBO (QAOA-insp.)",
+   "safe": 100.0,
+   "clear": 19.32,
+   "capv": 0,
+   "replan_ms": 2.763
+  },
+  {
+   "severity": 0.2,
+   "closures": 4,
+   "method": "Static shortest path",
+   "safe": 86.67,
+   "clear": 24.46,
+   "capv": 0.133,
+   "replan_ms": 0.153
+  },
+  {
+   "severity": 0.2,
+   "closures": 4,
+   "method": "Flood-aware A*",
+   "safe": 93.33,
+   "clear": 25.28,
+   "capv": 0,
+   "replan_ms": 0.141
+  },
+  {
+   "severity": 0.2,
+   "closures": 4,
+   "method": "Risk-aware greedy",
+   "safe": 86.67,
+   "clear": 24.45,
+   "capv": 0.133,
+   "replan_ms": 0.851
+  },
+  {
+   "severity": 0.2,
+   "closures": 4,
+   "method": "Proposer only",
+   "safe": 68.33,
+   "clear": 20.47,
+   "capv": 0.2,
+   "replan_ms": 2.07
+  },
+  {
+   "severity": 0.2,
+   "closures": 4,
+   "method": "Proposer + QUBO (SA)",
+   "safe": 93.33,
+   "clear": 25.27,
+   "capv": 0,
+   "replan_ms": 2.182
+  },
+  {
+   "severity": 0.2,
+   "closures": 4,
+   "method": "Proposer + QUBO (QAOA-insp.)",
+   "safe": 93.33,
+   "clear": 25.28,
+   "capv": 0,
+   "replan_ms": 2.497
+  },
+  {
+   "severity": 0.35,
+   "closures": 0,
+   "method": "Static shortest path",
+   "safe": 90.0,
+   "clear": 16.63,
+   "capv": 0.2,
+   "replan_ms": 0.188
+  },
+  {
+   "severity": 0.35,
+   "closures": 0,
+   "method": "Flood-aware A*",
+   "safe": 100.0,
+   "clear": 17.81,
+   "capv": 0,
+   "replan_ms": 0.169
+  },
+  {
+   "severity": 0.35,
+   "closures": 0,
+   "method": "Risk-aware greedy",
+   "safe": 90.0,
+   "clear": 16.63,
+   "capv": 0.2,
+   "replan_ms": 1.153
+  },
+  {
+   "severity": 0.35,
+   "closures": 0,
+   "method": "Proposer only",
+   "safe": 90.0,
+   "clear": 16.63,
+   "capv": 0.2,
+   "replan_ms": 2.209
+  },
+  {
+   "severity": 0.35,
+   "closures": 0,
+   "method": "Proposer + QUBO (SA)",
+   "safe": 100.0,
+   "clear": 17.81,
+   "capv": 0,
+   "replan_ms": 2.515
+  },
+  {
+   "severity": 0.35,
+   "closures": 0,
+   "method": "Proposer + QUBO (QAOA-insp.)",
+   "safe": 100.0,
+   "clear": 17.82,
+   "capv": 0,
+   "replan_ms": 2.764
+  },
+  {
+   "severity": 0.35,
+   "closures": 2,
+   "method": "Static shortest path",
+   "safe": 93.33,
+   "clear": 18.5,
+   "capv": 0.133,
+   "replan_ms": 0.173
+  },
+  {
+   "severity": 0.35,
+   "closures": 2,
+   "method": "Flood-aware A*",
+   "safe": 100.0,
+   "clear": 19.31,
+   "capv": 0,
+   "replan_ms": 0.157
+  },
+  {
+   "severity": 0.35,
+   "closures": 2,
+   "method": "Risk-aware greedy",
+   "safe": 93.33,
+   "clear": 18.5,
+   "capv": 0.133,
+   "replan_ms": 1.017
+  },
+  {
+   "severity": 0.35,
+   "closures": 2,
+   "method": "Proposer only",
+   "safe": 86.67,
+   "clear": 19.07,
+   "capv": 0.2,
+   "replan_ms": 2.162
+  },
+  {
+   "severity": 0.35,
+   "closures": 2,
+   "method": "Proposer + QUBO (SA)",
+   "safe": 100.0,
+   "clear": 19.31,
+   "capv": 0,
+   "replan_ms": 2.397
+  },
+  {
+   "severity": 0.35,
+   "closures": 2,
+   "method": "Proposer + QUBO (QAOA-insp.)",
+   "safe": 100.0,
+   "clear": 19.32,
+   "capv": 0,
+   "replan_ms": 2.697
+  },
+  {
+   "severity": 0.35,
+   "closures": 4,
+   "method": "Static shortest path",
+   "safe": 86.67,
+   "clear": 24.46,
+   "capv": 0.133,
+   "replan_ms": 0.17
+  },
+  {
+   "severity": 0.35,
+   "closures": 4,
+   "method": "Flood-aware A*",
+   "safe": 93.33,
+   "clear": 25.28,
+   "capv": 0,
+   "replan_ms": 0.147
+  },
+  {
+   "severity": 0.35,
+   "closures": 4,
+   "method": "Risk-aware greedy",
+   "safe": 86.67,
+   "clear": 24.46,
+   "capv": 0.133,
+   "replan_ms": 0.892
+  },
+  {
+   "severity": 0.35,
+   "closures": 4,
+   "method": "Proposer only",
+   "safe": 68.33,
+   "clear": 20.47,
+   "capv": 0.2,
+   "replan_ms": 2.197
+  },
+  {
+   "severity": 0.35,
+   "closures": 4,
+   "method": "Proposer + QUBO (SA)",
+   "safe": 93.33,
+   "clear": 25.27,
+   "capv": 0,
+   "replan_ms": 2.368
+  },
+  {
+   "severity": 0.35,
+   "closures": 4,
+   "method": "Proposer + QUBO (QAOA-insp.)",
+   "safe": 93.33,
+   "clear": 25.28,
+   "capv": 0,
+   "replan_ms": 2.636
+  },
+  {
+   "severity": 0.5,
+   "closures": 0,
+   "method": "Static shortest path",
+   "safe": 90.0,
+   "clear": 16.63,
+   "capv": 0.2,
+   "replan_ms": 0.176
+  },
+  {
+   "severity": 0.5,
+   "closures": 0,
+   "method": "Flood-aware A*",
+   "safe": 100.0,
+   "clear": 17.81,
+   "capv": 0,
+   "replan_ms": 0.165
+  },
+  {
+   "severity": 0.5,
+   "closures": 0,
+   "method": "Risk-aware greedy",
+   "safe": 90.0,
+   "clear": 16.63,
+   "capv": 0.2,
+   "replan_ms": 1.165
+  },
+  {
+   "severity": 0.5,
+   "closures": 0,
+   "method": "Proposer only",
+   "safe": 90.0,
+   "clear": 16.63,
+   "capv": 0.2,
+   "replan_ms": 2.229
+  },
+  {
+   "severity": 0.5,
+   "closures": 0,
+   "method": "Proposer + QUBO (SA)",
+   "safe": 100.0,
+   "clear": 17.81,
+   "capv": 0,
+   "replan_ms": 2.409
+  },
+  {
+   "severity": 0.5,
+   "closures": 0,
+   "method": "Proposer + QUBO (QAOA-insp.)",
+   "safe": 100.0,
+   "clear": 17.82,
+   "capv": 0,
+   "replan_ms": 2.766
+  },
+  {
+   "severity": 0.5,
+   "closures": 2,
+   "method": "Static shortest path",
+   "safe": 93.33,
+   "clear": 18.5,
+   "capv": 0.133,
+   "replan_ms": 0.165
+  },
+  {
+   "severity": 0.5,
+   "closures": 2,
+   "method": "Flood-aware A*",
+   "safe": 100.0,
+   "clear": 19.32,
+   "capv": 0,
+   "replan_ms": 0.149
+  },
+  {
+   "severity": 0.5,
+   "closures": 2,
+   "method": "Risk-aware greedy",
+   "safe": 93.33,
+   "clear": 18.5,
+   "capv": 0.133,
+   "replan_ms": 1.044
+  },
+  {
+   "severity": 0.5,
+   "closures": 2,
+   "method": "Proposer only",
+   "safe": 86.67,
+   "clear": 19.08,
+   "capv": 0.2,
+   "replan_ms": 2.486
+  },
+  {
+   "severity": 0.5,
+   "closures": 2,
+   "method": "Proposer + QUBO (SA)",
+   "safe": 100.0,
+   "clear": 19.31,
+   "capv": 0,
+   "replan_ms": 2.359
+  },
+  {
+   "severity": 0.5,
+   "closures": 2,
+   "method": "Proposer + QUBO (QAOA-insp.)",
+   "safe": 100.0,
+   "clear": 19.32,
+   "capv": 0,
+   "replan_ms": 2.679
+  },
+  {
+   "severity": 0.5,
+   "closures": 4,
+   "method": "Static shortest path",
+   "safe": 86.67,
+   "clear": 24.46,
+   "capv": 0.133,
+   "replan_ms": 0.157
+  },
+  {
+   "severity": 0.5,
+   "closures": 4,
+   "method": "Flood-aware A*",
+   "safe": 93.33,
+   "clear": 25.28,
+   "capv": 0,
+   "replan_ms": 0.143
+  },
+  {
+   "severity": 0.5,
+   "closures": 4,
+   "method": "Risk-aware greedy",
+   "safe": 86.67,
+   "clear": 24.46,
+   "capv": 0.133,
+   "replan_ms": 0.859
+  },
+  {
+   "severity": 0.5,
+   "closures": 4,
+   "method": "Proposer only",
+   "safe": 68.33,
+   "clear": 20.47,
+   "capv": 0.2,
+   "replan_ms": 2.07
+  },
+  {
+   "severity": 0.5,
+   "closures": 4,
+   "method": "Proposer + QUBO (SA)",
+   "safe": 93.33,
+   "clear": 25.27,
+   "capv": 0,
+   "replan_ms": 2.215
+  },
+  {
+   "severity": 0.5,
+   "closures": 4,
+   "method": "Proposer + QUBO (QAOA-insp.)",
+   "safe": 93.33,
+   "clear": 25.28,
+   "capv": 0,
+   "replan_ms": 2.507
+  },
+  {
+   "severity": 0.65,
+   "closures": 0,
+   "method": "Static shortest path",
+   "safe": 90.0,
+   "clear": 16.63,
+   "capv": 0.2,
+   "replan_ms": 0.179
+  },
+  {
+   "severity": 0.65,
+   "closures": 0,
+   "method": "Flood-aware A*",
+   "safe": 100.0,
+   "clear": 17.81,
+   "capv": 0,
+   "replan_ms": 0.159
+  },
+  {
+   "severity": 0.65,
+   "closures": 0,
+   "method": "Risk-aware greedy",
+   "safe": 90.0,
+   "clear": 16.63,
+   "capv": 0.2,
+   "replan_ms": 1.122
+  },
+  {
+   "severity": 0.65,
+   "closures": 0,
+   "method": "Proposer only",
+   "safe": 90.0,
+   "clear": 16.63,
+   "capv": 0.2,
+   "replan_ms": 2.163
+  },
+  {
+   "severity": 0.65,
+   "closures": 0,
+   "method": "Proposer + QUBO (SA)",
+   "safe": 100.0,
+   "clear": 17.81,
+   "capv": 0,
+   "replan_ms": 2.426
+  },
+  {
+   "severity": 0.65,
+   "closures": 0,
+   "method": "Proposer + QUBO (QAOA-insp.)",
+   "safe": 100.0,
+   "clear": 17.82,
+   "capv": 0,
+   "replan_ms": 2.702
+  },
+  {
+   "severity": 0.65,
+   "closures": 2,
+   "method": "Static shortest path",
+   "safe": 93.33,
+   "clear": 18.5,
+   "capv": 0.133,
+   "replan_ms": 0.182
+  },
+  {
+   "severity": 0.65,
+   "closures": 2,
+   "method": "Flood-aware A*",
+   "safe": 100.0,
+   "clear": 19.32,
+   "capv": 0,
+   "replan_ms": 0.157
+  },
+  {
+   "severity": 0.65,
+   "closures": 2,
+   "method": "Risk-aware greedy",
+   "safe": 93.33,
+   "clear": 18.5,
+   "capv": 0.133,
+   "replan_ms": 1.068
+  },
+  {
+   "severity": 0.65,
+   "closures": 2,
+   "method": "Proposer only",
+   "safe": 86.67,
+   "clear": 19.08,
+   "capv": 0.2,
+   "replan_ms": 2.176
+  },
+  {
+   "severity": 0.65,
+   "closures": 2,
+   "method": "Proposer + QUBO (SA)",
+   "safe": 100.0,
+   "clear": 19.32,
+   "capv": 0,
+   "replan_ms": 2.364
+  },
+  {
+   "severity": 0.65,
+   "closures": 2,
+   "method": "Proposer + QUBO (QAOA-insp.)",
+   "safe": 100.0,
+   "clear": 19.32,
+   "capv": 0,
+   "replan_ms": 2.708
+  },
+  {
+   "severity": 0.65,
+   "closures": 4,
+   "method": "Static shortest path",
+   "safe": 86.67,
+   "clear": 24.46,
+   "capv": 0.133,
+   "replan_ms": 0.164
+  },
+  {
+   "severity": 0.65,
+   "closures": 4,
+   "method": "Flood-aware A*",
+   "safe": 93.33,
+   "clear": 25.28,
+   "capv": 0,
+   "replan_ms": 0.147
+  },
+  {
+   "severity": 0.65,
+   "closures": 4,
+   "method": "Risk-aware greedy",
+   "safe": 86.67,
+   "clear": 24.46,
+   "capv": 0.133,
+   "replan_ms": 0.898
+  },
+  {
+   "severity": 0.65,
+   "closures": 4,
+   "method": "Proposer only",
+   "safe": 68.33,
+   "clear": 20.47,
+   "capv": 0.2,
+   "replan_ms": 2.179
+  },
+  {
+   "severity": 0.65,
+   "closures": 4,
+   "method": "Proposer + QUBO (SA)",
+   "safe": 93.33,
+   "clear": 25.28,
+   "capv": 0,
+   "replan_ms": 2.326
+  },
+  {
+   "severity": 0.65,
+   "closures": 4,
+   "method": "Proposer + QUBO (QAOA-insp.)",
+   "safe": 93.33,
+   "clear": 25.28,
+   "capv": 0,
+   "replan_ms": 2.561
+  }
+ ],
+ "gating": [
+  {
+   "failures": [
+    "none"
+   ],
+   "mean_reliability": 0.81,
+   "auto_dispatch": true,
+   "human_required": false
+  },
+  {
+   "failures": [
+    "weather_outage"
+   ],
+   "mean_reliability": 0.662,
+   "auto_dispatch": true,
+   "human_required": false
+  },
+  {
+   "failures": [
+    "delayed_radar"
+   ],
+   "mean_reliability": 0.744,
+   "auto_dispatch": true,
+   "human_required": false
+  },
+  {
+   "failures": [
+    "sensor_drift"
+   ],
+   "mean_reliability": 0.724,
+   "auto_dispatch": true,
+   "human_required": false
+  },
+  {
+   "failures": [
+    "outdated_road_data"
+   ],
+   "mean_reliability": 0.746,
+   "auto_dispatch": true,
+   "human_required": false
+  },
+  {
+   "failures": [
+    "citizen_conflict"
+   ],
+   "mean_reliability": 0.78,
+   "auto_dispatch": true,
+   "human_required": false
+  },
+  {
+   "failures": [
+    "comms_failure"
+   ],
+   "mean_reliability": 0.586,
+   "auto_dispatch": false,
+   "human_required": true
+  },
+  {
+   "failures": [
+    "shelter_failure"
+   ],
+   "mean_reliability": 0.81,
+   "auto_dispatch": true,
+   "human_required": false
+  },
+  {
+   "failures": [
+    "delayed_radar",
+    "sensor_drift"
+   ],
+   "mean_reliability": 0.658,
+   "auto_dispatch": true,
+   "human_required": false
+  },
+  {
+   "failures": [
+    "sensor_drift",
+    "outdated_road_data"
+   ],
+   "mean_reliability": 0.66,
+   "auto_dispatch": true,
+   "human_required": false
+  },
+  {
+   "failures": [
+    "weather_outage",
+    "sensor_drift",
+    "outdated_road_data"
+   ],
+   "mean_reliability": 0.512,
+   "auto_dispatch": false,
+   "human_required": true
+  }
+ ],
+ "bench": [
+  {
+   "method": "Static Shortest Path",
+   "clearance_time_min": 16.634,
+   "clearance_time_std": 0.462,
+   "safe_evacuation_pct": 90.0,
+   "safe_evacuation_std": 20.0,
+   "unsafe_route_pct": 10.0,
+   "capacity_violations": 0.2,
+   "replanning_latency_ms": 0.199,
+   "replanning_latency_std": 0.048,
+   "route_changes": 0.0,
+   "solver_execution_ms": 0.461
+  },
+  {
+   "method": "Time-Dependent A*",
+   "clearance_time_min": 17.814,
+   "clearance_time_std": 2.485,
+   "safe_evacuation_pct": 100.0,
+   "safe_evacuation_std": 0.0,
+   "unsafe_route_pct": 0.0,
+   "capacity_violations": 0.0,
+   "replanning_latency_ms": 0.18,
+   "replanning_latency_std": 0.051,
+   "route_changes": 0.233,
+   "solver_execution_ms": 0.386
+  },
+  {
+   "method": "Risk-Aware Greedy",
+   "clearance_time_min": 16.634,
+   "clearance_time_std": 0.462,
+   "safe_evacuation_pct": 90.0,
+   "safe_evacuation_std": 20.0,
+   "unsafe_route_pct": 10.0,
+   "capacity_violations": 0.2,
+   "replanning_latency_ms": 1.248,
+   "replanning_latency_std": 0.32,
+   "route_changes": 0.0,
+   "solver_execution_ms": 2.527
+  },
+  {
+   "method": "PPO",
+   "clearance_time_min": 16.634,
+   "clearance_time_std": 0.462,
+   "safe_evacuation_pct": 90.0,
+   "safe_evacuation_std": 20.0,
+   "unsafe_route_pct": 10.0,
+   "capacity_violations": 0.2,
+   "replanning_latency_ms": 2.477,
+   "replanning_latency_std": 0.665,
+   "route_changes": 0.0,
+   "solver_execution_ms": 5.029
+  },
+  {
+   "method": "PPO + Classical QUBO",
+   "clearance_time_min": 17.814,
+   "clearance_time_std": 2.485,
+   "safe_evacuation_pct": 100.0,
+   "safe_evacuation_std": 0.0,
+   "unsafe_route_pct": 0.0,
+   "capacity_violations": 0.0,
+   "replanning_latency_ms": 2.729,
+   "replanning_latency_std": 0.755,
+   "route_changes": 0.2,
+   "solver_execution_ms": 5.58
+  },
+  {
+   "method": "PPO + QAOA",
+   "clearance_time_min": 17.819,
+   "clearance_time_std": 2.495,
+   "safe_evacuation_pct": 100.0,
+   "safe_evacuation_std": 0.0,
+   "unsafe_route_pct": 0.0,
+   "capacity_violations": 0.0,
+   "replanning_latency_ms": 3.017,
+   "replanning_latency_std": 0.683,
+   "route_changes": 0.233,
+   "solver_execution_ms": 6.01
+  }
+ ],
+ "ablation": {
+  "label": "Ablation \u2014 Without Safety Layer vs HQRL",
+  "n_scenarios": 20,
+  "seed": 42,
+  "without_safety": {
+   "name": "RL only (PPO candidates, no QUBO)",
+   "story": "Fast / short route may be selected even if closed roads or capacity are violated.",
+   "safe_evacuation_pct": 92.5,
+   "unsafe_route_pct": 7.5,
+   "clearance_time_min": 16.578,
+   "capacity_violations": 0.15,
+   "replanning_latency_ms": 2.211
+  },
+  "with_hqrl": {
+   "name": "HQRL (PPO + QUBO + QAOA/classical + validation)",
+   "story": "Hard constraints filter unsafe candidates before the final recommendation.",
+   "safe_evacuation_pct": 100.0,
+   "unsafe_route_pct": 0.0,
+   "clearance_time_min": 17.571,
+   "capacity_violations": 0.0,
+   "replanning_latency_ms": 2.805
+  },
+  "delta": {
+   "safe_evacuation_pct": 7.5,
+   "unsafe_route_pct": -7.5,
+   "capacity_violations": -0.15
+  },
+  "takeaway": "Hard safety filtering reduces unsafe-route selection versus RL alone on the same synthetic scenarios. This supports the paper claim of constraint-aware evacuation routing \u2014 not quantum advantage.",
+  "generated_at": "2026-10-06T17:36:20.176739+00:00"
+ }
+}

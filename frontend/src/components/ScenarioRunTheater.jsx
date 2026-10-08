@@ -1,7 +1,9 @@
+import { memo } from "react";
+
 const STEPS = [
   { id: "scenario", title: "Scenario launch" },
   { id: "ingest", title: "Live twin ingest" },
-  { id: "ml", title: "Random Forest predicting" },
+  { id: "ml", title: "ML predicting (V3 + safety cross-check)" },
   { id: "risk", title: "Flood probability published" },
   { id: "policy", title: "Decision policy" },
   { id: "agents", title: "Agents running" },
@@ -16,12 +18,13 @@ function prettyModel(pred = {}, progress = {}) {
   return progress.model_name || "Random Forest";
 }
 
-export default function ScenarioRunTheater({ sim, progress, onWatchMap, onPause }) {
+function ScenarioRunTheater({ sim, progress, onWatchMap, onPause }) {
   const pipe = sim?.pipeline || {};
   const pred = pipe.prediction || {};
   const history = Array.isArray(sim?.history) ? sim.history : [];
   const last = history[history.length - 1] || {};
-  const p = last.flood_probability ?? pred.flood_probability;
+  // Canonical current probability (backend current_view); fallbacks only for older payloads.
+  const p = sim?.current && "flood_probability" in sim.current ? sim.current.flood_probability : last.flood_probability ?? pred.flood_probability;
   const model = prettyModel(pred, progress || {});
   const step = progress?.step || "scenario";
   const idx = Math.max(0, STEPS.findIndex((s) => s.id === step));
@@ -42,7 +45,10 @@ export default function ScenarioRunTheater({ sim, progress, onWatchMap, onPause 
           <span className="run-spinner" />
           <div>
             <div className="run-model-name">{model} is running</div>
-            <div className="muted">{pred.model_id || progress?.model || "random_forest_flood_v1"} · v{pred.model_version || progress?.model_version || "1.1.0"}</div>
+            <div className="muted">
+              {pred.model_id || progress?.model || "model id pending"}
+              {(pred.model_version || progress?.model_version) ? ` · v${pred.model_version || progress?.model_version}` : ""}
+            </div>
           </div>
         </div>
         <div className="run-kpis">
@@ -83,6 +89,8 @@ export default function ScenarioRunTheater({ sim, progress, onWatchMap, onPause 
     </div>
   );
 }
+
+export default memo(ScenarioRunTheater);
 
 function formatClock(sec) {
   const s = Math.round(sec || 0);

@@ -5,6 +5,7 @@ import App from "./App.jsx";
 import { formatUnavailable } from "./services/api.js";
 import { mergeSnapshot } from "./state/snapshot.js";
 import ScenarioRunTheater from "./components/ScenarioRunTheater.jsx";
+import { SCENARIOS, SCENARIO_GROUPS } from "./config/scenarios.js";
 
 vi.mock("./hooks/useLivePipeline.js", () => ({
   useLivePipeline: () => ({
@@ -41,6 +42,9 @@ vi.mock("./services/api.js", async (orig) => {
     ...actual,
     fetchSimState: () => Promise.resolve({ status: "idle", history: [], events: [], pipeline: {} }),
     fetchScenarios: () => Promise.resolve({ scenarios: [] }),
+    fetchDams: () => Promise.resolve({ available: true, dams: [{ id: "bhakra", name: "Bhakra Dam", state: "HP", current_level_m: 488.83 }] }),
+    runDamSimulation: () => Promise.resolve({ available: true }),
+    startSimulation: () => Promise.resolve({ run_id: "run-1" }),
     fetchHealth: () => Promise.resolve({ backend: "connected" }),
     fetchShelters: () => Promise.resolve({ shelters: [] }),
     fetchTeams: () => Promise.resolve({ teams: [] }),
@@ -48,6 +52,7 @@ vi.mock("./services/api.js", async (orig) => {
     fetchMlBenchmark: () => Promise.resolve({}),
     fetchSources: () => Promise.resolve({ live_apis: [] }),
     fetchClusters: () => Promise.resolve({ n_sos: 0, clusters: [] }),
+    fetchModelsV2: () => Promise.resolve({ available: true, version: "3.0.0" }),
     hqrlState: () => Promise.resolve(hqrlStub),
     hqrlConfigure: () => Promise.resolve(hqrlStub),
     hqrlStart: () => Promise.resolve(hqrlStub),
@@ -62,21 +67,50 @@ describe("routing", () => {
         <App />
       </MemoryRouter>
     );
-    expect(screen.getAllByText(/AGENTIC REAL-TIME FLOOD RESPONSE/).length).toBeGreaterThan(0);
-    expect(screen.getByText(/Command Center/)).toBeTruthy();
+    expect(screen.getAllByText(/AQUASENTINEL/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/Command Center/).length).toBeGreaterThan(0);
   });
 
-  it("renders simulation lab on one route", async () => {
+  it("renders the unified simulation page: picker, inputs, one run button", async () => {
     render(
       <MemoryRouter initialEntries={["/simulation"]}>
         <App />
       </MemoryRouter>
     );
-    expect(screen.getAllByText(/IEEE HQRL Demo/i).length).toBeGreaterThan(0);
-    expect(screen.getAllByText(/Scenario Lab/i).length).toBeGreaterThan(0);
-    expect(await screen.findByText(/CHOOSE SCENARIO/i)).toBeTruthy();
-    expect(screen.getByText(/SIMULATION MODE/)).toBeTruthy();
-    expect(screen.getByText(/^Simulation$/)).toBeTruthy();
+    expect(screen.getAllByText(/AI Dam Monitoring & Disaster Simulation/i).length).toBeGreaterThan(0);
+    expect(await screen.findByText(/Choose scenario/i)).toBeTruthy();
+    expect(screen.getByRole("combobox", { name: /search scenarios/i })).toBeTruthy();
+    // Exactly one run control — the old RUN SIMULATION / RUN BENCHMARK NOW are gone.
+    const runButtons = screen.getAllByRole("button", { name: /^RUN SCENARIO$/i });
+    expect(runButtons).toHaveLength(1);
+    expect(screen.queryByRole("button", { name: /RUN SIMULATION/i })).toBeNull();
+    expect(screen.queryByRole("button", { name: /RUN BENCHMARK/i })).toBeNull();
+  });
+
+  it("shows only an empty state before a run", () => {
+    render(
+      <MemoryRouter initialEntries={["/simulation"]}>
+        <App />
+      </MemoryRouter>
+    );
+    expect(screen.getByText(/No results yet/i)).toBeTruthy();
+    expect(screen.getByText(/Select a scenario and click/i)).toBeTruthy();
+  });
+
+  it("offers every scenario, grouped, with exactly one selected", () => {
+    render(
+      <MemoryRouter initialEntries={["/simulation"]}>
+        <App />
+      </MemoryRouter>
+    );
+    for (const g of SCENARIO_GROUPS) {
+      expect(screen.getAllByRole("radiogroup", { name: g.label }).length).toBe(1);
+    }
+    for (const s of SCENARIOS) {
+      expect(screen.getAllByText(s.label).length).toBeGreaterThan(0);
+    }
+    const checked = screen.getAllByRole("radio").filter((r) => r.getAttribute("aria-checked") === "true");
+    expect(checked).toHaveLength(1);
   });
 });
 

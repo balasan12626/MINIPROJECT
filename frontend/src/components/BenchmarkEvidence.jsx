@@ -1,9 +1,14 @@
+import { memo } from "react";
 import { HqrlResultCharts, HqrlResultsTable } from "./HqrlVisuals.jsx";
 
 /**
  * Explains how IEEE benchmark works + shows results / evidence / outputs.
+ *
+ * With `resultsHref` the comparison table and charts are NOT rendered here —
+ * the page already shows them once (the /simulation Results section) and this
+ * block links to it. Run controls render only when `onRun` is passed.
  */
-export default function BenchmarkEvidence({ benchmark, busy, onRun, seed, nScenarios, onSeed, onN }) {
+function BenchmarkEvidence({ benchmark, busy, onRun, seed, nScenarios, onSeed, onN, resultsHref }) {
   const table = benchmark?.table || [];
   const scenarios = benchmark?.scenarios || [];
   const defs = benchmark?.metric_definitions || {};
@@ -49,6 +54,7 @@ export default function BenchmarkEvidence({ benchmark, busy, onRun, seed, nScena
         </div>
       </div>
 
+      {onRun ? (
       <div className="hqrl-controls" style={{ marginTop: 10 }}>
         <label className="hqrl-muted" style={{ display: "flex", alignItems: "center", gap: 6 }}>
           Seed
@@ -62,6 +68,7 @@ export default function BenchmarkEvidence({ benchmark, busy, onRun, seed, nScena
           {busy ? "RUNNING BENCHMARK…" : "RUN BENCHMARK NOW"}
         </button>
       </div>
+      ) : null}
 
       {benchmark ? (
         <div style={{ marginTop: 12 }}>
@@ -71,6 +78,14 @@ export default function BenchmarkEvidence({ benchmark, busy, onRun, seed, nScena
             <div style={{ marginTop: 6 }}>{benchmark.disclaimer}</div>
           </div>
 
+          {resultsHref ? (
+            <p style={{ marginTop: 10 }}>
+              <a className="results-link" href={resultsHref}>
+                Comparison table &amp; charts — view in Results ↑
+              </a>
+            </p>
+          ) : (
+          <>
           <div className="grid-3" style={{ marginTop: 10 }}>
             <div className="metric">
               <span>Best safe evacuation</span>
@@ -92,6 +107,8 @@ export default function BenchmarkEvidence({ benchmark, busy, onRun, seed, nScena
           <HqrlResultsTable table={table} />
           <h3 style={{ marginTop: 12 }}>Mixed charts (bar · line · area · radar)</h3>
           <HqrlResultCharts graphs={benchmark.graphs} />
+          </>
+          )}
 
           <h3>Scenario run log</h3>
           <div className="hqrl-scenario-log">
@@ -104,9 +121,15 @@ export default function BenchmarkEvidence({ benchmark, busy, onRun, seed, nScena
         </div>
       ) : (
         <p className="hqrl-muted" style={{ marginTop: 10 }}>
-          No benchmark output yet. Click <b>RUN BENCHMARK NOW</b>.
+          {onRun ? (
+            <>No benchmark output yet. Click <b>RUN BENCHMARK NOW</b>.</>
+          ) : (
+            <>No benchmark output yet — click <b>RUN SCENARIO</b> above.</>
+          )}
         </p>
       )}
     </div>
   );
 }
+
+export default memo(BenchmarkEvidence);

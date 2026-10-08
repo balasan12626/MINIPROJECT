@@ -2,14 +2,18 @@ import { useEffect, useState } from "react";
 
 const KEY = "flood_theme";
 
+// Dark (black + yellow) is the default. Light mode is the only opt-in:
+// `body.light-theme` swaps the token values in index.css; `data-theme` on
+// <html> mirrors it so the root background matches before first paint.
 function applyTheme(theme) {
   document.body.classList.toggle("light-theme", theme === "light");
+  document.documentElement.dataset.theme = theme === "light" ? "light" : "dark";
   localStorage.setItem(KEY, theme);
   window.dispatchEvent(new CustomEvent("flood-theme", { detail: theme }));
 }
 
 export default function ThemeToggle() {
-  const [theme, setTheme] = useState(() => localStorage.getItem(KEY) || "dark");
+  const [theme, setTheme] = useState(() => (localStorage.getItem(KEY) === "light" ? "light" : "dark"));
 
   useEffect(() => {
     applyTheme(theme);

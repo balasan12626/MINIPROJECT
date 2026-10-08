@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { formatDateTimeIST } from "../../utils/time.js";
 import { fetchHealth, fetchShelters, fetchTeams, fetchEmergencies, fetchMlBenchmark, fetchSources, fetchClusters } from "../../services/api.js";
 import { useLivePipeline } from "../../hooks/useLivePipeline.js";
 import KpiCard, { ModeBadge } from "../../components/KpiCard.jsx";
@@ -46,36 +47,57 @@ export default function LiveCommandCenter() {
   const stale = lastEventAt && (Date.now() - new Date(lastEventAt).getTime() > 120000);
 
   return (
-    <div className="page">
+    <div className="page command-center-page">
+      <section className="page-hero">
+        <div>
+          <p className="eyebrow">Operations overview</p>
+          <h2 className="page-title">Command Center</h2>
+          <p className="page-lead">
+            Live Yamuna floodplain picture — rainfall, stage, hybrid risk, shelters, and agent pipeline in one glass console.
+          </p>
+        </div>
+        <div className="page-hero-actions">
+          <button className="primary glow-btn" onClick={reload}>Refresh live pipeline</button>
+        </div>
+      </section>
+
       <ModeBadge
         mode="live"
         backend={health?.backend === "connected" ? "Connected" : health?.mongodb || "DATA SOURCE UNAVAILABLE"}
         ws={wsStatus}
         lastUpdate={lastEventAt || snapshot?.timestamp}
       />
-      {stale ? <div className="unavailable">STALE DATA — last realtime event is older than 2 minutes</div> : null}
-      <div className="actions">
-        <button className="primary" onClick={reload}>Refresh live pipeline</button>
-      </div>
-      <div className="grid-4">
+      {stale ? <div className="unavailable banner-warn">STALE DATA — last realtime event is older than 2 minutes</div> : null}
+
+      <div className="section-label">Situation KPIs</div>
+      <div className="grid-4 kpi-hero-grid">
         <KpiCard label="Rainfall" value={weather.available === false ? null : weather.rainfall_mm} suffix=" mm" sub={weather.source} />
         <KpiCard label="Water / Dam Level" value={dam.available === false && river.available === false ? null : (river.value_m ?? dam.value_m)} suffix=" m" sub={river.station || dam.station} />
         <KpiCard label="Flood Probability (hybrid)" value={pred.available === false ? null : pct(pred.flood_probability)} sub="Operational risk — not raw RF alone" />
         <KpiCard label="Risk Level" value={pred.risk_category} sub={pred.available === false ? pred.message : null} />
+      </div>
+      <div className="grid-4">
         <KpiCard label="Active Incidents" value={incident.incident_id ? 1 : 0} sub={incident.zone_name} />
         <KpiCard label="Available Shelters" value={extras.shelters.filter((s) => s.status === "open").length || null} />
         <KpiCard label="Rescue Teams" value={extras.teams.length || null} />
         <KpiCard label="Model" value={pred.available === false ? null : pred.model_version} sub={pred.model_id} />
       </div>
       <RiskSplitPanel prediction={pred.available === false ? null : pred} />
-      <div className="grid-2">
-        <div className="panel glass-panel">
-          <h2>LIVE MAP</h2>
+      <div className="section-label">Live theater</div>
+      <div className="grid-2 map-priority-grid">
+        <div className="panel glass-panel map-hero-panel">
+          <div className="panel-head">
+            <h2>LIVE MAP</h2>
+            <span className="chip chip-live">Realtime</span>
+          </div>
           <FloodMap snapshot={{ ...snapshot, all_shelters: extras.shelters, teams: extras.teams, emergencies: extras.emergencies, clusters: clusters?.clusters || snapshot?.clusters || [] }} />
         </div>
-        <div>
+        <div className="stack-panels">
           <div className="panel glass-panel">
-            <h2>LIVE WEATHER <DataSourceBadge kind="LIVE API" /></h2>
+            <div className="panel-head">
+              <h2>LIVE WEATHER</h2>
+              <DataSourceBadge kind="LIVE API" />
+            </div>
             {weather.available === false ? <div className="unavailable">{weather.message || "DATA SOURCE UNAVAILABLE"}</div> : (
               <div>
                 <div className="metric"><span>Temperature</span><b>{weather.temperature_c ?? "DATA UNAVAILABLE"} °C</b></div>
@@ -84,15 +106,15 @@ export default function LiveCommandCenter() {
                 <div className="metric"><span>Wind</span><b>{weather.wind_mps ?? "DATA UNAVAILABLE"} m/s</b></div>
                 <div className="metric"><span>Pressure</span><b>{weather.pressure_hpa ?? "DATA UNAVAILABLE"} hPa</b></div>
                 <div className="metric"><span>Forecast source</span><b>{snapshot?.forecast?.source || "DATA UNAVAILABLE"}</b></div>
-                <div className="metric"><span>Timestamp</span><b>{weather.timestamp ? new Date(weather.timestamp).toLocaleString() : "DATA UNAVAILABLE"}</b></div>
+                <div className="metric"><span>Timestamp</span><b>{formatDateTimeIST(weather.timestamp, "DATA UNAVAILABLE")}</b></div>
               </div>
             )}
           </div>
-          <div className="panel glass-panel" style={{ marginTop: 12 }}>
+          <div className="panel glass-panel">
             <h2>LIVE FLOOD RISK</h2>
             {pred.available === false ? <div className="unavailable">{pred.message || "MODEL UNAVAILABLE"}</div> : (
               <div>
-                <div className="value" style={{ fontSize: 42 }}>{pct(pred.flood_probability)}</div>
+                <div className="risk-big-value">{pct(pred.flood_probability)}</div>
                 <div className={`badge ${pred.risk_category === "CRITICAL" || pred.risk_category === "HIGH" ? "crit" : "live"}`}>{pred.risk_category}</div>
                 <div className="metric"><span>Hybrid operational P</span><b>{pct(pred.flood_probability)}</b></div>
                 <div className="metric"><span>Raw ML P</span><b>{pred.ml_probability != null ? pct(pred.ml_probability) : "DATA UNAVAILABLE"}</b></div>
@@ -101,7 +123,7 @@ export default function LiveCommandCenter() {
                 <div className="metric"><span>Model</span><b>{pred.model_id}</b></div>
                 <div className="metric"><span>Version</span><b>{pred.model_version}</b></div>
                 <div className="metric"><span>River level source</span><b>{river.source || river.kind || "API proxy / estimate"}</b></div>
-                <div className="metric"><span>Prediction time</span><b>{pred.prediction_timestamp ? new Date(pred.prediction_timestamp).toLocaleString() : "—"}</b></div>
+                <div className="metric"><span>Prediction time</span><b>{formatDateTimeIST(pred.prediction_timestamp)}</b></div>
                 <div className="metric"><span>Freshness</span><b>{pred.data_freshness_sec != null ? `${Math.round(pred.data_freshness_sec)} sec ago` : "DATA UNAVAILABLE"}</b></div>
                 <div className="metric"><span>Inference</span><b>{pred.inference_latency_ms != null ? `${pred.inference_latency_ms} ms` : "DATA UNAVAILABLE"}</b></div>
                 <div className="metric"><span>Source</span><b>{pred.probability_source || pred.model_id}</b></div>
@@ -111,6 +133,7 @@ export default function LiveCommandCenter() {
         </div>
       </div>
       <AgentExecutionTrace mode="live" />
+      <div className="section-label">Agents & performance</div>
       <div className="grid-2">
         <div className="panel glass-panel">
           <h2>AGENT STATUS</h2>

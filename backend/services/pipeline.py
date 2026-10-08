@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import asyncio
 import time
 from datetime import datetime, timezone
 from typing import Any
@@ -7,13 +8,13 @@ from typing import Any
 from backend.agents.graph import graph
 from backend.config import get_settings
 from backend.database import mongo
-from backend.ml.inference import model_status, predict_live
+from backend.ml.inference import model_status, predict_live, predict_peak_level_v2
 from backend.services.progress import publish_progress
 from backend.ml.risk_engine import operational_risk
 from backend.utils.geo import jsonable, risk_category, utcnow
 from backend.services import hydro_service, weather_service
 from backend.services.decision_engine import evaluate_policy, pipeline_health
-from backend.services.dispatch import apply_threshold_dispatch
+from backend.services.dispatch import apply_threshold_dispatch, dispatch_permitted
 from backend.ml.change_monitor import observe_cards
 from backend.agents.dialogue import converse
 from backend.services.route_engine import candidate_routes
@@ -29,6 +30,12 @@ _last_latencies: dict[str, float] = {}
 
 def last_snapshot(mode: str = "live") -> dict[str, Any]:
     return _snapshots.get(mode) or {}
+
+
+def clear_snapshot(mode: str = "simulation") -> None:
+    """Drop the cached pipeline snapshot so a fresh run can't display the
+    previous run's ML/risk/route/shelter values before its own first tick."""
+    _snapshots[mode] = {}
 
 
 def last_latencies() -> dict[str, float]:
@@ -117,8 +124,13 @@ async def run_pipeline(mode: str = "live", observations: dict[str, Any] | None =
         model_version=status.get("model_version"),
     )
     pred = predict_live(rainfall_24h_mm=rain_24, forecast_daily_mm=daily)
+    pred_v2 = predict_peak_level_v2(rain_24, daily)
+    pred["v2"] = pred_v2
+    ml_prior = pred.get("flood_probability")
+    if pred_v2.get("available") and pred_v2.get("flood_type_probability") is not None:
+        ml_prior = (float(ml_prior or 0) + float(pred_v2["flood_type_probability"])) / 2.0
     blended = operational_risk(
-        pred.get("flood_probability"),
+        ml_prior,
         rain_24,
         river.get("percent_of_danger"),
         dam.get("percent_of_danger"),
@@ -143,7 +155,8 @@ async def run_pipeline(mode: str = "live", observations: dict[str, Any] | None =
     pred["dual"] = dual
     feats = (observations or {}).get("features") or {}
     human_override = bool((observations or {}).get("human_dispatch_override"))
-    if mode == "simulation" and feats.get("model_disagreement", True) and dual.get("disagree") and not human_override:
+    # The disagreement hold is a safety gate, so it applies in live mode too.
+    if feats.get("model_disagreement", True) and dual.get("disagree") and not human_override:
         pred["dispatch_hold"] = True
     ml_ms = (time.perf_counter() - t2) * 1000
     await mongo.insert("flood_predictions", {**pred, "mode": mode})
@@ -166,13 +179,15 @@ async def run_pipeline(mode: str = "live", observations: dict[str, Any] | None =
     )
 
     data_ok, model_ok, system_ok = pipeline_health(weather, river if river.get("available") else dam, pred)
-    if pred.get("dispatch_hold"):
-        model_ok = False
     policy = evaluate_policy(pred.get("flood_probability"), data_ok, model_ok, system_ok, human_override=human_override)
-    if pred.get("dispatch_hold") and not human_override:
+    # Single mechanism for the disagreement hold. Previously this ALSO forced
+    # model_ok=False, which made the UI report the model as unhealthy when in
+    # fact it is available — the two models simply disagree.
+    policy["model_disagreement"] = bool(pred.get("dispatch_hold"))
+    policy["dispatch_hold"] = bool(pred.get("dispatch_hold")) and not human_override
+    if policy["dispatch_hold"]:
         policy["action"] = "HUMAN_REVIEW"
         policy["reason"] = dual.get("message") or "Random Forest and XGBoost disagree — hold auto-dispatch"
-        policy["model_disagreement"] = True
     await graph.emit("flood_risk", "DECISION_REQUIRED", policy["action"], "apply decision policy", policy)
     await publish_progress(mode, "policy", f"Decision policy: {policy['action']}", action=policy["action"], model=model_name, model_name=pretty)
     await mongo.insert("risk_events", {"policy": policy, "prediction": pred, "mode": mode})
@@ -221,7 +236,11 @@ async def run_pipeline(mode: str = "live", observations: dict[str, Any] | None =
         dispatch = {"called": False, "band": "admin", "places": [], "teams": [], "mode": mode, "held": True, "reason": dual.get("message")}
         await publish_progress(mode, "dispatch", "Auto-dispatch HELD — RF and XGBoost disagree", model=model_name, model_name=pretty, called=False)
     else:
-        dispatch = await apply_threshold_dispatch(pred.get("flood_probability"), mode)
+        dispatch = await apply_threshold_dispatch(
+            pred.get("flood_probability"),
+            mode,
+            allowed=dispatch_permitted(policy["action"], bool(pred.get("dispatch_hold")), human_override),
+        )
         if dispatch.get("called"):
             await publish_progress(mode, "dispatch", "Rescue and ambulance auto-called (P ≥ 60%) — moving to flood places", model=model_name, model_name=pretty, called=True)
     spike = observe_cards(mode, rain_24, river.get("value_m"), dam.get("value_m"), pred.get("flood_probability"))
@@ -235,21 +254,29 @@ async def run_pipeline(mode: str = "live", observations: dict[str, Any] | None =
         )
     await publish_progress(mode, "talk", "Agents talking on the operations net", model=model_name, model_name=pretty, band=(dispatch or {}).get("band"))
     skip_talk = bool((observations or {}).get("skip_talk"))
-    if skip_talk:
-        from backend.agents.dialogue import last_conversation
+    from backend.agents.dialogue import last_conversation
 
+    if skip_talk:
         conversation = last_conversation(mode) or {"available": False, "turns": [], "history": [], "message": "Agent radio is OFF"}
     else:
-        conversation = await converse(
-            mode,
-            pred.get("flood_probability"),
-            weather,
-            river,
-            incident,
-            dispatch,
-            force=bool((observations or {}).get("force_talk") or spike.get("sudden") or pred.get("dispatch_hold")),
-            extra={"spike": spike, "dual": dual},
+        # converse() makes a real LLM network call (~2-5s) and already broadcasts its
+        # result over the "agent_talk" websocket event the frontend listens for — so it
+        # must not block the pipeline's response. Return the last known conversation
+        # immediately and let the fresh one arrive over the socket when ready.
+        conversation = last_conversation(mode) or {"available": False, "turns": [], "history": [], "message": "Agents connecting..."}
+        talk_task = asyncio.create_task(
+            converse(
+                mode,
+                pred.get("flood_probability"),
+                weather,
+                river,
+                incident,
+                dispatch,
+                force=bool((observations or {}).get("force_talk") or spike.get("sudden") or pred.get("dispatch_hold")),
+                extra={"spike": spike, "dual": dual, "dam": dam},
+            )
         )
+        talk_task.add_done_callback(lambda t: None if t.cancelled() else t.exception())
 
     t4 = time.perf_counter()
     await hub.broadcast("system_metrics", {"ingest_ms": ingest_ms})

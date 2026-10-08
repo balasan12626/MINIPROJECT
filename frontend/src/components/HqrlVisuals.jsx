@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   Area,
   AreaChart,
@@ -19,15 +19,16 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import { chartTheme } from "../config/chartTheme.js";
 
 const EDGE_STROKE = {
-  selected: "#4aa3ff",
-  closed: "#e85d6c",
-  hazard: "#e08a3c",
-  congested: "#e6b84d",
-  open: "#3ecf8e",
-  candidate: "#9ad0e0",
-  rejected: "#778899",
+  selected: "var(--accent)",
+  closed: "var(--status-sos)",
+  hazard: "var(--status-enroute)",
+  congested: "var(--status-assigned)",
+  open: "var(--status-safe)",
+  candidate: "var(--accent)",
+  rejected: "var(--muted)",
 };
 
 const METHOD_SHORT = (m) =>
@@ -49,8 +50,10 @@ function clientToSvgPoint(svg, clientX, clientY) {
   return { x: local.x, y: local.y };
 }
 
-/** Network map with drag-drop nodes + selected route highlight. */
-export function HqrlNetworkMap({ map, selected, candidates = [] }) {
+/** Network map with drag-drop nodes + selected route highlight.
+ * `animate={false}` stops the marching-ants route animation (pass it while the
+ * map is off-screen so the browser is not repainting an invisible SVG). */
+export const HqrlNetworkMap = memo(function HqrlNetworkMap({ map, selected, candidates = [], animate = true }) {
   const svgRef = useRef(null);
   const dragRef = useRef(null);
   const [positions, setPositions] = useState({});
@@ -193,7 +196,7 @@ export function HqrlNetworkMap({ map, selected, candidates = [] }) {
       >
         <defs>
           <marker id="hqrl-arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
-            <path d="M0,0 L6,3 L0,6 Z" fill="#4aa3ff" />
+            <path d="M0,0 L6,3 L0,6 Z" fill="var(--accent)" />
           </marker>
           <filter id="hqrl-glow">
             <feGaussianBlur stdDeviation="2.2" result="coloredBlur" />
@@ -244,14 +247,14 @@ export function HqrlNetworkMap({ map, selected, candidates = [] }) {
           <path
             d={pathD(selected.nodes)}
             fill="none"
-            stroke="#4aa3ff"
+            stroke="var(--accent)"
             strokeWidth="3"
             strokeDasharray="12 8"
             filter="url(#hqrl-glow)"
             markerEnd="url(#hqrl-arrow)"
             pointerEvents="none"
           >
-            <animate attributeName="stroke-dashoffset" from="0" to="40" dur="1.1s" repeatCount="indefinite" />
+            {animate ? <animate attributeName="stroke-dashoffset" from="0" to="40" dur="1.1s" repeatCount="indefinite" /> : null}
           </path>
         ) : null}
 
@@ -259,7 +262,7 @@ export function HqrlNetworkMap({ map, selected, candidates = [] }) {
           const isShelter = n.kind === "shelter";
           const isZone = n.kind === "zone";
           const onRoute = (selected?.nodes || []).includes(n.id);
-          const fill = isShelter ? "#b07cff" : isZone ? "#f4f7fa" : onRoute ? "#5ec8d8" : "#6a9aaa";
+          const fill = isShelter ? "var(--status-transport)" : isZone ? "var(--text)" : onRoute ? "var(--accent)" : "var(--muted)";
           const r = isShelter || isZone ? 13 : 8;
           const dragging = dragId === n.id;
           const active = activeId === n.id;
@@ -272,21 +275,21 @@ export function HqrlNetworkMap({ map, selected, candidates = [] }) {
               onClick={() => setActiveId(n.id)}
             >
               {onRoute || active ? (
-                <circle cx={n.x} cy={n.y} r={r + 6} fill="none" stroke="#4aa3ff" strokeWidth="1.5" opacity="0.85" />
+                <circle cx={n.x} cy={n.y} r={r + 6} fill="none" stroke="var(--accent)" strokeWidth="1.5" opacity="0.85" />
               ) : null}
               <circle
                 cx={n.x}
                 cy={n.y}
                 r={dragging ? r + 2 : r}
                 fill={fill}
-                stroke={active ? "#fff" : "#0a1218"}
+                stroke={active ? "var(--text)" : "var(--card)"}
                 strokeWidth={active ? 2.5 : 2}
               />
-              <text x={n.x} y={n.y - r - 5} textAnchor="middle" fill="#dff4fa" fontSize="11" fontWeight="600" pointerEvents="none">
+              <text x={n.x} y={n.y - r - 5} textAnchor="middle" fill="var(--text)" fontSize="11" fontWeight="600" pointerEvents="none">
                 {n.id}
               </text>
               {isShelter ? (
-                <text x={n.x} y={n.y + r + 13} textAnchor="middle" fill="#d4b8ff" fontSize="10" pointerEvents="none">
+                <text x={n.x} y={n.y + r + 13} textAnchor="middle" fill="var(--status-transport)" fontSize="10" pointerEvents="none">
                   {n.pct ?? 0}% · {n.status}
                 </text>
               ) : null}
@@ -301,7 +304,7 @@ export function HqrlNetworkMap({ map, selected, candidates = [] }) {
         <span><i style={{ background: EDGE_STROKE.hazard }} /> Hazard</span>
         <span><i style={{ background: EDGE_STROKE.closed }} /> Closed</span>
         <span><i style={{ background: EDGE_STROKE.selected }} /> Selected route</span>
-        <span><i style={{ background: "#b07cff" }} /> Shelter</span>
+        <span><i style={{ background: "var(--status-transport)" }} /> Shelter</span>
         <span className="hqrl-drag-hint">Drag any node to rearrange the graph</span>
       </div>
       {activeId ? (
@@ -314,25 +317,26 @@ export function HqrlNetworkMap({ map, selected, candidates = [] }) {
       ) : null}
     </div>
   );
-}
+});
 
-function tipStyle() {
-  return { background: "#0c1c24", border: "1px solid #3a6a78", fontSize: 12, borderRadius: 8 };
-}
 
-/** Mixed chart types for benchmark results. */
-export function HqrlResultCharts({ graphs }) {
-  const safe = (graphs?.safe_evacuation_pct || []).map((d) => ({ method: METHOD_SHORT(d.method), value: d.value, std: d.std || 0 }));
-  const unsafe = (graphs?.unsafe_route_pct || []).map((d) => ({ method: METHOD_SHORT(d.method), value: d.value }));
-  const clear = (graphs?.clearance_time_min || []).map((d) => ({ method: METHOD_SHORT(d.method), value: d.value }));
-  const replan = (graphs?.replanning_latency_ms || []).map((d) => ({ method: METHOD_SHORT(d.method), value: d.value }));
-  const radar = safe.map((s, i) => ({
-    method: s.method,
-    safe: s.value,
-    unsafe: unsafe[i]?.value ?? 0,
-    clearance: clear[i]?.value ?? 0,
-    replan: replan[i]?.value ?? 0,
-  }));
+
+/** Mixed chart types for benchmark results. Memoised; animation off. */
+export const HqrlResultCharts = memo(function HqrlResultCharts({ graphs }) {
+  const { safe, unsafe, clear, replan, radar } = useMemo(() => {
+    const safe = (graphs?.safe_evacuation_pct || []).map((d) => ({ method: METHOD_SHORT(d.method), value: d.value, std: d.std || 0 }));
+    const unsafe = (graphs?.unsafe_route_pct || []).map((d) => ({ method: METHOD_SHORT(d.method), value: d.value }));
+    const clear = (graphs?.clearance_time_min || []).map((d) => ({ method: METHOD_SHORT(d.method), value: d.value }));
+    const replan = (graphs?.replanning_latency_ms || []).map((d) => ({ method: METHOD_SHORT(d.method), value: d.value }));
+    const radar = safe.map((s, i) => ({
+      method: s.method,
+      safe: s.value,
+      unsafe: unsafe[i]?.value ?? 0,
+      clearance: clear[i]?.value ?? 0,
+      replan: replan[i]?.value ?? 0,
+    }));
+    return { safe, unsafe, clear, replan, radar };
+  }, [graphs]);
 
   if (!safe.length) return null;
 
@@ -342,13 +346,13 @@ export function HqrlResultCharts({ graphs }) {
         <h3>Safe evacuation % (bars)</h3>
         <ResponsiveContainer width="100%" height="88%">
           <BarChart data={safe} margin={{ top: 8, right: 8, left: 0, bottom: 40 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="rgba(120,200,210,0.15)" />
-            <XAxis dataKey="method" tick={{ fill: "#9eb8c2", fontSize: 9 }} interval={0} angle={-18} textAnchor="end" height={48} />
-            <YAxis tick={{ fill: "#9eb8c2", fontSize: 10 }} unit="%" />
-            <Tooltip contentStyle={tipStyle()} />
-            <Bar dataKey="value" radius={[5, 5, 0, 0]}>
+            <CartesianGrid {...chartTheme.grid} />
+            <XAxis {...chartTheme.axis} dataKey="method" tick={{ fill: "var(--axis)", fontSize: 9 }} interval={0} angle={-18} textAnchor="end" height={48} />
+            <YAxis {...chartTheme.axis} tick={{ fill: "var(--axis)", fontSize: 10 }} unit="%" />
+            <Tooltip {...chartTheme.tooltip} />
+            <Bar isAnimationActive={false} dataKey="value" radius={[5, 5, 0, 0]}>
               {safe.map((_, i) => (
-                <Cell key={i} fill={["#5ec8d8", "#3ecf8e", "#e6b84d", "#7aa7ff", "#b07cff", "#4aa3ff"][i % 6]} />
+                <Cell key={i} fill={chartTheme.series[i % chartTheme.series.length]} />
               ))}
             </Bar>
           </BarChart>
@@ -359,11 +363,11 @@ export function HqrlResultCharts({ graphs }) {
         <h3>Unsafe route % (line)</h3>
         <ResponsiveContainer width="100%" height="88%">
           <LineChart data={unsafe} margin={{ top: 8, right: 8, left: 0, bottom: 40 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="rgba(120,200,210,0.15)" />
-            <XAxis dataKey="method" tick={{ fill: "#9eb8c2", fontSize: 9 }} interval={0} angle={-18} textAnchor="end" height={48} />
-            <YAxis tick={{ fill: "#9eb8c2", fontSize: 10 }} unit="%" />
-            <Tooltip contentStyle={tipStyle()} />
-            <Line type="monotone" dataKey="value" stroke="#e85d6c" strokeWidth={2.5} dot={{ r: 4, fill: "#e85d6c" }} />
+            <CartesianGrid {...chartTheme.grid} />
+            <XAxis {...chartTheme.axis} dataKey="method" tick={{ fill: "var(--axis)", fontSize: 9 }} interval={0} angle={-18} textAnchor="end" height={48} />
+            <YAxis {...chartTheme.axis} tick={{ fill: "var(--axis)", fontSize: 10 }} unit="%" />
+            <Tooltip {...chartTheme.tooltip} />
+            <Line isAnimationActive={false} type="monotone" dataKey="value" stroke="var(--status-sos)" strokeWidth={2.5} dot={{ r: 4, fill: "var(--status-sos)" }} />
           </LineChart>
         </ResponsiveContainer>
       </div>
@@ -372,11 +376,11 @@ export function HqrlResultCharts({ graphs }) {
         <h3>Clearance time (area)</h3>
         <ResponsiveContainer width="100%" height="88%">
           <AreaChart data={clear} margin={{ top: 8, right: 8, left: 0, bottom: 40 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="rgba(120,200,210,0.15)" />
-            <XAxis dataKey="method" tick={{ fill: "#9eb8c2", fontSize: 9 }} interval={0} angle={-18} textAnchor="end" height={48} />
-            <YAxis tick={{ fill: "#9eb8c2", fontSize: 10 }} unit=" min" width={48} />
-            <Tooltip contentStyle={tipStyle()} />
-            <Area type="monotone" dataKey="value" stroke="#5ec8d8" fill="rgba(94,200,216,0.35)" strokeWidth={2} />
+            <CartesianGrid {...chartTheme.grid} />
+            <XAxis {...chartTheme.axis} dataKey="method" tick={{ fill: "var(--axis)", fontSize: 9 }} interval={0} angle={-18} textAnchor="end" height={48} />
+            <YAxis {...chartTheme.axis} tick={{ fill: "var(--axis)", fontSize: 10 }} unit=" min" width={48} />
+            <Tooltip {...chartTheme.tooltip} />
+            <Area isAnimationActive={false} type="monotone" dataKey="value" stroke="var(--accent)" fill="var(--accent)" fillOpacity={0.3} strokeWidth={2} />
           </AreaChart>
         </ResponsiveContainer>
       </div>
@@ -385,11 +389,11 @@ export function HqrlResultCharts({ graphs }) {
         <h3>Replanning time (horizontal bars)</h3>
         <ResponsiveContainer width="100%" height="88%">
           <BarChart data={replan} layout="vertical" margin={{ top: 8, right: 16, left: 8, bottom: 8 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="rgba(120,200,210,0.15)" />
-            <XAxis type="number" tick={{ fill: "#9eb8c2", fontSize: 10 }} unit=" ms" />
-            <YAxis type="category" dataKey="method" width={72} tick={{ fill: "#9eb8c2", fontSize: 9 }} />
-            <Tooltip contentStyle={tipStyle()} />
-            <Bar dataKey="value" fill="#e6b84d" radius={[0, 5, 5, 0]} />
+            <CartesianGrid {...chartTheme.grid} />
+            <XAxis {...chartTheme.axis} type="number" tick={{ fill: "var(--axis)", fontSize: 10 }} unit=" ms" />
+            <YAxis {...chartTheme.axis} type="category" dataKey="method" width={72} tick={{ fill: "var(--axis)", fontSize: 9 }} />
+            <Tooltip {...chartTheme.tooltip} />
+            <Bar isAnimationActive={false} dataKey="value" fill="var(--status-assigned)" radius={[0, 5, 5, 0]} />
           </BarChart>
         </ResponsiveContainer>
       </div>
@@ -398,22 +402,22 @@ export function HqrlResultCharts({ graphs }) {
         <h3>Method radar (safe % vs replan ms)</h3>
         <ResponsiveContainer width="100%" height="88%">
           <RadarChart data={radar}>
-            <PolarGrid stroke="rgba(120,200,210,0.25)" />
-            <PolarAngleAxis dataKey="method" tick={{ fill: "#9eb8c2", fontSize: 9 }} />
-            <PolarRadiusAxis tick={{ fill: "#7a9aa8", fontSize: 9 }} />
-            <Radar name="Safe %" dataKey="safe" stroke="#3ecf8e" fill="#3ecf8e" fillOpacity={0.25} />
-            <Radar name="Replan ms" dataKey="replan" stroke="#e6b84d" fill="#e6b84d" fillOpacity={0.15} />
-            <Legend wrapperStyle={{ fontSize: 11, color: "#9eb8c2" }} />
-            <Tooltip contentStyle={tipStyle()} />
+            <PolarGrid stroke="var(--grid)" />
+            <PolarAngleAxis dataKey="method" tick={{ fill: "var(--axis)", fontSize: 9 }} />
+            <PolarRadiusAxis tick={{ fill: "var(--axis)", fontSize: 9 }} />
+            <Radar isAnimationActive={false} name="Safe %" dataKey="safe" stroke="var(--status-safe)" fill="var(--status-safe)" fillOpacity={0.25} />
+            <Radar isAnimationActive={false} name="Replan ms" dataKey="replan" stroke="var(--status-assigned)" fill="var(--status-assigned)" fillOpacity={0.15} />
+            <Legend {...chartTheme.legend} />
+            <Tooltip {...chartTheme.tooltip} />
           </RadarChart>
         </ResponsiveContainer>
       </div>
     </div>
   );
-}
+});
 
 /** Attractive comparison table for benchmark methods. */
-export function HqrlResultsTable({ table = [] }) {
+export const HqrlResultsTable = memo(function HqrlResultsTable({ table = [] }) {
   if (!table.length) return null;
   const bestSafe = Math.max(...table.map((r) => r.safe_evacuation_pct || 0));
   return (
@@ -452,4 +456,4 @@ export function HqrlResultsTable({ table = [] }) {
       </table>
     </div>
   );
-}
+});

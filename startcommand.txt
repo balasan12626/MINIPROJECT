@@ -1,0 +1,117 @@
+I’ll inspect the project startup files and confirm the exact commands to run the frontend and backend correctly in this workspace.
+
+Searched for regex `venv|python -m venv|uvicorn|npm install|npm run dev|start-backend|start-frontend|frontend` (`**/{README.md,**/*.ps1,**/*.md,backend/**/*.py,frontend/package.json}`), 17 results
+
+Read 
+
+Read 
+
+Read 
+
+I’ve confirmed the repo’s launch scripts; I’m checking whether a local virtual environment already exists so I can give you the exact Windows activation and run commands.
+
+Read 
+
+## ✅ Correct way to run this project
+
+I checked `README.md`, `start-backend.ps1`, and `start-frontend.ps1`. The project expects:
+
+- backend: FastAPI on port 8000
+- frontend: Vite on port 5173
+- Python virtual environment in the repo: .venv
+
+---
+
+## 1) Activate the virtual environment
+
+Open PowerShell in the project root:
+
+```powershell
+cd "D:\fineal mini proejct\1"
+.\.venv\Scripts\Activate.ps1
+```
+
+If PowerShell blocks script execution, run this first:
+
+```powershell
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+.\.venv\Scripts\Activate.ps1
+```
+
+---
+
+## 2) Install Python dependencies and start backend
+
+From the same activated terminal:
+
+```powershell
+pip install -r backend\requirements.txt
+python scripts\train_flood_model.py
+$env:PYTHONPATH = "$PWD"
+python -m uvicorn backend.main:app --host 0.0.0.0 --port 8000 --reload
+```
+
+This matches the repo’s backend startup script in `start-backend.ps1`.
+
+> The backend should run at:
+> http://localhost:8000
+
+---
+
+## 3) Start the frontend in another terminal
+
+Open a second PowerShell window:
+
+```powershell
+cd "D:\fineal mini proejct\1\frontend"
+npm install
+npm run dev
+```
+
+This matches `start-frontend.ps1`.
+
+> The frontend should run at:
+> http://localhost:5173
+
+---
+
+## 4) Quick one-liner version
+
+If you want the full proper run sequence:
+
+```powershell
+cd "D:\fineal mini proejct\1"
+.\.venv\Scripts\Activate.ps1
+pip install -r backend\requirements.txt
+python scripts\train_flood_model.py
+$env:PYTHONPATH = "$PWD"
+Start-Process powershell -ArgumentList '-NoExit', '-Command', 'cd "D:\fineal mini proejct\1"; .\.venv\Scripts\Activate.ps1; python -m uvicorn backend.main:app --host 0.0.0.0 --port 8000 --reload'
+cd "D:\fineal mini proejct\1\frontend"
+npm install
+npm run dev
+```
+
+---
+
+## 5) If you want to use the repo scripts directly
+
+From the repo root:
+
+```powershell
+cd "D:\fineal mini proejct\1"
+.\.venv\Scripts\Activate.ps1
+.\start-backend.ps1
+```
+
+Then in another terminal:
+
+```powershell
+cd "D:\fineal mini proejct\1"
+.\.venv\Scripts\Activate.ps1
+.\start-frontend.ps1
+```
+
+If you want, I can also give you the exact commands for:
+- running only the backend
+- running only the frontend
+- checking whether MongoDB is required first

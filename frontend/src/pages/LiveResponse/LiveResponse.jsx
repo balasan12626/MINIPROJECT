@@ -51,12 +51,21 @@ export default function LiveResponse() {
 
   return (
     <div className="page">
-      <div className="status-row">
+      <section className="page-hero">
+        <div>
+          <p className="eyebrow">Coordination desk</p>
+          <h2 className="page-title">Response & Evacuation</h2>
+          <p className="page-lead">
+            Review incidents, approve policy actions, dispatch SOS, and watch shelter / team assignment on the live map.
+          </p>
+        </div>
+      </section>
+      <div className="status-row status-bar">
         <span className="badge live">LIVE RESPONSE & EVACUATION</span>
         <span className="badge">Policy: {policy.action || "—"}</span>
       </div>
       <div className="grid-2">
-        <div className="panel">
+        <div className="panel glass-panel">
           <h2>ACTIVE INCIDENTS</h2>
           {!(incidents.length || incident.incident_id) ? <div className="unavailable">DATA UNAVAILABLE</div> : (
             <>

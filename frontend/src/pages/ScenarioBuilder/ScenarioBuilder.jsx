@@ -1,6 +1,17 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { fetchScenarios, resetSimulation, startSimulation } from "../../services/api.js";
+import { fetchDams, fetchScenarios, startSimulation } from "../../services/api.js";
 import FeatureToggles, { DEFAULT_FEATURES } from "../../components/FeatureToggles.jsx";
+import { useScenario } from "../../state/ScenarioContext.jsx";
+
+/** Maps a real dam's fill % onto this scenario engine's Yamuna/Hathnikund
+ * dam-stage range (danger_level_m=205.8, scenario defaults ~199-206.5) so a
+ * real dam selection genuinely drives the simulated dam stage without
+ * pushing it outside the engine's valid/consistent range. Documented
+ * mapping, not a hidden fudge: dam_level = 195 + (fill_pct/100) * 15. */
+function damLevelFromFillPct(pct) {
+  const clamped = Math.max(0, Math.min(150, Number(pct) || 0));
+  return Number((195 + (clamped / 100) * 15).toFixed(2));
+}
 
 const FALLBACK_NUMERIC = {
   rainfall_intensity: 55,
@@ -183,8 +194,49 @@ export default function ScenarioBuilder({ onStarted }) {
   const [launching, setLaunching] = useState(false);
   const [pageLoading, setPageLoading] = useState(true);
   const [ready, setReady] = useState(false);
+  const [dams, setDams] = useState([]);
+  const [selectedDamId, setSelectedDamId] = useState("");
   const launchLock = useRef(false);
+  const unified = useScenario();
+  const appliedRef = useRef(null);
   const current = useMemo(() => scenarios.find((s) => s.id === selected), [scenarios, selected]);
+  const selectedDam = useMemo(() => dams.find((d) => d.id === selectedDamId), [dams, selectedDamId]);
+
+  // Unified scenario -> this section's engine scenario + param overrides.
+  // Runs once per selection (keyed on revision) so manual edits afterwards
+  // are never clobbered.
+  useEffect(() => {
+    if (!unified?.scenario || !ready || !scenarios.length) return;
+    const key = `${unified.activeId}:${unified.revision}`;
+    if (appliedRef.current === key) return;
+    appliedRef.current = key;
+    const target = scenarios.find((s) => s.id === unified.scenario.sim?.scenario);
+    if (!target) return;
+    selectScenario(target);
+    const overrides = unified.scenario.sim?.params || {};
+    if (Object.keys(overrides).length) {
+      setParams((p) => ({ ...p, ...overrides }));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [unified?.activeId, unified?.revision, ready, scenarios.length]);
+
+  useEffect(() => {
+    let alive = true;
+    fetchDams()
+      .then((d) => alive && Array.isArray(d?.dams) && setDams(d.dams))
+      .catch(() => {});
+    return () => {
+      alive = false;
+    };
+  }, []);
+
+  function selectDamForScenario(damId) {
+    setSelectedDamId(damId);
+    const dam = dams.find((d) => d.id === damId);
+    if (dam) {
+      setParams((p) => ({ ...p, dam_level: damLevelFromFillPct(dam.fill_percentage) }));
+    }
+  }
 
   function applyScenarioList(list, note = "") {
     setScenarios(list);
@@ -230,6 +282,12 @@ export default function ScenarioBuilder({ onStarted }) {
     if (!scenario) return;
     const defaults = scenario.defaults || {};
     const nextParams = paramsFromDefaults(defaults);
+    // Keep an active dam selection driving dam_level even after switching
+    // scenario cards, so picking Heavy Rainfall etc. doesn't silently discard it.
+    if (selectedDamId) {
+      const dam = dams.find((d) => d.id === selectedDamId);
+      if (dam) nextParams.dam_level = damLevelFromFillPct(dam.fill_percentage);
+    }
     const nextCitizens = roster(defaults.sos_count ?? nextParams.sos_count ?? 10);
     setSelected(scenario.id);
     setParams(nextParams);
@@ -295,7 +353,8 @@ export default function ScenarioBuilder({ onStarted }) {
       setLaunching(true);
       setError("");
       sessionStorage.removeItem("flood_run_theater");
-      await resetSimulation().catch(() => {});
+      // engine.start() already fully resets prior run state before launching —
+      // calling resetSimulation() first only added a redundant round trip.
       const state = await startSimulation({
         scenario: selected,
         ...params,
@@ -308,6 +367,9 @@ export default function ScenarioBuilder({ onStarted }) {
         scenario: selected,
         title: current?.title,
         features,
+        dam: selectedDam
+          ? { id: selectedDam.id, name: selectedDam.name, lat: selectedDam.lat, lon: selectedDam.lon, state: selectedDam.state, river: selectedDam.river }
+          : null,
       });
       window.setTimeout(() => {
         document.getElementById("sim-execution")?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -334,33 +396,47 @@ export default function ScenarioBuilder({ onStarted }) {
 
   return (
     <div className="page sim-builder">
-      <div className="status-row">
-        <h2 style={{ margin: 0 }}>1 · CHOOSE SCENARIO & FILL DETAILS</h2>
+      <div className="status-row builder-head">
+        <div>
+          <p className="eyebrow">Step 1 of 3</p>
+          <h2 className="section-title">Choose scenario & fill details</h2>
+        </div>
         <span className="badge sim">SIMULATION MODE</span>
       </div>
       <p className="hint">
-        Step 1: click a scenario to fill rainfall, river/dam water, roads, SOS. Step 2: set feature radios ON/OFF.
-        Step 3: click <b>RUN SCENARIO</b> — fresh output appears below (old run is cleared). Below the map you also get
-        the <b>IEEE HQRL</b> live research panel (dynamic replan + paper benchmark).
+        Pick a scenario to auto-fill rainfall, river/dam stage, roads, and SOS. Set feature radios ON/OFF, then
+        <b> RUN SCENARIO</b>. Output clears the previous run. IEEE HQRL research tools appear under the map.
       </p>
       <div className="grid-2">
         <div className="panel">
           <h2>SCENARIO</h2>
-          <div className="form-grid">
+          <div className="form-grid scenario-pick-grid">
             {scenarios.map((s) => (
               <button
                 key={s.id}
                 type="button"
-                className={selected === s.id ? "primary" : ""}
+                className={`scenario-pick ${selected === s.id ? "active" : ""}`}
                 disabled={launching}
                 onClick={() => selectScenario(s)}
               >
-                {s.title}
+                <strong>{s.title}</strong>
+                <span>{s.story || s.id}</span>
               </button>
             ))}
           </div>
           <h3 style={{ marginTop: 16 }}>ENVIRONMENT DETAILS</h3>
           <div className="form-grid">
+            <label>
+              Dam (drives dam/river stage)
+              <select value={selectedDamId} onChange={(e) => selectDamForScenario(e.target.value)} disabled={launching}>
+                <option value="">— None (use manual dam level below) —</option>
+                {dams.map((d) => (
+                  <option key={d.id} value={d.id}>
+                    {d.name} · {d.state}
+                  </option>
+                ))}
+              </select>
+            </label>
             {Object.entries(params).map(([k, v]) => (
               <label key={k}>
                 {PARAM_LABELS[k] || k.replaceAll("_", " ")}
@@ -368,7 +444,11 @@ export default function ScenarioBuilder({ onStarted }) {
                   type="number"
                   step="0.01"
                   value={v}
-                  onChange={(e) => setParams({ ...params, [k]: Number(e.target.value) })}
+                  onChange={(e) => {
+                    const next = Number(e.target.value);
+                    setParams({ ...params, [k]: next });
+                    unified?.patchInputs({ [k]: next });
+                  }}
                 />
               </label>
             ))}
@@ -397,6 +477,9 @@ export default function ScenarioBuilder({ onStarted }) {
           <h2>LOADED FOR: {current?.title || "—"}</h2>
           <p>{current?.story || "Select a scenario above."}</p>
           <div className="scenario-preview">
+            {selectedDam ? (
+              <div className="metric"><span>Dam scenario</span><b>{selectedDam.name} ({selectedDam.fill_percentage}% full)</b></div>
+            ) : null}
             <div className="metric"><span>Rainfall</span><b>{params.rainfall_intensity} mm</b></div>
             <div className="metric"><span>River water</span><b>{params.river_level} m</b></div>
             <div className="metric"><span>Dam water</span><b>{params.dam_level} m</b></div>
@@ -414,7 +497,10 @@ export default function ScenarioBuilder({ onStarted }) {
       <FeatureToggles features={features} onChange={setFeatures} />
       <div className="panel">
         <h2>SOS QUEUE — EDIT BEFORE RUN (CRUD)</h2>
-        <p className="hint">{citizens.length} citizens (default 10). Add / edit / delete rows. Min 0, no upper limit. Then Run.</p>
+        <p className="hint">
+          {citizens.length} citizens (default 10). Add / edit / delete rows. Min 0, no upper limit. Then Run.
+          {" "}Scenario region: <b>Delhi NCR — Yamuna floodplain</b> (lat ~28.5–28.7, lon ~77.1–77.3) — keep SOS points inside this area so the map, route, and shelter assignments stay coherent.
+        </p>
         <div className="actions" style={{ marginBottom: 10 }}>
           <button type="button" className="primary" onClick={addCitizen}>Add person</button>
           <button type="button" onClick={resetDefaultTen}>Load default 10</button>
@@ -510,7 +596,7 @@ export default function ScenarioBuilder({ onStarted }) {
             <ul className="pdf-overlay-steps">
               <li className="on">Reset prior run</li>
               <li className="on">Load environment + SOS queue</li>
-              <li className="on">Start Random Forest / XGBoost</li>
+              <li className="on">Run flood ML inference (active model)</li>
               <li>Scroll to live output below</li>
             </ul>
             <p className="hint" style={{ marginTop: 12 }}>

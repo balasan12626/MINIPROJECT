@@ -47,7 +47,7 @@ async def connect() -> None:
     global _client, _db, _mongo_ok, _mongo_error
     settings = get_settings()
     try:
-        _client = AsyncIOMotorClient(settings.mongodb_uri, serverSelectionTimeoutMS=2500)
+        _client = AsyncIOMotorClient(settings.mongodb_uri, serverSelectionTimeoutMS=2500, tz_aware=True)
         await _client.admin.command("ping")
         _db = _client[settings.database_name]
         await ensure_indexes(_db)

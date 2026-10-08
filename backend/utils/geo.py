@@ -52,12 +52,14 @@ def haversine_km(lat1: float, lon1: float, lat2: float, lon2: float) -> float:
 
 
 def risk_category(probability: float | None) -> str | None:
+    from backend.thresholds import SEVERITY_CRITICAL, SEVERITY_HIGH, SEVERITY_MODERATE
+
     if probability is None:
         return None
-    if probability >= 0.70:
+    if probability >= SEVERITY_CRITICAL:
         return "CRITICAL"
-    if probability >= 0.50:
+    if probability >= SEVERITY_HIGH:
         return "HIGH"
-    if probability >= 0.35:
+    if probability >= SEVERITY_MODERATE:
         return "MODERATE"
     return "LOW"

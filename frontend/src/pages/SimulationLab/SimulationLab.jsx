@@ -1,82 +1,65 @@
-import { useEffect, useState } from "react";
-import HqrlDemo from "../HqrlDemo/HqrlDemo.jsx";
-import ScenarioBuilder from "../ScenarioBuilder/ScenarioBuilder.jsx";
-import SimulationExecution from "../SimulationExecution/SimulationExecution.jsx";
-import IeeeHqrlEmbed from "../../components/IeeeHqrlEmbed.jsx";
-import { AgentExecutionTrace } from "../../components/DataSourceBadge.jsx";
+import { useEffect, useRef } from "react";
+import ScenarioPicker from "../../components/scenario/ScenarioPicker.jsx";
+import ScenarioInputs from "../../components/scenario/ScenarioInputs.jsx";
+import RunScenarioBar from "../../components/scenario/RunScenarioBar.jsx";
+import ScenarioOutputs from "../../components/scenario/ScenarioOutputs.jsx";
+import { ScenarioProvider, useScenario } from "../../state/ScenarioContext.jsx";
 
-/** /simulation — Scenario Lab (classic + IEEE) and dedicated HQRL demo tab. */
-export default function SimulationLab() {
-  const [tab, setTab] = useState("scenario"); // scenario | hqrl
-  const [runMeta, setRunMeta] = useState(null);
+/** /simulation — one page, one scenario, one run button.
+ *
+ * Replaces the old three-section switcher (Dam Monitor / Scenario Lab / IEEE
+ * HQRL) and its three separate run buttons. The page is now a straight
+ * top-to-bottom flow:
+ *
+ *   pick scenario -> review/edit inputs -> RUN SCENARIO -> results
+ *
+ * Nothing runs on mount. The only load-time request is the dam registry that
+ * populates the dam selector (see ScenarioProvider). */
+function SimulationLabInner() {
+  const { running, hasResults } = useScenario();
+  const wasRunning = useRef(false);
 
-  // After RUN SCENARIO, scroll output into view then soft-focus IEEE HQRL graph
+  // Scroll to the results once a run finishes (not while it is still going).
   useEffect(() => {
-    if (!runMeta?.runId) return undefined;
-    const t1 = window.setTimeout(() => {
-      document.getElementById("sim-execution")?.scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 80);
-    const t2 = window.setTimeout(() => {
-      document.getElementById("ieee-hqrl-panel")?.scrollIntoView({ behavior: "smooth", block: "nearest" });
-    }, 900);
-    return () => {
-      window.clearTimeout(t1);
-      window.clearTimeout(t2);
-    };
-  }, [runMeta?.runId]);
+    if (wasRunning.current && !running && hasResults) {
+      const t = window.setTimeout(() => {
+        document.getElementById("scenario-output")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 120);
+      wasRunning.current = running;
+      return () => window.clearTimeout(t);
+    }
+    wasRunning.current = running;
+    return undefined;
+  }, [running, hasResults]);
 
   return (
     <div className="simulation-lab">
-      <div className="sim-mode-tabs" role="tablist" aria-label="Simulation modes">
-        <button
-          type="button"
-          role="tab"
-          aria-selected={tab === "scenario"}
-          className={tab === "scenario" ? "active" : ""}
-          onClick={() => setTab("scenario")}
-        >
-          Scenario Lab
-        </button>
-        <button
-          type="button"
-          role="tab"
-          aria-selected={tab === "hqrl"}
-          className={tab === "hqrl" ? "active" : ""}
-          onClick={() => setTab("hqrl")}
-        >
-          IEEE HQRL Demo
-        </button>
-      </div>
+      <section className="page-hero page-hero-inline">
+        <div>
+          <p className="eyebrow">Pick a scenario · edit the inputs · run once</p>
+          <h2 className="page-title">AI Dam Monitoring &amp; Disaster Simulation</h2>
+          <p className="page-lead">
+            One scenario fills every input below. One RUN SCENARIO click drives the reservoir water-balance model,
+            the flood/evacuation engine and the IEEE HQRL benchmark, and every result on this page comes from that
+            run.
+          </p>
+        </div>
+      </section>
 
-      {tab === "hqrl" ? (
-        <HqrlDemo />
-      ) : (
-        <>
-          <ScenarioBuilder onStarted={setRunMeta} />
-          <div className="page" style={{ paddingTop: 0 }}>
-            <AgentExecutionTrace mode="simulation" />
-          </div>
-          <div id="sim-execution" className="sim-output-anchor">
-            {runMeta ? (
-              <SimulationExecution key={runMeta.runId} runMeta={runMeta} />
-            ) : (
-              <div className="page">
-                <div className="panel sim-output-empty">
-                  <h2>2 · SCENARIO OUTPUT</h2>
-                  <p className="hint">
-                    Select a scenario, fill rainfall / river / dam details, set feature radios ON or OFF, then click
-                    <b> RUN SCENARIO</b>. Live model prediction, water levels, map, and dispatch appear here — one run at a
-                    time. IEEE HQRL research tools below (live graph is <b>drag-and-drop</b>).
-                  </p>
-                </div>
-                <div id="ieee-hqrl-panel">
-                  <IeeeHqrlEmbed sim={null} runMeta={null} />
-                </div>
-              </div>
-            )}
-          </div>
-        </>
-      )}
+      <div className="page sim-flow">
+        <ScenarioPicker />
+        <ScenarioInputs />
+        <RunScenarioBar />
+        <ScenarioOutputs />
+      </div>
     </div>
+  );
+}
+
+export default function SimulationLab() {
+  return (
+    <ScenarioProvider>
+      <SimulationLabInner />
+    </ScenarioProvider>
   );
 }

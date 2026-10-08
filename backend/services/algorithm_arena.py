@@ -7,10 +7,32 @@ from typing import Any
 
 import networkx as nx
 
-from backend.ml.inference import dual_model_view, predict_live
-from backend.services.route_engine import _nearest_node, build_graph, path_payload
+from backend.ml.inference import dual_model_view, predict_live, predict_peak_level_v2
+from backend.services.priority import _age, is_child
+from backend.services.route_engine import _nearest_node, build_graph, path_payload, travel_minutes
 from backend.services.seed import GRAPH_NODES, ROADS, SHELTERS
+from backend.thresholds import (
+    CHILD_MAX_AGE,
+    MODEL_GAP_MAX,
+    PHYSICS_DIVERGENCE_MAX,
+    SEVERITY_MODERATE,
+    auto_threshold,
+)
 from backend.utils.geo import haversine_km, jsonable
+
+
+def _first_number(*values: Any, default: float) -> float:
+    """First finite numeric value, ignoring None/blank (0.0 is a valid reading)."""
+    for v in values:
+        if v is None or v == "":
+            continue
+        try:
+            f = float(v)
+        except (TypeError, ValueError):
+            continue
+        if math.isfinite(f):
+            return f
+    return float(default)
 
 
 # —— Policy rules (explainable decision table) ————————————————————————————————
@@ -18,19 +40,19 @@ from backend.utils.geo import haversine_km, jsonable
 POLICY_RULES = [
     {
         "id": "R1_MODEL_DISAGREE",
-        "when": "RF–XGBoost gap ≥ 15%",
+        "when": f"RF–XGBoost gap ≥ {MODEL_GAP_MAX:.0%} or models straddle the auto threshold",
         "then": "HOLD auto-dispatch",
         "severity": "critical",
     },
     {
         "id": "R2_PHYSICS_ML_DIVERGE",
-        "when": "Physics twin vs ML gap ≥ 20%",
+        "when": f"Physics twin vs ML gap ≥ {PHYSICS_DIVERGENCE_MAX:.0%}",
         "then": "HOLD + transfer warning",
         "severity": "critical",
     },
     {
         "id": "R3_CHILD_OR_CHEST",
-        "when": "age < 12 OR water = chest-deep",
+        "when": f"age < {CHILD_MAX_AGE} OR water = chest-deep",
         "then": "PRIORITY rescue",
         "severity": "high",
     },
@@ -202,13 +224,21 @@ def evaluate_policies(
     priority_names: list[str] = []
     reroutes: list[str] = []
 
-    if gap >= 0.15:
+    # Consume the same disagreement verdict the pipeline used to gate the main
+    # action. Re-testing gap here against a different constant is exactly what
+    # let the Arena say FULL_AUTO while the main action said HUMAN_REVIEW.
+    model_disagree = bool(dual.get("disagree")) if "disagree" in dual else gap >= MODEL_GAP_MAX
+    if model_disagree:
         hold = True
-        fired.append({**POLICY_RULES[0], "fired": True, "detail": f"gap={gap:.1%}"})
-    else:
-        fired.append({**POLICY_RULES[0], "fired": False, "detail": f"gap={gap:.1%}"})
+    fired.append(
+        {
+            **POLICY_RULES[0],
+            "fired": model_disagree,
+            "detail": dual.get("hold_reason") or f"gap={gap:.1%}",
+        }
+    )
 
-    if phys_gap >= 0.20:
+    if phys_gap >= PHYSICS_DIVERGENCE_MAX:
         hold = True
         fired.append({**POLICY_RULES[1], "fired": True, "detail": f"|physics−ML|={phys_gap:.1%}"})
     else:
@@ -216,9 +246,8 @@ def evaluate_policies(
 
     child_or_chest = False
     for c in citizens:
-        age = c.get("age")
         note = str(c.get("water_level_note") or "")
-        if (age is not None and int(age) < 12) or "chest" in note.lower():
+        if is_child(_age(c)) or "chest" in note.lower():
             child_or_chest = True
             priority_names.append(c.get("citizen_name") or "?")
     fired.append(
@@ -247,8 +276,8 @@ def evaluate_policies(
         }
     )
 
-    agree = gap < 0.15 and phys_gap < 0.20
-    high = ml >= 0.60 and agree and not hold
+    agree = (not model_disagree) and phys_gap < PHYSICS_DIVERGENCE_MAX
+    high = ml >= auto_threshold() and agree and not hold
     fired.append(
         {
             **POLICY_RULES[4],
@@ -256,7 +285,7 @@ def evaluate_policies(
             "detail": f"ML P={ml:.1%} agree={agree}",
         }
     )
-    medium = 0.35 <= ml < 0.60
+    medium = SEVERITY_MODERATE <= ml < auto_threshold()
     fired.append(
         {
             **POLICY_RULES[5],
@@ -265,7 +294,7 @@ def evaluate_policies(
         }
     )
 
-    if hold or ml < 0.35:
+    if hold or ml < SEVERITY_MODERATE:
         autonomy = "MANUAL_ONLY"
         autonomy_note = "Low confidence or policy HOLD — operator must approve."
     elif medium and not high:
@@ -319,8 +348,11 @@ def run_path_algorithms(
         ],
         "distance_km": round(greedy_km, 3),
         "cost": round(greedy_km, 4),
-        "travel_time_min": round(greedy_km / 0.35 * 6, 2),
+        "travel_time_min": round(travel_minutes(greedy_km), 2),
         "roads": [],
+        # A straight line is not a drivable road path, so it can never be the
+        # recommended route — it is shown only as a lower bound.
+        "drivable": False,
     }
 
     people = int(citizen.get("people") or 1)
@@ -361,24 +393,45 @@ def run_algorithm_arena(sim_state: dict[str, Any] | None = None) -> dict[str, An
     hist = st.get("history") or []
     last = hist[-1] if hist else {}
 
-    rain = float(
-        last.get("rainfall_intensity")
-        or params.get("rainfall_intensity")
-        or pipe.get("weather", {}).get("rainfall_24h_mm")
-        or 55
+    # Live tick values first. The history rows and the pipeline snapshot use
+    # keys `rainfall_mm` / `river_m` / `dam_m`; reading `rainfall_intensity`
+    # and `rainfall_24h_mm` here always missed, so the Arena silently scored
+    # the static scenario seed and never saw live rain or operator overrides.
+    weather = pipe.get("weather") or {}
+    river_snap = pipe.get("river") or {}
+    dam_snap = pipe.get("dam") or {}
+    rain = _first_number(
+        last.get("rainfall_mm"),
+        weather.get("rainfall_mm"),
+        weather.get("rainfall_24h_mm"),
+        params.get("rainfall_intensity"),
+        default=55.0,
     )
-    river = float(last.get("river_level") or params.get("river_level") or pipe.get("river", {}).get("level_m") or 204.2)
-    dam = float(last.get("dam_level") or params.get("dam_level") or pipe.get("dam", {}).get("level_m") or 199.0)
+    river = _first_number(
+        last.get("river_m"), river_snap.get("value_m"), river_snap.get("level_m"), params.get("river_level"), default=204.2
+    )
+    dam = _first_number(
+        last.get("dam_m"), dam_snap.get("value_m"), dam_snap.get("level_m"), params.get("dam_level"), default=199.0
+    )
 
-    ml = predict_live(rain)
-    dual = dual_model_view(rain)
-    physics = physics_twin(rain, river_level=river, dam_level=dam)
-
+    # Canonical ML result: reuse the pipeline's already-computed prediction for
+    # this run so the Arena and the V1 cross-check can never show different
+    # RF/XGB values. Only infer locally when no pipeline snapshot exists.
+    pred = pipe.get("prediction") or {}
+    if pred.get("flood_probability") is not None:
+        ml = pred
+        ml_source = "pipeline"
+    else:
+        ml = predict_live(rain)
+        ml_source = "arena_local"
+    dual = pred.get("dual") or dual_model_view(rain)
+    v2 = pred.get("v2") or predict_peak_level_v2(rain)
     ml_p = ml.get("flood_probability")
     if ml_p is None and dual.get("random_forest") is not None:
         ml_p = dual["random_forest"]
 
-    twin_diverge = abs(float(physics["flood_probability"]) - float(ml_p or 0)) >= 0.20
+    physics = physics_twin(rain, river_level=river, dam_level=dam)
+    twin_diverge = abs(float(physics["flood_probability"]) - float(ml_p or 0)) >= PHYSICS_DIVERGENCE_MAX
 
     citizens = list(st.get("citizens") or [])
     if not citizens:
@@ -410,7 +463,7 @@ def run_algorithm_arena(sim_state: dict[str, Any] | None = None) -> dict[str, An
     ordered = sorted(
         citizens,
         key=lambda c: (
-            0 if (c.get("age") is not None and int(c.get("age")) < 12) else 1,
+            0 if is_child(_age(c)) else 1,
             0 if "chest" in str(c.get("water_level_note") or "").lower() else 1,
             -int(c.get("people") or 1),
         ),
@@ -441,6 +494,10 @@ def run_algorithm_arena(sim_state: dict[str, Any] | None = None) -> dict[str, An
             roads_used = set(route.get("roads") or [])
             methods[m]["blocked_hits"] += len(roads_used & blocked_ids)
 
+    # Only drivable, flood-aware graph routes that avoid blocked roads can be
+    # recommended. The scoreboard star and the Referee's pick both read
+    # `winner_method` below, so they can never disagree.
+    eligible_methods = {"dijkstra-flood", "astar-flood"}
     scoreboard = []
     for mid, row in methods.items():
         if not row["etas"]:
@@ -455,23 +512,30 @@ def run_algorithm_arena(sim_state: dict[str, Any] | None = None) -> dict[str, An
                 "avg_lives_per_min": round(avg_score, 4),
                 "blocked_roads_used": row["blocked_hits"],
                 "assignments": len(row["etas"]),
+                "eligible": mid in eligible_methods and row["blocked_hits"] == 0,
+                "winner": False,
             }
         )
-    scoreboard.sort(key=lambda x: (-x["avg_lives_per_min"], x["avg_eta_min"]))
+    scoreboard.sort(key=lambda x: (not x["eligible"], -x["avg_lives_per_min"], x["avg_eta_min"]))
+    winner_row = next((r for r in scoreboard if r["eligible"]), None)
+    if winner_row:
+        winner_row["winner"] = True
+    winner_method = (winner_row or {}).get("method")
 
-    # Map polylines: primary citizen before (blue) vs after A* (red)
+    # Map polylines: primary citizen before (blue) vs the WINNING method (red)
     primary = path_runs[0] if path_runs else None
+    after_key = {"astar-flood": "after_astar", "dijkstra-flood": "after_dijkstra"}.get(winner_method or "", "after_astar")
     map_paths = {
         "before": primary.get("before_path") if primary else None,
-        "after": (primary.get("after_astar") or primary.get("after_dijkstra")) if primary else None,
+        "after": (primary.get(after_key) or primary.get("after_astar") or primary.get("after_dijkstra")) if primary else None,
     }
 
     agent_verdict = {
         "flood_risk_agent": f"ML P={float(ml_p or 0):.1%} ({ml.get('model_id') or 'rf'})",
         "physics_agent": physics["message"],
         "rescue_agent": (
-            f"Winner route: {(primary or {}).get('winner', {}).get('label') or 'n/a'} "
-            f"→ {(primary or {}).get('shelter_name') or 'shelter'}"
+            f"Winner: {(winner_row or {}).get('label') or 'n/a'} "
+            f"(best lives/min over {(winner_row or {}).get('assignments', 0)} SOS, no blocked roads)"
         ),
         "shelter_agent": f"{len(shelters)} shelters in play; reroutes={policy['reroute_citizens'] or 'none'}",
         "administrator_agent": (
@@ -492,13 +556,18 @@ def run_algorithm_arena(sim_state: dict[str, Any] | None = None) -> dict[str, An
                 "flood_probability": ml_p,
                 "model_id": ml.get("model_id"),
                 "risk_category": ml.get("risk_category"),
+                "source": ml_source,
+                "probability_source": ml.get("probability_source"),
                 "dual": dual,
+                "v2": v2,
             },
             "physics": physics,
             "twin_diverge": twin_diverge,
             "policy": policy,
             "path_runs": path_runs,
             "scoreboard": scoreboard,
+            "winner_method": winner_method,
+            "winner_label": (winner_row or {}).get("label"),
             "map_paths": map_paths,
             "agent_verdict": agent_verdict,
             "pitch": (

@@ -92,23 +92,31 @@ export default function RescueRoute() {
 
   return (
     <div className="page rescue-page">
-      <div className="status-row">
-        <h2 style={{ margin: 0 }}>RESCUE ROUTE</h2>
+      <section className="page-hero">
+        <div>
+          <p className="eyebrow">Field operations</p>
+          <h2 className="page-title">Rescue Route</h2>
+          <p className="page-lead">
+            Administrator → ambulance → shelter handoff with live queue metrics and case tracking.
+          </p>
+        </div>
+      </section>
+      <div className="status-row status-bar">
         <span className="badge live">Admin → Ambulance → Shelter</span>
         <span className="badge">Amb free {desk?.ambulances_free ?? "—"}/{desk?.ambulances_total ?? 10}</span>
-        <span className="badge">Vacant seats {desk?.vacant_total ?? "—"}</span>
+        <span className="badge" title="5 fixed rescue-desk shelters — not the simulation shelter board">Rescue-desk vacant seats {desk?.vacant_total ?? "—"}</span>
         <span className="badge">Queue {desk?.queue_len ?? 0}</span>
       </div>
       {desk?.wait_reason ? <p className="counterfactual">{desk.wait_reason}</p> : null}
       {err ? <div className="unavailable">{err}</div> : null}
 
-      <div className="rescue-tabs" role="tablist">
+      <div className="rescue-tabs segmented-tabs" role="tablist">
         {TABS.map((t) => (
           <button
             key={t.id}
             type="button"
             role="tab"
-            className={tab === t.id ? "primary" : ""}
+            className={tab === t.id ? "active" : ""}
             aria-selected={tab === t.id}
             onClick={() => setTab(t.id)}
           >

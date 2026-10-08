@@ -1,3 +1,4 @@
+import { memo, useMemo } from "react";
 import {
   Area,
   AreaChart,
@@ -10,21 +11,26 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import { chartTheme } from "../config/chartTheme.js";
+
 
 /** Dynamic RL + XAI panels — values only from backend HQRL state. */
-export default function DynamicRlXaiPanel({ state }) {
+function DynamicRlXaiPanel({ state }) {
   const rl = state?.rl_learning || {};
   const xai = state?.xai || {};
   const cands = state?.candidates || [];
   const mode = state?.data_mode || {};
   const bars = xai.feature_bars || [];
-  const hist = (rl.reward_history || []).map((v, i) => ({ ep: i + 1, reward: Number(v) }));
-  const candRows = cands.map((c) => ({
-    name: c.id,
-    score: Number(c.ppo_score) || 0,
-    ok: c.qubo_pass || c.status === "FEASIBLE" || c.status === "SELECTED",
-  }));
-  const tip = { background: "#0c1c24", border: "1px solid #3a6a78", fontSize: 12, borderRadius: 8 };
+  const hist = useMemo(() => (rl.reward_history || []).map((v, i) => ({ ep: i + 1, reward: Number(v) })), [rl.reward_history]);
+  const candRows = useMemo(
+    () =>
+      cands.map((c) => ({
+        name: c.id,
+        score: Number(c.ppo_score) || 0,
+        ok: c.qubo_pass || c.status === "FEASIBLE" || c.status === "SELECTED",
+      })),
+    [cands]
+  );
 
   return (
     <div className="hqrl-panel">
@@ -52,11 +58,11 @@ export default function DynamicRlXaiPanel({ state }) {
             {hist.length ? (
               <ResponsiveContainer width="100%" height="100%">
                 <AreaChart data={hist} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(120,200,210,0.12)" />
-                  <XAxis dataKey="ep" tick={{ fill: "#9eb8c2", fontSize: 10 }} />
-                  <YAxis tick={{ fill: "#9eb8c2", fontSize: 10 }} />
-                  <Tooltip contentStyle={tip} />
-                  <Area type="monotone" dataKey="reward" stroke="#5ec8d8" fill="rgba(94,200,216,0.28)" strokeWidth={2} />
+                  <CartesianGrid {...chartTheme.grid} />
+                  <XAxis {...chartTheme.axis} dataKey="ep" tick={{ fill: "var(--axis)", fontSize: 10 }} />
+                  <YAxis {...chartTheme.axis} tick={{ fill: "var(--axis)", fontSize: 10 }} />
+                  <Tooltip {...chartTheme.tooltip} />
+                  <Area isAnimationActive={false} type="monotone" dataKey="reward" stroke="var(--accent)" fill="var(--accent)" fillOpacity={0.25} strokeWidth={2} />
                 </AreaChart>
               </ResponsiveContainer>
             ) : (
@@ -69,13 +75,13 @@ export default function DynamicRlXaiPanel({ state }) {
             {candRows.length ? (
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={candRows} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(120,200,210,0.12)" />
-                  <XAxis dataKey="name" tick={{ fill: "#9eb8c2", fontSize: 10 }} />
-                  <YAxis tick={{ fill: "#9eb8c2", fontSize: 10 }} />
-                  <Tooltip contentStyle={tip} />
-                  <Bar dataKey="score" radius={[4, 4, 0, 0]}>
+                  <CartesianGrid {...chartTheme.grid} />
+                  <XAxis {...chartTheme.axis} dataKey="name" tick={{ fill: "var(--axis)", fontSize: 10 }} />
+                  <YAxis {...chartTheme.axis} tick={{ fill: "var(--axis)", fontSize: 10 }} />
+                  <Tooltip {...chartTheme.tooltip} />
+                  <Bar isAnimationActive={false} dataKey="score" radius={[4, 4, 0, 0]}>
                     {candRows.map((c, i) => (
-                      <Cell key={i} fill={c.ok ? "#3ecf8e" : "#e85d6c"} />
+                      <Cell key={i} fill={c.ok ? "var(--status-safe)" : "var(--status-sos)"} />
                     ))}
                   </Bar>
                 </BarChart>
@@ -105,13 +111,13 @@ Computed: ${xai.computed_at || "—"}`}
             {bars.length ? (
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={bars} layout="vertical" margin={{ top: 4, right: 12, left: 8, bottom: 4 }}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(120,200,210,0.12)" />
-                  <XAxis type="number" tick={{ fill: "#9eb8c2", fontSize: 10 }} />
-                  <YAxis type="category" dataKey="feature" width={120} tick={{ fill: "#9eb8c2", fontSize: 9 }} />
-                  <Tooltip contentStyle={tip} />
-                  <Bar dataKey="contribution" radius={[0, 4, 4, 0]}>
+                  <CartesianGrid {...chartTheme.grid} />
+                  <XAxis {...chartTheme.axis} type="number" tick={{ fill: "var(--axis)", fontSize: 10 }} />
+                  <YAxis {...chartTheme.axis} type="category" dataKey="feature" width={120} tick={{ fill: "var(--axis)", fontSize: 9 }} />
+                  <Tooltip {...chartTheme.tooltip} />
+                  <Bar isAnimationActive={false} dataKey="contribution" radius={[0, 4, 4, 0]}>
                     {bars.map((b, i) => (
-                      <Cell key={i} fill={b.contribution >= 0 ? "#3ecf8e" : "#e85d6c"} />
+                      <Cell key={i} fill={b.contribution >= 0 ? "var(--status-safe)" : "var(--status-sos)"} />
                     ))}
                   </Bar>
                 </BarChart>
@@ -137,3 +143,5 @@ Computed: ${xai.computed_at || "—"}`}
     </div>
   );
 }
+
+export default memo(DynamicRlXaiPanel);

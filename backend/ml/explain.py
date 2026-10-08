@@ -2,13 +2,14 @@
 
 from __future__ import annotations
 
+import math
 from typing import Any
 
 import numpy as np
 import pandas as pd
 
-from backend.ml.features import build_feature_row, feature_columns
-from backend.ml.inference import _active_model, _models, load_models, predict_from_row
+from backend.ml.features import build_feature_row, build_feature_row_v2, feature_columns, feature_columns_v2
+from backend.ml.inference import _active_model, _models, load_models, predict_from_row, get_v2_regressor
 
 
 def _background_row(row: dict[str, Any]) -> dict[str, Any]:
@@ -104,6 +105,59 @@ def explain_prediction(rainfall_24h_mm: float, forecast_daily_mm: list[float] | 
         "bars": bars,
         "features_used": pred.get("features_used"),
         "counterfactual": rain_counterfactual(rainfall_24h_mm, forecast_daily_mm),
+    }
+
+
+def explain_prediction_v2(rainfall_24h_mm: float, forecast_daily_mm: list[float] | None = None, month: int | None = None) -> dict[str, Any]:
+    """TreeSHAP on the v2 LightGBM/XGBoost peak-flood-level regressor — the
+    model actually producing the /predict-v2 number, not the v1 classifier."""
+    reg, meta = get_v2_regressor()
+    if reg is None:
+        return {"available": False, "message": "MODEL UNAVAILABLE", "bars": []}
+    row = build_feature_row_v2(rainfall_24h_mm, forecast_daily_mm, month)
+    numeric, categorical, _ = feature_columns_v2()
+    cols = numeric + categorical
+    frame = pd.DataFrame([{c: row.get(c) for c in cols}])
+    log_target = bool((meta.get("stage1") or {}).get("log_target"))
+    try:
+        pred_val = float(reg.predict(frame)[0])
+    except Exception:  # noqa: BLE001
+        return {"available": False, "message": "PREDICTION FAILED", "bars": []}
+    bars: list[dict[str, Any]] = []
+    method = "unavailable"
+    try:
+        import shap  # type: ignore
+
+        estimator = reg
+        data = frame
+        if hasattr(reg, "named_steps"):
+            steps = list(reg.named_steps.items())
+            estimator = steps[-1][1]
+            prep = reg[:-1]
+            data = prep.transform(frame)
+        explainer = shap.TreeExplainer(estimator)
+        values = explainer.shap_values(data)
+        arr = np.array(values)
+        if arr.ndim == 2:
+            arr = arr[0]
+        names = list(getattr(estimator, "feature_names_in_", None) or cols)[: len(arr)]
+        for feat, val in zip(names, arr):
+            bars.append({"feature": str(feat), "shap_value": round(float(val), 4), "direction": "raises" if float(val) > 0 else "lowers"})
+        bars.sort(key=lambda b: abs(b["shap_value"]), reverse=True)
+        bars = bars[:10]
+        method = f"TreeSHAP ({'log1p target units' if log_target else 'meters'})"
+    except Exception:  # noqa: BLE001
+        bars = []
+        method = "unavailable"
+    if not bars:
+        return {"available": False, "message": "Explanation unavailable for this prediction.", "bars": []}
+    pred_level = math.expm1(pred_val) if log_target else pred_val
+    return {
+        "available": True,
+        "method": method,
+        "model_id": (meta.get("stage1") or {}).get("model"),
+        "predicted_peak_flood_level_m": round(pred_level, 3),
+        "bars": bars,
     }
 
 

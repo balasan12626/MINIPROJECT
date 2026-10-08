@@ -6,7 +6,13 @@ function pct(v) {
   return `${(Number(v) * 100).toFixed(1)}%`;
 }
 
-export default function AlgorithmArena({ enabled = true, onMapPaths }) {
+/** Path contest + policy engine.
+ *
+ * Computed ONCE per run input, not on a timer: the single RUN SCENARIO flow
+ * drives it. `runKey` changes when the run id changes, when the first model
+ * tick lands, or when the set of blocked roads changes — only then is the
+ * arena re-run. The manual re-run lives in a collapsed Advanced panel. */
+export default function AlgorithmArena({ enabled = true, onMapPaths, runKey = "" }) {
   const [arena, setArena] = useState(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
@@ -30,11 +36,11 @@ export default function AlgorithmArena({ enabled = true, onMapPaths }) {
   }, [onMapPaths]);
 
   useEffect(() => {
-    if (!enabled) return undefined;
+    if (!enabled) return;
     run();
-    const id = setInterval(run, 8000);
-    return () => clearInterval(id);
-  }, [enabled, run]);
+    // Deliberately keyed on runKey only — no interval polling.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [enabled, runKey]);
 
   if (!enabled) return null;
 
@@ -48,9 +54,7 @@ export default function AlgorithmArena({ enabled = true, onMapPaths }) {
     <div className="panel arena-panel">
       <div className="status-row">
         <h2 style={{ margin: 0 }}>ALGORITHM ARENA</h2>
-        <button type="button" className="primary" disabled={busy} onClick={run}>
-          {busy ? "Running…" : "Re-run algorithms"}
-        </button>
+        {busy ? <span className="badge sim">Computing…</span> : null}
       </div>
       <p className="hint">
         {arena?.pitch ||
@@ -106,7 +110,7 @@ export default function AlgorithmArena({ enabled = true, onMapPaths }) {
             ))}
             {!rules.length ? (
               <tr>
-                <td colSpan={5}>Run a scenario, then re-run arena.</td>
+                <td colSpan={5}>Run a scenario — the arena computes once per run.</td>
               </tr>
             ) : null}
           </tbody>
@@ -137,11 +141,12 @@ export default function AlgorithmArena({ enabled = true, onMapPaths }) {
             </tr>
           </thead>
           <tbody>
-            {board.map((row, i) => (
-              <tr key={row.method} className={i === 0 ? "arena-winner" : ""}>
+            {board.map((row) => (
+              <tr key={row.method} className={row.winner ? "arena-winner" : ""}>
                 <td>
-                  {i === 0 ? "★ " : ""}
+                  {row.winner ? "★ " : ""}
                   {row.label}
+                  {row.eligible === false ? <small className="hint"> (reference only)</small> : null}
                 </td>
                 <td>{row.avg_eta_min}</td>
                 <td>{row.avg_lives_per_min}</td>
@@ -176,6 +181,16 @@ export default function AlgorithmArena({ enabled = true, onMapPaths }) {
           <b>Administrator:</b> {verdict.administrator_agent || "—"}
         </li>
       </ul>
+      <p className="hint">
+        ★ = the Referee&apos;s pick ({arena?.winner_label || "—"}): best lives/min among drivable, flood-aware routes
+        that use no blocked road. ETAs are road travel time at 25 km/h free-flow, slowed by traffic and flood exposure.
+      </p>
+      <details className="arena-advanced">
+        <summary>Advanced</summary>
+        <button type="button" disabled={busy} onClick={run}>
+          {busy ? "Running…" : "Re-run algorithms now"}
+        </button>
+      </details>
     </div>
   );
 }

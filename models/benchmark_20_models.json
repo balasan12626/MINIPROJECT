@@ -1,0 +1,1273 @@
+{
+  "rules": "T1 test accuracy >= 0.85\n  T2 test balanced accuracy >= 0.85\n  T3 not overfit:   train_bal - test_bal <= 0.05\n  T4 not underfit:  train_bal >= 0.80\n  T5 beats baseline: test_bal > baseline test_bal\n  T6 stable on unseen gauges: |val_bal - test_bal| <= 0.05",
+  "OLD_INDOFLOODS": {
+    "info": {
+      "rows": 4548,
+      "train": 2848,
+      "val": 912,
+      "test": 788,
+      "test_gauges": 31,
+      "test_positive_rate": 0.35152284263959394,
+      "baseline": "always predict majority class (balanced accuracy 0.5)",
+      "baseline_test_acc": 0.648477157360406,
+      "baseline_test_bal": 0.5
+    },
+    "results": [
+      {
+        "model": "01 Logistic Regression",
+        "train": {
+          "acc": 0.6632724719101124,
+          "bal": 0.7205980407242141,
+          "auc": 0.85655930871956
+        },
+        "val": {
+          "acc": 0.41776315789473684,
+          "bal": 0.516745301063477,
+          "auc": 0.4499859733238122
+        },
+        "test": {
+          "acc": 0.4720812182741117,
+          "bal": 0.5731170565253944,
+          "auc": 0.6770330702876077
+        },
+        "gap_train_test_bal": 0.14748098419881972,
+        "tests": {
+          "T1_acc>=85": false,
+          "T2_bal>=85": false,
+          "T3_not_overfit": false,
+          "T4_not_underfit": false,
+          "T5_beats_baseline": true,
+          "T6_stable_unseen": false
+        },
+        "passed": 1,
+        "verdict": "UNDERFIT",
+        "fit_seconds": 0.3,
+        "note": ""
+      },
+      {
+        "model": "02 Ridge Classifier",
+        "train": {
+          "acc": 0.6685393258426966,
+          "bal": 0.7260247865393596,
+          "auc": 0.8546529425579643
+        },
+        "val": {
+          "acc": 0.5252192982456141,
+          "bal": 0.5912397031445258,
+          "auc": 0.595368646553263
+        },
+        "test": {
+          "acc": 0.39720812182741116,
+          "bal": 0.5112542123817531,
+          "auc": 0.6351741824270383
+        },
+        "gap_train_test_bal": 0.2147705741576066,
+        "tests": {
+          "T1_acc>=85": false,
+          "T2_bal>=85": false,
+          "T3_not_overfit": false,
+          "T4_not_underfit": false,
+          "T5_beats_baseline": true,
+          "T6_stable_unseen": false
+        },
+        "passed": 1,
+        "verdict": "UNDERFIT",
+        "fit_seconds": 0.3,
+        "note": ""
+      },
+      {
+        "model": "03 SGD (log-loss)",
+        "train": {
+          "acc": 0.730688202247191,
+          "bal": 0.7202049977999314,
+          "auc": 0.7949568489619185
+        },
+        "val": {
+          "acc": 0.6633771929824561,
+          "bal": 0.6376960546785341,
+          "auc": 0.6647777409400424
+        },
+        "test": {
+          "acc": 0.5647208121827412,
+          "bal": 0.5511420234974955,
+          "auc": 0.6130048676411368
+        },
+        "gap_train_test_bal": 0.1690629743024359,
+        "tests": {
+          "T1_acc>=85": false,
+          "T2_bal>=85": false,
+          "T3_not_overfit": false,
+          "T4_not_underfit": false,
+          "T5_beats_baseline": true,
+          "T6_stable_unseen": false
+        },
+        "passed": 1,
+        "verdict": "UNDERFIT",
+        "fit_seconds": 0.3,
+        "note": ""
+      },
+      {
+        "model": "04 Linear SVM",
+        "train": {
+          "acc": 0.7134831460674157,
+          "bal": 0.7535118763210534,
+          "auc": 0.8568173781121522
+        },
+        "val": {
+          "acc": 0.4868421052631579,
+          "bal": 0.5569304531891561,
+          "auc": 0.5296217898038815
+        },
+        "test": {
+          "acc": 0.5545685279187818,
+          "bal": 0.6061343581990434,
+          "auc": 0.685072802673317
+        },
+        "gap_train_test_bal": 0.14737751812201005,
+        "tests": {
+          "T1_acc>=85": false,
+          "T2_bal>=85": false,
+          "T3_not_overfit": false,
+          "T4_not_underfit": false,
+          "T5_beats_baseline": true,
+          "T6_stable_unseen": true
+        },
+        "passed": 2,
+        "verdict": "UNDERFIT",
+        "fit_seconds": 0.4,
+        "note": ""
+      },
+      {
+        "model": "05 RBF SVM",
+        "train": {
+          "acc": 0.7988061797752809,
+          "bal": 0.7977202970497486,
+          "auc": 0.8753902759668828
+        },
+        "val": {
+          "acc": 0.6260964912280702,
+          "bal": 0.5970441967815154,
+          "auc": 0.6100431001504679
+        },
+        "test": {
+          "acc": 0.6979695431472082,
+          "bal": 0.6472691049616028,
+          "auc": 0.6505754272432478
+        },
+        "gap_train_test_bal": 0.15045119208814572,
+        "tests": {
+          "T1_acc>=85": false,
+          "T2_bal>=85": false,
+          "T3_not_overfit": false,
+          "T4_not_underfit": false,
+          "T5_beats_baseline": true,
+          "T6_stable_unseen": false
+        },
+        "passed": 1,
+        "verdict": "UNDERFIT",
+        "fit_seconds": 1.7,
+        "note": ""
+      },
+      {
+        "model": "06 K-Nearest Neighbors",
+        "train": {
+          "acc": 0.7071629213483146,
+          "bal": 0.7422944960493247,
+          "auc": 0.8478489268254495
+        },
+        "val": {
+          "acc": 0.5866228070175439,
+          "bal": 0.613554869806942,
+          "auc": 0.6586825125602509
+        },
+        "test": {
+          "acc": 0.5139593908629442,
+          "bal": 0.5491992059174691,
+          "auc": 0.5658120624244951
+        },
+        "gap_train_test_bal": 0.19309529013185567,
+        "tests": {
+          "T1_acc>=85": false,
+          "T2_bal>=85": false,
+          "T3_not_overfit": false,
+          "T4_not_underfit": false,
+          "T5_beats_baseline": true,
+          "T6_stable_unseen": false
+        },
+        "passed": 1,
+        "verdict": "UNDERFIT",
+        "fit_seconds": 2.3,
+        "note": ""
+      },
+      {
+        "model": "07 Gaussian Naive Bayes",
+        "train": {
+          "acc": 0.5203651685393258,
+          "bal": 0.5995481086159005,
+          "auc": 0.7525349378986781
+        },
+        "val": {
+          "acc": 0.6842105263157895,
+          "bal": 0.7067710591415675,
+          "auc": 0.7264109561092551
+        },
+        "test": {
+          "acc": 0.4517766497461929,
+          "bal": 0.49960083929719457,
+          "auc": 0.49092527570347655
+        },
+        "gap_train_test_bal": 0.0999472693187059,
+        "tests": {
+          "T1_acc>=85": false,
+          "T2_bal>=85": false,
+          "T3_not_overfit": false,
+          "T4_not_underfit": false,
+          "T5_beats_baseline": false,
+          "T6_stable_unseen": false
+        },
+        "passed": 0,
+        "verdict": "UNDERFIT",
+        "fit_seconds": 0.6,
+        "note": ""
+      },
+      {
+        "model": "08 LDA",
+        "train": {
+          "acc": 0.6945224719101124,
+          "bal": 0.7422550837780711,
+          "auc": 0.8560080768161363
+        },
+        "val": {
+          "acc": 0.41776315789473684,
+          "bal": 0.5178572339394558,
+          "auc": 0.46005457652189435
+        },
+        "test": {
+          "acc": 0.38578680203045684,
+          "bal": 0.5131934975661794,
+          "auc": 0.6315004910029884
+        },
+        "gap_train_test_bal": 0.22906158621189177,
+        "tests": {
+          "T1_acc>=85": false,
+          "T2_bal>=85": false,
+          "T3_not_overfit": false,
+          "T4_not_underfit": false,
+          "T5_beats_baseline": true,
+          "T6_stable_unseen": true
+        },
+        "passed": 2,
+        "verdict": "UNDERFIT",
+        "fit_seconds": 0.3,
+        "note": ""
+      },
+      {
+        "model": "09 QDA",
+        "train": {
+          "acc": 0.5902387640449438,
+          "bal": 0.6707285601293587,
+          "auc": 0.8373452865892999
+        },
+        "val": {
+          "acc": 0.5142543859649122,
+          "bal": 0.5873938435643059,
+          "auc": 0.5390502665068475
+        },
+        "test": {
+          "acc": 0.399746192893401,
+          "bal": 0.5363554155156944,
+          "auc": 0.6178760411736032
+        },
+        "gap_train_test_bal": 0.13437314461366423,
+        "tests": {
+          "T1_acc>=85": false,
+          "T2_bal>=85": false,
+          "T3_not_overfit": false,
+          "T4_not_underfit": false,
+          "T5_beats_baseline": true,
+          "T6_stable_unseen": false
+        },
+        "passed": 1,
+        "verdict": "UNDERFIT",
+        "fit_seconds": 0.3,
+        "note": ""
+      },
+      {
+        "model": "10 Decision Tree",
+        "train": {
+          "acc": 0.8061797752808989,
+          "bal": 0.8217409965905687,
+          "auc": 0.916019468582211
+        },
+        "val": {
+          "acc": 0.5712719298245614,
+          "bal": 0.531669684527301,
+          "auc": 0.49221902017291064
+        },
+        "test": {
+          "acc": 0.6078680203045685,
+          "bal": 0.5620924498576445,
+          "auc": 0.5739083131398052
+        },
+        "gap_train_test_bal": 0.25964854673292415,
+        "tests": {
+          "T1_acc>=85": false,
+          "T2_bal>=85": false,
+          "T3_not_overfit": false,
+          "T4_not_underfit": true,
+          "T5_beats_baseline": true,
+          "T6_stable_unseen": true
+        },
+        "passed": 3,
+        "verdict": "OVERFIT",
+        "fit_seconds": 0.2,
+        "note": ""
+      },
+      {
+        "model": "11 Random Forest",
+        "train": {
+          "acc": 0.776685393258427,
+          "bal": 0.8066433972298033,
+          "auc": 0.9050906617212364
+        },
+        "val": {
+          "acc": 0.5997807017543859,
+          "bal": 0.6108311443217465,
+          "auc": 0.6442375863915738
+        },
+        "test": {
+          "acc": 0.4746192893401015,
+          "bal": 0.5618487145612411,
+          "auc": 0.639844009410302
+        },
+        "gap_train_test_bal": 0.2447946826685622,
+        "tests": {
+          "T1_acc>=85": false,
+          "T2_bal>=85": false,
+          "T3_not_overfit": false,
+          "T4_not_underfit": true,
+          "T5_beats_baseline": true,
+          "T6_stable_unseen": true
+        },
+        "passed": 3,
+        "verdict": "OVERFIT",
+        "fit_seconds": 1.7,
+        "note": ""
+      },
+      {
+        "model": "12 Extra Trees",
+        "train": {
+          "acc": 0.7422752808988764,
+          "bal": 0.7755319981751578,
+          "auc": 0.8718612580073049
+        },
+        "val": {
+          "acc": 0.6820175438596491,
+          "bal": 0.7005534161332279,
+          "auc": 0.712606156435694
+        },
+        "test": {
+          "acc": 0.47588832487309646,
+          "bal": 0.5677866715649219,
+          "auc": 0.5051678947628703
+        },
+        "gap_train_test_bal": 0.20774532661023593,
+        "tests": {
+          "T1_acc>=85": false,
+          "T2_bal>=85": false,
+          "T3_not_overfit": false,
+          "T4_not_underfit": false,
+          "T5_beats_baseline": true,
+          "T6_stable_unseen": false
+        },
+        "passed": 1,
+        "verdict": "UNDERFIT",
+        "fit_seconds": 1.1,
+        "note": ""
+      },
+      {
+        "model": "13 AdaBoost",
+        "train": {
+          "acc": 0.6853932584269663,
+          "bal": 0.7397256797941923,
+          "auc": 0.8600737495377156
+        },
+        "val": {
+          "acc": 0.47149122807017546,
+          "bal": 0.5512126699140547,
+          "auc": 0.4875749152023667
+        },
+        "test": {
+          "acc": 0.44543147208121825,
+          "bal": 0.5368640804821013,
+          "auc": 0.572717895822589
+        },
+        "gap_train_test_bal": 0.20286159931209102,
+        "tests": {
+          "T1_acc>=85": false,
+          "T2_bal>=85": false,
+          "T3_not_overfit": false,
+          "T4_not_underfit": false,
+          "T5_beats_baseline": true,
+          "T6_stable_unseen": true
+        },
+        "passed": 2,
+        "verdict": "UNDERFIT",
+        "fit_seconds": 3.0,
+        "note": ""
+      },
+      {
+        "model": "14 Gradient Boosting",
+        "train": {
+          "acc": 0.7507022471910112,
+          "bal": 0.8051171165334479,
+          "auc": 0.9671811857694704
+        },
+        "val": {
+          "acc": 0.4309210526315789,
+          "bal": 0.5318125015939404,
+          "auc": 0.5125500497309428
+        },
+        "test": {
+          "acc": 0.38071065989847713,
+          "bal": 0.508453022670915,
+          "auc": 0.6224363638932651
+        },
+        "gap_train_test_bal": 0.2966640938625329,
+        "tests": {
+          "T1_acc>=85": false,
+          "T2_bal>=85": false,
+          "T3_not_overfit": false,
+          "T4_not_underfit": true,
+          "T5_beats_baseline": true,
+          "T6_stable_unseen": true
+        },
+        "passed": 3,
+        "verdict": "OVERFIT",
+        "fit_seconds": 4.4,
+        "note": ""
+      },
+      {
+        "model": "15 Hist Gradient Boosting",
+        "train": {
+          "acc": 0.9873595505617978,
+          "bal": 0.9854827868255035,
+          "auc": 0.9985727898759054
+        },
+        "val": {
+          "acc": 0.5921052631578947,
+          "bal": 0.5140139246639973,
+          "auc": 0.4983091479431792
+        },
+        "test": {
+          "acc": 0.6548223350253807,
+          "bal": 0.5495277187082735,
+          "auc": 0.6126092393339315
+        },
+        "gap_train_test_bal": 0.43595506811722995,
+        "tests": {
+          "T1_acc>=85": false,
+          "T2_bal>=85": false,
+          "T3_not_overfit": false,
+          "T4_not_underfit": true,
+          "T5_beats_baseline": true,
+          "T6_stable_unseen": true
+        },
+        "passed": 3,
+        "verdict": "OVERFIT",
+        "fit_seconds": 5.8,
+        "note": ""
+      },
+      {
+        "model": "16 XGBoost",
+        "train": {
+          "acc": 0.8964185393258427,
+          "bal": 0.9190625818277036,
+          "auc": 0.9941518668189168
+        },
+        "val": {
+          "acc": 0.5328947368421053,
+          "bal": 0.5423937160490679,
+          "auc": 0.546642523781592
+        },
+        "test": {
+          "acc": 0.5862944162436549,
+          "bal": 0.5975329749129265,
+          "auc": 0.6352518951302395
+        },
+        "gap_train_test_bal": 0.32152960691477717,
+        "tests": {
+          "T1_acc>=85": false,
+          "T2_bal>=85": false,
+          "T3_not_overfit": false,
+          "T4_not_underfit": true,
+          "T5_beats_baseline": true,
+          "T6_stable_unseen": false
+        },
+        "passed": 2,
+        "verdict": "OVERFIT",
+        "fit_seconds": 2.1,
+        "note": ""
+      },
+      {
+        "model": "17 CatBoost",
+        "train": {
+          "acc": 0.9020365168539326,
+          "bal": 0.9238557618850944,
+          "auc": 0.997126683457374
+        },
+        "val": {
+          "acc": 0.5175438596491229,
+          "bal": 0.5566907245415827,
+          "auc": 0.5434393410012497
+        },
+        "test": {
+          "acc": 0.5,
+          "bal": 0.5574473496435812,
+          "auc": 0.6147004175291599
+        },
+        "gap_train_test_bal": 0.3664084122415132,
+        "tests": {
+          "T1_acc>=85": false,
+          "T2_bal>=85": false,
+          "T3_not_overfit": false,
+          "T4_not_underfit": true,
+          "T5_beats_baseline": true,
+          "T6_stable_unseen": true
+        },
+        "passed": 3,
+        "verdict": "OVERFIT",
+        "fit_seconds": 6.0,
+        "note": ""
+      },
+      {
+        "model": "18 MLP Neural Net",
+        "train": {
+          "acc": 0.7780898876404494,
+          "bal": 0.7774156887834296,
+          "auc": 0.860207373334089
+        },
+        "val": {
+          "acc": 0.6480263157894737,
+          "bal": 0.5925046543061896,
+          "auc": 0.6102675269694728
+        },
+        "test": {
+          "acc": 0.6065989847715736,
+          "bal": 0.5759924265438335,
+          "auc": 0.6128353126523346
+        },
+        "gap_train_test_bal": 0.20142326223959606,
+        "tests": {
+          "T1_acc>=85": false,
+          "T2_bal>=85": false,
+          "T3_not_overfit": false,
+          "T4_not_underfit": false,
+          "T5_beats_baseline": true,
+          "T6_stable_unseen": true
+        },
+        "passed": 2,
+        "verdict": "UNDERFIT",
+        "fit_seconds": 0.6,
+        "note": ""
+      },
+      {
+        "model": "19 Bagged Trees",
+        "train": {
+          "acc": 0.8423455056179775,
+          "bal": 0.8100968300116347,
+          "auc": 0.9242323380385106
+        },
+        "val": {
+          "acc": 0.6162280701754386,
+          "bal": 0.5168039580729897,
+          "auc": 0.46749636581571496
+        },
+        "test": {
+          "acc": 0.6548223350253807,
+          "bal": 0.5437416547153949,
+          "auc": 0.5961624054201078
+        },
+        "gap_train_test_bal": 0.26635517529623975,
+        "tests": {
+          "T1_acc>=85": false,
+          "T2_bal>=85": false,
+          "T3_not_overfit": false,
+          "T4_not_underfit": true,
+          "T5_beats_baseline": true,
+          "T6_stable_unseen": true
+        },
+        "passed": 3,
+        "verdict": "OVERFIT",
+        "fit_seconds": 9.9,
+        "note": ""
+      },
+      {
+        "model": "20 Ensemble RF+XGBoost",
+        "train": {
+          "acc": 0.8985252808988764,
+          "bal": 0.9118679526944766,
+          "auc": 0.9754936656921578
+        },
+        "val": {
+          "acc": 0.6085526315789473,
+          "bal": 0.5745454081762771,
+          "auc": 0.5828160465175589
+        },
+        "test": {
+          "acc": 0.6548223350253807,
+          "bal": 0.6305326146085752,
+          "auc": 0.6584102806841544
+        },
+        "gap_train_test_bal": 0.2813353380859014,
+        "tests": {
+          "T1_acc>=85": false,
+          "T2_bal>=85": false,
+          "T3_not_overfit": false,
+          "T4_not_underfit": true,
+          "T5_beats_baseline": true,
+          "T6_stable_unseen": false
+        },
+        "passed": 2,
+        "verdict": "OVERFIT",
+        "fit_seconds": 4.9,
+        "note": ""
+      }
+    ]
+  },
+  "NEW_CAMELS_IND": {
+    "info": {
+      "train": 100000,
+      "val": 100000,
+      "test": 52994,
+      "test_gauges": 48,
+      "test_positive_rate": 0.05455334484577179,
+      "baseline": "persistence: flood in next 3 days iff flooded today",
+      "baseline_test_acc": 0.9677085368235984,
+      "baseline_test_bal": 0.7651758785993206,
+      "note": "all 20 models fit on the same 100,000-row train sample for a fair comparison"
+    },
+    "results": [
+      {
+        "model": "01 Logistic Regression",
+        "train": {
+          "acc": 0.87723,
+          "bal": 0.8957639506605741,
+          "auc": 0.9631470443249895
+        },
+        "val": {
+          "acc": 0.87412,
+          "bal": 0.8968982053428599,
+          "auc": 0.9629165357819004
+        },
+        "test": {
+          "acc": 0.8741555647809186,
+          "bal": 0.8930302677142299,
+          "auc": 0.9604360365278104
+        },
+        "gap_train_test_bal": 0.0027336829463442402,
+        "tests": {
+          "T1_acc>=85": true,
+          "T2_bal>=85": true,
+          "T3_not_overfit": true,
+          "T4_not_underfit": true,
+          "T5_beats_baseline": true,
+          "T6_stable_unseen": true
+        },
+        "passed": 6,
+        "verdict": "BALANCED",
+        "fit_seconds": 4.1,
+        "note": ""
+      },
+      {
+        "model": "02 Ridge Classifier",
+        "train": {
+          "acc": 0.85356,
+          "bal": 0.8772627902404064,
+          "auc": 0.9491204726799181
+        },
+        "val": {
+          "acc": 0.85736,
+          "bal": 0.8824928021886387,
+          "auc": 0.9515701963792258
+        },
+        "test": {
+          "acc": 0.8561723968751179,
+          "bal": 0.875534275559763,
+          "auc": 0.9445545496926625
+        },
+        "gap_train_test_bal": 0.0017285146806433893,
+        "tests": {
+          "T1_acc>=85": true,
+          "T2_bal>=85": true,
+          "T3_not_overfit": true,
+          "T4_not_underfit": true,
+          "T5_beats_baseline": true,
+          "T6_stable_unseen": true
+        },
+        "passed": 6,
+        "verdict": "BALANCED",
+        "fit_seconds": 2.7,
+        "note": ""
+      },
+      {
+        "model": "03 SGD (log-loss)",
+        "train": {
+          "acc": 0.87433,
+          "bal": 0.8899974696915632,
+          "auc": 0.9606725261799328
+        },
+        "val": {
+          "acc": 0.87284,
+          "bal": 0.8923225648551425,
+          "auc": 0.9596123242268423
+        },
+        "test": {
+          "acc": 0.8690417783145262,
+          "bal": 0.8857626482113743,
+          "auc": 0.9554317000096371
+        },
+        "gap_train_test_bal": 0.004234821480188944,
+        "tests": {
+          "T1_acc>=85": true,
+          "T2_bal>=85": true,
+          "T3_not_overfit": true,
+          "T4_not_underfit": true,
+          "T5_beats_baseline": true,
+          "T6_stable_unseen": true
+        },
+        "passed": 6,
+        "verdict": "BALANCED",
+        "fit_seconds": 3.9,
+        "note": ""
+      },
+      {
+        "model": "04 Linear SVM",
+        "train": {
+          "acc": 0.87871,
+          "bal": 0.8938484877083259,
+          "auc": 0.9624449013535461
+        },
+        "val": {
+          "acc": 0.87808,
+          "bal": 0.8958851299411261,
+          "auc": 0.9624881314320244
+        },
+        "test": {
+          "acc": 0.8797599728271125,
+          "bal": 0.8922458269344604,
+          "auc": 0.9592300808104245
+        },
+        "gap_train_test_bal": 0.0016026607738655052,
+        "tests": {
+          "T1_acc>=85": true,
+          "T2_bal>=85": true,
+          "T3_not_overfit": true,
+          "T4_not_underfit": true,
+          "T5_beats_baseline": true,
+          "T6_stable_unseen": true
+        },
+        "passed": 6,
+        "verdict": "BALANCED",
+        "fit_seconds": 6.0,
+        "note": ""
+      },
+      {
+        "model": "05 RBF SVM",
+        "train": {
+          "acc": 0.8912666666666667,
+          "bal": 0.9299624490258873,
+          "auc": 0.9816391878169148
+        },
+        "val": {
+          "acc": 0.86824,
+          "bal": 0.8910478200130176,
+          "auc": 0.9520230525229022
+        },
+        "test": {
+          "acc": 0.8542287806166736,
+          "bal": 0.870432115652893,
+          "auc": 0.9356052094774007
+        },
+        "gap_train_test_bal": 0.05953033337299429,
+        "tests": {
+          "T1_acc>=85": true,
+          "T2_bal>=85": true,
+          "T3_not_overfit": false,
+          "T4_not_underfit": true,
+          "T5_beats_baseline": true,
+          "T6_stable_unseen": true
+        },
+        "passed": 5,
+        "verdict": "OVERFIT",
+        "fit_seconds": 83.8,
+        "note": "fit on 15,000-row subsample (kernel SVM is O(n^2))"
+      },
+      {
+        "model": "06 K-Nearest Neighbors",
+        "train": {
+          "acc": 0.89206,
+          "bal": 0.9096509172250619,
+          "auc": 0.9696798810788596
+        },
+        "val": {
+          "acc": 0.87126,
+          "bal": 0.8804248958059456,
+          "auc": 0.9422024890386098
+        },
+        "test": {
+          "acc": 0.8660414386534324,
+          "bal": 0.8685306918733228,
+          "auc": 0.9309274364887887
+        },
+        "gap_train_test_bal": 0.04112022535173909,
+        "tests": {
+          "T1_acc>=85": true,
+          "T2_bal>=85": true,
+          "T3_not_overfit": true,
+          "T4_not_underfit": true,
+          "T5_beats_baseline": true,
+          "T6_stable_unseen": true
+        },
+        "passed": 6,
+        "verdict": "BALANCED",
+        "fit_seconds": 63.5,
+        "note": ""
+      },
+      {
+        "model": "07 Gaussian Naive Bayes",
+        "train": {
+          "acc": 0.86,
+          "bal": 0.8687602804268191,
+          "auc": 0.9366637888855089
+        },
+        "val": {
+          "acc": 0.8407,
+          "bal": 0.8684448709475203,
+          "auc": 0.9350919808977762
+        },
+        "test": {
+          "acc": 0.8275465146997774,
+          "bal": 0.8657735076120225,
+          "auc": 0.9300892634365873
+        },
+        "gap_train_test_bal": 0.0029867728147965344,
+        "tests": {
+          "T1_acc>=85": false,
+          "T2_bal>=85": true,
+          "T3_not_overfit": true,
+          "T4_not_underfit": true,
+          "T5_beats_baseline": true,
+          "T6_stable_unseen": true
+        },
+        "passed": 5,
+        "verdict": "BALANCED",
+        "fit_seconds": 2.6,
+        "note": ""
+      },
+      {
+        "model": "08 LDA",
+        "train": {
+          "acc": 0.8697,
+          "bal": 0.882229871395267,
+          "auc": 0.9478144644067112
+        },
+        "val": {
+          "acc": 0.86588,
+          "bal": 0.8826114828637888,
+          "auc": 0.9477377800357039
+        },
+        "test": {
+          "acc": 0.8719666377325735,
+          "bal": 0.8773682250537604,
+          "auc": 0.9404472445703393
+        },
+        "gap_train_test_bal": 0.0048616463415065425,
+        "tests": {
+          "T1_acc>=85": true,
+          "T2_bal>=85": true,
+          "T3_not_overfit": true,
+          "T4_not_underfit": true,
+          "T5_beats_baseline": true,
+          "T6_stable_unseen": true
+        },
+        "passed": 6,
+        "verdict": "BALANCED",
+        "fit_seconds": 3.1,
+        "note": ""
+      },
+      {
+        "model": "09 QDA",
+        "train": {
+          "acc": 0.84893,
+          "bal": 0.8766437887315737,
+          "auc": 0.9380306943820574
+        },
+        "val": {
+          "acc": 0.82852,
+          "bal": 0.8704116814134126,
+          "auc": 0.9313480717401631
+        },
+        "test": {
+          "acc": 0.8096576970977847,
+          "bal": 0.8651134353304831,
+          "auc": 0.9206224282095108
+        },
+        "gap_train_test_bal": 0.011530353401090543,
+        "tests": {
+          "T1_acc>=85": false,
+          "T2_bal>=85": true,
+          "T3_not_overfit": true,
+          "T4_not_underfit": true,
+          "T5_beats_baseline": true,
+          "T6_stable_unseen": true
+        },
+        "passed": 5,
+        "verdict": "BALANCED",
+        "fit_seconds": 3.5,
+        "note": ""
+      },
+      {
+        "model": "10 Decision Tree",
+        "train": {
+          "acc": 0.87835,
+          "bal": 0.9217160348659453,
+          "auc": 0.9751894212970483
+        },
+        "val": {
+          "acc": 0.85497,
+          "bal": 0.8754964577078612,
+          "auc": 0.9163877913881538
+        },
+        "test": {
+          "acc": 0.8597954485413443,
+          "bal": 0.8694647448946281,
+          "auc": 0.9091023581011495
+        },
+        "gap_train_test_bal": 0.05225128997131723,
+        "tests": {
+          "T1_acc>=85": true,
+          "T2_bal>=85": true,
+          "T3_not_overfit": false,
+          "T4_not_underfit": true,
+          "T5_beats_baseline": true,
+          "T6_stable_unseen": true
+        },
+        "passed": 5,
+        "verdict": "OVERFIT",
+        "fit_seconds": 5.2,
+        "note": ""
+      },
+      {
+        "model": "11 Random Forest",
+        "train": {
+          "acc": 0.89991,
+          "bal": 0.9435635667893583,
+          "auc": 0.9870272525114917
+        },
+        "val": {
+          "acc": 0.87974,
+          "bal": 0.9018191636986346,
+          "auc": 0.9665738659571037
+        },
+        "test": {
+          "acc": 0.8853643808733064,
+          "bal": 0.8956986345934362,
+          "auc": 0.9628642616410816
+        },
+        "gap_train_test_bal": 0.04786493219592203,
+        "tests": {
+          "T1_acc>=85": true,
+          "T2_bal>=85": true,
+          "T3_not_overfit": true,
+          "T4_not_underfit": true,
+          "T5_beats_baseline": true,
+          "T6_stable_unseen": true
+        },
+        "passed": 6,
+        "verdict": "BALANCED",
+        "fit_seconds": 41.1,
+        "note": ""
+      },
+      {
+        "model": "12 Extra Trees",
+        "train": {
+          "acc": 0.88692,
+          "bal": 0.9158450044341367,
+          "auc": 0.973278519903139
+        },
+        "val": {
+          "acc": 0.87364,
+          "bal": 0.8951823401599659,
+          "auc": 0.9607210062066791
+        },
+        "test": {
+          "acc": 0.8712118353021097,
+          "bal": 0.8790876715791827,
+          "auc": 0.9506922553790318
+        },
+        "gap_train_test_bal": 0.03675733285495408,
+        "tests": {
+          "T1_acc>=85": true,
+          "T2_bal>=85": true,
+          "T3_not_overfit": true,
+          "T4_not_underfit": true,
+          "T5_beats_baseline": true,
+          "T6_stable_unseen": true
+        },
+        "passed": 6,
+        "verdict": "BALANCED",
+        "fit_seconds": 19.7,
+        "note": ""
+      },
+      {
+        "model": "13 AdaBoost",
+        "train": {
+          "acc": 0.8813,
+          "bal": 0.8973791674240363,
+          "auc": 0.9646914282820331
+        },
+        "val": {
+          "acc": 0.8783,
+          "bal": 0.8966715681499526,
+          "auc": 0.9624709155846893
+        },
+        "test": {
+          "acc": 0.8884213307166849,
+          "bal": 0.8890037784702427,
+          "auc": 0.9602297026686079
+        },
+        "gap_train_test_bal": 0.008375388953793639,
+        "tests": {
+          "T1_acc>=85": true,
+          "T2_bal>=85": true,
+          "T3_not_overfit": true,
+          "T4_not_underfit": true,
+          "T5_beats_baseline": true,
+          "T6_stable_unseen": true
+        },
+        "passed": 6,
+        "verdict": "BALANCED",
+        "fit_seconds": 67.1,
+        "note": ""
+      },
+      {
+        "model": "14 Gradient Boosting",
+        "train": {
+          "acc": 0.89239,
+          "bal": 0.9076438483366819,
+          "auc": 0.9705831437447885
+        },
+        "val": {
+          "acc": 0.88394,
+          "bal": 0.901664020888348,
+          "auc": 0.9662916182885628
+        },
+        "test": {
+          "acc": 0.889817715213043,
+          "bal": 0.8944684189241902,
+          "auc": 0.9624617252486167
+        },
+        "gap_train_test_bal": 0.013175429412491724,
+        "tests": {
+          "T1_acc>=85": true,
+          "T2_bal>=85": true,
+          "T3_not_overfit": true,
+          "T4_not_underfit": true,
+          "T5_beats_baseline": true,
+          "T6_stable_unseen": true
+        },
+        "passed": 6,
+        "verdict": "BALANCED",
+        "fit_seconds": 156.2,
+        "note": ""
+      },
+      {
+        "model": "15 Hist Gradient Boosting",
+        "train": {
+          "acc": 0.90574,
+          "bal": 0.9298859228933645,
+          "auc": 0.9787219419972939
+        },
+        "val": {
+          "acc": 0.89296,
+          "bal": 0.9035700611290126,
+          "auc": 0.9672598130916064
+        },
+        "test": {
+          "acc": 0.9001207683888742,
+          "bal": 0.8914426975691232,
+          "auc": 0.9628370710262837
+        },
+        "gap_train_test_bal": 0.03844322532424127,
+        "tests": {
+          "T1_acc>=85": true,
+          "T2_bal>=85": true,
+          "T3_not_overfit": true,
+          "T4_not_underfit": true,
+          "T5_beats_baseline": true,
+          "T6_stable_unseen": true
+        },
+        "passed": 6,
+        "verdict": "BALANCED",
+        "fit_seconds": 26.9,
+        "note": ""
+      },
+      {
+        "model": "16 XGBoost",
+        "train": {
+          "acc": 0.90314,
+          "bal": 0.9473820581822823,
+          "auc": 0.9910082784368944
+        },
+        "val": {
+          "acc": 0.88464,
+          "bal": 0.9041663242800684,
+          "auc": 0.9676814898200778
+        },
+        "test": {
+          "acc": 0.8873457372532739,
+          "bal": 0.8931611119765024,
+          "auc": 0.962689153667554
+        },
+        "gap_train_test_bal": 0.054220946205779885,
+        "tests": {
+          "T1_acc>=85": true,
+          "T2_bal>=85": true,
+          "T3_not_overfit": false,
+          "T4_not_underfit": true,
+          "T5_beats_baseline": true,
+          "T6_stable_unseen": true
+        },
+        "passed": 5,
+        "verdict": "OVERFIT",
+        "fit_seconds": 15.9,
+        "note": ""
+      },
+      {
+        "model": "17 CatBoost",
+        "train": {
+          "acc": 0.90727,
+          "bal": 0.9367412990190485,
+          "auc": 0.9821339421869829
+        },
+        "val": {
+          "acc": 0.893,
+          "bal": 0.9037130498942538,
+          "auc": 0.9674226551319575
+        },
+        "test": {
+          "acc": 0.897327999396158,
+          "bal": 0.890617624476698,
+          "auc": 0.960921173430813
+        },
+        "gap_train_test_bal": 0.046123674542350446,
+        "tests": {
+          "T1_acc>=85": true,
+          "T2_bal>=85": true,
+          "T3_not_overfit": true,
+          "T4_not_underfit": true,
+          "T5_beats_baseline": true,
+          "T6_stable_unseen": true
+        },
+        "passed": 6,
+        "verdict": "BALANCED",
+        "fit_seconds": 24.2,
+        "note": ""
+      },
+      {
+        "model": "18 MLP Neural Net",
+        "train": {
+          "acc": 0.88314,
+          "bal": 0.9125555139692088,
+          "auc": 0.9744184060663322
+        },
+        "val": {
+          "acc": 0.87382,
+          "bal": 0.8958257896035511,
+          "auc": 0.9631450239643737
+        },
+        "test": {
+          "acc": 0.8647771445824055,
+          "bal": 0.8825294676777669,
+          "auc": 0.9530042101510252
+        },
+        "gap_train_test_bal": 0.0300260462914419,
+        "tests": {
+          "T1_acc>=85": true,
+          "T2_bal>=85": true,
+          "T3_not_overfit": true,
+          "T4_not_underfit": true,
+          "T5_beats_baseline": true,
+          "T6_stable_unseen": true
+        },
+        "passed": 6,
+        "verdict": "BALANCED",
+        "fit_seconds": 11.5,
+        "note": ""
+      },
+      {
+        "model": "19 Bagged Trees",
+        "train": {
+          "acc": 0.90007,
+          "bal": 0.9333704891977376,
+          "auc": 0.9840506056597197
+        },
+        "val": {
+          "acc": 0.8792,
+          "bal": 0.8998888153678788,
+          "auc": 0.9654405391486337
+        },
+        "test": {
+          "acc": 0.8827225723666831,
+          "bal": 0.8956052814149928,
+          "auc": 0.9629828999856284
+        },
+        "gap_train_test_bal": 0.037765207782744725,
+        "tests": {
+          "T1_acc>=85": true,
+          "T2_bal>=85": true,
+          "T3_not_overfit": true,
+          "T4_not_underfit": true,
+          "T5_beats_baseline": true,
+          "T6_stable_unseen": true
+        },
+        "passed": 6,
+        "verdict": "BALANCED",
+        "fit_seconds": 81.7,
+        "note": ""
+      },
+      {
+        "model": "20 Ensemble RF+XGBoost",
+        "train": {
+          "acc": 0.90356,
+          "bal": 0.9473733881449735,
+          "auc": 0.9898833306081452
+        },
+        "val": {
+          "acc": 0.88496,
+          "bal": 0.9053102344019976,
+          "auc": 0.9682542062962174
+        },
+        "test": {
+          "acc": 0.8881948899875458,
+          "bal": 0.8954028689139736,
+          "auc": 0.9643945992873497
+        },
+        "gap_train_test_bal": 0.051970519230999934,
+        "tests": {
+          "T1_acc>=85": true,
+          "T2_bal>=85": true,
+          "T3_not_overfit": false,
+          "T4_not_underfit": true,
+          "T5_beats_baseline": true,
+          "T6_stable_unseen": true
+        },
+        "passed": 5,
+        "verdict": "OVERFIT",
+        "fit_seconds": 48.7,
+        "note": ""
+      }
+    ]
+  }
+}

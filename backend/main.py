@@ -7,7 +7,7 @@ from fastapi.responses import JSONResponse
 from slowapi import _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
 
-from backend.api import agents, emergency, health, hqrl, live, ml, response, rescue_desk, simulation, sources, voice_agent
+from backend.api import agents, dams, emergency, health, hqrl, live, ml, response, rescue_desk, simulation, sources, voice_agent
 from backend.config import get_settings
 from backend.database import mongo
 from backend.ml.inference import load_models
@@ -83,7 +83,7 @@ async def security_headers(request: Request, call_next):
     return response
 
 
-for module in (health, live, ml, agents, response, simulation, hqrl, emergency, sources, rescue_desk, voice_agent):
+for module in (health, live, ml, agents, response, simulation, hqrl, emergency, sources, rescue_desk, voice_agent, dams):
     app.include_router(module.router)
 
 

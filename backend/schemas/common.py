@@ -164,9 +164,10 @@ class SimulationOverrideRequest(BaseModel):
 
 class CitizenSosRequest(BaseModel):
     citizen_name: str = "Aarav Sharma"
+    age: Optional[int] = Field(default=None, ge=0, le=120)
     lat: float = 28.651
     lon: float = 77.262
-    people: int = 2
+    people: int = Field(default=2, ge=1, le=50)
     water_level_note: str = "knee-deep rainwater"
     mode: str = "simulation"
 
@@ -174,3 +175,9 @@ class CitizenSosRequest(BaseModel):
 class RescueOutcomeRequest(BaseModel):
     rescued: bool
     mode: str = "simulation"
+
+
+class ForecastV4Request(BaseModel):
+    """Historical replay of the v4 CAMELS-IND forecaster for one gauge-day."""
+    gauge_id: int
+    date: Optional[str] = Field(default=None, pattern=r"^\d{4}-\d{2}-\d{2}$")

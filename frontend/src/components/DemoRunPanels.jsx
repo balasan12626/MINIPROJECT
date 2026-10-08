@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { overrideSimulation, askSimAgent, setSimChecklist, forceDispatch, fetchSources, fetchMetrics } from "../services/api.js";
-import PdfDownloadButton from "./PdfDownloadButton.jsx";
 
-export default function DemoRunPanels({ sim, feats, explain, setSim }) {
+function DemoRunPanels({ sim, feats, explain, setSim }) {
   const [askQ, setAskQ] = useState("What is status?");
   const [askA, setAskA] = useState("");
   const [askStats, setAskStats] = useState(null);
@@ -34,15 +33,17 @@ export default function DemoRunPanels({ sim, feats, explain, setSim }) {
     return () => document.body.classList.remove("jury-mode");
   }, [feats.jury_mode]);
 
+  // Once per status change (start / complete), not once per tick — per-tick
+  // latencies already arrive in sim.pipeline.latencies.
   useEffect(() => {
-    if (feats.api_health) fetchSources().then(setSources);
-    if (feats.latency_meter) fetchMetrics().then(setMetrics);
-  }, [feats.api_health, feats.latency_meter, sim?.tick]);
+    if (feats.api_health) fetchSources().then(setSources).catch(() => {});
+    if (feats.latency_meter) fetchMetrics().then(setMetrics).catch(() => {});
+  }, [feats.api_health, feats.latency_meter, sim?.status]);
 
   useEffect(() => {
     if (!feats.scenario_compare || !sim?.run_id || sim?.status !== "completed") return;
-    const peaks = (sim.history || []).map((h) => h.flood_probability).filter((x) => x != null);
-    const peak = peaks.length ? Math.max(...peaks) : sim?.after?.flood_probability;
+    // Canonical run peak from the backend (current_view) — not recomputed here.
+    const peak = sim?.current?.peak_flood_probability ?? null;
     const entry = {
       run_id: sim.run_id,
       scenario: sim.scenario,
@@ -149,58 +150,8 @@ export default function DemoRunPanels({ sim, feats, explain, setSim }) {
         </div>
       ) : null}
 
-      {feats.citizen_status_board ? (
-        <div className="panel">
-          <h2>CITIZEN STATUS BOARD (LIVE)</h2>
-          <p className="hint">Updates every ~12s: queued → assigned → en_route → to_shelter → rescued. Click Generate PDF for animated download.</p>
-          <div className="table-wrap">
-            <table className="data-table">
-              <thead>
-                <tr>
-                  <th>Person</th>
-                  <th>Name</th>
-                  <th>Age</th>
-                  <th>Status</th>
-                  <th>Triage</th>
-                  <th>Ambulance / Team</th>
-                  <th>Shelter</th>
-                  <th>PDF</th>
-                </tr>
-              </thead>
-              <tbody>
-                {(sim?.status_board || []).map((r) => (
-                  <tr key={`st-${r.person_index}-${r.citizen_name}`}>
-                    <td>{r.person_index}</td>
-                    <td>{r.citizen_name}</td>
-                    <td>{r.age ?? "—"}</td>
-                    <td><span className={`status-pill ${r.status}`}>{r.status}</span></td>
-                    <td>{feats.medical_triage ? (r.triage || "—") : "—"}</td>
-                    <td>{r.ambulance_name || r.assigned_team || "—"}</td>
-                    <td>{r.shelter_name || "—"}</td>
-                    <td>
-                      <PdfDownloadButton personName={r.citizen_name} />
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-            {!(sim?.status_board || []).length ? <p className="hint">Starts after SOS queue loads.</p> : null}
-          </div>
-        </div>
-      ) : null}
-
-      {feats.eta_board ? (
-        <div className="panel">
-          <h2>ETA PER CITIZEN</h2>
-          {(sim?.eta_board || []).map((e) => (
-            <div className="metric" key={e.citizen_name}>
-              <span>{e.rescue_order}. {e.citizen_name}{feats.medical_triage ? ` · ${e.triage}` : ""}</span>
-              <b>{e.eta_min != null ? `${e.eta_min} min` : "n/a"} → {e.assigned_team || "team"}</b>
-            </div>
-          ))}
-          {!(sim?.eta_board || []).length ? <p className="hint">ETA appears with the SOS queue.</p> : null}
-        </div>
-      ) : null}
+      {/* Citizen Status Board + ETA per citizen are merged into the Live SOS
+          roster (RescueOpsPanel) as expandable row details — one table. */}
 
       {feats.shelter_board ? (
         <div className="panel">
@@ -208,7 +159,10 @@ export default function DemoRunPanels({ sim, feats, explain, setSim }) {
           {(sim?.shelter_board || []).map((s) => (
             <div className={`metric ${s.full ? "full-shelter" : ""}`} key={s.shelter_id}>
               <span>{s.name || s.shelter_id}</span>
-              <b className={s.full ? "crit-text" : ""}>{s.seats_left} seats left / {s.capacity}</b>
+              <b className={s.full ? "crit-text" : ""}>
+                {s.seats_left} seats left / {s.capacity}
+                {s.used_this_run ? ` · delivered this run ${s.delivered_this_run ?? 0}` : ""}
+              </b>
             </div>
           ))}
         </div>
@@ -267,7 +221,7 @@ export default function DemoRunPanels({ sim, feats, explain, setSim }) {
               <div className="metric"><span>Rescued</span><b>{askStats.rescued ?? "—"}</b></div>
               <div className="metric"><span>Missing / trapped</span><b>{askStats.missing ?? "—"}</b></div>
               <div className="metric"><span>Shelters</span><b>{askStats.shelters ?? "—"}</b></div>
-              <div className="metric"><span>Vacant seats</span><b>{askStats.vacant_seats ?? "—"}</b></div>
+              <div className="metric"><span>Vacant seats</span><b>{sim?.shelter_totals?.vacant_seats ?? askStats.vacant_seats ?? "—"}</b></div>
               <div className="metric"><span>Full shelters</span><b>{askStats.full_shelters ?? "—"}</b></div>
             </div>
           ) : null}
@@ -366,3 +320,5 @@ export default function DemoRunPanels({ sim, feats, explain, setSim }) {
 function pct(p) {
   return p == null ? "n/a" : `${(p * 100).toFixed(1)}%`;
 }
+
+export default memo(DemoRunPanels);

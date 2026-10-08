@@ -1,0 +1,8592 @@
+{
+ "policy": {
+  "cases": 16032,
+  "violations": 0,
+  "examples": [],
+  "actions": {
+   "MONITOR": 4000,
+   "HUMAN_OVERRIDE": 8008,
+   "HUMAN_REVIEW": 3607,
+   "AUTOMATED_RESPONSE": 401,
+   "UNAVAILABLE": 16
+  },
+  "monotone_healthy": true,
+  "auto_when_unhealthy": 0,
+  "monitor_t": 0.5,
+  "auto_t": 0.6,
+  "ms": 42.4
+ },
+ "e2e": {
+  "cases": 32032,
+  "viol_before": 2807,
+  "viol_after": 0,
+  "fired_before": 9624,
+  "fired_after": 6817
+ },
+ "dual": {
+  "n": 604,
+  "gap_max": 0.15,
+  "auto_t": 0.6,
+  "hold_pct": 69.70198675496688,
+  "gap_pct": 64.0728476821192,
+  "straddle_pct": 10.264900662251655,
+  "straddle_only_pct": 5.629139072847682,
+  "eligible": 515,
+  "eligible_held_pct": 76.89320388349515,
+  "both_auto": 453,
+  "both_auto_held_pct": 73.73068432671081,
+  "mean_gap": 0.1673233443708609,
+  "max_gap": 0.34659999999999996,
+  "rf_auto_pct": 79.47019867549669,
+  "xgb_auto_pct": 80.79470198675497,
+  "first_rain_rf_auto": {
+   "6": 0,
+   "7": 0,
+   "8": 0,
+   "9": 10
+  },
+  "first_rain_xgb_auto": {
+   "6": 0,
+   "7": 0,
+   "8": 0,
+   "9": 0
+  },
+  "prod_check_available": true,
+  "rows": [
+   {
+    "month": 6,
+    "rain": 0,
+    "rf": 0.6264,
+    "xgb": 0.7568,
+    "gap": 0.13040000000000007,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 2,
+    "rf": 0.5401,
+    "xgb": 0.3793,
+    "gap": 0.1608,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 6,
+    "rain": 4,
+    "rf": 0.5354,
+    "xgb": 0.3957,
+    "gap": 0.1397,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 6,
+    "rain": 6,
+    "rf": 0.5674,
+    "xgb": 0.5249,
+    "gap": 0.04249999999999998,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 6,
+    "rain": 8,
+    "rf": 0.5927,
+    "xgb": 0.7644,
+    "gap": 0.17169999999999996,
+    "gap_exceeds": true,
+    "straddle": true,
+    "hold": true,
+    "rf_auto": false,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 10,
+    "rf": 0.6155,
+    "xgb": 0.786,
+    "gap": 0.17049999999999998,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 12,
+    "rf": 0.6064,
+    "xgb": 0.8313,
+    "gap": 0.2249,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 14,
+    "rf": 0.5792,
+    "xgb": 0.7427,
+    "gap": 0.16349999999999998,
+    "gap_exceeds": true,
+    "straddle": true,
+    "hold": true,
+    "rf_auto": false,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 16,
+    "rf": 0.5725,
+    "xgb": 0.6895,
+    "gap": 0.11699999999999999,
+    "gap_exceeds": false,
+    "straddle": true,
+    "hold": true,
+    "rf_auto": false,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 18,
+    "rf": 0.5727,
+    "xgb": 0.6174,
+    "gap": 0.04469999999999996,
+    "gap_exceeds": false,
+    "straddle": true,
+    "hold": true,
+    "rf_auto": false,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 20,
+    "rf": 0.5371,
+    "xgb": 0.5201,
+    "gap": 0.017000000000000015,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 6,
+    "rain": 22,
+    "rf": 0.4059,
+    "xgb": 0.2768,
+    "gap": 0.1291,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 6,
+    "rain": 24,
+    "rf": 0.3151,
+    "xgb": 0.2128,
+    "gap": 0.1023,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 6,
+    "rain": 26,
+    "rf": 0.2681,
+    "xgb": 0.1688,
+    "gap": 0.0993,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 6,
+    "rain": 28,
+    "rf": 0.2729,
+    "xgb": 0.1665,
+    "gap": 0.10639999999999997,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 6,
+    "rain": 30,
+    "rf": 0.2454,
+    "xgb": 0.2081,
+    "gap": 0.0373,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 6,
+    "rain": 32,
+    "rf": 0.2557,
+    "xgb": 0.2022,
+    "gap": 0.05349999999999999,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 6,
+    "rain": 34,
+    "rf": 0.2864,
+    "xgb": 0.3225,
+    "gap": 0.03610000000000002,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 6,
+    "rain": 36,
+    "rf": 0.3224,
+    "xgb": 0.2832,
+    "gap": 0.03920000000000001,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 6,
+    "rain": 38,
+    "rf": 0.3935,
+    "xgb": 0.5212,
+    "gap": 0.12769999999999998,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 6,
+    "rain": 40,
+    "rf": 0.4419,
+    "xgb": 0.5571,
+    "gap": 0.11520000000000002,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 6,
+    "rain": 42,
+    "rf": 0.4435,
+    "xgb": 0.5197,
+    "gap": 0.07620000000000005,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 6,
+    "rain": 44,
+    "rf": 0.4311,
+    "xgb": 0.4481,
+    "gap": 0.017000000000000015,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 6,
+    "rain": 46,
+    "rf": 0.4353,
+    "xgb": 0.3748,
+    "gap": 0.0605,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 6,
+    "rain": 48,
+    "rf": 0.4404,
+    "xgb": 0.3816,
+    "gap": 0.05880000000000002,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 6,
+    "rain": 50,
+    "rf": 0.4544,
+    "xgb": 0.3285,
+    "gap": 0.1259,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 6,
+    "rain": 52,
+    "rf": 0.5017,
+    "xgb": 0.3285,
+    "gap": 0.17320000000000002,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 6,
+    "rain": 54,
+    "rf": 0.5436,
+    "xgb": 0.4863,
+    "gap": 0.05729999999999996,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 6,
+    "rain": 56,
+    "rf": 0.5742,
+    "xgb": 0.5702,
+    "gap": 0.0040000000000000036,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 6,
+    "rain": 58,
+    "rf": 0.6241,
+    "xgb": 0.709,
+    "gap": 0.08489999999999998,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 60,
+    "rf": 0.6856,
+    "xgb": 0.8534,
+    "gap": 0.16780000000000006,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 62,
+    "rf": 0.7275,
+    "xgb": 0.8875,
+    "gap": 0.15999999999999992,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 64,
+    "rf": 0.7433,
+    "xgb": 0.9097,
+    "gap": 0.1664,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 66,
+    "rf": 0.7528,
+    "xgb": 0.9086,
+    "gap": 0.15579999999999994,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 68,
+    "rf": 0.7606,
+    "xgb": 0.9186,
+    "gap": 0.15799999999999992,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 70,
+    "rf": 0.7451,
+    "xgb": 0.9017,
+    "gap": 0.15659999999999996,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 72,
+    "rf": 0.741,
+    "xgb": 0.8838,
+    "gap": 0.14280000000000004,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 74,
+    "rf": 0.7356,
+    "xgb": 0.866,
+    "gap": 0.13039999999999996,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 76,
+    "rf": 0.7178,
+    "xgb": 0.8717,
+    "gap": 0.15390000000000004,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 78,
+    "rf": 0.7152,
+    "xgb": 0.8293,
+    "gap": 0.11410000000000009,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 80,
+    "rf": 0.7087,
+    "xgb": 0.8832,
+    "gap": 0.1745,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 82,
+    "rf": 0.7115,
+    "xgb": 0.7641,
+    "gap": 0.05259999999999998,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 84,
+    "rf": 0.6841,
+    "xgb": 0.7279,
+    "gap": 0.04379999999999995,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 86,
+    "rf": 0.6611,
+    "xgb": 0.7001,
+    "gap": 0.038999999999999924,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 88,
+    "rf": 0.6363,
+    "xgb": 0.7342,
+    "gap": 0.09789999999999999,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 90,
+    "rf": 0.6237,
+    "xgb": 0.7268,
+    "gap": 0.10309999999999997,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 92,
+    "rf": 0.6148,
+    "xgb": 0.6702,
+    "gap": 0.055400000000000005,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 94,
+    "rf": 0.6272,
+    "xgb": 0.6564,
+    "gap": 0.029200000000000004,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 96,
+    "rf": 0.613,
+    "xgb": 0.7025,
+    "gap": 0.08950000000000002,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 98,
+    "rf": 0.631,
+    "xgb": 0.728,
+    "gap": 0.09699999999999998,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 100,
+    "rf": 0.6463,
+    "xgb": 0.7081,
+    "gap": 0.061799999999999966,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 102,
+    "rf": 0.6624,
+    "xgb": 0.7026,
+    "gap": 0.040200000000000014,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 104,
+    "rf": 0.6745,
+    "xgb": 0.7597,
+    "gap": 0.08520000000000005,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 106,
+    "rf": 0.6877,
+    "xgb": 0.7248,
+    "gap": 0.03710000000000002,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 108,
+    "rf": 0.6889,
+    "xgb": 0.6941,
+    "gap": 0.0052000000000000934,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 110,
+    "rf": 0.6751,
+    "xgb": 0.6371,
+    "gap": 0.038000000000000034,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 112,
+    "rf": 0.6647,
+    "xgb": 0.6161,
+    "gap": 0.04859999999999998,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 114,
+    "rf": 0.6533,
+    "xgb": 0.5677,
+    "gap": 0.08560000000000001,
+    "gap_exceeds": false,
+    "straddle": true,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": false
+   },
+   {
+    "month": 6,
+    "rain": 116,
+    "rf": 0.6217,
+    "xgb": 0.4478,
+    "gap": 0.17390000000000005,
+    "gap_exceeds": true,
+    "straddle": true,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": false
+   },
+   {
+    "month": 6,
+    "rain": 118,
+    "rf": 0.6055,
+    "xgb": 0.2944,
+    "gap": 0.31110000000000004,
+    "gap_exceeds": true,
+    "straddle": true,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": false
+   },
+   {
+    "month": 6,
+    "rain": 120,
+    "rf": 0.5946,
+    "xgb": 0.3322,
+    "gap": 0.2624,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 6,
+    "rain": 122,
+    "rf": 0.5754,
+    "xgb": 0.2845,
+    "gap": 0.29090000000000005,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 6,
+    "rain": 124,
+    "rf": 0.5688,
+    "xgb": 0.2605,
+    "gap": 0.30829999999999996,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 6,
+    "rain": 126,
+    "rf": 0.5609,
+    "xgb": 0.2143,
+    "gap": 0.34659999999999996,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 6,
+    "rain": 128,
+    "rf": 0.5497,
+    "xgb": 0.2283,
+    "gap": 0.32139999999999996,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 6,
+    "rain": 130,
+    "rf": 0.5409,
+    "xgb": 0.2773,
+    "gap": 0.26360000000000006,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 6,
+    "rain": 132,
+    "rf": 0.5475,
+    "xgb": 0.3014,
+    "gap": 0.24609999999999999,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 6,
+    "rain": 134,
+    "rf": 0.5441,
+    "xgb": 0.3547,
+    "gap": 0.1894,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 6,
+    "rain": 136,
+    "rf": 0.5513,
+    "xgb": 0.3904,
+    "gap": 0.1609,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 6,
+    "rain": 138,
+    "rf": 0.5509,
+    "xgb": 0.3943,
+    "gap": 0.15659999999999996,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 6,
+    "rain": 140,
+    "rf": 0.5562,
+    "xgb": 0.3153,
+    "gap": 0.2409,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 6,
+    "rain": 142,
+    "rf": 0.5662,
+    "xgb": 0.3649,
+    "gap": 0.20130000000000003,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 6,
+    "rain": 144,
+    "rf": 0.5698,
+    "xgb": 0.384,
+    "gap": 0.18579999999999997,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 6,
+    "rain": 146,
+    "rf": 0.5788,
+    "xgb": 0.45,
+    "gap": 0.12879999999999997,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 6,
+    "rain": 148,
+    "rf": 0.6031,
+    "xgb": 0.4106,
+    "gap": 0.19249999999999995,
+    "gap_exceeds": true,
+    "straddle": true,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": false
+   },
+   {
+    "month": 6,
+    "rain": 150,
+    "rf": 0.6166,
+    "xgb": 0.4305,
+    "gap": 0.18610000000000004,
+    "gap_exceeds": true,
+    "straddle": true,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": false
+   },
+   {
+    "month": 6,
+    "rain": 152,
+    "rf": 0.6288,
+    "xgb": 0.4617,
+    "gap": 0.16710000000000003,
+    "gap_exceeds": true,
+    "straddle": true,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": false
+   },
+   {
+    "month": 6,
+    "rain": 154,
+    "rf": 0.6349,
+    "xgb": 0.5005,
+    "gap": 0.13440000000000007,
+    "gap_exceeds": false,
+    "straddle": true,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": false
+   },
+   {
+    "month": 6,
+    "rain": 156,
+    "rf": 0.6425,
+    "xgb": 0.581,
+    "gap": 0.0615,
+    "gap_exceeds": false,
+    "straddle": true,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": false
+   },
+   {
+    "month": 6,
+    "rain": 158,
+    "rf": 0.6429,
+    "xgb": 0.5832,
+    "gap": 0.059699999999999975,
+    "gap_exceeds": false,
+    "straddle": true,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": false
+   },
+   {
+    "month": 6,
+    "rain": 160,
+    "rf": 0.6601,
+    "xgb": 0.6322,
+    "gap": 0.027900000000000036,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 162,
+    "rf": 0.6653,
+    "xgb": 0.7094,
+    "gap": 0.04410000000000003,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 164,
+    "rf": 0.6741,
+    "xgb": 0.7373,
+    "gap": 0.06319999999999992,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 166,
+    "rf": 0.686,
+    "xgb": 0.7785,
+    "gap": 0.09249999999999992,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 168,
+    "rf": 0.6912,
+    "xgb": 0.781,
+    "gap": 0.08979999999999999,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 170,
+    "rf": 0.691,
+    "xgb": 0.7821,
+    "gap": 0.09110000000000007,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 172,
+    "rf": 0.6903,
+    "xgb": 0.7674,
+    "gap": 0.07709999999999995,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 174,
+    "rf": 0.6919,
+    "xgb": 0.7687,
+    "gap": 0.07680000000000009,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 176,
+    "rf": 0.7,
+    "xgb": 0.8072,
+    "gap": 0.10720000000000007,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 178,
+    "rf": 0.7072,
+    "xgb": 0.8359,
+    "gap": 0.12869999999999993,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 180,
+    "rf": 0.706,
+    "xgb": 0.8256,
+    "gap": 0.11960000000000004,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 182,
+    "rf": 0.6944,
+    "xgb": 0.8256,
+    "gap": 0.13119999999999998,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 184,
+    "rf": 0.6796,
+    "xgb": 0.8318,
+    "gap": 0.1522,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 186,
+    "rf": 0.6819,
+    "xgb": 0.8429,
+    "gap": 0.16100000000000003,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 188,
+    "rf": 0.685,
+    "xgb": 0.8468,
+    "gap": 0.16179999999999994,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 190,
+    "rf": 0.6884,
+    "xgb": 0.8622,
+    "gap": 0.17379999999999995,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 192,
+    "rf": 0.6926,
+    "xgb": 0.8729,
+    "gap": 0.18030000000000002,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 194,
+    "rf": 0.6931,
+    "xgb": 0.8584,
+    "gap": 0.1653,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 196,
+    "rf": 0.6857,
+    "xgb": 0.8544,
+    "gap": 0.16870000000000007,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 198,
+    "rf": 0.6832,
+    "xgb": 0.8544,
+    "gap": 0.17120000000000002,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 200,
+    "rf": 0.6863,
+    "xgb": 0.8167,
+    "gap": 0.13039999999999996,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 202,
+    "rf": 0.689,
+    "xgb": 0.8054,
+    "gap": 0.11640000000000006,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 204,
+    "rf": 0.6855,
+    "xgb": 0.7823,
+    "gap": 0.0968,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 206,
+    "rf": 0.6811,
+    "xgb": 0.7634,
+    "gap": 0.08229999999999993,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 208,
+    "rf": 0.6816,
+    "xgb": 0.7689,
+    "gap": 0.08730000000000004,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 210,
+    "rf": 0.6804,
+    "xgb": 0.7659,
+    "gap": 0.08550000000000002,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 212,
+    "rf": 0.6773,
+    "xgb": 0.7707,
+    "gap": 0.09340000000000004,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 214,
+    "rf": 0.6792,
+    "xgb": 0.7679,
+    "gap": 0.0887,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 216,
+    "rf": 0.6751,
+    "xgb": 0.7671,
+    "gap": 0.09199999999999997,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 218,
+    "rf": 0.6817,
+    "xgb": 0.7671,
+    "gap": 0.08540000000000003,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 220,
+    "rf": 0.6808,
+    "xgb": 0.7734,
+    "gap": 0.09260000000000002,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 222,
+    "rf": 0.6797,
+    "xgb": 0.7695,
+    "gap": 0.08979999999999999,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 224,
+    "rf": 0.676,
+    "xgb": 0.7646,
+    "gap": 0.0885999999999999,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 226,
+    "rf": 0.6751,
+    "xgb": 0.6315,
+    "gap": 0.04360000000000008,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 228,
+    "rf": 0.677,
+    "xgb": 0.6391,
+    "gap": 0.037900000000000045,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 230,
+    "rf": 0.677,
+    "xgb": 0.6391,
+    "gap": 0.037900000000000045,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 232,
+    "rf": 0.6727,
+    "xgb": 0.6437,
+    "gap": 0.028999999999999915,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 234,
+    "rf": 0.6712,
+    "xgb": 0.6689,
+    "gap": 0.0022999999999999687,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 236,
+    "rf": 0.6752,
+    "xgb": 0.6586,
+    "gap": 0.01660000000000006,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 238,
+    "rf": 0.674,
+    "xgb": 0.665,
+    "gap": 0.009000000000000008,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 240,
+    "rf": 0.6735,
+    "xgb": 0.6666,
+    "gap": 0.006900000000000017,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 242,
+    "rf": 0.6732,
+    "xgb": 0.6666,
+    "gap": 0.00660000000000005,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 244,
+    "rf": 0.6726,
+    "xgb": 0.658,
+    "gap": 0.014599999999999946,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 246,
+    "rf": 0.6703,
+    "xgb": 0.6625,
+    "gap": 0.007800000000000029,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 248,
+    "rf": 0.6708,
+    "xgb": 0.6625,
+    "gap": 0.008299999999999974,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 250,
+    "rf": 0.6723,
+    "xgb": 0.6625,
+    "gap": 0.009800000000000031,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 252,
+    "rf": 0.6726,
+    "xgb": 0.6625,
+    "gap": 0.010099999999999998,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 254,
+    "rf": 0.6725,
+    "xgb": 0.6506,
+    "gap": 0.02190000000000003,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 256,
+    "rf": 0.6717,
+    "xgb": 0.644,
+    "gap": 0.027699999999999947,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 258,
+    "rf": 0.6637,
+    "xgb": 0.644,
+    "gap": 0.01969999999999994,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 260,
+    "rf": 0.6626,
+    "xgb": 0.644,
+    "gap": 0.01859999999999995,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 262,
+    "rf": 0.6564,
+    "xgb": 0.625,
+    "gap": 0.031399999999999983,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 264,
+    "rf": 0.6502,
+    "xgb": 0.6222,
+    "gap": 0.028000000000000025,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 266,
+    "rf": 0.6478,
+    "xgb": 0.6222,
+    "gap": 0.025600000000000067,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 6,
+    "rain": 268,
+    "rf": 0.6466,
+    "xgb": 0.5991,
+    "gap": 0.04749999999999999,
+    "gap_exceeds": false,
+    "straddle": true,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": false
+   },
+   {
+    "month": 6,
+    "rain": 270,
+    "rf": 0.6457,
+    "xgb": 0.5893,
+    "gap": 0.056400000000000006,
+    "gap_exceeds": false,
+    "straddle": true,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": false
+   },
+   {
+    "month": 6,
+    "rain": 272,
+    "rf": 0.6407,
+    "xgb": 0.5829,
+    "gap": 0.057800000000000074,
+    "gap_exceeds": false,
+    "straddle": true,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": false
+   },
+   {
+    "month": 6,
+    "rain": 274,
+    "rf": 0.6401,
+    "xgb": 0.5829,
+    "gap": 0.05720000000000003,
+    "gap_exceeds": false,
+    "straddle": true,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": false
+   },
+   {
+    "month": 6,
+    "rain": 276,
+    "rf": 0.6354,
+    "xgb": 0.5575,
+    "gap": 0.07789999999999997,
+    "gap_exceeds": false,
+    "straddle": true,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": false
+   },
+   {
+    "month": 6,
+    "rain": 278,
+    "rf": 0.6323,
+    "xgb": 0.5575,
+    "gap": 0.07479999999999998,
+    "gap_exceeds": false,
+    "straddle": true,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": false
+   },
+   {
+    "month": 6,
+    "rain": 280,
+    "rf": 0.6284,
+    "xgb": 0.5415,
+    "gap": 0.08689999999999998,
+    "gap_exceeds": false,
+    "straddle": true,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": false
+   },
+   {
+    "month": 6,
+    "rain": 282,
+    "rf": 0.6229,
+    "xgb": 0.5414,
+    "gap": 0.08150000000000002,
+    "gap_exceeds": false,
+    "straddle": true,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": false
+   },
+   {
+    "month": 6,
+    "rain": 284,
+    "rf": 0.6167,
+    "xgb": 0.5358,
+    "gap": 0.08089999999999997,
+    "gap_exceeds": false,
+    "straddle": true,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": false
+   },
+   {
+    "month": 6,
+    "rain": 286,
+    "rf": 0.617,
+    "xgb": 0.5358,
+    "gap": 0.08119999999999994,
+    "gap_exceeds": false,
+    "straddle": true,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": false
+   },
+   {
+    "month": 6,
+    "rain": 288,
+    "rf": 0.6176,
+    "xgb": 0.5358,
+    "gap": 0.08179999999999998,
+    "gap_exceeds": false,
+    "straddle": true,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": false
+   },
+   {
+    "month": 6,
+    "rain": 290,
+    "rf": 0.6141,
+    "xgb": 0.5358,
+    "gap": 0.07829999999999993,
+    "gap_exceeds": false,
+    "straddle": true,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": false
+   },
+   {
+    "month": 6,
+    "rain": 292,
+    "rf": 0.6176,
+    "xgb": 0.5358,
+    "gap": 0.08179999999999998,
+    "gap_exceeds": false,
+    "straddle": true,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": false
+   },
+   {
+    "month": 6,
+    "rain": 294,
+    "rf": 0.6127,
+    "xgb": 0.5358,
+    "gap": 0.07689999999999997,
+    "gap_exceeds": false,
+    "straddle": true,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": false
+   },
+   {
+    "month": 6,
+    "rain": 296,
+    "rf": 0.6106,
+    "xgb": 0.5358,
+    "gap": 0.07479999999999998,
+    "gap_exceeds": false,
+    "straddle": true,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": false
+   },
+   {
+    "month": 6,
+    "rain": 298,
+    "rf": 0.6099,
+    "xgb": 0.5217,
+    "gap": 0.08819999999999995,
+    "gap_exceeds": false,
+    "straddle": true,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": false
+   },
+   {
+    "month": 6,
+    "rain": 300,
+    "rf": 0.6072,
+    "xgb": 0.5217,
+    "gap": 0.08549999999999991,
+    "gap_exceeds": false,
+    "straddle": true,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": false
+   },
+   {
+    "month": 7,
+    "rain": 0,
+    "rf": 0.6138,
+    "xgb": 0.7377,
+    "gap": 0.12390000000000001,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 2,
+    "rf": 0.5374,
+    "xgb": 0.4179,
+    "gap": 0.1195,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 7,
+    "rain": 4,
+    "rf": 0.5332,
+    "xgb": 0.4407,
+    "gap": 0.09250000000000003,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 7,
+    "rain": 6,
+    "rf": 0.566,
+    "xgb": 0.5983,
+    "gap": 0.032300000000000106,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 7,
+    "rain": 8,
+    "rf": 0.5954,
+    "xgb": 0.825,
+    "gap": 0.22959999999999992,
+    "gap_exceeds": true,
+    "straddle": true,
+    "hold": true,
+    "rf_auto": false,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 10,
+    "rf": 0.6182,
+    "xgb": 0.8556,
+    "gap": 0.23740000000000006,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 12,
+    "rf": 0.6094,
+    "xgb": 0.8898,
+    "gap": 0.2804,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 14,
+    "rf": 0.583,
+    "xgb": 0.828,
+    "gap": 0.245,
+    "gap_exceeds": true,
+    "straddle": true,
+    "hold": true,
+    "rf_auto": false,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 16,
+    "rf": 0.577,
+    "xgb": 0.7963,
+    "gap": 0.21930000000000005,
+    "gap_exceeds": true,
+    "straddle": true,
+    "hold": true,
+    "rf_auto": false,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 18,
+    "rf": 0.5782,
+    "xgb": 0.7453,
+    "gap": 0.16709999999999992,
+    "gap_exceeds": true,
+    "straddle": true,
+    "hold": true,
+    "rf_auto": false,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 20,
+    "rf": 0.5433,
+    "xgb": 0.653,
+    "gap": 0.10970000000000002,
+    "gap_exceeds": false,
+    "straddle": true,
+    "hold": true,
+    "rf_auto": false,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 22,
+    "rf": 0.4134,
+    "xgb": 0.3876,
+    "gap": 0.02579999999999999,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 7,
+    "rain": 24,
+    "rf": 0.3236,
+    "xgb": 0.3016,
+    "gap": 0.02200000000000002,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 7,
+    "rain": 26,
+    "rf": 0.2768,
+    "xgb": 0.2673,
+    "gap": 0.009500000000000008,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 7,
+    "rain": 28,
+    "rf": 0.2804,
+    "xgb": 0.2639,
+    "gap": 0.01649999999999996,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 7,
+    "rain": 30,
+    "rf": 0.2519,
+    "xgb": 0.3348,
+    "gap": 0.08289999999999997,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 7,
+    "rain": 32,
+    "rf": 0.2619,
+    "xgb": 0.3244,
+    "gap": 0.0625,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 7,
+    "rain": 34,
+    "rf": 0.2917,
+    "xgb": 0.4706,
+    "gap": 0.1789,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 7,
+    "rain": 36,
+    "rf": 0.3366,
+    "xgb": 0.4178,
+    "gap": 0.0812,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 7,
+    "rain": 38,
+    "rf": 0.4117,
+    "xgb": 0.7017,
+    "gap": 0.29,
+    "gap_exceeds": true,
+    "straddle": true,
+    "hold": true,
+    "rf_auto": false,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 40,
+    "rf": 0.4632,
+    "xgb": 0.7132,
+    "gap": 0.24999999999999994,
+    "gap_exceeds": true,
+    "straddle": true,
+    "hold": true,
+    "rf_auto": false,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 42,
+    "rf": 0.4625,
+    "xgb": 0.6927,
+    "gap": 0.23019999999999996,
+    "gap_exceeds": true,
+    "straddle": true,
+    "hold": true,
+    "rf_auto": false,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 44,
+    "rf": 0.4479,
+    "xgb": 0.597,
+    "gap": 0.14909999999999995,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 7,
+    "rain": 46,
+    "rf": 0.4519,
+    "xgb": 0.5183,
+    "gap": 0.06639999999999996,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 7,
+    "rain": 48,
+    "rf": 0.4589,
+    "xgb": 0.5125,
+    "gap": 0.05359999999999998,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 7,
+    "rain": 50,
+    "rf": 0.4731,
+    "xgb": 0.4417,
+    "gap": 0.03140000000000004,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 7,
+    "rain": 52,
+    "rf": 0.5173,
+    "xgb": 0.4368,
+    "gap": 0.08049999999999996,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 7,
+    "rain": 54,
+    "rf": 0.5601,
+    "xgb": 0.6056,
+    "gap": 0.045499999999999985,
+    "gap_exceeds": false,
+    "straddle": true,
+    "hold": true,
+    "rf_auto": false,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 56,
+    "rf": 0.5894,
+    "xgb": 0.693,
+    "gap": 0.10359999999999991,
+    "gap_exceeds": false,
+    "straddle": true,
+    "hold": true,
+    "rf_auto": false,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 58,
+    "rf": 0.6431,
+    "xgb": 0.8082,
+    "gap": 0.16510000000000002,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 60,
+    "rf": 0.7087,
+    "xgb": 0.9167,
+    "gap": 0.20799999999999996,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 62,
+    "rf": 0.7499,
+    "xgb": 0.9459,
+    "gap": 0.19599999999999995,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 64,
+    "rf": 0.7658,
+    "xgb": 0.959,
+    "gap": 0.19319999999999993,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 66,
+    "rf": 0.7776,
+    "xgb": 0.9564,
+    "gap": 0.17880000000000007,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 68,
+    "rf": 0.7868,
+    "xgb": 0.9595,
+    "gap": 0.17269999999999996,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 70,
+    "rf": 0.766,
+    "xgb": 0.9541,
+    "gap": 0.18809999999999993,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 72,
+    "rf": 0.7595,
+    "xgb": 0.9437,
+    "gap": 0.18420000000000003,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 74,
+    "rf": 0.7519,
+    "xgb": 0.9305,
+    "gap": 0.17859999999999998,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 76,
+    "rf": 0.733,
+    "xgb": 0.927,
+    "gap": 0.19400000000000006,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 78,
+    "rf": 0.7336,
+    "xgb": 0.8993,
+    "gap": 0.16569999999999996,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 80,
+    "rf": 0.7279,
+    "xgb": 0.9312,
+    "gap": 0.20330000000000004,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 82,
+    "rf": 0.737,
+    "xgb": 0.8984,
+    "gap": 0.1614,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 84,
+    "rf": 0.7115,
+    "xgb": 0.8911,
+    "gap": 0.17959999999999998,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 86,
+    "rf": 0.6897,
+    "xgb": 0.8821,
+    "gap": 0.19240000000000002,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 88,
+    "rf": 0.671,
+    "xgb": 0.8942,
+    "gap": 0.22319999999999995,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 90,
+    "rf": 0.6614,
+    "xgb": 0.8895,
+    "gap": 0.22809999999999997,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 92,
+    "rf": 0.649,
+    "xgb": 0.8689,
+    "gap": 0.21989999999999998,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 94,
+    "rf": 0.6593,
+    "xgb": 0.8664,
+    "gap": 0.20709999999999995,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 96,
+    "rf": 0.6439,
+    "xgb": 0.8872,
+    "gap": 0.24329999999999996,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 98,
+    "rf": 0.6632,
+    "xgb": 0.909,
+    "gap": 0.24580000000000002,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 100,
+    "rf": 0.6823,
+    "xgb": 0.9028,
+    "gap": 0.22050000000000003,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 102,
+    "rf": 0.7008,
+    "xgb": 0.8983,
+    "gap": 0.1975,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 104,
+    "rf": 0.7065,
+    "xgb": 0.9249,
+    "gap": 0.21840000000000004,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 106,
+    "rf": 0.719,
+    "xgb": 0.9225,
+    "gap": 0.20350000000000001,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 108,
+    "rf": 0.7181,
+    "xgb": 0.9074,
+    "gap": 0.18930000000000002,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 110,
+    "rf": 0.7108,
+    "xgb": 0.8677,
+    "gap": 0.15690000000000004,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 112,
+    "rf": 0.6999,
+    "xgb": 0.8503,
+    "gap": 0.15039999999999998,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 114,
+    "rf": 0.6899,
+    "xgb": 0.8299,
+    "gap": 0.14,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 116,
+    "rf": 0.657,
+    "xgb": 0.7644,
+    "gap": 0.10739999999999994,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 118,
+    "rf": 0.6382,
+    "xgb": 0.6129,
+    "gap": 0.02529999999999999,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 120,
+    "rf": 0.6303,
+    "xgb": 0.6906,
+    "gap": 0.06030000000000002,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 122,
+    "rf": 0.6133,
+    "xgb": 0.6556,
+    "gap": 0.042300000000000004,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 124,
+    "rf": 0.6081,
+    "xgb": 0.619,
+    "gap": 0.01090000000000002,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 126,
+    "rf": 0.6036,
+    "xgb": 0.5438,
+    "gap": 0.059800000000000075,
+    "gap_exceeds": false,
+    "straddle": true,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": false
+   },
+   {
+    "month": 7,
+    "rain": 128,
+    "rf": 0.5936,
+    "xgb": 0.5572,
+    "gap": 0.03639999999999999,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 7,
+    "rain": 130,
+    "rf": 0.5902,
+    "xgb": 0.6336,
+    "gap": 0.043400000000000105,
+    "gap_exceeds": false,
+    "straddle": true,
+    "hold": true,
+    "rf_auto": false,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 132,
+    "rf": 0.5945,
+    "xgb": 0.6859,
+    "gap": 0.09139999999999993,
+    "gap_exceeds": false,
+    "straddle": true,
+    "hold": true,
+    "rf_auto": false,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 134,
+    "rf": 0.5927,
+    "xgb": 0.7379,
+    "gap": 0.1452,
+    "gap_exceeds": false,
+    "straddle": true,
+    "hold": true,
+    "rf_auto": false,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 136,
+    "rf": 0.6006,
+    "xgb": 0.763,
+    "gap": 0.1624,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 138,
+    "rf": 0.6023,
+    "xgb": 0.769,
+    "gap": 0.16670000000000007,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 140,
+    "rf": 0.6084,
+    "xgb": 0.7122,
+    "gap": 0.1038,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 142,
+    "rf": 0.6187,
+    "xgb": 0.7493,
+    "gap": 0.13059999999999994,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 144,
+    "rf": 0.6218,
+    "xgb": 0.8008,
+    "gap": 0.17899999999999994,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 146,
+    "rf": 0.6339,
+    "xgb": 0.847,
+    "gap": 0.21309999999999996,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 148,
+    "rf": 0.6582,
+    "xgb": 0.8451,
+    "gap": 0.18689999999999996,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 150,
+    "rf": 0.6725,
+    "xgb": 0.8604,
+    "gap": 0.18790000000000007,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 152,
+    "rf": 0.6852,
+    "xgb": 0.8749,
+    "gap": 0.18969999999999998,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 154,
+    "rf": 0.6895,
+    "xgb": 0.8909,
+    "gap": 0.20140000000000002,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 156,
+    "rf": 0.6969,
+    "xgb": 0.9137,
+    "gap": 0.2168,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 158,
+    "rf": 0.6972,
+    "xgb": 0.9144,
+    "gap": 0.21719999999999995,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 160,
+    "rf": 0.7141,
+    "xgb": 0.9298,
+    "gap": 0.2157,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 162,
+    "rf": 0.7209,
+    "xgb": 0.9512,
+    "gap": 0.23030000000000006,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 164,
+    "rf": 0.7269,
+    "xgb": 0.9556,
+    "gap": 0.22870000000000001,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 166,
+    "rf": 0.7394,
+    "xgb": 0.9639,
+    "gap": 0.22450000000000003,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 168,
+    "rf": 0.7448,
+    "xgb": 0.9644,
+    "gap": 0.21960000000000002,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 170,
+    "rf": 0.7473,
+    "xgb": 0.9646,
+    "gap": 0.21730000000000005,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 172,
+    "rf": 0.7481,
+    "xgb": 0.9616,
+    "gap": 0.21350000000000002,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 174,
+    "rf": 0.7501,
+    "xgb": 0.9619,
+    "gap": 0.2118,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 176,
+    "rf": 0.7575,
+    "xgb": 0.9656,
+    "gap": 0.20810000000000006,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 178,
+    "rf": 0.7607,
+    "xgb": 0.9715,
+    "gap": 0.2108,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 180,
+    "rf": 0.7594,
+    "xgb": 0.9699,
+    "gap": 0.21050000000000002,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 182,
+    "rf": 0.7427,
+    "xgb": 0.9699,
+    "gap": 0.22719999999999996,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 184,
+    "rf": 0.7278,
+    "xgb": 0.9712,
+    "gap": 0.24339999999999995,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 186,
+    "rf": 0.7286,
+    "xgb": 0.9739,
+    "gap": 0.24529999999999996,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 188,
+    "rf": 0.7298,
+    "xgb": 0.9765,
+    "gap": 0.24670000000000003,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 190,
+    "rf": 0.7333,
+    "xgb": 0.9777,
+    "gap": 0.24440000000000006,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 192,
+    "rf": 0.7384,
+    "xgb": 0.9796,
+    "gap": 0.24120000000000008,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 194,
+    "rf": 0.74,
+    "xgb": 0.9774,
+    "gap": 0.23740000000000006,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 196,
+    "rf": 0.7336,
+    "xgb": 0.9761,
+    "gap": 0.24249999999999994,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 198,
+    "rf": 0.7305,
+    "xgb": 0.9761,
+    "gap": 0.24559999999999993,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 200,
+    "rf": 0.7328,
+    "xgb": 0.9679,
+    "gap": 0.23509999999999998,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 202,
+    "rf": 0.7345,
+    "xgb": 0.9655,
+    "gap": 0.23099999999999998,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 204,
+    "rf": 0.7307,
+    "xgb": 0.9634,
+    "gap": 0.23270000000000002,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 206,
+    "rf": 0.7279,
+    "xgb": 0.9595,
+    "gap": 0.23160000000000003,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 208,
+    "rf": 0.7274,
+    "xgb": 0.9606,
+    "gap": 0.23319999999999996,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 210,
+    "rf": 0.7274,
+    "xgb": 0.96,
+    "gap": 0.23259999999999992,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 212,
+    "rf": 0.7243,
+    "xgb": 0.961,
+    "gap": 0.2366999999999999,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 214,
+    "rf": 0.7262,
+    "xgb": 0.9604,
+    "gap": 0.23420000000000007,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 216,
+    "rf": 0.7206,
+    "xgb": 0.9602,
+    "gap": 0.23960000000000004,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 218,
+    "rf": 0.7256,
+    "xgb": 0.9602,
+    "gap": 0.23460000000000003,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 220,
+    "rf": 0.7248,
+    "xgb": 0.9616,
+    "gap": 0.2368,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 222,
+    "rf": 0.7246,
+    "xgb": 0.9616,
+    "gap": 0.237,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 224,
+    "rf": 0.7209,
+    "xgb": 0.9616,
+    "gap": 0.24070000000000003,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 226,
+    "rf": 0.7219,
+    "xgb": 0.9296,
+    "gap": 0.2077,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 228,
+    "rf": 0.7229,
+    "xgb": 0.9317,
+    "gap": 0.20879999999999999,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 230,
+    "rf": 0.7245,
+    "xgb": 0.9317,
+    "gap": 0.20719999999999994,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 232,
+    "rf": 0.721,
+    "xgb": 0.933,
+    "gap": 0.21200000000000008,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 234,
+    "rf": 0.7194,
+    "xgb": 0.9385,
+    "gap": 0.21909999999999996,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 236,
+    "rf": 0.7234,
+    "xgb": 0.9358,
+    "gap": 0.21239999999999992,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 238,
+    "rf": 0.7233,
+    "xgb": 0.936,
+    "gap": 0.2127,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 240,
+    "rf": 0.7234,
+    "xgb": 0.9364,
+    "gap": 0.21299999999999997,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 242,
+    "rf": 0.723,
+    "xgb": 0.9364,
+    "gap": 0.21340000000000003,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 244,
+    "rf": 0.722,
+    "xgb": 0.9341,
+    "gap": 0.21210000000000007,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 246,
+    "rf": 0.7227,
+    "xgb": 0.937,
+    "gap": 0.21430000000000005,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 248,
+    "rf": 0.7232,
+    "xgb": 0.937,
+    "gap": 0.2138000000000001,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 250,
+    "rf": 0.7248,
+    "xgb": 0.937,
+    "gap": 0.21220000000000006,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 252,
+    "rf": 0.724,
+    "xgb": 0.937,
+    "gap": 0.21300000000000008,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 254,
+    "rf": 0.7239,
+    "xgb": 0.9353,
+    "gap": 0.21140000000000003,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 256,
+    "rf": 0.7207,
+    "xgb": 0.9335,
+    "gap": 0.2128,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 258,
+    "rf": 0.7137,
+    "xgb": 0.9335,
+    "gap": 0.2198,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 260,
+    "rf": 0.7126,
+    "xgb": 0.9335,
+    "gap": 0.22089999999999999,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 262,
+    "rf": 0.7064,
+    "xgb": 0.9282,
+    "gap": 0.2218,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 264,
+    "rf": 0.6992,
+    "xgb": 0.9274,
+    "gap": 0.22819999999999996,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 266,
+    "rf": 0.6969,
+    "xgb": 0.9274,
+    "gap": 0.23050000000000004,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 268,
+    "rf": 0.6944,
+    "xgb": 0.9231,
+    "gap": 0.22870000000000001,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 270,
+    "rf": 0.6935,
+    "xgb": 0.9202,
+    "gap": 0.2267,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 272,
+    "rf": 0.6901,
+    "xgb": 0.9182,
+    "gap": 0.22809999999999997,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 274,
+    "rf": 0.6895,
+    "xgb": 0.9182,
+    "gap": 0.22870000000000001,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 276,
+    "rf": 0.6825,
+    "xgb": 0.9154,
+    "gap": 0.2329,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 278,
+    "rf": 0.6779,
+    "xgb": 0.9154,
+    "gap": 0.23750000000000004,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 280,
+    "rf": 0.6731,
+    "xgb": 0.918,
+    "gap": 0.2449,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 282,
+    "rf": 0.6675,
+    "xgb": 0.9165,
+    "gap": 0.249,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 284,
+    "rf": 0.6621,
+    "xgb": 0.9147,
+    "gap": 0.25259999999999994,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 286,
+    "rf": 0.6608,
+    "xgb": 0.9147,
+    "gap": 0.2538999999999999,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 288,
+    "rf": 0.6615,
+    "xgb": 0.9147,
+    "gap": 0.2532,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 290,
+    "rf": 0.658,
+    "xgb": 0.9147,
+    "gap": 0.25669999999999993,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 292,
+    "rf": 0.6609,
+    "xgb": 0.9147,
+    "gap": 0.2537999999999999,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 294,
+    "rf": 0.6575,
+    "xgb": 0.9147,
+    "gap": 0.2572,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 296,
+    "rf": 0.6548,
+    "xgb": 0.9147,
+    "gap": 0.2598999999999999,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 298,
+    "rf": 0.6547,
+    "xgb": 0.9079,
+    "gap": 0.2532000000000001,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 7,
+    "rain": 300,
+    "rf": 0.652,
+    "xgb": 0.9079,
+    "gap": 0.2559,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 0,
+    "rf": 0.6038,
+    "xgb": 0.6952,
+    "gap": 0.09140000000000004,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 2,
+    "rf": 0.531,
+    "xgb": 0.463,
+    "gap": 0.068,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 8,
+    "rain": 4,
+    "rf": 0.5226,
+    "xgb": 0.4794,
+    "gap": 0.04319999999999996,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 8,
+    "rain": 6,
+    "rf": 0.5523,
+    "xgb": 0.6559,
+    "gap": 0.10360000000000003,
+    "gap_exceeds": false,
+    "straddle": true,
+    "hold": true,
+    "rf_auto": false,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 8,
+    "rf": 0.5812,
+    "xgb": 0.8447,
+    "gap": 0.26349999999999996,
+    "gap_exceeds": true,
+    "straddle": true,
+    "hold": true,
+    "rf_auto": false,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 10,
+    "rf": 0.6093,
+    "xgb": 0.873,
+    "gap": 0.26370000000000005,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 12,
+    "rf": 0.6011,
+    "xgb": 0.9069,
+    "gap": 0.30580000000000007,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 14,
+    "rf": 0.5753,
+    "xgb": 0.8817,
+    "gap": 0.3064,
+    "gap_exceeds": true,
+    "straddle": true,
+    "hold": true,
+    "rf_auto": false,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 16,
+    "rf": 0.5804,
+    "xgb": 0.8706,
+    "gap": 0.2902,
+    "gap_exceeds": true,
+    "straddle": true,
+    "hold": true,
+    "rf_auto": false,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 18,
+    "rf": 0.5852,
+    "xgb": 0.8497,
+    "gap": 0.26449999999999996,
+    "gap_exceeds": true,
+    "straddle": true,
+    "hold": true,
+    "rf_auto": false,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 20,
+    "rf": 0.5518,
+    "xgb": 0.8084,
+    "gap": 0.25660000000000005,
+    "gap_exceeds": true,
+    "straddle": true,
+    "hold": true,
+    "rf_auto": false,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 22,
+    "rf": 0.4245,
+    "xgb": 0.5843,
+    "gap": 0.15980000000000005,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 8,
+    "rain": 24,
+    "rf": 0.339,
+    "xgb": 0.4696,
+    "gap": 0.1306,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 8,
+    "rain": 26,
+    "rf": 0.297,
+    "xgb": 0.4241,
+    "gap": 0.1271,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 8,
+    "rain": 28,
+    "rf": 0.294,
+    "xgb": 0.4089,
+    "gap": 0.1149,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 8,
+    "rain": 30,
+    "rf": 0.2623,
+    "xgb": 0.4688,
+    "gap": 0.20650000000000002,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 8,
+    "rain": 32,
+    "rf": 0.2709,
+    "xgb": 0.4636,
+    "gap": 0.19270000000000004,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 8,
+    "rain": 34,
+    "rf": 0.2968,
+    "xgb": 0.5709,
+    "gap": 0.27409999999999995,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 8,
+    "rain": 36,
+    "rf": 0.3308,
+    "xgb": 0.4699,
+    "gap": 0.1391,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 8,
+    "rain": 38,
+    "rf": 0.4006,
+    "xgb": 0.6832,
+    "gap": 0.2826,
+    "gap_exceeds": true,
+    "straddle": true,
+    "hold": true,
+    "rf_auto": false,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 40,
+    "rf": 0.4606,
+    "xgb": 0.6853,
+    "gap": 0.2247,
+    "gap_exceeds": true,
+    "straddle": true,
+    "hold": true,
+    "rf_auto": false,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 42,
+    "rf": 0.4667,
+    "xgb": 0.6756,
+    "gap": 0.20889999999999997,
+    "gap_exceeds": true,
+    "straddle": true,
+    "hold": true,
+    "rf_auto": false,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 44,
+    "rf": 0.4535,
+    "xgb": 0.5704,
+    "gap": 0.1169,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 8,
+    "rain": 46,
+    "rf": 0.4547,
+    "xgb": 0.4545,
+    "gap": 0.00019999999999997797,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 8,
+    "rain": 48,
+    "rf": 0.4684,
+    "xgb": 0.4327,
+    "gap": 0.03570000000000001,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 8,
+    "rain": 50,
+    "rf": 0.4805,
+    "xgb": 0.3777,
+    "gap": 0.1028,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 8,
+    "rain": 52,
+    "rf": 0.5296,
+    "xgb": 0.3471,
+    "gap": 0.18249999999999994,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 8,
+    "rain": 54,
+    "rf": 0.5631,
+    "xgb": 0.5176,
+    "gap": 0.045500000000000096,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 8,
+    "rain": 56,
+    "rf": 0.5922,
+    "xgb": 0.6076,
+    "gap": 0.01540000000000008,
+    "gap_exceeds": false,
+    "straddle": true,
+    "hold": true,
+    "rf_auto": false,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 58,
+    "rf": 0.6505,
+    "xgb": 0.7404,
+    "gap": 0.08989999999999998,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 60,
+    "rf": 0.7092,
+    "xgb": 0.8736,
+    "gap": 0.1644,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 62,
+    "rf": 0.7513,
+    "xgb": 0.9034,
+    "gap": 0.1521,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 64,
+    "rf": 0.7715,
+    "xgb": 0.9314,
+    "gap": 0.15990000000000004,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 66,
+    "rf": 0.7874,
+    "xgb": 0.9269,
+    "gap": 0.13949999999999996,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 68,
+    "rf": 0.7893,
+    "xgb": 0.9377,
+    "gap": 0.14839999999999998,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 70,
+    "rf": 0.77,
+    "xgb": 0.929,
+    "gap": 0.15900000000000003,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 72,
+    "rf": 0.7616,
+    "xgb": 0.895,
+    "gap": 0.13339999999999996,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 74,
+    "rf": 0.7507,
+    "xgb": 0.8686,
+    "gap": 0.1179,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 76,
+    "rf": 0.7292,
+    "xgb": 0.8488,
+    "gap": 0.11960000000000004,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 78,
+    "rf": 0.7302,
+    "xgb": 0.8062,
+    "gap": 0.07600000000000007,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 80,
+    "rf": 0.7274,
+    "xgb": 0.8737,
+    "gap": 0.14629999999999999,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 82,
+    "rf": 0.739,
+    "xgb": 0.8349,
+    "gap": 0.09589999999999999,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 84,
+    "rf": 0.7152,
+    "xgb": 0.8225,
+    "gap": 0.10730000000000006,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 86,
+    "rf": 0.6928,
+    "xgb": 0.8125,
+    "gap": 0.11970000000000003,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 88,
+    "rf": 0.6805,
+    "xgb": 0.832,
+    "gap": 0.15149999999999997,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 90,
+    "rf": 0.6739,
+    "xgb": 0.8326,
+    "gap": 0.15869999999999995,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 92,
+    "rf": 0.6591,
+    "xgb": 0.7976,
+    "gap": 0.13849999999999996,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 94,
+    "rf": 0.6734,
+    "xgb": 0.8173,
+    "gap": 0.14390000000000003,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 96,
+    "rf": 0.6675,
+    "xgb": 0.8494,
+    "gap": 0.18190000000000006,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 98,
+    "rf": 0.6877,
+    "xgb": 0.9064,
+    "gap": 0.2187,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 100,
+    "rf": 0.7071,
+    "xgb": 0.9063,
+    "gap": 0.19920000000000004,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 102,
+    "rf": 0.7256,
+    "xgb": 0.9045,
+    "gap": 0.17889999999999995,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 104,
+    "rf": 0.7289,
+    "xgb": 0.934,
+    "gap": 0.20510000000000006,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 106,
+    "rf": 0.7414,
+    "xgb": 0.9534,
+    "gap": 0.21200000000000008,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 108,
+    "rf": 0.7431,
+    "xgb": 0.9466,
+    "gap": 0.20350000000000001,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 110,
+    "rf": 0.7355,
+    "xgb": 0.9231,
+    "gap": 0.1876,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 112,
+    "rf": 0.7262,
+    "xgb": 0.9109,
+    "gap": 0.1847000000000001,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 114,
+    "rf": 0.7163,
+    "xgb": 0.893,
+    "gap": 0.17669999999999997,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 116,
+    "rf": 0.6841,
+    "xgb": 0.8566,
+    "gap": 0.1725,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 118,
+    "rf": 0.6709,
+    "xgb": 0.7408,
+    "gap": 0.06989999999999996,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 120,
+    "rf": 0.6641,
+    "xgb": 0.8067,
+    "gap": 0.14259999999999995,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 122,
+    "rf": 0.6499,
+    "xgb": 0.7818,
+    "gap": 0.13190000000000002,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 124,
+    "rf": 0.6451,
+    "xgb": 0.7528,
+    "gap": 0.10770000000000002,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 126,
+    "rf": 0.6454,
+    "xgb": 0.6967,
+    "gap": 0.05130000000000001,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 128,
+    "rf": 0.6363,
+    "xgb": 0.7083,
+    "gap": 0.07200000000000006,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 130,
+    "rf": 0.6355,
+    "xgb": 0.779,
+    "gap": 0.14350000000000007,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 132,
+    "rf": 0.6388,
+    "xgb": 0.8166,
+    "gap": 0.17779999999999996,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 134,
+    "rf": 0.637,
+    "xgb": 0.8583,
+    "gap": 0.22129999999999994,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 136,
+    "rf": 0.6443,
+    "xgb": 0.8769,
+    "gap": 0.23260000000000003,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 138,
+    "rf": 0.6466,
+    "xgb": 0.8711,
+    "gap": 0.22450000000000003,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 140,
+    "rf": 0.6503,
+    "xgb": 0.8391,
+    "gap": 0.18879999999999997,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 142,
+    "rf": 0.6628,
+    "xgb": 0.8629,
+    "gap": 0.20010000000000006,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 144,
+    "rf": 0.6659,
+    "xgb": 0.8936,
+    "gap": 0.2276999999999999,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 146,
+    "rf": 0.6771,
+    "xgb": 0.9205,
+    "gap": 0.24339999999999995,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 148,
+    "rf": 0.6995,
+    "xgb": 0.9216,
+    "gap": 0.22209999999999996,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 150,
+    "rf": 0.7146,
+    "xgb": 0.9287,
+    "gap": 0.21409999999999996,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 152,
+    "rf": 0.7283,
+    "xgb": 0.9354,
+    "gap": 0.20710000000000006,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 154,
+    "rf": 0.729,
+    "xgb": 0.9459,
+    "gap": 0.21689999999999998,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 156,
+    "rf": 0.7373,
+    "xgb": 0.955,
+    "gap": 0.2177,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 158,
+    "rf": 0.7362,
+    "xgb": 0.9557,
+    "gap": 0.21950000000000003,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 160,
+    "rf": 0.753,
+    "xgb": 0.9638,
+    "gap": 0.2108,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 162,
+    "rf": 0.7593,
+    "xgb": 0.9747,
+    "gap": 0.21540000000000004,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 164,
+    "rf": 0.7638,
+    "xgb": 0.9764,
+    "gap": 0.2126,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 166,
+    "rf": 0.7754,
+    "xgb": 0.9808,
+    "gap": 0.20540000000000003,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 168,
+    "rf": 0.7819,
+    "xgb": 0.98,
+    "gap": 0.19809999999999994,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 170,
+    "rf": 0.7844,
+    "xgb": 0.9802,
+    "gap": 0.19579999999999997,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 172,
+    "rf": 0.7862,
+    "xgb": 0.9785,
+    "gap": 0.19230000000000003,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 174,
+    "rf": 0.7882,
+    "xgb": 0.9786,
+    "gap": 0.1904,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 176,
+    "rf": 0.7953,
+    "xgb": 0.9807,
+    "gap": 0.1854,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 178,
+    "rf": 0.7992,
+    "xgb": 0.9841,
+    "gap": 0.18489999999999995,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 180,
+    "rf": 0.7959,
+    "xgb": 0.9835,
+    "gap": 0.1876,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 182,
+    "rf": 0.7784,
+    "xgb": 0.9835,
+    "gap": 0.20510000000000006,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 184,
+    "rf": 0.7642,
+    "xgb": 0.9842,
+    "gap": 0.21999999999999997,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 186,
+    "rf": 0.765,
+    "xgb": 0.9854,
+    "gap": 0.22040000000000004,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 188,
+    "rf": 0.7662,
+    "xgb": 0.9855,
+    "gap": 0.21930000000000005,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 190,
+    "rf": 0.7697,
+    "xgb": 0.9862,
+    "gap": 0.21649999999999991,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 192,
+    "rf": 0.7732,
+    "xgb": 0.9875,
+    "gap": 0.21430000000000005,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 194,
+    "rf": 0.774,
+    "xgb": 0.9864,
+    "gap": 0.21240000000000003,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 196,
+    "rf": 0.7684,
+    "xgb": 0.9856,
+    "gap": 0.21720000000000006,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 198,
+    "rf": 0.7638,
+    "xgb": 0.985,
+    "gap": 0.22119999999999995,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 200,
+    "rf": 0.7661,
+    "xgb": 0.9797,
+    "gap": 0.2136,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 202,
+    "rf": 0.7692,
+    "xgb": 0.9793,
+    "gap": 0.21009999999999995,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 204,
+    "rf": 0.7669,
+    "xgb": 0.9779,
+    "gap": 0.21099999999999997,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 206,
+    "rf": 0.7641,
+    "xgb": 0.9767,
+    "gap": 0.2126,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 208,
+    "rf": 0.7643,
+    "xgb": 0.9774,
+    "gap": 0.21310000000000007,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 210,
+    "rf": 0.7634,
+    "xgb": 0.977,
+    "gap": 0.2136,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 212,
+    "rf": 0.7621,
+    "xgb": 0.9776,
+    "gap": 0.21550000000000002,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 214,
+    "rf": 0.764,
+    "xgb": 0.9767,
+    "gap": 0.2127,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 216,
+    "rf": 0.7584,
+    "xgb": 0.9762,
+    "gap": 0.2178,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 218,
+    "rf": 0.7638,
+    "xgb": 0.9762,
+    "gap": 0.21239999999999992,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 220,
+    "rf": 0.7629,
+    "xgb": 0.977,
+    "gap": 0.21409999999999996,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 222,
+    "rf": 0.7602,
+    "xgb": 0.977,
+    "gap": 0.2168,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 224,
+    "rf": 0.7565,
+    "xgb": 0.977,
+    "gap": 0.22050000000000003,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 226,
+    "rf": 0.7591,
+    "xgb": 0.9584,
+    "gap": 0.19930000000000003,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 228,
+    "rf": 0.7606,
+    "xgb": 0.9597,
+    "gap": 0.19909999999999994,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 230,
+    "rf": 0.7622,
+    "xgb": 0.9597,
+    "gap": 0.1975,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 232,
+    "rf": 0.7602,
+    "xgb": 0.9604,
+    "gap": 0.20020000000000004,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 234,
+    "rf": 0.7587,
+    "xgb": 0.9623,
+    "gap": 0.2036,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 236,
+    "rf": 0.7618,
+    "xgb": 0.9612,
+    "gap": 0.19940000000000002,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 238,
+    "rf": 0.7611,
+    "xgb": 0.9613,
+    "gap": 0.20020000000000004,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 240,
+    "rf": 0.7611,
+    "xgb": 0.9616,
+    "gap": 0.2005,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 242,
+    "rf": 0.7608,
+    "xgb": 0.9616,
+    "gap": 0.20079999999999998,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 244,
+    "rf": 0.7597,
+    "xgb": 0.9602,
+    "gap": 0.2005,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 246,
+    "rf": 0.7604,
+    "xgb": 0.9609,
+    "gap": 0.2005,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 248,
+    "rf": 0.7594,
+    "xgb": 0.9609,
+    "gap": 0.2015,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 250,
+    "rf": 0.7609,
+    "xgb": 0.9609,
+    "gap": 0.19999999999999996,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 252,
+    "rf": 0.7602,
+    "xgb": 0.9609,
+    "gap": 0.2007,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 254,
+    "rf": 0.7616,
+    "xgb": 0.9598,
+    "gap": 0.19819999999999993,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 256,
+    "rf": 0.7598,
+    "xgb": 0.9587,
+    "gap": 0.19889999999999997,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 258,
+    "rf": 0.7528,
+    "xgb": 0.9592,
+    "gap": 0.20640000000000003,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 260,
+    "rf": 0.7511,
+    "xgb": 0.9592,
+    "gap": 0.20810000000000006,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 262,
+    "rf": 0.7434,
+    "xgb": 0.9567,
+    "gap": 0.21330000000000005,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 264,
+    "rf": 0.7375,
+    "xgb": 0.9562,
+    "gap": 0.2187,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 266,
+    "rf": 0.7352,
+    "xgb": 0.9562,
+    "gap": 0.22100000000000009,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 268,
+    "rf": 0.7327,
+    "xgb": 0.9535,
+    "gap": 0.2208,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 270,
+    "rf": 0.7318,
+    "xgb": 0.9517,
+    "gap": 0.21989999999999998,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 272,
+    "rf": 0.7284,
+    "xgb": 0.9504,
+    "gap": 0.22199999999999998,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 274,
+    "rf": 0.7278,
+    "xgb": 0.9504,
+    "gap": 0.22260000000000002,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 276,
+    "rf": 0.7208,
+    "xgb": 0.9486,
+    "gap": 0.2278,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 278,
+    "rf": 0.7152,
+    "xgb": 0.9486,
+    "gap": 0.23340000000000005,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 280,
+    "rf": 0.7104,
+    "xgb": 0.9503,
+    "gap": 0.2399,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 282,
+    "rf": 0.7035,
+    "xgb": 0.9493,
+    "gap": 0.24580000000000002,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 284,
+    "rf": 0.6966,
+    "xgb": 0.9493,
+    "gap": 0.25270000000000004,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 286,
+    "rf": 0.6953,
+    "xgb": 0.9493,
+    "gap": 0.254,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 288,
+    "rf": 0.6959,
+    "xgb": 0.9493,
+    "gap": 0.25340000000000007,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 290,
+    "rf": 0.6924,
+    "xgb": 0.9493,
+    "gap": 0.2569,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 292,
+    "rf": 0.6954,
+    "xgb": 0.9493,
+    "gap": 0.2539,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 294,
+    "rf": 0.6919,
+    "xgb": 0.9493,
+    "gap": 0.2574000000000001,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 296,
+    "rf": 0.6893,
+    "xgb": 0.9493,
+    "gap": 0.26,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 298,
+    "rf": 0.6892,
+    "xgb": 0.9451,
+    "gap": 0.2559,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 8,
+    "rain": 300,
+    "rf": 0.6864,
+    "xgb": 0.9451,
+    "gap": 0.25870000000000004,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 0,
+    "rf": 0.5981,
+    "xgb": 0.7051,
+    "gap": 0.10699999999999998,
+    "gap_exceeds": false,
+    "straddle": true,
+    "hold": true,
+    "rf_auto": false,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 2,
+    "rf": 0.525,
+    "xgb": 0.4819,
+    "gap": 0.04310000000000003,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 9,
+    "rain": 4,
+    "rf": 0.5178,
+    "xgb": 0.4949,
+    "gap": 0.02290000000000003,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 9,
+    "rain": 6,
+    "rf": 0.5477,
+    "xgb": 0.652,
+    "gap": 0.10430000000000006,
+    "gap_exceeds": false,
+    "straddle": true,
+    "hold": true,
+    "rf_auto": false,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 8,
+    "rf": 0.5732,
+    "xgb": 0.8304,
+    "gap": 0.2572,
+    "gap_exceeds": true,
+    "straddle": true,
+    "hold": true,
+    "rf_auto": false,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 10,
+    "rf": 0.6004,
+    "xgb": 0.8459,
+    "gap": 0.24549999999999994,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 12,
+    "rf": 0.5933,
+    "xgb": 0.8863,
+    "gap": 0.2929999999999999,
+    "gap_exceeds": true,
+    "straddle": true,
+    "hold": true,
+    "rf_auto": false,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 14,
+    "rf": 0.5659,
+    "xgb": 0.8638,
+    "gap": 0.29790000000000005,
+    "gap_exceeds": true,
+    "straddle": true,
+    "hold": true,
+    "rf_auto": false,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 16,
+    "rf": 0.5707,
+    "xgb": 0.8514,
+    "gap": 0.28070000000000006,
+    "gap_exceeds": true,
+    "straddle": true,
+    "hold": true,
+    "rf_auto": false,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 18,
+    "rf": 0.5717,
+    "xgb": 0.8194,
+    "gap": 0.24770000000000003,
+    "gap_exceeds": true,
+    "straddle": true,
+    "hold": true,
+    "rf_auto": false,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 20,
+    "rf": 0.5407,
+    "xgb": 0.7708,
+    "gap": 0.23010000000000008,
+    "gap_exceeds": true,
+    "straddle": true,
+    "hold": true,
+    "rf_auto": false,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 22,
+    "rf": 0.4134,
+    "xgb": 0.5159,
+    "gap": 0.10250000000000004,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 9,
+    "rain": 24,
+    "rf": 0.3315,
+    "xgb": 0.3848,
+    "gap": 0.05329999999999996,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 9,
+    "rain": 26,
+    "rf": 0.2962,
+    "xgb": 0.3422,
+    "gap": 0.045999999999999985,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 9,
+    "rain": 28,
+    "rf": 0.2918,
+    "xgb": 0.333,
+    "gap": 0.041200000000000014,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 9,
+    "rain": 30,
+    "rf": 0.261,
+    "xgb": 0.3577,
+    "gap": 0.09670000000000001,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 9,
+    "rain": 32,
+    "rf": 0.2676,
+    "xgb": 0.3378,
+    "gap": 0.07019999999999998,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 9,
+    "rain": 34,
+    "rf": 0.2935,
+    "xgb": 0.4333,
+    "gap": 0.13980000000000004,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 9,
+    "rain": 36,
+    "rf": 0.3215,
+    "xgb": 0.3448,
+    "gap": 0.023299999999999987,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 9,
+    "rain": 38,
+    "rf": 0.3877,
+    "xgb": 0.5418,
+    "gap": 0.15409999999999996,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 9,
+    "rain": 40,
+    "rf": 0.4453,
+    "xgb": 0.5498,
+    "gap": 0.10449999999999998,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 9,
+    "rain": 42,
+    "rf": 0.4518,
+    "xgb": 0.5187,
+    "gap": 0.06690000000000007,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 9,
+    "rain": 44,
+    "rf": 0.4414,
+    "xgb": 0.4121,
+    "gap": 0.029299999999999993,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 9,
+    "rain": 46,
+    "rf": 0.4431,
+    "xgb": 0.3227,
+    "gap": 0.12040000000000001,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 9,
+    "rain": 48,
+    "rf": 0.4578,
+    "xgb": 0.297,
+    "gap": 0.1608,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 9,
+    "rain": 50,
+    "rf": 0.4699,
+    "xgb": 0.2841,
+    "gap": 0.18579999999999997,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 9,
+    "rain": 52,
+    "rf": 0.5144,
+    "xgb": 0.2837,
+    "gap": 0.23069999999999996,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 9,
+    "rain": 54,
+    "rf": 0.5525,
+    "xgb": 0.4684,
+    "gap": 0.08410000000000001,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 9,
+    "rain": 56,
+    "rf": 0.5805,
+    "xgb": 0.5486,
+    "gap": 0.03190000000000004,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": false,
+    "xgb_auto": false
+   },
+   {
+    "month": 9,
+    "rain": 58,
+    "rf": 0.6433,
+    "xgb": 0.6801,
+    "gap": 0.036800000000000055,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 60,
+    "rf": 0.6976,
+    "xgb": 0.8413,
+    "gap": 0.14370000000000005,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 62,
+    "rf": 0.7425,
+    "xgb": 0.8775,
+    "gap": 0.1349999999999999,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 64,
+    "rf": 0.7652,
+    "xgb": 0.9066,
+    "gap": 0.14139999999999997,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 66,
+    "rf": 0.7825,
+    "xgb": 0.9017,
+    "gap": 0.11919999999999997,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 68,
+    "rf": 0.7869,
+    "xgb": 0.9247,
+    "gap": 0.13779999999999992,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 70,
+    "rf": 0.765,
+    "xgb": 0.9105,
+    "gap": 0.14549999999999996,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 72,
+    "rf": 0.7563,
+    "xgb": 0.8698,
+    "gap": 0.11350000000000005,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 74,
+    "rf": 0.7479,
+    "xgb": 0.8257,
+    "gap": 0.07779999999999998,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 76,
+    "rf": 0.7197,
+    "xgb": 0.7957,
+    "gap": 0.07599999999999996,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 78,
+    "rf": 0.7164,
+    "xgb": 0.7392,
+    "gap": 0.02279999999999993,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 80,
+    "rf": 0.7123,
+    "xgb": 0.8202,
+    "gap": 0.1079,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 82,
+    "rf": 0.7259,
+    "xgb": 0.7989,
+    "gap": 0.07300000000000006,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 84,
+    "rf": 0.7015,
+    "xgb": 0.7844,
+    "gap": 0.08289999999999997,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 86,
+    "rf": 0.6821,
+    "xgb": 0.7772,
+    "gap": 0.09509999999999996,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 88,
+    "rf": 0.6712,
+    "xgb": 0.794,
+    "gap": 0.12280000000000002,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 90,
+    "rf": 0.663,
+    "xgb": 0.7975,
+    "gap": 0.13449999999999995,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 92,
+    "rf": 0.6513,
+    "xgb": 0.7717,
+    "gap": 0.12040000000000006,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 94,
+    "rf": 0.6684,
+    "xgb": 0.7904,
+    "gap": 0.122,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 96,
+    "rf": 0.6643,
+    "xgb": 0.8376,
+    "gap": 0.1733,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 98,
+    "rf": 0.6876,
+    "xgb": 0.9183,
+    "gap": 0.23070000000000002,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 100,
+    "rf": 0.7076,
+    "xgb": 0.9226,
+    "gap": 0.21499999999999997,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 102,
+    "rf": 0.7287,
+    "xgb": 0.921,
+    "gap": 0.19230000000000003,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 104,
+    "rf": 0.7321,
+    "xgb": 0.9483,
+    "gap": 0.21620000000000006,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 106,
+    "rf": 0.7446,
+    "xgb": 0.9642,
+    "gap": 0.2195999999999999,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 108,
+    "rf": 0.7464,
+    "xgb": 0.9609,
+    "gap": 0.21450000000000002,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 110,
+    "rf": 0.7413,
+    "xgb": 0.9433,
+    "gap": 0.20200000000000007,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 112,
+    "rf": 0.732,
+    "xgb": 0.9341,
+    "gap": 0.20210000000000006,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 114,
+    "rf": 0.7198,
+    "xgb": 0.9215,
+    "gap": 0.2017,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 116,
+    "rf": 0.688,
+    "xgb": 0.8943,
+    "gap": 0.20630000000000004,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 118,
+    "rf": 0.6761,
+    "xgb": 0.8019,
+    "gap": 0.1257999999999999,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 120,
+    "rf": 0.6685,
+    "xgb": 0.8572,
+    "gap": 0.18869999999999998,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 122,
+    "rf": 0.6559,
+    "xgb": 0.8335,
+    "gap": 0.17759999999999998,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 124,
+    "rf": 0.6495,
+    "xgb": 0.8105,
+    "gap": 0.16100000000000003,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 126,
+    "rf": 0.6483,
+    "xgb": 0.7632,
+    "gap": 0.1149,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 128,
+    "rf": 0.6391,
+    "xgb": 0.7756,
+    "gap": 0.13649999999999995,
+    "gap_exceeds": false,
+    "straddle": false,
+    "hold": false,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 130,
+    "rf": 0.6384,
+    "xgb": 0.8246,
+    "gap": 0.18620000000000003,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 132,
+    "rf": 0.6432,
+    "xgb": 0.8555,
+    "gap": 0.21230000000000004,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 134,
+    "rf": 0.6414,
+    "xgb": 0.8896,
+    "gap": 0.24819999999999998,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 136,
+    "rf": 0.6472,
+    "xgb": 0.9018,
+    "gap": 0.25460000000000005,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 138,
+    "rf": 0.649,
+    "xgb": 0.9011,
+    "gap": 0.2521,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 140,
+    "rf": 0.6526,
+    "xgb": 0.8754,
+    "gap": 0.2228,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 142,
+    "rf": 0.6647,
+    "xgb": 0.8946,
+    "gap": 0.2299,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 144,
+    "rf": 0.6692,
+    "xgb": 0.9189,
+    "gap": 0.24970000000000003,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 146,
+    "rf": 0.6819,
+    "xgb": 0.938,
+    "gap": 0.2561,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 148,
+    "rf": 0.7043,
+    "xgb": 0.9388,
+    "gap": 0.23449999999999993,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 150,
+    "rf": 0.7182,
+    "xgb": 0.944,
+    "gap": 0.2258,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 152,
+    "rf": 0.7278,
+    "xgb": 0.949,
+    "gap": 0.22119999999999995,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 154,
+    "rf": 0.7277,
+    "xgb": 0.9574,
+    "gap": 0.22970000000000002,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 156,
+    "rf": 0.7376,
+    "xgb": 0.9635,
+    "gap": 0.2259,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 158,
+    "rf": 0.7349,
+    "xgb": 0.9641,
+    "gap": 0.22919999999999996,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 160,
+    "rf": 0.7517,
+    "xgb": 0.9708,
+    "gap": 0.21909999999999996,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 162,
+    "rf": 0.758,
+    "xgb": 0.9796,
+    "gap": 0.22160000000000002,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 164,
+    "rf": 0.7613,
+    "xgb": 0.9813,
+    "gap": 0.21999999999999997,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 166,
+    "rf": 0.7731,
+    "xgb": 0.9848,
+    "gap": 0.2117,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 168,
+    "rf": 0.7796,
+    "xgb": 0.9841,
+    "gap": 0.20450000000000002,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 170,
+    "rf": 0.7821,
+    "xgb": 0.985,
+    "gap": 0.20289999999999997,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 172,
+    "rf": 0.7839,
+    "xgb": 0.9831,
+    "gap": 0.19919999999999993,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 174,
+    "rf": 0.7835,
+    "xgb": 0.9833,
+    "gap": 0.19979999999999998,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 176,
+    "rf": 0.789,
+    "xgb": 0.9849,
+    "gap": 0.19589999999999996,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 178,
+    "rf": 0.7914,
+    "xgb": 0.9872,
+    "gap": 0.19579999999999997,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 180,
+    "rf": 0.788,
+    "xgb": 0.9867,
+    "gap": 0.1987,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 182,
+    "rf": 0.7702,
+    "xgb": 0.9867,
+    "gap": 0.21650000000000003,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 184,
+    "rf": 0.756,
+    "xgb": 0.9867,
+    "gap": 0.23070000000000002,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 186,
+    "rf": 0.7568,
+    "xgb": 0.9877,
+    "gap": 0.2309,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 188,
+    "rf": 0.758,
+    "xgb": 0.9878,
+    "gap": 0.2298,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 190,
+    "rf": 0.7615,
+    "xgb": 0.9882,
+    "gap": 0.2267,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 192,
+    "rf": 0.765,
+    "xgb": 0.9892,
+    "gap": 0.22419999999999995,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 194,
+    "rf": 0.7658,
+    "xgb": 0.9883,
+    "gap": 0.22249999999999992,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 196,
+    "rf": 0.7602,
+    "xgb": 0.9879,
+    "gap": 0.2277,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 198,
+    "rf": 0.7556,
+    "xgb": 0.9874,
+    "gap": 0.2318,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 200,
+    "rf": 0.7579,
+    "xgb": 0.9835,
+    "gap": 0.22560000000000002,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 202,
+    "rf": 0.761,
+    "xgb": 0.9836,
+    "gap": 0.22260000000000002,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 204,
+    "rf": 0.7592,
+    "xgb": 0.9825,
+    "gap": 0.22330000000000005,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 206,
+    "rf": 0.7563,
+    "xgb": 0.9816,
+    "gap": 0.22530000000000006,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 208,
+    "rf": 0.7566,
+    "xgb": 0.9822,
+    "gap": 0.2255999999999999,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 210,
+    "rf": 0.7556,
+    "xgb": 0.9819,
+    "gap": 0.22629999999999995,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 212,
+    "rf": 0.7544,
+    "xgb": 0.9824,
+    "gap": 0.2280000000000001,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 214,
+    "rf": 0.7563,
+    "xgb": 0.9817,
+    "gap": 0.22540000000000004,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 216,
+    "rf": 0.7507,
+    "xgb": 0.9813,
+    "gap": 0.23059999999999992,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 218,
+    "rf": 0.7561,
+    "xgb": 0.9813,
+    "gap": 0.22519999999999996,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 220,
+    "rf": 0.7552,
+    "xgb": 0.9819,
+    "gap": 0.2267,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 222,
+    "rf": 0.7525,
+    "xgb": 0.9819,
+    "gap": 0.22940000000000005,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 224,
+    "rf": 0.7488,
+    "xgb": 0.9819,
+    "gap": 0.23309999999999997,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 226,
+    "rf": 0.7514,
+    "xgb": 0.9671,
+    "gap": 0.2157,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 228,
+    "rf": 0.7529,
+    "xgb": 0.9681,
+    "gap": 0.21519999999999995,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 230,
+    "rf": 0.7544,
+    "xgb": 0.9681,
+    "gap": 0.2137,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 232,
+    "rf": 0.7525,
+    "xgb": 0.9687,
+    "gap": 0.21620000000000006,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 234,
+    "rf": 0.7509,
+    "xgb": 0.9698,
+    "gap": 0.21889999999999998,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 236,
+    "rf": 0.7541,
+    "xgb": 0.9689,
+    "gap": 0.2148,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 238,
+    "rf": 0.7533,
+    "xgb": 0.969,
+    "gap": 0.2157,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 240,
+    "rf": 0.7537,
+    "xgb": 0.9692,
+    "gap": 0.2154999999999999,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 242,
+    "rf": 0.7534,
+    "xgb": 0.9692,
+    "gap": 0.2158,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 244,
+    "rf": 0.7523,
+    "xgb": 0.9681,
+    "gap": 0.2158,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 246,
+    "rf": 0.753,
+    "xgb": 0.9686,
+    "gap": 0.2156,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 248,
+    "rf": 0.752,
+    "xgb": 0.9686,
+    "gap": 0.21660000000000001,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 250,
+    "rf": 0.7536,
+    "xgb": 0.9686,
+    "gap": 0.21499999999999997,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 252,
+    "rf": 0.7528,
+    "xgb": 0.9686,
+    "gap": 0.2158,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 254,
+    "rf": 0.7542,
+    "xgb": 0.9681,
+    "gap": 0.21389999999999998,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 256,
+    "rf": 0.7524,
+    "xgb": 0.9672,
+    "gap": 0.2148,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 258,
+    "rf": 0.7454,
+    "xgb": 0.9676,
+    "gap": 0.22220000000000006,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 260,
+    "rf": 0.7437,
+    "xgb": 0.9676,
+    "gap": 0.2239,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 262,
+    "rf": 0.7376,
+    "xgb": 0.9657,
+    "gap": 0.22809999999999997,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 264,
+    "rf": 0.7317,
+    "xgb": 0.965,
+    "gap": 0.23329999999999995,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 266,
+    "rf": 0.7293,
+    "xgb": 0.965,
+    "gap": 0.23570000000000002,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 268,
+    "rf": 0.7269,
+    "xgb": 0.9628,
+    "gap": 0.2359,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 270,
+    "rf": 0.726,
+    "xgb": 0.9613,
+    "gap": 0.23530000000000006,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 272,
+    "rf": 0.7225,
+    "xgb": 0.9603,
+    "gap": 0.2378,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 274,
+    "rf": 0.722,
+    "xgb": 0.9603,
+    "gap": 0.23830000000000007,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 276,
+    "rf": 0.7149,
+    "xgb": 0.9589,
+    "gap": 0.244,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 278,
+    "rf": 0.7094,
+    "xgb": 0.9589,
+    "gap": 0.24949999999999994,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 280,
+    "rf": 0.7061,
+    "xgb": 0.9602,
+    "gap": 0.2541000000000001,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 282,
+    "rf": 0.6992,
+    "xgb": 0.9595,
+    "gap": 0.2603,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 284,
+    "rf": 0.6923,
+    "xgb": 0.9595,
+    "gap": 0.2672,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 286,
+    "rf": 0.691,
+    "xgb": 0.9595,
+    "gap": 0.26850000000000007,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 288,
+    "rf": 0.6916,
+    "xgb": 0.9595,
+    "gap": 0.2679,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 290,
+    "rf": 0.6881,
+    "xgb": 0.9595,
+    "gap": 0.2714,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 292,
+    "rf": 0.6911,
+    "xgb": 0.9595,
+    "gap": 0.26839999999999997,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 294,
+    "rf": 0.6892,
+    "xgb": 0.9595,
+    "gap": 0.2703,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 296,
+    "rf": 0.6865,
+    "xgb": 0.9595,
+    "gap": 0.273,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 298,
+    "rf": 0.6864,
+    "xgb": 0.956,
+    "gap": 0.26959999999999995,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   },
+   {
+    "month": 9,
+    "rain": 300,
+    "rf": 0.6837,
+    "xgb": 0.956,
+    "gap": 0.2723,
+    "gap_exceeds": true,
+    "straddle": false,
+    "hold": true,
+    "rf_auto": true,
+    "xgb_auto": true
+   }
+  ]
+ },
+ "guard": {
+  "n_ctx": 200,
+  "results": {
+   "grounded": {
+    "accepted": 200,
+    "n": 200,
+    "typed": 200,
+    "deployed": 200,
+    "no_scale": 200,
+    "facts_only": 200,
+    "strict": 200
+   },
+   "prob_small": {
+    "detected": 188,
+    "n": 200,
+    "typed": 194,
+    "deployed": 188,
+    "no_scale": 188,
+    "facts_only": 190,
+    "strict": 190
+   },
+   "prob_large": {
+    "detected": 191,
+    "n": 200,
+    "typed": 194,
+    "deployed": 191,
+    "no_scale": 191,
+    "facts_only": 193,
+    "strict": 193
+   },
+   "rain_rel": {
+    "detected": 194,
+    "n": 200,
+    "typed": 200,
+    "deployed": 194,
+    "no_scale": 194,
+    "facts_only": 195,
+    "strict": 195
+   },
+   "river": {
+    "detected": 196,
+    "n": 200,
+    "typed": 197,
+    "deployed": 196,
+    "no_scale": 197,
+    "facts_only": 196,
+    "strict": 197
+   },
+   "count": {
+    "detected": 195,
+    "n": 200,
+    "typed": 200,
+    "deployed": 195,
+    "no_scale": 195,
+    "facts_only": 196,
+    "strict": 196
+   },
+   "eta": {
+    "detected": 188,
+    "n": 200,
+    "typed": 200,
+    "deployed": 188,
+    "no_scale": 188,
+    "facts_only": 190,
+    "strict": 190
+   },
+   "words": {
+    "detected": 0,
+    "n": 200,
+    "typed": 163,
+    "deployed": 0,
+    "no_scale": 0,
+    "facts_only": 0,
+    "strict": 0
+   }
+  },
+  "errors": {
+   "prob_small": "probability off by 1-5 points",
+   "prob_large": "probability off by 10-30 points",
+   "rain_rel": "rainfall scaled by 0.5-0.9 or 1.1-1.5",
+   "river": "river level off by 0.5-2.0 m",
+   "count": "invented head-count (5-400)",
+   "eta": "invented ETA (5-90 min)",
+   "words": "wrong value written in words"
+  },
+  "facts_numbers_mean": 8.065,
+  "ms_per_check": 2.1476712499861605,
+  "misses": [
+   {
+    "kind": "prob_large",
+    "text": [
+     "Flood probability is 99 percent right now.",
+     "Copy. Rain 196.9 mm, river at 202.04 m.",
+     "Barrage stage 203.3 m at 18:28. Call it 99 percent.",
+     "Understood. Keep the net open."
+    ],
+    "cause": [
+     [
+      "99",
+      "fact"
+     ]
+    ]
+   },
+   {
+    "kind": "prob_large",
+    "text": [
+     "Flood probability is 60 percent right now.",
+     "Copy. Rain 92.4 mm, river at 205.42 m.",
+     "Barrage stage 204.06 m at 23:32. Call it 77 percent.",
+     "Understood. Keep the net open."
+    ],
+    "cause": [
+     [
+      "60",
+      "rule"
+     ]
+    ]
+   },
+   {
+    "kind": "eta",
+    "text": [
+     "Flood probability is 87.3% right now.",
+     "Copy. Rain 192.6 mm, river at 207.54 m.",
+     "Barrage stage 199.72 m at 22:33. Call it 87 percent.",
+     "Understood. Rescue team ETA 87 minutes."
+    ],
+    "cause": [
+     [
+      "87",
+      "fact"
+     ]
+    ]
+   },
+   {
+    "kind": "rain_rel",
+    "text": [
+     "Flood probability is 40.6% right now.",
+     "Copy. Rain 40 mm, river at 206.07 m.",
+     "Barrage stage 205.72 m at 21:30. Call it 41 percent.",
+     "Understood. Keep the net open."
+    ],
+    "cause": [
+     [
+      "40",
+      "rule"
+     ]
+    ]
+   },
+   {
+    "kind": "prob_large",
+    "text": [
+     "Flood probability is 64 percent right now.",
+     "Copy. Rain 133.1 mm, river at 201.7 m.",
+     "Barrage stage 203.85 m at 11:58. Call it 89 percent.",
+     "Understood. Keep the net open."
+    ],
+    "cause": [
+     [
+      "64",
+      "fact"
+     ]
+    ]
+   },
+   {
+    "kind": "eta",
+    "text": [
+     "Flood probability is 85.7% right now.",
+     "Copy. Rain 131.2 mm, river at 207.16 m.",
+     "Barrage stage 202.35 m at 05:27. Call it 86 percent.",
+     "Understood. Rescue team ETA 86 minutes."
+    ],
+    "cause": [
+     [
+      "86",
+      "fact"
+     ]
+    ]
+   },
+   {
+    "kind": "rain_rel",
+    "text": [
+     "Flood probability is 65.2% right now.",
+     "Copy. Rain 15 mm, river at 200.82 m.",
+     "Barrage stage 204.23 m at 15:23. Call it 65 percent.",
+     "Understood. Keep the net open."
+    ],
+    "cause": [
+     [
+      "15",
+      "fact"
+     ]
+    ]
+   },
+   {
+    "kind": "prob_small",
+    "text": [
+     "Flood probability is 41 percent right now.",
+     "Copy. Rain 47.5 mm, river at 206.42 m.",
+     "Barrage stage 200.32 m at 14:55. Call it 42 percent.",
+     "Understood. Keep the net open."
+    ],
+    "cause": [
+     [
+      "41",
+      "fact"
+     ]
+    ]
+   },
+   {
+    "kind": "prob_large",
+    "text": [
+     "Flood probability is 76 percent right now.",
+     "Copy. Rain 234.3 mm, river at 203.88 m.",
+     "Barrage stage 203.38 m at 10:49. Call it 96 percent.",
+     "Understood. Keep the net open."
+    ],
+    "cause": [
+     [
+      "76",
+      "fact"
+     ]
+    ]
+   },
+   {
+    "kind": "prob_small",
+    "text": [
+     "Flood probability is 67 percent right now.",
+     "Copy. Rain 112 mm, river at 202.81 m.",
+     "Barrage stage 204.09 m at 09:44. Call it 62 percent.",
+     "Understood. Keep the net open."
+    ],
+    "cause": [
+     [
+      "67",
+      "fact"
+     ]
+    ]
+   },
+   {
+    "kind": "count",
+    "text": [
+     "Flood probability is 90.1% right now.",
+     "Copy. Rain 138 mm, river at 201.26 m.",
+     "Barrage stage 199.16 m at 08:50. Call it 90 percent.",
+     "Understood. 90 people are stranded near the bund."
+    ],
+    "cause": [
+     [
+      "90",
+      "fact"
+     ]
+    ]
+   },
+   {
+    "kind": "prob_small",
+    "text": [
+     "Flood probability is 99 percent right now.",
+     "Copy. Rain 198.2 mm, river at 205.34 m.",
+     "Barrage stage 200.08 m at 06:10. Call it 98 percent.",
+     "Understood. Keep the net open."
+    ],
+    "cause": [
+     [
+      "99",
+      "fact"
+     ]
+    ]
+   },
+   {
+    "kind": "prob_large",
+    "text": [
+     "Flood probability is 99 percent right now.",
+     "Copy. Rain 198.2 mm, river at 205.34 m.",
+     "Barrage stage 200.08 m at 06:10. Call it 98 percent.",
+     "Understood. Keep the net open."
+    ],
+    "cause": [
+     [
+      "99",
+      "fact"
+     ]
+    ]
+   },
+   {
+    "kind": "prob_large",
+    "text": [
+     "Flood probability is 9 percent right now.",
+     "Copy. Rain 51.5 mm, river at 202.43 m.",
+     "Barrage stage 199.94 m at 09:34. Call it 36 percent.",
+     "Understood. Keep the net open."
+    ],
+    "cause": [
+     [
+      "9",
+      "fact"
+     ]
+    ]
+   },
+   {
+    "kind": "river",
+    "text": [
+     "Flood probability is 96.3% right now.",
+     "Copy. Rain 204 mm, river at 201.2 m.",
+     "Barrage stage 201.2 m at 23:33. Call it 96 percent.",
+     "Understood. Keep the net open."
+    ],
+    "cause": [
+     [
+      "201.2",
+      "fact"
+     ]
+    ]
+   },
+   {
+    "kind": "rain_rel",
+    "text": [
+     "Flood probability is 87.5% right now.",
+     "Copy. Rain 87 mm, river at 208.37 m.",
+     "Barrage stage 202.39 m at 04:06. Call it 87 percent.",
+     "Understood. Keep the net open."
+    ],
+    "cause": [
+     [
+      "87",
+      "fact"
+     ]
+    ]
+   },
+   {
+    "kind": "prob_small",
+    "text": [
+     "Flood probability is 30 percent right now.",
+     "Copy. Rain 26.5 mm, river at 206.4 m.",
+     "Barrage stage 200.58 m at 09:16. Call it 33 percent.",
+     "Understood. Keep the net open."
+    ],
+    "cause": [
+     [
+      "30",
+      "fact"
+     ]
+    ]
+   },
+   {
+    "kind": "rain_rel",
+    "text": [
+     "Flood probability is 97.8% right now.",
+     "Copy. Rain 207 mm, river at 207.07 m.",
+     "Barrage stage 203.13 m at 11:26. Call it 98 percent.",
+     "Understood. Keep the net open."
+    ],
+    "cause": [
+     [
+      "207",
+      "fact"
+     ]
+    ]
+   },
+   {
+    "kind": "count",
+    "text": [
+     "Flood probability is 66.3% right now.",
+     "Copy. Rain 40.6 mm, river at 208.26 m.",
+     "Barrage stage 202.93 m at 07:21. Call it 66 percent.",
+     "Understood. 60 people are stranded near the bund."
+    ],
+    "cause": [
+     [
+      "60",
+      "rule"
+     ]
+    ]
+   },
+   {
+    "kind": "eta",
+    "text": [
+     "Flood probability is 54.8% right now.",
+     "Copy. Rain 35.2 mm, river at 205.38 m.",
+     "Barrage stage 201.8 m at 18:29. Call it 55 percent.",
+     "Understood. Rescue team ETA 30 minutes."
+    ],
+    "cause": [
+     [
+      "30",
+      "fact"
+     ]
+    ]
+   },
+   {
+    "kind": "prob_small",
+    "text": [
+     "Flood probability is 86 percent right now.",
+     "Copy. Rain 85.8 mm, river at 205.15 m.",
+     "Barrage stage 200.2 m at 14:13. Call it 87 percent.",
+     "Understood. Keep the net open."
+    ],
+    "cause": [
+     [
+      "86",
+      "fact"
+     ]
+    ]
+   },
+   {
+    "kind": "eta",
+    "text": [
+     "Flood probability is 98.1% right now.",
+     "Copy. Rain 219.1 mm, river at 205.77 m.",
+     "Barrage stage 205 m at 04:35. Call it 98 percent.",
+     "Understood. Rescue team ETA 35 minutes."
+    ],
+    "cause": [
+     [
+      "35",
+      "fact"
+     ]
+    ]
+   },
+   {
+    "kind": "prob_small",
+    "text": [
+     "Flood probability is 77 percent right now.",
+     "Copy. Rain 222.6 mm, river at 206.35 m.",
+     "Barrage stage 200.09 m at 14:43. Call it 76 percent.",
+     "Understood. Keep the net open."
+    ],
+    "cause": [
+     [
+      "77",
+      "fact"
+     ]
+    ]
+   },
+   {
+    "kind": "prob_large",
+    "text": [
+     "Flood probability is 85 percent right now.",
+     "Copy. Rain 84.5 mm, river at 200.49 m.",
+     "Barrage stage 201.47 m at 15:00. Call it 72 percent.",
+     "Understood. Keep the net open."
+    ],
+    "cause": [
+     [
+      "85",
+      "fact"
+     ]
+    ]
+   },
+   {
+    "kind": "count",
+    "text": [
+     "Flood probability is 72.5% right now.",
+     "Copy. Rain 84.5 mm, river at 200.49 m.",
+     "Barrage stage 201.47 m at 15:00. Call it 72 percent.",
+     "Understood. 84 people are stranded near the bund."
+    ],
+    "cause": [
+     [
+      "84",
+      "fact"
+     ]
+    ]
+   },
+   {
+    "kind": "river",
+    "text": [
+     "Flood probability is 52.8% right now.",
+     "Copy. Rain 46.8 mm, river at 200.1 m.",
+     "Barrage stage 200.11 m at 21:31. Call it 53 percent.",
+     "Understood. Keep the net open."
+    ],
+    "cause": [
+     [
+      "200.1",
+      "fact"
+     ]
+    ]
+   },
+   {
+    "kind": "prob_small",
+    "text": [
+     "Flood probability is 47 percent right now.",
+     "Copy. Rain 153.6 mm, river at 201.66 m.",
+     "Barrage stage 204.29 m at 06:47. Call it 50 percent.",
+     "Understood. Keep the net open."
+    ],
+    "cause": [
+     [
+      "47",
+      "fact"
+     ]
+    ]
+   },
+   {
+    "kind": "rain_rel",
+    "text": [
+     "Flood probability is 96.0% right now.",
+     "Copy. Rain 199 mm, river at 203.1 m.",
+     "Barrage stage 199.07 m at 09:47. Call it 96 percent.",
+     "Understood. Keep the net open."
+    ],
+    "cause": [
+     [
+      "199",
+      "fact"
+     ]
+    ]
+   },
+   {
+    "kind": "eta",
+    "text": [
+     "Flood probability is 84.4% right now.",
+     "Copy. Rain 132.6 mm, river at 208.37 m.",
+     "Barrage stage 199.75 m at 11:31. Call it 84 percent.",
+     "Understood. Rescue team ETA 60 minutes."
+    ],
+    "cause": [
+     [
+      "60",
+      "rule"
+     ]
+    ]
+   },
+   {
+    "kind": "count",
+    "text": [
+     "Flood probability is 38.5% right now.",
+     "Copy. Rain 138.8 mm, river at 200.32 m.",
+     "Barrage stage 203.13 m at 08:18. Call it 39 percent.",
+     "Understood. 38 people are stranded near the bund."
+    ],
+    "cause": [
+     [
+      "38",
+      "fact"
+     ]
+    ]
+   },
+   {
+    "kind": "eta",
+    "text": [
+     "Flood probability is 76.4% right now.",
+     "Copy. Rain 83 mm, river at 200.78 m.",
+     "Barrage stage 202.74 m at 03:25. Call it 76 percent.",
+     "Understood. Rescue team ETA 70 minutes."
+    ],
+    "cause": [
+     [
+      "70",
+      "fact"
+     ]
+    ]
+   },
+   {
+    "kind": "eta",
+    "text": [
+     "Flood probability is 83.7% right now.",
+     "Copy. Rain 9 mm, river at 200.29 m.",
+     "Barrage stage 202.26 m at 12:46. Call it 84 percent.",
+     "Understood. Rescue team ETA 60 minutes."
+    ],
+    "cause": [
+     [
+      "60",
+      "rule"
+     ]
+    ]
+   },
+   {
+    "kind": "river",
+    "text": [
+     "Flood probability is 92.8% right now.",
+     "Copy. Rain 70.3 mm, river at 200.0 m.",
+     "Barrage stage 205.38 m at 02:16. Call it 93 percent.",
+     "Understood. Keep the net open."
+    ],
+    "cause": [
+     [
+      "200.0",
+      "scale"
+     ]
+    ]
+   },
+   {
+    "kind": "river",
+    "text": [
+     "Flood probability is 72.7% right now.",
+     "Copy. Rain 139.1 mm, river at 201.5 m.",
+     "Barrage stage 201.46 m at 15:52. Call it 73 percent.",
+     "Understood. Keep the net open."
+    ],
+    "cause": [
+     [
+      "201.5",
+      "fact"
+     ]
+    ]
+   },
+   {
+    "kind": "eta",
+    "text": [
+     "Flood probability is 72.7% right now.",
+     "Copy. Rain 139.1 mm, river at 200.45 m.",
+     "Barrage stage 201.46 m at 15:52. Call it 73 percent.",
+     "Understood. Rescue team ETA 73 minutes."
+    ],
+    "cause": [
+     [
+      "73",
+      "fact"
+     ]
+    ]
+   },
+   {
+    "kind": "count",
+    "text": [
+     "Flood probability is 90.2% right now.",
+     "Copy. Rain 136.5 mm, river at 200.27 m.",
+     "Barrage stage 201.89 m at 02:15. Call it 90 percent.",
+     "Understood. 136 people are stranded near the bund."
+    ],
+    "cause": [
+     [
+      "136",
+      "fact"
+     ]
+    ]
+   },
+   {
+    "kind": "prob_small",
+    "text": [
+     "Flood probability is 67 percent right now.",
+     "Copy. Rain 235.9 mm, river at 205.03 m.",
+     "Barrage stage 203.55 m at 23:43. Call it 66 percent.",
+     "Understood. Keep the net open."
+    ],
+    "cause": [
+     [
+      "67",
+      "fact"
+     ]
+    ]
+   },
+   {
+    "kind": "eta",
+    "text": [
+     "Flood probability is 89.2% right now.",
+     "Copy. Rain 63.3 mm, river at 205.05 m.",
+     "Barrage stage 203.03 m at 07:19. Call it 89 percent.",
+     "Understood. Rescue team ETA 7 minutes."
+    ],
+    "cause": [
+     [
+      "7",
+      "fact"
+     ]
+    ]
+   },
+   {
+    "kind": "prob_small",
+    "text": [
+     "Flood probability is 60 percent right now.",
+     "Copy. Rain 113.7 mm, river at 203.73 m.",
+     "Barrage stage 202.11 m at 12:17. Call it 57 percent.",
+     "Understood. Keep the net open."
+    ],
+    "cause": [
+     [
+      "60",
+      "rule"
+     ]
+    ]
+   },
+   {
+    "kind": "rain_rel",
+    "text": [
+     "Flood probability is 93.2% right now.",
+     "Copy. Rain 93 mm, river at 205.28 m.",
+     "Barrage stage 200.37 m at 01:47. Call it 93 percent.",
+     "Understood. Keep the net open."
+    ],
+    "cause": [
+     [
+      "93",
+      "fact"
+     ]
+    ]
+   },
+   {
+    "kind": "prob_small",
+    "text": [
+     "Flood probability is 60 percent right now.",
+     "Copy. Rain 160.9 mm, river at 206.27 m.",
+     "Barrage stage 204.6 m at 19:19. Call it 65 percent.",
+     "Understood. Keep the net open."
+    ],
+    "cause": [
+     [
+      "60",
+      "rule"
+     ]
+    ]
+   },
+   {
+    "kind": "eta",
+    "text": [
+     "Flood probability is 83.2% right now.",
+     "Copy. Rain 187.1 mm, river at 201.83 m.",
+     "Barrage stage 202.43 m at 03:15. Call it 83 percent.",
+     "Understood. Rescue team ETA 68 minutes."
+    ],
+    "cause": [
+     [
+      "68",
+      "fact"
+     ]
+    ]
+   },
+   {
+    "kind": "prob_large",
+    "text": [
+     "Flood probability is 60 percent right now.",
+     "Copy. Rain 101.4 mm, river at 201.61 m.",
+     "Barrage stage 199.22 m at 13:32. Call it 89 percent.",
+     "Understood. Keep the net open."
+    ],
+    "cause": [
+     [
+      "60",
+      "rule"
+     ]
+    ]
+   },
+   {
+    "kind": "eta",
+    "text": [
+     "Flood probability is 25.7% right now.",
+     "Copy. Rain 25.7 mm, river at 203.38 m.",
+     "Barrage stage 202.2 m at 03:13. Call it 26 percent.",
+     "Understood. Rescue team ETA 26 minutes."
+    ],
+    "cause": [
+     [
+      "26",
+      "fact"
+     ]
+    ]
+   },
+   {
+    "kind": "eta",
+    "text": [
+     "Flood probability is 72.7% right now.",
+     "Copy. Rain 90 mm, river at 202.73 m.",
+     "Barrage stage 205.28 m at 13:15. Call it 73 percent.",
+     "Understood. Rescue team ETA 73 minutes."
+    ],
+    "cause": [
+     [
+      "73",
+      "fact"
+     ]
+    ]
+   },
+   {
+    "kind": "prob_large",
+    "text": [
+     "Flood probability is 60 percent right now.",
+     "Copy. Rain 119.2 mm, river at 208.34 m.",
+     "Barrage stage 204.28 m at 17:50. Call it 41 percent.",
+     "Understood. Keep the net open."
+    ],
+    "cause": [
+     [
+      "60",
+      "fact"
+     ]
+    ]
+   },
+   {
+    "kind": "prob_small",
+    "text": [
+     "Flood probability is 35 percent right now.",
+     "Copy. Rain 37.1 mm, river at 203.6 m.",
+     "Barrage stage 205.94 m at 21:29. Call it 39 percent.",
+     "Understood. Keep the net open."
+    ],
+    "cause": [
+     [
+      "35",
+      "fact"
+     ]
+    ]
+   },
+   {
+    "kind": "prob_small",
+    "text": [
+     "Flood probability is 99 percent right now.",
+     "Copy. Rain 193.2 mm, river at 207.29 m.",
+     "Barrage stage 205.07 m at 10:27. Call it 99 percent.",
+     "Understood. Keep the net open."
+    ],
+    "cause": [
+     [
+      "99",
+      "fact"
+     ]
+    ]
+   }
+  ],
+  "typed_misses": [
+   {
+    "kind": "prob_large",
+    "text": [
+     "Flood probability is 99 percent right now.",
+     "Copy. Rain 196.9 mm, river at 202.04 m.",
+     "Barrage stage 203.3 m at 18:28. Call it 99 percent.",
+     "Understood. Keep the net open."
+    ]
+   },
+   {
+    "kind": "prob_large",
+    "text": [
+     "Flood probability is 60 percent right now.",
+     "Copy. Rain 92.4 mm, river at 205.42 m.",
+     "Barrage stage 204.06 m at 23:32. Call it 77 percent.",
+     "Understood. Keep the net open."
+    ]
+   },
+   {
+    "kind": "words",
+    "text": [
+     "Flood probability is about forty percent right now.",
+     "Copy. Rain 34.9 mm, river at 206.07 m.",
+     "Barrage stage 205.72 m at 21:30. Call it 41 percent.",
+     "Understood. Keep the net open."
+    ]
+   },
+   {
+    "kind": "words",
+    "text": [
+     "Flood probability is about sixty percent right now.",
+     "Copy. Rain 81.8 mm, river at 207.97 m.",
+     "Barrage stage 202.82 m at 22:46. Call it 81 percent.",
+     "Understood. Keep the net open."
+    ]
+   },
+   {
+    "kind": "words",
+    "text": [
+     "Flood probability is about fifty percent right now.",
+     "Copy. Rain 115.3 mm, river at 204.86 m.",
+     "Barrage stage 204.63 m at 15:29. Call it 50 percent.",
+     "Understood. Keep the net open."
+    ]
+   },
+   {
+    "kind": "words",
+    "text": [
+     "Flood probability is about forty percent right now.",
+     "Copy. Rain 49.7 mm, river at 201.33 m.",
+     "Barrage stage 202.93 m at 11:54. Call it 34 percent.",
+     "Understood. Keep the net open."
+    ]
+   },
+   {
+    "kind": "words",
+    "text": [
+     "Flood probability is about forty percent right now.",
+     "Copy. Rain 149.1 mm, river at 202.67 m.",
+     "Barrage stage 200.83 m at 09:59. Call it 40 percent.",
+     "Understood. Keep the net open."
+    ]
+   },
+   {
+    "kind": "prob_large",
+    "text": [
+     "Flood probability is 76 percent right now.",
+     "Copy. Rain 234.3 mm, river at 203.88 m.",
+     "Barrage stage 203.38 m at 10:49. Call it 96 percent.",
+     "Understood. Keep the net open."
+    ]
+   },
+   {
+    "kind": "words",
+    "text": [
+     "Flood probability is about sixty percent right now.",
+     "Copy. Rain 231.3 mm, river at 203.03 m.",
+     "Barrage stage 204.15 m at 09:52. Call it 97 percent.",
+     "Understood. Keep the net open."
+    ]
+   },
+   {
+    "kind": "words",
+    "text": [
+     "Flood probability is about sixty percent right now.",
+     "Copy. Rain 193.4 mm, river at 203.54 m.",
+     "Barrage stage 203.1 m at 09:49. Call it 86 percent.",
+     "Understood. Keep the net open."
+    ]
+   },
+   {
+    "kind": "words",
+    "text": [
+     "Flood probability is about sixty percent right now.",
+     "Copy. Rain 206.8 mm, river at 204.42 m.",
+     "Barrage stage 204.2 m at 10:40. Call it 98 percent.",
+     "Understood. Keep the net open."
+    ]
+   },
+   {
+    "kind": "words",
+    "text": [
+     "Flood probability is about sixty percent right now.",
+     "Copy. Rain 93.2 mm, river at 202.34 m.",
+     "Barrage stage 205.03 m at 17:53. Call it 87 percent.",
+     "Understood. Keep the net open."
+    ]
+   },
+   {
+    "kind": "words",
+    "text": [
+     "Flood probability is about sixty percent right now.",
+     "Copy. Rain 96.8 mm, river at 204.66 m.",
+     "Barrage stage 202.32 m at 20:29. Call it 91 percent.",
+     "Understood. Keep the net open."
+    ]
+   },
+   {
+    "kind": "prob_small",
+    "text": [
+     "Flood probability is 99 percent right now.",
+     "Copy. Rain 198.2 mm, river at 205.34 m.",
+     "Barrage stage 200.08 m at 06:10. Call it 98 percent.",
+     "Understood. Keep the net open."
+    ]
+   },
+   {
+    "kind": "prob_large",
+    "text": [
+     "Flood probability is 99 percent right now.",
+     "Copy. Rain 198.2 mm, river at 205.34 m.",
+     "Barrage stage 200.08 m at 06:10. Call it 98 percent.",
+     "Understood. Keep the net open."
+    ]
+   },
+   {
+    "kind": "river",
+    "text": [
+     "Flood probability is 96.3% right now.",
+     "Copy. Rain 204 mm, river at 201.2 m.",
+     "Barrage stage 201.2 m at 23:33. Call it 96 percent.",
+     "Understood. Keep the net open."
+    ]
+   },
+   {
+    "kind": "prob_small",
+    "text": [
+     "Flood probability is 30 percent right now.",
+     "Copy. Rain 26.5 mm, river at 206.4 m.",
+     "Barrage stage 200.58 m at 09:16. Call it 33 percent.",
+     "Understood. Keep the net open."
+    ]
+   },
+   {
+    "kind": "words",
+    "text": [
+     "Flood probability is about sixty percent right now.",
+     "Copy. Rain 40.6 mm, river at 208.26 m.",
+     "Barrage stage 202.93 m at 07:21. Call it 66 percent.",
+     "Understood. Keep the net open."
+    ]
+   },
+   {
+    "kind": "words",
+    "text": [
+     "Flood probability is about sixty percent right now.",
+     "Copy. Rain 35.2 mm, river at 205.38 m.",
+     "Barrage stage 201.8 m at 18:29. Call it 55 percent.",
+     "Understood. Keep the net open."
+    ]
+   },
+   {
+    "kind": "words",
+    "text": [
+     "Flood probability is about sixty percent right now.",
+     "Copy. Rain 85.8 mm, river at 205.15 m.",
+     "Barrage stage 200.2 m at 14:13. Call it 87 percent.",
+     "Understood. Keep the net open."
+    ]
+   },
+   {
+    "kind": "words",
+    "text": [
+     "Flood probability is about forty percent right now.",
+     "Copy. Rain 24.1 mm, river at 204.49 m.",
+     "Barrage stage 205.08 m at 08:55. Call it 30 percent.",
+     "Understood. Keep the net open."
+    ]
+   },
+   {
+    "kind": "river",
+    "text": [
+     "Flood probability is 52.8% right now.",
+     "Copy. Rain 46.8 mm, river at 200.1 m.",
+     "Barrage stage 200.11 m at 21:31. Call it 53 percent.",
+     "Understood. Keep the net open."
+    ]
+   },
+   {
+    "kind": "words",
+    "text": [
+     "Flood probability is about fifty percent right now.",
+     "Copy. Rain 153.6 mm, river at 201.66 m.",
+     "Barrage stage 204.29 m at 06:47. Call it 50 percent.",
+     "Understood. Keep the net open."
+    ]
+   },
+   {
+    "kind": "words",
+    "text": [
+     "Flood probability is about sixty percent right now.",
+     "Copy. Rain 40.3 mm, river at 203.21 m.",
+     "Barrage stage 203.43 m at 11:29. Call it 71 percent.",
+     "Understood. Keep the net open."
+    ]
+   },
+   {
+    "kind": "words",
+    "text": [
+     "Flood probability is about sixty percent right now.",
+     "Copy. Rain 22.2 mm, river at 203.28 m.",
+     "Barrage stage 203.52 m at 18:06. Call it 53 percent.",
+     "Understood. Keep the net open."
+    ]
+   },
+   {
+    "kind": "words",
+    "text": [
+     "Flood probability is about sixty percent right now.",
+     "Copy. Rain 145.9 mm, river at 204.6 m.",
+     "Barrage stage 200.07 m at 19:30. Call it 94 percent.",
+     "Understood. Keep the net open."
+    ]
+   },
+   {
+    "kind": "words",
+    "text": [
+     "Flood probability is about sixty percent right now.",
+     "Copy. Rain 83 mm, river at 200.78 m.",
+     "Barrage stage 202.74 m at 03:25. Call it 76 percent.",
+     "Understood. Keep the net open."
+    ]
+   },
+   {
+    "kind": "words",
+    "text": [
+     "Flood probability is about sixty percent right now.",
+     "Copy. Rain 58.5 mm, river at 205.67 m.",
+     "Barrage stage 201.49 m at 14:35. Call it 74 percent.",
+     "Understood. Keep the net open."
+    ]
+   },
+   {
+    "kind": "words",
+    "text": [
+     "Flood probability is about sixty percent right now.",
+     "Copy. Rain 221.3 mm, river at 207.94 m.",
+     "Barrage stage 205.7 m at 16:40. Call it 98 percent.",
+     "Understood. Keep the net open."
+    ]
+   },
+   {
+    "kind": "words",
+    "text": [
+     "Flood probability is about forty percent right now.",
+     "Copy. Rain 27.3 mm, river at 200.06 m.",
+     "Barrage stage 203.32 m at 08:13. Call it 19 percent.",
+     "Understood. Keep the net open."
+    ]
+   },
+   {
+    "kind": "river",
+    "text": [
+     "Flood probability is 72.7% right now.",
+     "Copy. Rain 139.1 mm, river at 201.5 m.",
+     "Barrage stage 201.46 m at 15:52. Call it 73 percent.",
+     "Understood. Keep the net open."
+    ]
+   },
+   {
+    "kind": "words",
+    "text": [
+     "Flood probability is about ninety percent right now.",
+     "Copy. Rain 136.5 mm, river at 200.27 m.",
+     "Barrage stage 201.89 m at 02:15. Call it 90 percent.",
+     "Understood. Keep the net open."
+    ]
+   },
+   {
+    "kind": "words",
+    "text": [
+     "Flood probability is about sixty percent right now.",
+     "Copy. Rain 84 mm, river at 201.18 m.",
+     "Barrage stage 204.7 m at 17:07. Call it 78 percent.",
+     "Understood. Keep the net open."
+    ]
+   },
+   {
+    "kind": "words",
+    "text": [
+     "Flood probability is about sixty percent right now.",
+     "Copy. Rain 235.9 mm, river at 205.03 m.",
+     "Barrage stage 203.55 m at 23:43. Call it 66 percent.",
+     "Understood. Keep the net open."
+    ]
+   },
+   {
+    "kind": "prob_small",
+    "text": [
+     "Flood probability is 60 percent right now.",
+     "Copy. Rain 113.7 mm, river at 203.73 m.",
+     "Barrage stage 202.11 m at 12:17. Call it 57 percent.",
+     "Understood. Keep the net open."
+    ]
+   },
+   {
+    "kind": "words",
+    "text": [
+     "Flood probability is about eighty percent right now.",
+     "Copy. Rain 77.6 mm, river at 205.21 m.",
+     "Barrage stage 199.21 m at 05:06. Call it 80 percent.",
+     "Understood. Keep the net open."
+    ]
+   },
+   {
+    "kind": "words",
+    "text": [
+     "Flood probability is about sixty percent right now.",
+     "Copy. Rain 57.3 mm, river at 208.46 m.",
+     "Barrage stage 200.57 m at 22:48. Call it 70 percent.",
+     "Understood. Keep the net open."
+    ]
+   },
+   {
+    "kind": "words",
+    "text": [
+     "Flood probability is about sixty percent right now.",
+     "Copy. Rain 136.9 mm, river at 202.95 m.",
+     "Barrage stage 205.46 m at 22:16. Call it 90 percent.",
+     "Understood. Keep the net open."
+    ]
+   },
+   {
+    "kind": "prob_small",
+    "text": [
+     "Flood probability is 60 percent right now.",
+     "Copy. Rain 160.9 mm, river at 206.27 m.",
+     "Barrage stage 204.6 m at 19:19. Call it 65 percent.",
+     "Understood. Keep the net open."
+    ]
+   },
+   {
+    "kind": "words",
+    "text": [
+     "Flood probability is about sixty percent right now.",
+     "Copy. Rain 160.9 mm, river at 206.27 m.",
+     "Barrage stage 204.6 m at 19:19. Call it 65 percent.",
+     "Understood. Keep the net open."
+    ]
+   },
+   {
+    "kind": "words",
+    "text": [
+     "Flood probability is about sixty percent right now.",
+     "Copy. Rain 136 mm, river at 208.13 m.",
+     "Barrage stage 202.54 m at 21:53. Call it 88 percent.",
+     "Understood. Keep the net open."
+    ]
+   },
+   {
+    "kind": "prob_large",
+    "text": [
+     "Flood probability is 60 percent right now.",
+     "Copy. Rain 101.4 mm, river at 201.61 m.",
+     "Barrage stage 199.22 m at 13:32. Call it 89 percent.",
+     "Understood. Keep the net open."
+    ]
+   },
+   {
+    "kind": "words",
+    "text": [
+     "Flood probability is about sixty percent right now.",
+     "Copy. Rain 101.4 mm, river at 201.61 m.",
+     "Barrage stage 199.22 m at 13:32. Call it 89 percent.",
+     "Understood. Keep the net open."
+    ]
+   },
+   {
+    "kind": "words",
+    "text": [
+     "Flood probability is about sixty percent right now.",
+     "Copy. Rain 90 mm, river at 202.73 m.",
+     "Barrage stage 205.28 m at 13:15. Call it 73 percent.",
+     "Understood. Keep the net open."
+    ]
+   },
+   {
+    "kind": "words",
+    "text": [
+     "Flood probability is about sixty percent right now.",
+     "Copy. Rain 88.5 mm, river at 202.94 m.",
+     "Barrage stage 200.05 m at 03:05. Call it 88 percent.",
+     "Understood. Keep the net open."
+    ]
+   },
+   {
+    "kind": "prob_large",
+    "text": [
+     "Flood probability is 60 percent right now.",
+     "Copy. Rain 119.2 mm, river at 208.34 m.",
+     "Barrage stage 204.28 m at 17:50. Call it 41 percent.",
+     "Understood. Keep the net open."
+    ]
+   },
+   {
+    "kind": "prob_small",
+    "text": [
+     "Flood probability is 35 percent right now.",
+     "Copy. Rain 37.1 mm, river at 203.6 m.",
+     "Barrage stage 205.94 m at 21:29. Call it 39 percent.",
+     "Understood. Keep the net open."
+    ]
+   },
+   {
+    "kind": "words",
+    "text": [
+     "Flood probability is about sixty percent right now.",
+     "Copy. Rain 39.7 mm, river at 206.81 m.",
+     "Barrage stage 204.5 m at 08:49. Call it 69 percent.",
+     "Understood. Keep the net open."
+    ]
+   },
+   {
+    "kind": "words",
+    "text": [
+     "Flood probability is about sixty percent right now.",
+     "Copy. Rain 175.2 mm, river at 207.45 m.",
+     "Barrage stage 199.58 m at 02:26. Call it 98 percent.",
+     "Understood. Keep the net open."
+    ]
+   },
+   {
+    "kind": "prob_small",
+    "text": [
+     "Flood probability is 99 percent right now.",
+     "Copy. Rain 193.2 mm, river at 207.29 m.",
+     "Barrage stage 205.07 m at 10:27. Call it 99 percent.",
+     "Understood. Keep the net open."
+    ]
+   },
+   {
+    "kind": "words",
+    "text": [
+     "Flood probability is about sixty percent right now.",
+     "Copy. Rain 193.2 mm, river at 207.29 m.",
+     "Barrage stage 205.07 m at 10:27. Call it 99 percent.",
+     "Understood. Keep the net open."
+    ]
+   },
+   {
+    "kind": "words",
+    "text": [
+     "Flood probability is about sixty percent right now.",
+     "Copy. Rain 66.7 mm, river at 206.28 m.",
+     "Barrage stage 205.08 m at 09:26. Call it 91 percent.",
+     "Understood. Keep the net open."
+    ]
+   }
+  ],
+  "bands": {
+   "calm": 21,
+   "watch": 8,
+   "admin": 10,
+   "auto": 161
+  }
+ }
+}

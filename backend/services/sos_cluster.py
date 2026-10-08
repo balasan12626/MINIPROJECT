@@ -10,6 +10,42 @@ from sklearn.cluster import KMeans
 from backend.utils.geo import haversine_km
 
 
+def _match_teams(centers, labels, items, teams: list[dict[str, Any]]) -> dict[int, dict[str, Any]]:
+    """Team ↔ cluster assignment minimising total people-weighted distance.
+
+    The previous greedy pass (clusters in index order, each grabbing its
+    nearest unused team) could hand a central cluster to a depot 25 km away
+    because an earlier cluster had taken the close one. With ≤ 8 clusters and
+    a handful of teams an exhaustive search over permutations is exact and cheap.
+    """
+    from itertools import permutations
+
+    k = int(centers.shape[0])
+    if not teams or k == 0:
+        return {}
+    weight = [sum(int(items[i].get("people") or 1) for i, lab in enumerate(labels) if int(lab) == c) for c in range(k)]
+
+    def dist(c: int, t: dict[str, Any]) -> float:
+        return haversine_km(float(centers[c][0]), float(centers[c][1]), float(t["lat"]), float(t["lon"]))
+
+    if k <= len(teams) and len(teams) <= 7:
+        best, best_cost = None, float("inf")
+        for perm in permutations(range(len(teams)), k):
+            cost = sum(weight[c] * dist(c, teams[perm[c]]) for c in range(k))
+            if cost < best_cost:
+                best, best_cost = perm, cost
+        return {c: teams[best[c]] for c in range(k)}
+    # More clusters than teams (or many teams): heaviest cluster picks first.
+    out: dict[int, dict[str, Any]] = {}
+    used: set = set()
+    for c in sorted(range(k), key=lambda c: -weight[c]):
+        remaining = [t for t in teams if t.get("team_id") not in used] or teams
+        t = min(remaining, key=lambda t: dist(c, t))
+        used.add(t.get("team_id"))
+        out[c] = t
+    return out
+
+
 def cluster_emergencies(
     emergencies: list[dict[str, Any]],
     teams: list[dict[str, Any]],
@@ -39,18 +75,14 @@ def cluster_emergencies(
 
     clusters = []
     available_teams = [t for t in teams if str(t.get("status") or "AVAILABLE").upper() in {"AVAILABLE", "ASSIGNED"}] or list(teams)
-    used = set()
+    team_for = _match_teams(centers, labels, open_items, available_teams)
     for cid in range(int(centers.shape[0])):
         members = [open_items[i] for i, lab in enumerate(labels) if int(lab) == cid]
         if not members:
             continue
         lat, lon = float(centers[cid][0]), float(centers[cid][1])
         people = sum(int(m.get("people") or 1) for m in members)
-        team = None
-        if available_teams:
-            remaining = [t for t in available_teams if t.get("team_id") not in used] or available_teams
-            team = min(remaining, key=lambda t: haversine_km(lat, lon, float(t["lat"]), float(t["lon"])))
-            used.add(team.get("team_id"))
+        team = team_for.get(cid)
         clusters.append(
             {
                 "cluster_id": f"C{cid + 1}",

@@ -11,21 +11,17 @@ STATUS_FLOW = ["contacted", "trapped", "moving", "rescued"]
 
 
 def medical_triage(citizen: dict[str, Any]) -> str:
-    vuln = str(citizen.get("vulnerability") or "")
-    age = citizen.get("age")
-    try:
-        age_i = int(age) if age is not None else None
-    except (TypeError, ValueError):
-        age_i = None
+    """Triage label. Child/elderly use the single definition in priority.py."""
+    from backend.services.priority import _age, is_child, is_elderly
+
+    age_i = _age(citizen)
     water = str(citizen.get("water_level_note") or "").lower()
-    if age_i is not None and age_i < 18:
+    if is_child(age_i):
         return "child"
-    if age_i is not None and age_i >= 60:
+    if is_elderly(age_i):
         return "elderly"
-    if "chest" in water or "injured" in water:
+    if "chest" in water or "injur" in water:
         return "injured"
-    if vuln in {"child", "elderly", "chest-deep"}:
-        return "priority"
     return "standard"
 
 
@@ -172,8 +168,9 @@ def after_action_bullets(state: dict[str, Any]) -> list[str]:
     peak = max(peaks) if peaks else after.get("flood_probability")
     rescued = sum(1 for r in board if str(r.get("status") or "").lower() == "rescued")
     missing = sum(1 for r in board if str(r.get("status") or "").lower() in {"missing", "trapped"})
-    vacant = sum(int(s.get("seats_left") or 0) for s in shelters)
-    full = sum(1 for s in shelters if s.get("full"))
+    totals = state.get("shelter_totals") or {}
+    vacant = totals.get("vacant_seats", sum(int(s.get("seats_left") or 0) for s in shelters))
+    full = totals.get("full", sum(1 for s in shelters if s.get("full")))
     first = next((c for c in sorted(citizens, key=lambda x: x.get("rescue_order") or 99)), None)
     bullets = [
         f"Peak flood probability reached {round((peak or 0) * 100, 1)}% during the run.",
@@ -224,10 +221,13 @@ def _ops_stats(state: dict[str, Any]) -> dict[str, Any]:
     contacted = status_counts.get("contacted", 0)
     moving = status_counts.get("moving", 0)
     pending = max(0, len(citizens) - rescued - missing - contacted - moving)
-    vacant = sum(int(s.get("seats_left") or 0) for s in shelters)
-    capacity = sum(int(s.get("capacity") or 0) for s in shelters)
-    occupancy = sum(int(s.get("occupancy") or 0) for s in shelters)
-    full_shelters = sum(1 for s in shelters if s.get("full") or int(s.get("seats_left") or 0) <= 0)
+    totals = state.get("shelter_totals") or {}
+    # One sum only: the engine's shelter_totals (same board the UI shows).
+    # rescue_desk.vacant_total is a different quantity and is never blended in.
+    vacant = int(totals["vacant_seats"]) if "vacant_seats" in totals else sum(int(s.get("seats_left") or 0) for s in shelters)
+    capacity = int(totals["capacity"]) if "capacity" in totals else sum(int(s.get("capacity") or 0) for s in shelters)
+    occupancy = int(totals["occupancy"]) if "occupancy" in totals else sum(int(s.get("occupancy") or 0) for s in shelters)
+    full_shelters = int(totals["full"]) if "full" in totals else sum(1 for s in shelters if s.get("full") or int(s.get("seats_left") or 0) <= 0)
     people_total = sum(int(c.get("people") or 1) for c in citizens)
 
     mistakes: list[str] = []

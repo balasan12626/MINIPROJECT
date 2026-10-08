@@ -20,3 +20,8 @@ backend/.pytest_cache/
 scripts/__pycache__/
 mlruns/
 .ipynb_checkpoints/
+
+# Raw training data / caches (too large for git)
+dataset/camels_ind/
+dataset/india_weather_rainfall_data.xlsx
+catboost_info/

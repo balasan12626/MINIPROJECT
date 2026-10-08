@@ -17,7 +17,7 @@
         202
       ]
     ],
-    "inference_latency_ms_batch_mean": 0.11087384619903597,
+    "inference_latency_ms_batch_mean": 0.31588725274899504,
     "n_test": 910,
     "positive_rate_test": 0.35824175824175825,
     "classification_report": {
@@ -49,7 +49,7 @@
     },
     "model_size_bytes": 46353051,
     "accuracy_at_0_5": 0.7681318681318682,
-    "fit_seconds": 2.114
+    "fit_seconds": 5.003
   },
   "xgboost": {
     "threshold": 0.6399999999999999,
@@ -69,7 +69,7 @@
         184
       ]
     ],
-    "inference_latency_ms_batch_mean": 0.018822967079928615,
+    "inference_latency_ms_batch_mean": 0.04241945055552635,
     "n_test": 910,
     "positive_rate_test": 0.35824175824175825,
     "classification_report": {
@@ -101,6 +101,6 @@
     },
     "model_size_bytes": 2152240,
     "accuracy_at_0_5": 0.7483516483516484,
-    "fit_seconds": 3.045
+    "fit_seconds": 9.999
   }
 }

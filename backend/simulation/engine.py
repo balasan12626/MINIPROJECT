@@ -161,6 +161,60 @@ DEFAULT_FEATURES = {
 }
 
 
+
+def _objective(opt: dict[str, Any] | None) -> float | None:
+    """Same scalar the solvers minimise (backend/optimization/solvers.py)."""
+    if not opt or opt.get("solution_cost") is None:
+        return None
+    return float(opt["solution_cost"]) + 8 * float(opt.get("constraint_violations") or 0)
+
+
+def compare_optimization(before: dict[str, Any] | None, after: dict[str, Any] | None) -> dict[str, Any]:
+    """Before-vs-after optimisation. Never presents a worse plan as an improvement:
+    when the new plan's objective is higher than the baseline's, the baseline
+    plan is kept and the result is labelled "optimization rejected"."""
+    b, a = _objective(before), _objective(after)
+    out: dict[str, Any] = {
+        "before_cost": None if before is None else before.get("solution_cost"),
+        "after_cost": None if after is None else after.get("solution_cost"),
+        "before_objective": b,
+        "after_objective": a,
+    }
+    if a is None:
+        return {
+            **out,
+            "status": "baseline_only" if b is not None else "unavailable",
+            "plan": before,
+            "kept": "baseline" if before else None,
+            "label": "No optimised plan yet - baseline shown" if before else "Optimization unavailable",
+        }
+    if b is None:
+        return {**out, "status": "no_baseline", "plan": after, "kept": "optimized", "label": "Optimised plan (no baseline to compare)"}
+    if a > b:
+        return {
+            **out,
+            "status": "rejected",
+            "plan": before,
+            "kept": "baseline",
+            "improvement": round(b - a, 4),
+            "label": "Optimization rejected \u2014 kept baseline",
+        }
+    return {**out, "status": "accepted", "plan": after, "kept": "optimized", "improvement": round(b - a, 4), "label": "Optimization accepted"}
+
+
+def _canonical_ml(rain: float) -> tuple[dict[str, Any], dict[str, Any]]:
+    """(prediction, dual) for per-person rows. Reuses the pipeline's current
+    prediction so the RF/XGB gap and probability match every other display;
+    only infers locally when no pipeline snapshot exists yet."""
+    from backend.services.pipeline import last_snapshot
+
+    pred = (last_snapshot("simulation") or {}).get("prediction") or {}
+    if pred.get("flood_probability") is not None:
+        return pred, pred.get("dual") or {}
+    from backend.ml.inference import dual_model_view, predict_live
+
+    return predict_live(rain) or {}, dual_model_view(rain)
+
 class SimulationEngine:
     def __init__(self) -> None:
         self.run_id: Optional[str] = None
@@ -182,6 +236,8 @@ class SimulationEngine:
         self.checklist: list[dict[str, Any]] = []
         self.false_alarm: dict[str, Any] | None = None
         self._teams_cache: list[dict[str, Any]] = []
+        # The ONE K-means result for this run (cluster cards + roster read it).
+        self.clusters: dict[str, Any] | None = None
 
     def features(self) -> dict[str, bool]:
         merged = dict(DEFAULT_FEATURES)
@@ -194,12 +250,11 @@ class SimulationEngine:
     def _demo_payload(self, snap: dict[str, Any] | None = None) -> dict[str, Any]:
         from backend.services.demo_extras import (
             after_action_bullets,
-            build_eta_board,
             build_status_board,
             confidence_band,
             disagreement_debate,
-            team_paths,
         )
+        from backend.services.person_ops import delivered_by_shelter, eta_board, shelter_registry, unit_paths
         from backend.services.seed import RESCUE_TEAMS, SHELTERS
 
         snap = snap or {}
@@ -213,14 +268,31 @@ class SimulationEngine:
                 if c.get("citizen_name") == row.get("citizen_name"):
                     c["live_status"] = row.get("status")
                     c["triage"] = row.get("triage")
-        etas = build_eta_board(self.citizens, teams)
-        paths = team_paths(self.citizens, teams)
+        # ETA + unit legs come from the canonical stage machine (person_ops),
+        # so the moving unit, the roster and the ETA all name the same unit.
+        etas = eta_board(self.contact_log)
+        paths = unit_paths(self.contact_log)
         roads = snap.get("roads") or []
         blocked = [r for r in roads if r.get("blocked")]
         before_p = (self.before or {}).get("flood_probability")
-        after_p = (self.after or {}).get("flood_probability") or pred.get("flood_probability")
+        # Canonical "current" probability = the latest tick record (see current_view).
+        after_p = self.current_view(snap).get("flood_probability")
+        # Rescue-ops shelter usage this run. Reported separately from the
+        # pipeline's growth-curve occupancy — never blended.
+        delivered = delivered_by_shelter(self.contact_log)
+        assigned_ppl: dict[str, int] = {}
+        for r in self.contact_log:
+            if r.get("shelter_name"):
+                assigned_ppl[r["shelter_name"]] = assigned_ppl.get(r["shelter_name"], 0) + int(r.get("people") or 1)
+        board_src = list(shelters[:8])
+        listed = {s.get("name") for s in board_src}
+        registry = shelter_registry()
+        for name in assigned_ppl:
+            if name not in listed and name in registry:
+                board_src.append({"shelter_id": name, **registry[name]})
+                listed.add(name)
         shelter_board = []
-        for s in shelters[:8]:
+        for s in board_src:
             cap = int(s.get("capacity") or 0)
             occ = int(s.get("occupancy") or 0)
             left = max(0, cap - occ)
@@ -232,8 +304,19 @@ class SimulationEngine:
                     "occupancy": occ,
                     "seats_left": left,
                     "full": left <= 0,
+                    "assigned_this_run": assigned_ppl.get(s.get("name"), 0),
+                    "delivered_this_run": delivered.get(s.get("name"), 0),
+                    "used_this_run": s.get("name") in assigned_ppl,
                 }
             )
+        shelter_totals = {
+            "count": len(shelter_board),
+            "capacity": sum(r["capacity"] for r in shelter_board),
+            "occupancy": sum(r["occupancy"] for r in shelter_board),
+            "vacant_seats": sum(r["seats_left"] for r in shelter_board),
+            "full": sum(1 for r in shelter_board if r["full"]),
+            "source": "engine shelter_board (pipeline-recommended shelters; occupancy growth curve, not rescues delivered)",
+        }
         st_partial = {
             "history": self.history,
             "citizens": self.citizens,
@@ -244,6 +327,7 @@ class SimulationEngine:
             "status_board": board,
             "eta_board": etas,
             "shelter_board": shelter_board,
+            "shelter_totals": shelter_totals,
             "false_alarm": self.false_alarm,
             "scenario": self.params.get("scenario"),
             "status": self.status,
@@ -253,6 +337,7 @@ class SimulationEngine:
             "eta_board": etas,
             "team_paths": paths,
             "shelter_board": shelter_board,
+            "shelter_totals": shelter_totals,
             "disagreement_debate": disagreement_debate(dual) if dual else [],
             "confidence": confidence_band(dual, pred.get("flood_probability")),
             "after_action_summary": after_action_bullets(st_partial),
@@ -267,22 +352,55 @@ class SimulationEngine:
             "transfer_warning": "Model trained on INDOFLOODS (Indonesia catchments), applied to Delhi Yamuna floodplain — transfer risk.",
         }
 
+    def current_view(self, snap: dict[str, Any] | None = None) -> dict[str, Any]:
+        """THE canonical current values for display. Every card that shows the
+        current flood probability / risk / predicted peak / run status reads
+        this block, so two cards can never disagree. Source: the latest tick
+        record in history (written in the same step as the pipeline call);
+        falls back to the pipeline snapshot only before the first tick."""
+        last = self.history[-1] if self.history else {}
+        pred = (snap or {}).get("prediction") or {}
+        probs = [h.get("flood_probability") for h in self.history if h.get("flood_probability") is not None]
+        return {
+            "flood_probability": last.get("flood_probability") if last else pred.get("flood_probability"),
+            "risk_category": last.get("risk_category") if last else pred.get("risk_category"),
+            "predicted_peak_flood_level_m": (
+                last.get("predicted_peak_flood_level_m") if last else (pred.get("v2") or {}).get("predicted_peak_flood_level_m")
+            ),
+            "rainfall_mm": last.get("rainfall_mm"),
+            "river_m": last.get("river_m"),
+            "barrage_stage_m": last.get("dam_m"),
+            "action": last.get("action"),
+            "tick": last.get("tick"),
+            "peak_flood_probability": max(probs) if probs else None,
+            "dual": pred.get("dual"),
+            "run_status": self.status,
+            "source": "history" if last else ("pipeline" if pred else None),
+        }
+
     def state(self) -> dict[str, Any]:
         from backend.agents.dialogue import last_conversation
         from backend.services.progress import last_progress
         from backend.services.pipeline import last_snapshot
-        from backend.services.person_ops import advance_all, sync_citizen_from_log
+        from backend.services.person_ops import advance_all, clock_info, sync_citizen_from_log
 
-        # Every poll / tick: advance SOS people every 12s (queued → assigned → … → rescued)
+        snap = last_snapshot("simulation")
+        # Every poll / tick: fire every stage transition that is due. Stage
+        # length = real route travel time (person_ops is the stage machine).
         if self.contact_log:
-            advance_all(self.contact_log)
+            advance_all(
+                self.contact_log,
+                {"teams": self._teams_cache, "roads": (snap or {}).get("roads") or None},
+            )
             by_name = {c.get("citizen_name"): c for c in self.citizens}
             for row in self.contact_log:
                 src = by_name.get(row.get("citizen_name"))
                 if src:
                     sync_citizen_from_log(src, row)
-
-        snap = last_snapshot("simulation")
+        # One K-means source: the cluster cards read pipeline.clusters, the
+        # roster reads citizen.cluster_id — serve the engine's clustering for both.
+        if snap and self.clusters:
+            snap = {**snap, "clusters": self.clusters.get("clusters") or []}
         demo = self._demo_payload(snap)
         return jsonable(
             {
@@ -306,6 +424,8 @@ class SimulationEngine:
                 "features": self.features(),
                 "human_dispatch_override": self.human_dispatch_override,
                 "pipeline": snap,
+                "current": self.current_view(snap),
+                "ops_clock": clock_info(),
                 **demo,
             }
         )
@@ -479,6 +599,7 @@ class SimulationEngine:
                     "flood_probability": p,
                     "risk_category": (snap.get("prediction") or {}).get("risk_category"),
                     "action": action,
+                    "predicted_peak_flood_level_m": ((snap.get("prediction") or {}).get("v2") or {}).get("predicted_peak_flood_level_m"),
                 }
                 self.history.append(rec)
                 if self.tick == 0:
@@ -487,10 +608,14 @@ class SimulationEngine:
                         "optimization": snap.get("optimization"),
                         "risk_category": rec["risk_category"],
                     }
+                opt_cmp = compare_optimization((self.before or {}).get("optimization"), snap.get("optimization"))
                 self.after = {
                     "flood_probability": p,
                     "peak_risk": rec["risk_category"],
-                    "optimization": snap.get("optimization"),
+                    # If the latest plan scores worse than the tick-0 baseline
+                    # the baseline plan is kept, and the comparison says so.
+                    "optimization": opt_cmp["plan"],
+                    "optimization_comparison": opt_cmp,
                     "shelters": snap.get("shelters"),
                     "routes": snap.get("routes"),
                     "affected_population": (snap.get("incident") or {}).get("affected_population"),
@@ -532,6 +657,9 @@ class SimulationEngine:
         from backend.ml.change_monitor import reset_monitor
 
         reset_monitor("simulation")
+        from backend.services.pipeline import clear_snapshot
+
+        clear_snapshot("simulation")
         self.citizens = []
         self.contact_log = []
         self.human_dispatch_override = False
@@ -540,6 +668,7 @@ class SimulationEngine:
         self.checklist = [dict(x) for x in DEFAULT_CHECKLIST]
         self.false_alarm = None
         self._teams_cache = []
+        self.clusters = None
         await mongo.insert("simulation_runs", {"run_id": self.run_id, "params": params, "status": self.status})
         await publish_progress("simulation", "scenario", "Launching scenario — waiting for first model tick", scenario=params.get("scenario"))
         self.task = asyncio.create_task(self._loop())
@@ -568,6 +697,9 @@ class SimulationEngine:
         from backend.ml.change_monitor import reset_monitor
 
         reset_monitor("simulation")
+        from backend.services.pipeline import clear_snapshot
+
+        clear_snapshot("simulation")
         self.__init__()
         return self.state()
 
@@ -614,10 +746,18 @@ class SimulationEngine:
             "risk_category": (snap.get("prediction") or {}).get("risk_category"),
             "action": (snap.get("policy") or {}).get("action"),
             "source": "operator_edit",
+            "predicted_peak_flood_level_m": ((snap.get("prediction") or {}).get("v2") or {}).get("predicted_peak_flood_level_m"),
         }
         self.history.append(rec)
         self.after = {**(self.after or {}), "flood_probability": p, "peak_risk": rec["risk_category"]}
-        await self._log("Operator edited live cards — agents recalculating", rec)
+        field_labels = {"rainfall_mm": "rainfall", "river_m": "river level", "dam_m": "dam level", "flood_probability": "flood probability"}
+        field_units = {"rainfall_mm": "mm", "river_m": "m", "dam_m": "m", "flood_probability": "%"}
+        changes = ", ".join(
+            f"{field_labels.get(k, k)} to {(v * 100) if k == 'flood_probability' else v:.1f} {field_units.get(k, '')}".strip()
+            for k, v in fields.items()
+            if k in allowed and v is not None
+        )
+        await self._log(f"Operator override: {changes or 'live cards edited'} — agents recalculating", rec)
         monitor = snap.get("card_monitor") or {}
         if monitor.get("sudden"):
             await self._log(
@@ -667,6 +807,7 @@ class SimulationEngine:
         self.citizens = stored
         self._teams_cache = list(teams)
         clusters = cluster_emergencies(stored, teams)
+        self.clusters = clusters
         by_name = {c.get("citizen_name"): c for c in stored}
         for row in clusters.get("priority_global") or []:
             src = by_name.get(row.get("citizen_name"))
@@ -698,21 +839,15 @@ class SimulationEngine:
                 "status": "queued",
                 "rescued": None,
             }
-            ensure_ops(entry, int(row.get("rescue_order") or len(self.contact_log) + 1))
-            # Stagger start so Person 1 advances first, then 2… (still ~12s per stage)
-            stagger = max(0, (int(row.get("rescue_order") or 1) - 1) * 2)
-            if stagger:
-                from datetime import datetime, timezone, timedelta
-
-                entry["ops_stage_at"] = (datetime.now(timezone.utc) - timedelta(seconds=stagger)).isoformat()
+            order = int(row.get("rescue_order") or len(self.contact_log) + 1)
+            # Admin dispatches one SOS every DISPATCH_SECONDS, vulnerable-first.
+            ensure_ops(entry, order, queue_position=order)
             self.contact_log.append(entry)
         weather = (self.last_obs or {}).get("weather") or {}
         rain = float(weather.get("rainfall_mm") or self.params.get("rainfall_intensity") or 55)
         dual = None
         if self.features().get("model_disagreement"):
-            from backend.ml.inference import dual_model_view
-
-            dual = dual_model_view(rain)
+            dual = _canonical_ml(rain)[1]
         first = (clusters.get("priority_global") or [{}])[0]
         second = (clusters.get("priority_global") or [{}, {}])[1] if len(clusters.get("priority_global") or []) > 1 else {}
         await self._log(
@@ -739,77 +874,105 @@ class SimulationEngine:
                 row["done"] = bool(done)
 
     async def add_citizen_sos(self, body: dict[str, Any]) -> dict[str, Any]:
-        """Add one SOS mid-run: re-cluster, queue at queued, advance every 12s with others."""
+        """Add one SOS mid-run WITHOUT disturbing anyone already in progress.
+
+        The new person is attached to the nearest existing K-means cluster
+        (inheriting its team) and APPENDED to contact_log at `queued`. Nobody
+        is re-clustered: re-running K-means would drop everyone past `open`
+        (the clustering status filter) and relabel clusters mid-operation.
+        """
         from backend.agents.dialogue import talk_with_citizen
         from backend.services.person_ops import ensure_ops
+        from backend.services.priority import vulnerability_label
         from backend.services.seed import RESCUE_TEAMS
         from backend.services.sos_cluster import cluster_emergencies
-        from backend.utils.geo import utcnow
+        from backend.utils.geo import haversine_km, utcnow
 
+        name = str(body.get("citizen_name") or "Citizen").strip() or "Citizen"
+        taken = {str(r.get("citizen_name")) for r in self.contact_log} | {str(c.get("citizen_name")) for c in self.citizens}
+        if name in taken:  # citizen_name is the join key everywhere — keep it unique
+            k = 2
+            while f"{name} ({k})" in taken:
+                k += 1
+            name = f"{name} ({k})"
+        age = body.get("age")
+        try:
+            age = int(age) if age is not None and age != "" else None
+        except (TypeError, ValueError):
+            age = None
         citizen = {
-            "citizen_name": str(body.get("citizen_name") or "Citizen").strip() or "Citizen",
-            "age": body.get("age"),
+            "citizen_name": name,
+            "age": age,
             "lat": float(body.get("lat") or 28.65),
             "lon": float(body.get("lon") or 77.26),
-            "people": int(body.get("people") or 1),
+            "people": max(1, int(body.get("people") or 1)),
             "water_level_note": body.get("water_level_note") or "flood water",
             "emergency_type": "flood_sos",
-            "status": "queued",
-            "live_status": "queued",
-            "ops_status": "queued",
+            # "open" so any later clustering pass accepts this person.
+            "status": "open",
             "mode": body.get("mode") or "simulation",
             "run_id": self.run_id,
             "timestamp": utcnow(),
         }
-        await mongo.insert("emergency_requests", citizen)
-        self.citizens.append(citizen)
+        await mongo.insert("emergency_requests", dict(citizen))
 
         teams = self._teams_cache or await mongo.find_many("rescue_teams", {}, limit=20, sort_field="team_id", direction=1) or list(RESCUE_TEAMS)
         self._teams_cache = list(teams)
-        clusters = cluster_emergencies(self.citizens, teams)
-        by_name = {c.get("citizen_name"): c for c in self.citizens}
-        for row in clusters.get("priority_global") or []:
-            src = by_name.get(row.get("citizen_name"))
-            if src:
-                src["rescue_order"] = row.get("rescue_order")
-                src["vulnerability"] = row.get("vulnerability")
-                src["cluster_id"] = row.get("cluster_id")
-                src["assigned_team"] = row.get("assigned_team")
-                src["assigned_team_name"] = row.get("assigned_team_name")
-
-        # Rebuild contact_log preserving ops progress for existing; new person starts queued
-        existing_ops = {r.get("citizen_name"): r for r in self.contact_log}
-        new_log = []
-        for row in clusters.get("priority_global") or []:
-            name = row.get("citizen_name")
-            prev = existing_ops.get(name)
-            if prev and name != citizen["citizen_name"]:
-                prev["person_index"] = row.get("rescue_order")
-                prev["cluster_id"] = row.get("cluster_id") or prev.get("cluster_id")
-                prev["vulnerability"] = row.get("vulnerability") or prev.get("vulnerability")
-                prev["assigned_team"] = row.get("assigned_team_name") or row.get("assigned_team") or prev.get("assigned_team")
-                new_log.append(prev)
-            else:
-                entry = {
-                    "person_index": row.get("rescue_order"),
+        cl_list = (self.clusters or {}).get("clusters") or []
+        if cl_list:
+            cl = min(cl_list, key=lambda c: haversine_km(citizen["lat"], citizen["lon"], float(c["lat"]), float(c["lon"])))
+        else:
+            fresh = cluster_emergencies([citizen], teams)
+            self.clusters = fresh
+            cl = (fresh.get("clusters") or [{}])[0]
+        vuln = vulnerability_label(citizen)
+        if cl_list:  # keep the cluster card in step with the roster
+            cl["sos_count"] = int(cl.get("sos_count") or 0) + 1
+            cl["people"] = int(cl.get("people") or 0) + citizen["people"]
+            cl.setdefault("members", []).append(
+                {k: citizen.get(k) for k in ("citizen_name", "age", "water_level_note", "lat", "lon", "people")}
+            )
+            cl.setdefault("priority_queue", []).append(
+                {
+                    "order_in_cluster": len(cl["priority_queue"]) + 1,
                     "citizen_name": name,
-                    "age": row.get("age") or citizen.get("age"),
-                    "water_level_note": row.get("water_level_note") or citizen.get("water_level_note"),
-                    "lat": row.get("lat"),
-                    "lon": row.get("lon"),
-                    "people": row.get("people"),
-                    "vulnerability": row.get("vulnerability"),
-                    "cluster_id": row.get("cluster_id"),
-                    "assigned_team": row.get("assigned_team_name") or row.get("assigned_team"),
-                    "assigned_team_name": row.get("assigned_team_name") or row.get("assigned_team"),
-                    "called_at": utcnow().isoformat(),
-                    "answered": True,
-                    "status": "queued",
-                    "rescued": None,
+                    "age": age,
+                    "water_level_note": citizen["water_level_note"],
+                    "vulnerability": vuln,
+                    "people": citizen["people"],
                 }
-                ensure_ops(entry, int(row.get("rescue_order") or len(new_log) + 1))
-                new_log.append(entry)
-        self.contact_log = new_log
+            )
+        order = max([int(r.get("person_index") or 0) for r in self.contact_log] + [0]) + 1
+        team_name = cl.get("assigned_team_name") or cl.get("assigned_team")
+        citizen.update(
+            {
+                "cluster_id": cl.get("cluster_id"),
+                "assigned_team": team_name,
+                "assigned_team_name": team_name,
+                "vulnerability": vuln,
+                "rescue_order": order,
+            }
+        )
+        self.citizens.append(citizen)
+        entry = {
+            "person_index": order,
+            "citizen_name": name,
+            "age": age,
+            "water_level_note": citizen["water_level_note"],
+            "lat": citizen["lat"],
+            "lon": citizen["lon"],
+            "people": citizen["people"],
+            "vulnerability": vuln,
+            "cluster_id": cl.get("cluster_id"),
+            "assigned_team": team_name,
+            "assigned_team_name": team_name,
+            "called_at": utcnow().isoformat(),
+            "answered": True,
+            "status": "queued",
+            "rescued": None,
+        }
+        ensure_ops(entry, order, queue_position=1)
+        self.contact_log.append(entry)  # append — never rebuild
 
         weather = ((self.last_obs or {}).get("weather")) or {}
         talk = await talk_with_citizen(citizen.get("mode") or "simulation", citizen, weather)
@@ -817,11 +980,9 @@ class SimulationEngine:
         # Attach ML snapshot on the new person's journey
         pred = {}
         try:
-            from backend.ml.inference import predict_flood, dual_model_view
-
             rain = float(weather.get("rainfall_mm") or self.params.get("rainfall_intensity") or 55)
-            pred = predict_flood(rain) or {}
-            dual = dual_model_view(rain) if self.features().get("model_disagreement") else {}
+            pred, dual = _canonical_ml(rain)
+            dual = dual if self.features().get("model_disagreement") else {}
         except Exception:  # noqa: BLE001
             dual = {}
         for row in self.contact_log:
@@ -848,8 +1009,6 @@ class SimulationEngine:
                         "rescue_order": row.get("person_index"),
                         "vulnerability": row.get("vulnerability"),
                         "assigned_team": row.get("assigned_team"),
-                        "ops_status": "queued",
-                        "live_status": "queued",
                         "flood_probability": row.get("flood_probability"),
                         "model_id": row.get("model_id"),
                     }
@@ -871,18 +1030,17 @@ class SimulationEngine:
             pass
 
         await self._log(
-            f"New SOS from {citizen['citizen_name']} — queued (advances every 12s: assigned → en route → shelter → rescued)",
+            f"New SOS from {citizen['citizen_name']} · {citizen['people']} people — queued in {citizen.get('cluster_id')} ({citizen.get('assigned_team_name')})",
             {"citizen": citizen["citizen_name"], "cluster": citizen.get("cluster_id")},
         )
         snap = await run_pipeline(mode="simulation", observations=self._apply_overrides(self.last_obs or self._evolve()))
         if snap:
             snap["emergencies"] = jsonable(self.citizens)
-            snap["clusters"] = clusters.get("clusters") or []
             snap["conversation"] = talk
         await hub.broadcast("emergency_update", jsonable(citizen))
-        st = self.state()
-        st["pipeline"] = snap
+        st = self.state()  # serves pipeline with the engine's clusters
         st["conversation"] = talk
+        st["added_citizen_name"] = citizen["citizen_name"]
         await hub.broadcast("simulation_state", st)
         return st
 

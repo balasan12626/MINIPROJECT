@@ -73,7 +73,6 @@ def evaluate_policy(
 def pipeline_health(weather: dict, hydro: dict, prediction: dict) -> tuple[bool, bool, bool]:
     data_ok = bool(weather.get("available")) and bool(hydro.get("available"))
     model_ok = bool(prediction.get("available")) and bool(model_status().get("available"))
-    system_ok = bool(mongo.mongo_status().get("connected")) or True
     # Mongo outage must not silently auto-respond; require connected DB for automation.
     system_ok = bool(mongo.mongo_status().get("connected"))
     return data_ok, model_ok, system_ok

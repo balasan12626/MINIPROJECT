@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { memo, useState } from "react";
 
 /**
  * IEEE / M.Tech submission helpers shown on the simulation route.
  */
-export default function IeeePaperPack({ pack, ablation, onAblation, onExportCsv, onExportTex, busy }) {
-  const [open, setOpen] = useState(true);
+function IeeePaperPack({ pack, ablation, onAblation, onExportCsv, onExportTex, busy, defaultOpen = true }) {
+  const [open, setOpen] = useState(defaultOpen);
   if (!pack && !ablation) return null;
 
   const contrib = pack?.contributions || [];
@@ -59,9 +59,11 @@ export default function IeeePaperPack({ pack, ablation, onAblation, onExportCsv,
           <div className="hqrl-panel" style={{ marginTop: 10 }}>
             <div className="status-row" style={{ flexWrap: "wrap", gap: 8 }}>
               <h2 style={{ margin: 0 }}>Ablation — without safety vs HQRL</h2>
-              <button type="button" className="primary" disabled={busy} onClick={onAblation}>
-                {busy ? "RUNNING…" : "RUN ABLATION"}
-              </button>
+              {onAblation ? (
+                <button type="button" className="primary" disabled={busy} onClick={onAblation}>
+                  {busy ? "RUNNING…" : "RUN ABLATION"}
+                </button>
+              ) : null}
               <button type="button" disabled={busy} onClick={onExportCsv}>Export CSV</button>
               <button type="button" disabled={busy} onClick={onExportTex}>Export LaTeX table</button>
             </div>
@@ -72,7 +74,7 @@ export default function IeeePaperPack({ pack, ablation, onAblation, onExportCsv,
                   n={ablation.n_scenarios} · seed={ablation.seed}
                 </p>
                 <div className="hqrl-charts">
-                  <div className="hqrl-panel" style={{ borderColor: "rgba(232,93,108,0.45)" }}>
+                  <div className="hqrl-panel" style={{ borderColor: "var(--status-sos)" }}>
                     <h2>WITHOUT safety layer</h2>
                     <div className="hqrl-mono">
 {`${ablation.without_safety?.name}
@@ -84,7 +86,7 @@ Clearance:  ${ablation.without_safety?.clearance_time_min} min
 ${ablation.without_safety?.story}`}
                     </div>
                   </div>
-                  <div className="hqrl-panel" style={{ borderColor: "rgba(62,207,142,0.45)" }}>
+                  <div className="hqrl-panel" style={{ borderColor: "var(--status-safe)" }}>
                     <h2>WITH HQRL</h2>
                     <div className="hqrl-mono">
 {`${ablation.with_hqrl?.name}
@@ -103,7 +105,9 @@ ${ablation.with_hqrl?.story}`}
               </>
             ) : (
               <p className="hqrl-muted" style={{ marginTop: 8 }}>
-                Run ablation to show examiners why QUBO safety matters versus RL alone.
+                {onAblation
+                  ? "Run ablation to show examiners why QUBO safety matters versus RL alone."
+                  : "No ablation in this run. Pick an ablation scenario and click RUN SCENARIO, or use Advanced (manual HQRL controls)."}
               </p>
             )}
           </div>
@@ -112,3 +116,5 @@ ${ablation.with_hqrl?.story}`}
     </div>
   );
 }
+
+export default memo(IeeePaperPack);

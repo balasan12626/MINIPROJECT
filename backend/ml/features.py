@@ -90,3 +90,64 @@ def build_feature_row(
 def feature_columns() -> tuple[list[str], list[str]]:
     meta = _metadata()
     return list(meta.get("features_numeric") or []), list(meta.get("features_categorical") or [])
+
+
+def _metadata_v2() -> dict[str, Any]:
+    path = get_settings().models_path / "flood_model_metadata_v3.json"
+    if not path.exists():
+        path = get_settings().models_path / "flood_model_metadata_v2.json"
+    if not path.exists():
+        return {}
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def default_catchment_v2() -> dict[str, Any]:
+    return dict(_metadata_v2().get("default_catchment") or {})
+
+
+def build_feature_row_v2(
+    rainfall_24h_mm: float,
+    forecast_daily_mm: list[float] | None = None,
+    month: int | None = None,
+    catchment: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    """Feature row for the v2 peak-flood-level regressor / alert classifier.
+
+    Unlike v1, this never encodes GaugeID identity (no g_prior, no per-gauge
+    z-scores) so it generalizes to live/simulated catchments not seen in
+    INDOFLOODS training.
+    """
+    now = datetime.now(timezone.utc)
+    month = int(month or now.month)
+    t = live_precip_to_t_days(rainfall_24h_mm, forecast_daily_mm)
+    row: dict[str, Any] = {**t}
+    row["month"] = month
+    row["doy"] = int(now.timetuple().tm_yday) if month == now.month else int(month * 30.4)
+    row["is_monsoon"] = int(month in {6, 7, 8, 9})
+    t1, t3, t7, t10 = row["T1d"], row["T3d"], row["T7d"], row["T10d"]
+    row["precip_intensity_recent"] = t1 / (t3 + 1e-6)
+    row["precip_frac_recent"] = t1 / (t10 + 1e-6)
+    row["precip_buildup_3_10"] = (t10 - t3) / (t10 + 1e-6)
+    row["log_T1d"] = math.log1p(t1)
+    row["log_T3d"] = math.log1p(t3)
+    row["log_T7d"] = math.log1p(t7)
+    row["log_T10d"] = math.log1p(t10)
+
+    catch = {**default_catchment_v2(), **(catchment or {})}
+    meta = _metadata_v2()
+    stage1 = meta.get("stage1") or {}
+    for col in stage1.get("features_numeric", []):
+        if col not in row and col in catch:
+            row[col] = catch[col]
+    for col in stage1.get("features_categorical", []):
+        row[col] = catch.get(col, "Unknown")
+    return row
+
+
+def feature_columns_v2() -> tuple[list[str], list[str], list[str]]:
+    """Returns (stage1_numeric, stage1_categorical, stage2_extra_numeric)."""
+    meta = _metadata_v2()
+    stage1 = meta.get("stage1") or {}
+    stage2 = meta.get("stage2") or {}
+    stage2_numeric = [c for c in stage2.get("features_numeric", []) if c not in stage1.get("features_numeric", [])]
+    return list(stage1.get("features_numeric") or []), list(stage1.get("features_categorical") or []), stage2_numeric

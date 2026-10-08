@@ -4,6 +4,8 @@ from __future__ import annotations
 
 from typing import Any
 
+from backend.thresholds import CHILD_MAX_AGE, ELDERLY_MIN_AGE
+
 
 def _age(c: dict[str, Any]) -> int | None:
     try:
@@ -12,6 +14,15 @@ def _age(c: dict[str, Any]) -> int | None:
         return int(c.get("age"))
     except (TypeError, ValueError):
         return None
+
+
+def is_child(age: int | None) -> bool:
+    """The one child definition (thresholds.CHILD_MAX_AGE): rule R3, triage, ranking."""
+    return age is not None and age < CHILD_MAX_AGE
+
+
+def is_elderly(age: int | None) -> bool:
+    return age is not None and age >= ELDERLY_MIN_AGE
 
 
 def water_tier(note: str | None) -> int:
@@ -25,7 +36,7 @@ def water_tier(note: str | None) -> int:
 
 def vulnerability_tier(c: dict[str, Any]) -> int:
     age = _age(c)
-    if age is not None and (age < 18 or age >= 60):
+    if is_child(age) or is_elderly(age):
         return 0
     if water_tier(c.get("water_level_note") or c.get("water_depth")) >= 2:
         return 1
@@ -34,11 +45,11 @@ def vulnerability_tier(c: dict[str, Any]) -> int:
 
 def vulnerability_label(c: dict[str, Any]) -> str:
     age = _age(c)
-    if age is not None and age < 18:
+    if is_child(age):
         return "child"
-    if age is not None and age >= 60:
+    if is_elderly(age):
         return "elderly"
-    if water_tier(c.get("water_level_note")) >= 2:
+    if water_tier(c.get("water_level_note") or c.get("water_depth")) >= 2:
         return "chest-deep"
     return "standard"
 
@@ -47,12 +58,21 @@ def sort_key(c: dict[str, Any]) -> tuple:
     age = _age(c) if _age(c) is not None else 40
     tier = vulnerability_tier(c)
     if tier == 0:
-        if age < 18:
+        if is_child(age):
             return (0, age, -water_tier(c.get("water_level_note")))
         return (0, 100 + (100 - age), -water_tier(c.get("water_level_note")))
     if tier == 1:
         return (1, -water_tier(c.get("water_level_note")), age)
     return (2, -water_tier(c.get("water_level_note")), age)
+
+
+def needs_ambulance(c: dict[str, Any]) -> bool:
+    """Ambulance only for child / elderly / chest-deep / injured. Everyone else
+    is moved by the K-means rescue team straight to a shelter."""
+    if vulnerability_label(c) != "standard":
+        return True
+    note = str(c.get("water_level_note") or "").lower()
+    return "injur" in note or str(c.get("triage") or "") == "injured"
 
 
 def rank_citizens(citizens: list[dict[str, Any]]) -> list[dict[str, Any]]:

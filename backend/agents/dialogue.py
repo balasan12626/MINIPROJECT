@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 import re
 import time
+from datetime import timedelta, timezone
 from typing import Any
 
 import httpx
@@ -16,11 +17,27 @@ from backend.websocket.hub import hub
 
 GROQ_URL = "https://api.groq.com/openai/v1/chat/completions"
 # Prefer current Groq catalog IDs; legacy Llama IDs kept last for older keys.
+def groq_body(model: str, temperature: float, max_tokens: int, messages: list[dict[str, str]]) -> dict[str, Any]:
+    """Chat-completion body for Groq. gpt-oss models are reasoning models: their hidden
+    reasoning counts against max_tokens, so with a small budget they stop before writing the
+    JSON (HTTP 400 json_validate_failed). Keep their reasoning short and the budget larger."""
+    body: dict[str, Any] = {
+        "model": model,
+        "temperature": temperature,
+        "max_tokens": max_tokens,
+        "response_format": {"type": "json_object"},
+        "messages": messages,
+    }
+    if model.startswith("openai/gpt-oss"):
+        body["reasoning_effort"] = "low"
+        body["max_tokens"] = max(max_tokens, 2000)
+    return body
+
+
+# Current Groq catalogue IDs. The Llama 3.x chat models were retired (HTTP 404).
 GROQ_MODELS = [
     "openai/gpt-oss-20b",
     "openai/gpt-oss-120b",
-    "llama-3.3-70b-versatile",
-    "llama-3.1-8b-instant",
 ]
 
 _state: dict[str, dict[str, Any]] = {
@@ -47,6 +64,12 @@ _NAME_MAP = {
     "monitor": "Card Monitor Agent",
     "card monitor agent": "Card Monitor Agent",
 }
+
+
+def _primary_model(settings) -> str:
+    """Configured model if it is in the current catalogue, else the first catalogue model."""
+    m = (settings.groq_model or "").strip()
+    return m if m in GROQ_MODELS else GROQ_MODELS[0]
 
 
 def risk_band(probability: float | None) -> str:
@@ -88,6 +111,46 @@ def last_conversation(mode: str = "live") -> dict[str, Any]:
         "history": [],
         "message": "No agent conversation yet",
     }
+
+
+IST = timezone(timedelta(hours=5, minutes=30), "IST")
+_NUM_RE = re.compile(r"\d+(?:\.\d+)?")
+GROUNDING_RULE = (
+    "Use ONLY the numbers given in the facts above (probability, rain, river, barrage stage, time, ages, counts). "
+    "Do not invent any other figure, time, distance, count or percentage. If a value is 'unknown', say it is unknown."
+)
+
+
+def ist_clock(dt=None) -> str:
+    """Wall-clock time in IST for the radio, from the real server clock."""
+    return (dt or utcnow()).astimezone(IST).strftime("%H:%M IST")
+
+
+def _fact_numbers(text: str) -> set[float]:
+    out: set[float] = set()
+    for m in _NUM_RE.findall(text or ""):
+        v = float(m)
+        out.update({v, round(v * 100, 1), round(v / 100, 4)})
+    return out
+
+
+def grounded(turns: list[dict[str, str]] | None, facts_text: str, extra: tuple[float, ...] = ()) -> bool:
+    """True when every number the LLM emitted traces to a real fact it was given.
+
+    ``facts_text`` must be built only from current state (never from earlier
+    radio lines, which may carry stale values). A number matches when it equals
+    a fact after rounding to the precision the LLM used (e.g. 73% vs 73.4)."""
+    if not turns:
+        return False
+    facts = _fact_numbers(facts_text) | {float(x) for x in extra}
+    for t in turns:
+        for m in _NUM_RE.findall(str(t.get("text") or "")):
+            v = float(m)
+            decimals = len(m.split(".")[1]) if "." in m else 0
+            tol = 0.5 * 10 ** (-decimals) + 1e-9
+            if not any(abs(v - f) <= tol for f in facts):
+                return False
+    return True
 
 
 def _canon(name: str) -> str:
@@ -166,6 +229,15 @@ def _parse_turns(raw: str, allowed: set[str]) -> list[dict[str, str]] | None:
     return clean if len(clean) >= 2 else None
 
 
+def _v(value: Any) -> str:
+    if value is None:
+        return "unknown"
+    try:
+        return f"{float(value):.2f}".rstrip("0").rstrip(".")
+    except (TypeError, ValueError):
+        return str(value)
+
+
 async def _llm_turns(band: str, ctx: dict[str, Any], allowed: list[str]) -> tuple[list[dict[str, str]] | None, str | None]:
     settings = get_settings()
     key = (settings.groq_api_key or "").strip()
@@ -189,31 +261,32 @@ async def _llm_turns(band: str, ctx: dict[str, Any], allowed: list[str]) -> tupl
         "rescued_no": "Operator said NO — keep searching, ambulance stay on scene.",
         "spike": "A KPI card jumped suddenly. Report which metric, old vs new, and how many seconds the change took.",
     }
-    prompt = (
+    facts = (
         f"Speakers (use these exact names): {names}\n"
         f"Situation: {rules.get(band, '')}\n"
-        f"Flood probability {ctx.get('pct')}. Rain {ctx.get('rain')} mm. River {ctx.get('river')} m. "
-        f"Zone {ctx.get('zone')}. Places {ctx.get('places')}. Mode {ctx.get('mode')}.\n"
+        f"FACTS (current simulation state): flood probability {ctx.get('pct')}; rain {_v(ctx.get('rain'))} mm; "
+        f"Yamuna river level {_v(ctx.get('river'))} m; Yamuna barrage stage {_v(ctx.get('dam_stage'))} m; "
+        f"{ctx.get('models') or ''} time now {ctx.get('time_ist') or ist_clock()}; "
+        f"zone {ctx.get('zone')}; places {ctx.get('places')}; mode {ctx.get('mode')}.\n"
         f"{spike_txt}\n"
-        f"Recent radio:\n{recent_txt}\n"
-        "Write a NEW spoken conversation (do not copy the recent lines). 4-6 short turns, 1-2 sentences, like humans on radio.\n"
-        'JSON only: {"turns":[{"from":"...","to":"...","text":"..."}]}'
     )
-    models = [settings.groq_model] + [m for m in GROQ_MODELS if m != settings.groq_model]
+    prompt = (
+        facts
+        + f"Recent radio (context only, may be outdated - never repeat its numbers):\n{recent_txt}\n"
+        "Write a NEW spoken conversation (do not copy the recent lines). 4-6 short turns, 1-2 sentences, like humans on radio.\n"
+        + GROUNDING_RULE
+        + '\nJSON only: {"turns":[{"from":"...","to":"...","text":"..."}]}'
+    )
+    first = _primary_model(settings)
+    models = [first] + [m for m in GROQ_MODELS if m != first]
     last_err = None
     for model in models:
         if not model:
             continue
-        body = {
-            "model": model,
-            "temperature": 0.85,
-            "max_tokens": 700,
-            "response_format": {"type": "json_object"},
-            "messages": [
-                {"role": "system", "content": "You write realistic multi-agent emergency radio dialogue. JSON only."},
-                {"role": "user", "content": prompt},
-            ],
-        }
+        body = groq_body(model, 0.85, 700, [
+            {"role": "system", "content": "You write realistic multi-agent emergency radio dialogue. JSON only."},
+            {"role": "user", "content": prompt},
+        ])
         try:
             async with httpx.AsyncClient(timeout=12.0) as client:
                 resp = await client.post(GROQ_URL, headers={"Authorization": f"Bearer {key}"}, json=body)
@@ -222,9 +295,9 @@ async def _llm_turns(band: str, ctx: dict[str, Any], allowed: list[str]) -> tupl
                     continue
                 content = (((resp.json().get("choices") or [{}])[0].get("message") or {}).get("content")) or ""
             turns = _parse_turns(content, set(allowed))
-            if turns:
+            if turns and grounded(turns, facts):
                 return turns, None
-            last_err = f"{model} unusable JSON"
+            last_err = f"{model} unusable JSON" if not turns else f"{model} used numbers not in current state - rejected"
         except Exception as exc:  # noqa: BLE001
             last_err = f"{model}: {exc}"
             continue
@@ -316,11 +389,22 @@ async def converse(
         xgb_pct = None if dual.get("xgboost") is None else round(float(dual["xgboost"]) * 100, 1)
         places = f"RF {rf_pct}% vs XGBoost {xgb_pct}% — hold auto-dispatch"
     allowed = speakers_for(talk_band)
+    dam = (extra or {}).get("dam") or {}
+    models = ""
+    if dual.get("random_forest") is not None and dual.get("xgboost") is not None:
+        models = (
+            f"Random Forest {round(float(dual['random_forest']) * 100, 1)}%, "
+            f"XGBoost {round(float(dual['xgboost']) * 100, 1)}%;"
+        )
     ctx = {
         "mode": mode,
         "pct": pct,
         "rain": weather.get("rainfall_mm"),
         "river": river.get("value_m"),
+        # evacuation-side dam_level = Yamuna barrage stage, NOT a reservoir elevation
+        "dam_stage": dam.get("value_m"),
+        "models": models,
+        "time_ist": ist_clock(),
         "zone": zone,
         "places": places,
         "recent": slot.get("history") or [],
@@ -435,29 +519,31 @@ async def _llm_citizen(name, loc, people, water, rain, allowed, recent):
     if not key:
         return None, "GROQ_API_KEY missing"
     recent_txt = "\n".join(f"{t.get('from')}: {t.get('text')}" for t in (recent or [])[-3:]) or "(none)"
-    prompt = (
+    facts = (
         f"Speakers (exact names): Rescue Agent, Ambulance Agent, {name}.\n"
-        f"{name} pressed SOS. Live GPS {loc}. {people} people. Water report: {water}. Command rainfall {rain} mm.\n"
-        f"Rescue must use the name {name}, ask rainwater depth, confirm the live location, and send ambulance.\n"
-        f"Recent radio:\n{recent_txt}\n"
-        'JSON only: {"turns":[{"from":"...","to":"...","text":"..."}]}'
+        f"{name} pressed SOS. Live GPS {loc}. {people} people. Water report: {water}. Command rainfall {_v(rain)} mm. "
+        f"Time now {ist_clock()}.\n"
     )
-    body = {
-        "model": settings.groq_model or GROQ_MODELS[0],
-        "temperature": 0.8,
-        "max_tokens": 700,
-        "response_format": {"type": "json_object"},
-        "messages": [
-            {"role": "system", "content": "Emergency radio between rescue teams and a named citizen. JSON only."},
-            {"role": "user", "content": prompt},
-        ],
-    }
+    prompt = (
+        facts
+        + f"Rescue must use the name {name}, ask rainwater depth, confirm the live location, and send ambulance.\n"
+        f"Recent radio (context only, may be outdated):\n{recent_txt}\n"
+        + GROUNDING_RULE
+        + '\nJSON only: {"turns":[{"from":"...","to":"...","text":"..."}]}'
+    )
+    body = groq_body(_primary_model(settings), 0.8, 700, [
+        {"role": "system", "content": "Emergency radio between rescue teams and a named citizen. JSON only."},
+        {"role": "user", "content": prompt},
+    ])
     try:
         async with httpx.AsyncClient(timeout=12.0) as client:
             resp = await client.post(GROQ_URL, headers={"Authorization": f"Bearer {key}"}, json=body)
             resp.raise_for_status()
             content = (((resp.json().get("choices") or [{}])[0].get("message") or {}).get("content")) or ""
-        return _parse_turns(content, set(allowed)), None
+        turns = _parse_turns(content, set(allowed))
+        if turns and not grounded(turns, facts):
+            return None, "LLM used numbers not in current state - rejected"
+        return turns, None
     except Exception as exc:  # noqa: BLE001
         return None, str(exc)
 
@@ -590,31 +676,33 @@ async def _llm_queue(names, lines, cluster_txt, rain, allowed, hold=False, dual=
     if dual and dual.get("available"):
         dual_txt = f"RF={dual.get('random_forest')} XGB={dual.get('xgboost')} disagree={dual.get('disagree')}."
     hold_txt = "Administrator MUST speak first and forbid auto-dispatch." if hold else "Rescue may treat this as an active rescue net."
-    prompt = (
+    facts = (
         f"Speakers (exact names): Administrator Agent, Flood Risk Agent, Rescue Agent, Ambulance Agent, Disaster Team Agent, citizens: {', '.join(names)}.\n"
-        f"Command rainfall {rain} mm. {dual_txt} {hold_txt}\n"
+        f"Command rainfall {_v(rain)} mm. Time now {ist_clock()}. {dual_txt} {hold_txt}\n"
         f"K-means + vulnerable-first:{cluster_txt}\n"
-        f"Call EACH person by Person N + full name. Ask STATUS (trapped / moving / injured). They must answer.\n"
-        f"Announce first two vulnerable names like: '{names[0] if names else 'Name'}, age …, first.'\n"
         + "\n".join(lines) + "\n"
-        'JSON only: {"turns":[{"from":"...","to":"...","text":"..."}]}'
     )
-    body = {
-        "model": settings.groq_model or GROQ_MODELS[0],
-        "temperature": 0.6,
-        "max_tokens": 2000,
-        "response_format": {"type": "json_object"},
-        "messages": [
-            {"role": "system", "content": "Emergency radio. Vulnerable-first. Ask each person their live status. JSON only."},
-            {"role": "user", "content": prompt},
-        ],
-    }
+    prompt = (
+        facts
+        + "Call EACH person by Person N + full name. Ask STATUS (trapped / moving / injured). They must answer.\n"
+        f"Announce first two vulnerable names like: '{names[0] if names else 'Name'}, age …, first.'\n"
+        + GROUNDING_RULE
+        + '\nJSON only: {"turns":[{"from":"...","to":"...","text":"..."}]}'
+    )
+    body = groq_body(_primary_model(settings), 0.6, 2000, [
+        {"role": "system", "content": "Emergency radio. Vulnerable-first. Ask each person their live status. JSON only."},
+        {"role": "user", "content": prompt},
+    ])
     try:
         async with httpx.AsyncClient(timeout=22.0) as client:
             resp = await client.post(GROQ_URL, headers={"Authorization": f"Bearer {key}"}, json=body)
             resp.raise_for_status()
             content = (((resp.json().get("choices") or [{}])[0].get("message") or {}).get("content")) or ""
-        return _parse_turns(content, set(allowed)), None
+        turns = _parse_turns(content, set(allowed))
+        # Person N ordinals are real (1..len(names)); anything else must trace to facts.
+        if turns and not grounded(turns, facts, extra=tuple(range(1, len(names) + 1))):
+            return None, "LLM used numbers not in current state - rejected"
+        return turns, None
     except Exception as exc:  # noqa: BLE001
         return None, str(exc)
 

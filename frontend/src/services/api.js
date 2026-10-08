@@ -33,6 +33,10 @@ api.interceptors.response.use(
     const status = err?.response?.status;
     const cfg = err.config || {};
     const method = String(cfg.method || "get").toLowerCase();
+    console.warn(
+      `[AquaSentinel] API ${method.toUpperCase()} ${cfg.url || "?"} failed: ${status ? `HTTP ${status}` : err?.code || err?.message}`,
+      err?.response?.data?.detail ?? ""
+    );
     // Never retry auth failures, timeouts, or mutating POSTs — that caused 5+ min "Launching…" hangs
     if (status === 401 || status === 403 || err?.code === "ECONNABORTED" || method !== "get") {
       return Promise.reject(err);
@@ -83,7 +87,13 @@ export const fetchPolicy = () => getJson("/api/policy");
 export const fetchShelters = () => getJson("/api/shelters");
 export const fetchRoutes = () => getJson("/api/routes");
 export const fetchModels = () => getJson("/api/ml/models");
+export const fetchModelsV2 = () => getJson("/api/ml/models-v2");
 export const fetchMlBenchmark = () => getJson("/api/ml/benchmark");
+export const fetchMlBenchmarkV4 = () => getJson("/api/ml/benchmark-v4");
+export const fetchV4Gauges = () => getJson("/api/ml/v4/gauges");
+export const predictV4Replay = (gaugeId, date) =>
+  postJson("/api/ml/predict-v4", { gauge_id: gaugeId, ...(date ? { date } : {}) });
+export const fetchMlBenchmarkV2 = () => getJson("/api/ml/benchmark-v2");
 export const fetchMetrics = () => getJson("/api/metrics");
 export const fetchScenarios = () => getJson("/api/simulation/scenarios");
 export const fetchSimState = () => getJson("/api/simulation/state");
@@ -114,8 +124,18 @@ export const setSimFeatures = (features) => postJson("/api/simulation/features",
 export const forceDispatch = () => postJson("/api/simulation/force-dispatch", {});
 export const askSimAgent = (question) => postJson("/api/simulation/ask-agent", { question });
 export const setSimChecklist = (checklist) => postJson("/api/simulation/checklist", { checklist });
+/* —— Dam Monitor (/simulation → Dam Monitor tab) —— */
+export const fetchDams = () => getJson("/api/dams");
+export const fetchDam = (damId) => getJson(`/api/dams/${encodeURIComponent(damId)}`);
+export const fetchDamHistory = (damId, days = 14) =>
+  getJson(`/api/dams/${encodeURIComponent(damId)}/history?days=${days}`);
+export const runDamSimulation = (body) => postJson("/api/simulation/run", body);
+export const predictDamRisk = (body) => postJson("/api/prediction/dam-risk", body);
+
 export const fetchMlExplain = (rainfall) =>
   getJson(rainfall != null ? `/api/ml/explain?rainfall_24h_mm=${rainfall}` : "/api/ml/explain");
+export const fetchMlExplainV2 = (rainfall) =>
+  getJson(rainfall != null ? `/api/ml/explain-v2?rainfall_24h_mm=${rainfall}` : "/api/ml/explain-v2");
 
 export const fetchRescueDesk = () => getJson("/api/rescue-desk/state");
 export const rescueSos = (body) => postJson("/api/rescue-desk/sos", body);
