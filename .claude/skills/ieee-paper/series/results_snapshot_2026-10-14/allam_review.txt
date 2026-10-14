@@ -1,0 +1,976 @@
+### allam-2-7b 0 band=calm dep=True typed=True judge=None suggest=True []
+    FACTS p=34.3 rf=29.1 rain=34.2 river=205.11 dam=202.9 time=07:57 IST
+    | Citizens in Yamuna Pushta / Geeta Colony zone, based on current data: probability of flooding is at 34.3%, with `%rain` of 34.2 mm and Yamuna river level at 205.11 meters.
+    | Considering the river level and rain data, maintain vigilance and stay updated. At 07:57 IST, remain calm as the Yamuna barrage stage is at 202.9 meters.
+    | Satisfied with the current situation, Administrator Agent. Yamuna Pushta / Geeta Colony citizens will remain informed via simulation mode updates.
+    | Understood, Flood Risk Agent. If the river level exceeds the barrage stage or flood probability rises, I expect immediate notification.
+### allam-2-7b 2 band=calm dep=True typed=True judge=None suggest=True []
+    FACTS p=20.9 rf=25.6 rain=32.1 river=206.93 dam=203.8 time=14:00 IST
+    | Updates received for Yamuna Pushta/Geeta Colony zone: flood probability (Random Forest) is 25.6%, XGBoost is 20.9%. Rainfall: 32.1 mm.
+    | Given the probabilities and rain data, the area is not currently under severe risk. Yamuna river level at 206.93 meters, barrage stage at 203.8 meters.
+    | Considering these factors, the flood level remains below 40%. Residents: no evacuation orders. Remain updated, and please urge locals to continue monitoring the situation, especially if the flood levels rise in the future.
+    | Given the current situation, we shall keep the area under close watch. Keep me informed about any changes in probabilities or water levels.
+    | Understood, sir. I will notify you promptly if the flood risk increases.
+### allam-2-7b 3 band=auto dep=False typed=False judge=None suggest=False [('0.01', 'water level')]
+    FACTS p=96.2 rf=74.7 rain=171.5 river=202.96 dam=205.99 time=12:16 IST
+    | Administrator Agent, we have reached the critical point with a probability of 96.2%. The rain amount is 171.5 mm, river level is 202.96 m, and the barrage stage is 205.99 m. We recommend initiating the rescue operations in the Yamuna Pushta and Geeta Colony zones.
+    | Flood Risk Agent, I have informed the rescue teams. Yamuna Pushta and Geeta Colony are prioritized based on the current situation. Please keep providing updates on the river level and the progression of the flood.
+    | Administrator Agent, I am currently monitoring the river level, which is still rising at a rate of 0.01 m/minute. I will update you on the Yamuna Barrage status and actions accordingly.
+    | Thank you, Flood Risk Agent. I will coordinate with all involved parties to ensure a swift and effective response. Stay safe out there.
+### allam-2-7b 4 band=auto dep=False typed=False judge=None suggest=False [('200', 'quantity not in state'), ('300', 'unbound number'), ('3', 'unbound number'), ('3', 'unbound number'), ('0.033', 'water level')]
+    FACTS p=76.9 rf=65.4 rain=92.4 river=205.42 dam=204.06 time=23:32 IST
+    | 60% flood probability recorded in Yamuna Pushta and Geeta Colony zones. Weather updates confirm heavy rain (92.4 mm) caused by cyclone. River level (Yamuna) is 205.42 m and Yamuna barrage stage is 204.06 m.
+    | Activate rescue efforts in both locations. Urgent, no time to waste. Please inform relevant teams to coordinate. Use estimated 200 people affected and 300 houses inundated.
+    | Ambulance is en route to Yamuna Pushta. Disaster/NDRF team is mobilizing and heading for Geeta Colony.
+    | Upgrade flood warning to Level 3 in Yamuna Pushta and Geeta Colony. Keep me updated on rescue efforts, water levels, and estimated completion time.
+    | Rescue teams will prioritize vulnerable groups (elderly and children) and initiate house-to-house search and rescue operation. Level 3 warning adopted, Yamuna river level is increasing at a rate of 0.033 meters per hour.
+### allam-2-7b 5 band=watch dep=False typed=False judge=None suggest=False [('10', 'unbound number')]
+    FACTS p=42.9 rf=30.2 rain=27.0 river=201.2 dam=203.51 time=09:29 IST
+    | 09:29 IST, flood probability 42.9%, rain 27 mm, Yamuna river level 201.2 m, Yamuna barrage stage 203.51 m, zone Yamuna Pushta / Geeta Colony. Activating flood response plan.
+    | Actual river flow & barrage operations data needed, request real-time updates every 10 minutes.
+    | Understood, providing updated data at 09:39 IST. 40-50% watch only, no rescue required yet.
+    | Prioritize containment and containment zone expansion as per the updated information.
+    | Commissioning containment zone in Yamuna Pushta and expanding to Geeta Colony. Containment zone boundaries: south - Phase-IX B road; east - Geeta Colony road; north - Geeta Colony sports ground; west - Sector-10 E road.
+### allam-2-7b 6 band=auto dep=True typed=False judge=None suggest=True []
+    FACTS p=98.4 rf=79.4 rain=180.5 river=206.04 dam=201.54 time=00:54 IST
+    | Administrator, I'm getting a high flood alert. Based on the weather updates and river data, we are above 60% probability of flooding in Yamuna Pushta and Geeta Colony. We recommend immediate action.
+    | Confirmed, Flood Risk Agent. Let's alert the rescue teams and make sure they know the details of the situation. Yamuna river level at 206.04 and Yamuna barrage stage at 201.54. Rain amount is 180.5 mm.
+    | Rescue Agent, Administrator here. Yamuna Pushta and Geeta Colony are at high risk of flooding. Coordinate with the dispatchers and mobilize the rescue teams immediately. Yamuna river level and barrage stage indicate imminent flooding. Alert ambulance and disaster/NDRF team as well.
+    | Received, Administrator. I will prioritize Yamuna Pushta and Geeta Colony, informing all relevant teams of the situation. Yamuna river level at 206.04, barrage stage at 201.54, and we expect a flood in those areas.
+    | Disaster/NDRF Team Agent, this is Rescue Agent. Coordinate with me and be ready to assist with Yamuna Pushta and Geeta Colony. Yamuna river level at 206.04, barrage stage at 201.54, and flood expected shortly.
+### allam-2-7b 8 band=auto dep=False typed=False judge=None suggest=False [('134', 'unbound number'), ('45', 'unbound number'), ('1:00', 'wrong time')]
+    FACTS p=78.7 rf=63.8 rain=129.1 river=204.46 dam=204.91 time=12:58 IST
+    | Administrator, sounding the alert. Yamuna river level at 204.46 meters, barrage stage at 204.91 meters, and rain at 129.1 mm, with a probability of flood at 78.7%. Reminder to proceed with disaster response plans.
+    | Understood, Flood Risk. I have updated the system and dispatched rescue teams. Ambulance to Yamuna Pushta, and disaster/NDRF teams to Geeta Colony. Meet at the incident command center for instructions. Time is 12:58 IST.
+    | Ambulance is en route to Yamuna Pushta, and the disaster/NDRF teams are on standby at the IC. I have informed the locals in the affected areas.
+    | Notify the team that Yamuna Pushta has already begun flooding with 134 affected. Geeta Colony is next, expecting 45 affected. Stay updated and keep me posted on the situation.
+    | Understood, initiating flood warnings in Yamuna Pushta and Geeta Colony. Locals have been alerted. Update on rescue operations and number of rescued at 1:00 IST.
+### allam-2-7b 9 band=auto dep=False typed=False judge=None suggest=False [('2', 'unbound number'), ('5', 'unbound number'), ('2', 'unbound number'), ('5', 'unbound number')]
+    FACTS p=91.0 rf=67.2 rain=143.2 river=206.84 dam=203.03 time=16:33 IST
+    | 60% flood probability with 91.0% certainty, 143.2 mm rain, Yamuna river level at 206.84 m, Yamuna barrage stage at 203.03 m, 16:33 IST.
+    | Confirmed. Proceed with rescue operations. Yamuna Pushta and Geeta Colony are in the affected zone.
+    | Yamuna Pushta and Geeta Colony are flooding. Focus on rescuing at these locations. Yamuna Pushta: 2 confirmed, Geeta Colony: 5 confirmed.
+    | The rescue teams are on their way.
+    | Rescue teams en route to Yamuna Pushta (2 confirmed) and Geeta Colony (5 confirmed). Priority for Yamuna Pushta due to number of people.
+    | Currently it's 16:33 IST. Keep us updated on the progress.
+### allam-2-7b 11 band=auto dep=False typed=False judge=None suggest=False [('67', 'probability/threshold'), ('155', 'rainfall')]
+    FACTS p=96.6 rf=73.3 rain=157.5 river=207.52 dam=204.95 time=04:30 IST
+    | 67% flood probability, 155 mm rain, Yamuna river level 207.52 m, Yamuna barrage stage 204.95 m. Time: 04:30 IST. Yamuna Pushta/Geeta Colony affected.
+    | Confirmed. Yamuna Pushta and Geeta Colony under severe flood risk. Sound evacuation alarm and mobilize rescue teams immediately.
+    | Yamuna Pushta and Geeta Colony under severe flood threat. Proceed with immediate rescue operations.
+    | Activate emergency response teams, including ambulance, and NDRF. Yamuna Pushta and Geeta Colony require urgent assistance.
+    | Rescue operations prioritize those in elevated locations and vulnerable areas. Coordinate with citizens for exact locations.
+### allam-2-7b 12 band=watch dep=False typed=False judge=None suggest=False [('206.28', 'water level'), ('205.67', 'water level'), ('45.7', 'probability/threshold')]
+    FACTS p=40.6 rf=29.7 rain=34.9 river=206.07 dam=205.72 time=21:30 IST
+    | Good evening, Administrator Agent. Given the flood probability of 40.6% and the current Yamuna river level at 206.07 meters, I suggest reviewing our watch-only strategy in Yamuna Pushta / Geeta Colony zones.
+    | Understood, Flood Risk Agent. We'll ensure residents are aware of the situation and proceed with updating our protocols accordingly. Please keep monitoring the rain data (34.9 mm) and barrage stage (205.72 m) as they might further impact our decisions.
+    | Rainfall has remained consistent at 34.9 mm, but the Yamuna barrage stage is decreasing marginally at 205.72 meters. We should consider revising our response preparedness accordingly.
+    | Considering the updates, I agree. Let's notify the residents, and prepare for potential flood interventions if the probability crosses 50%. Stay updated on the river level and barrage stage.
+    | Current river level (206.28 m) and barrage stage (205.67 m) raise the flood probability to 45.7%. We'll need to consider evacuation options if it surpasses 50%.
+### allam-2-7b 13 band=auto dep=False typed=False judge=None suggest=False [('5:25', 'wrong time')]
+    FACTS p=96.0 rf=76.0 rain=244.8 river=205.69 dam=201.15 time=17:25 IST
+    | Administrator Agent to Flood Risk Agent. Update on flood probability and river level, please.
+    | Flood Risk Agent to Administrator Agent. Flood probability is still 96.0%, rain volume reached 244.8 mm, and the Yamuna river level is at 205.69 m. Yamuna barrage stage is unknown due to infrastructure failure.
+    | Administrator Agent to Flood Risk Agent. Based on these parameters, emergency response is necessary. Please coordinate with relevant teams to prioritize rescue operations at Yamuna Pushta and Geeta Colony. Remind me of the current time, please.
+    | Flood Risk Agent to Administrator Agent. Confirmed, rescue operations at Yamuna Pushta and Geeta Colony are of utmost priority. Current time is 5:25 PM IST.
+    | Administrator Agent to Flood Risk Agent. Very well, commence immediate rescues at both locations while ensuring safety of all emergency personnel.
+### allam-2-7b 14 band=auto dep=True typed=True judge=None suggest=True []
+    FACTS p=98.4 rf=76.1 rain=201.0 river=201.72 dam=204.82 time=12:27 IST
+    | Updates: Probability elevated to 98.4%, rain data: 201 mm, Yamuna river level: 201.72 m, barrage stage: 204.82 m. Yamuna Pushta/Geeta Colony zones are affected.
+    | Ambulance and disaster/NDRF teams report readiness. YP/GC locations marked for prioritization. Proceeding with rescue operations.
+    | Ambulance Agent, prioritize Yamuna Pushta and Geeta Colony. Coordinate with disaster/NDRF team for swift rescue efforts.
+    | Disaster/NDRF Agent reports preparedness. Proceeding with rescue operations in Yamuna Pushta and Geeta Colony zones.
+    | Ambulance Agent, inform other relevant agencies for support. Coordinate with Disaster/NDRF Agent for coordinated efforts.
+### allam-2-7b 15 band=auto dep=False typed=False judge=None suggest=False [('20:59', 'wrong time')]
+    FACTS p=73.6 rf=58.0 rain=7.3 river=205.08 dam=202.21 time=20:56 IST
+    | 73.6% probability of flooding, ongoing heavy rain (7.3 mm), Yamuna river level currently at 205.08 m, Yamuna barrage stage at 202.21 m, time is 20:56 IST.
+    | Vehicles from the disaster team and NDRF are on their way to Yamuna Pushta and Geeta Colony. Coordinate with rescue team and provide updates.
+    | Attention Rescue Team, flood is likely above 60%, priority goes to Yamuna Pushta and Geeta Colony. Coordinate with disaster and NDRF teams. Report back with rescue progress.
+    | Understood, Yamuna Pushta and Geeta Colony are now our focus. Rescue teams are mobilizing to these areas.
+    | Estimated time of arrival for disaster and NDRF teams is 20:59 IST. Focus efforts until then.
+### allam-2-7b 16 band=auto dep=False typed=False judge=None suggest=False [('70', 'probability/threshold')]
+    FACTS p=88.6 rf=64.5 rain=133.1 river=201.7 dam=203.85 time=11:58 IST
+    | 70% flood probability now at Yamuna Pushta and Geeta Colony. Rainfall continues at 133.1 mm. River level: 201.7 m, Yamuna Barrage stage: 203.85 m.
+    | Activate emergency operations. Send ambulance and Disaster Response Team to Yamuna Pushta and Geeta Colony. Proceed with rescue operations.
+    | Ambulance and Disaster Response Team are en route. River level rising, Yamuna Barrage stage indicates potential overflow.
+    | Inform Police to setup evacuation centers and secure the zones. Coordinate with Fire Brigade for additional support.
+    | Police and Fire Brigade informed. Evacuation centers will be set up within affected zones.
+### allam-2-7b 17 band=auto dep=True typed=True judge=None suggest=True []
+    FACTS p=87.2 rf=66.8 rain=119.3 river=205.64 dam=199.24 time=13:35 IST
+    | Administrator Agent, flood probability is 87.2%, rain 119.3 mm, Yamuna river level 205.64 m, Yamuna barrage stage 199.24 m, time now 13:35 IST, zone: Yamuna Pushta / Geeta Colony, places: Yamuna Pushta / Geeta Colony.
+    | Flood Risk Agent, I'm authorizing emergency response. Rescue teams for Yamuna Pushta and Geeta Colony.
+    | Flood Risk Agent, Yamuna Pushta and Geeta Colony have both registered over 60%. Proceed with rescue efforts.
+    | Administrator Agent, flooded vehicles found in Yamuna Pushta; multiple trapped people, Administer Agent, requesting immediate AMBULANCE response.
+    | Flood Risk Agent, NDRF, and Disaster Response team are on their way to Yamuna Pushta. Keep me updated on Geeta Colony.
+### allam-2-7b 18 band=auto dep=False typed=False judge=None suggest=False [('4', 'quantity not in state')]
+    FACTS p=79.6 rf=71.7 rain=76.1 river=205.86 dam=204.5 time=03:28 IST
+    | Admin, calculated flood probability stands at 79.6%. The rain has fallen for 4 hours, totaling 76.1 mm. Yamuna river level is 205.86 meters, just above the critical level.
+    | Flood Risk, I've updated the local teams about the flood probability and current situation. Yamuna barrage stage is unknown, the situation is critical.
+    | Understood, Admin. Considering the Yamuna barrage stage being unknown, we must act quickly. I've marked Yamuna Pushta and Geeta Colony as high-priority areas, and notified the rescue team, ambulance, and Disaster/NDRF teams.
+    | Flood Risk, please inform the rescue team and other relevant agencies about the exact locations of Yamuna Pushta and Geeta Colony, and request they proceed to these areas immediately.
+    | Disaster/NDRF Team, Admin has identified Yamuna Pushta and Geeta Colony as high-priority zones. Please proceed to these locations immediately to assist and rescue affected people.
+### allam-2-7b 19 band=auto dep=False typed=False judge=None suggest=False [('200', 'unbound number'), ('300', 'unbound number'), ('05:35', 'wrong time')]
+    FACTS p=85.7 rf=63.7 rain=131.2 river=207.16 dam=202.35 time=05:27 IST
+    | Based on the current situation, the flood probability is at 85.7%. Yamuna river level stands at 207.16 meters and the Yamuna barrage stage is 202.35 meters.
+    | The rain intensity has reached 131.2 mm so far, and the time is 05:27 IST. The affected zones are Yamuna Pushta and Geeta Colony with counts of 200 residents in Yamuna Pushta and 300 in Geeta Colony.
+    | It seems like the flood waters are spreading rapidly. Proceed with the rescue operations.
+    | Understood, the river is overflowing and the residents in both zones are in grave danger. Requesting both the ambulance and disaster/NDRF teams to rush to Yamuna Pushta and Geeta Colony to initiate the rescue operations.
+    | Let's make sure all rescue operations are coordinated efficiently. Confirm the progress at 05:35 IST.
+    | Assigned. I'll ensure smooth coordination and keep you updated at the requested time.
+### allam-2-7b 20 band=auto dep=False typed=False judge=None suggest=False [('15:45', 'wrong time'), ('30', 'probability/threshold'), ('10', 'quantity not in state')]
+    FACTS p=65.2 rf=50.7 rain=20.8 river=200.82 dam=204.23 time=15:23 IST
+    | Latest data shows a flood probability of 65.2%, along with 20.8 mm of rain within the last hour. Yamuna river level is at 200.82 m, while Yamuna barrage stage is at 204.23 m.
+    | Alert received - Yamuna Pushta and Geeta Colony are in severe danger. Task an ambulance and a disaster/NDRF team to Yamuna Pushta and Geeta Colony zones immediately.
+    | Ambulance dispatched to Yamuna Pushta zone. Disaster/NDRF team is en route to Geeta Colony. We're monitoring the situation closely.
+    | UPDATE: Yamuna river flow increased by 30% within the last 10 minutes. Please inform the rescue teams about the escalating danger. Time to peak is estimated at 15:45 IST.
+    | I have updated the rescue teams on the rapidly worsening conditions. They are preparing for a more challenging rescue operation.
+### allam-2-7b 21 band=auto dep=False typed=False judge=None suggest=False [('1', 'unbound number'), ('2', 'unbound number'), ('3', 'unbound number')]
+    FACTS p=96.4 rf=74.4 rain=105.8 river=200.0 dam=203.06 time=00:05 IST
+    | Admin here. Probability updated as 96.4% and rain received as 105.8 mm. Yamuna river level: 200 m and Yamuna barrage stage: 203.06 m.
+    | Flood Risk Agent, Flood Risk Agent reporting. Given the above data, flood occurs above 60%. Orders initiating flood rescue operations at specified locations, Yamuna Pushta and Geeta Colony.
+    | Flood Risk Agent, Admin confirms. Preemptive actions initiated. Coordinating with Rescue, Ambulance, and Disaster/NDRF teams to rescue people at provided locations: Yamuna Pushta, Geeta Colony. Keep me updated on the progress.
+    | Admin, Flood Risk Agent acknowledges received instructions. Team 1 (Rescue) will head to Geeta Colony while Team 2 (Ambulance) heads to Yamuna Pushta. Team 3 (Disaster/NDRF) is notified and en route as well.
+    | Flood Risk Agent, Admin. Please ensure the teams communicate with each other and coordinate their efforts. Keep me updated on the progress.
+### allam-2-7b 23 band=auto dep=False typed=False judge=None suggest=False [('300', 'unbound number'), ('500', 'unbound number')]
+    FACTS p=87.1 rf=58.0 rain=15.9 river=205.4 dam=200.08 time=21:48 IST
+    | Current flood probability indicates 87.1% chance of flooding. Yamuna river level stands at 205.4 m and Yamuna barrage stage is at 200.08 m. Preparing for potential flood rescue operations.
+    | Rainfall has reached 15.9 mm so far, but the situation at Yamuna Pushta and Geeta Colony is concerning. Yamuna Pushta residents total: 300, Geeta Colony residents total: 500. Are we to assume that flood rescue teams should be mobilized to these locations given the numbers and the river and barrage conditions?
+    | Consider initiating flood rescue operations at Yamuna Pushta and Geeta Colony. Prepare a detailed assessment report highlighting the potential threats and rescue strategies. This is a high priority due to the large number of residents and severe river conditions. Report back in five minutes.
+    | Ambulance and disaster relief team are preparing for the rescue operations in Yamuna Pushta and Geeta Colony. We will update you on the assessment report within the given timeframe.
+### allam-2-7b 24 band=auto dep=True typed=False judge=None suggest=False [('twenty', 'number word, no state quantity'), ('twenty', 'number word, no state quantity'), ('thirty', 'number word, no state quantity'), ('forty', 'number word, no state quantity'), ('eighty', 'number word, no state quantity'), ('two', 'number word, no state quantity'), ('two', 'number word, no state quantity'), ('two', 'number word, no state quantity'), ('two', 'number word, no state quantity'), ('two', 'number word, no state quantity')]
+    FACTS p=80.6 rf=71.9 rain=81.8 river=207.97 dam=202.82 time=22:46 IST
+    | Eighty-zero-six flood probability, one-zero-zero-seven-point-one millimeters rain, two-oh-seven-point-nine-seven meters Yamuna river level, two-oh-two-point-eight-two meters Yamuna barrage stage, twenty-one citizens in Yamuna Pushta, thirty in Geeta Colony.
+Rain continues and river level rising, Administrator.
+Time: twenty-two forty six Indian Standard Time
+    | Got it, Flood Risk Agent. I authorize your team and the ambulance to respond urgently.
+I'll alert the disaster/NDRF team now. Stay in touch about river conditions and estimated time of arrival.
+### allam-2-7b 26 band=auto dep=False typed=False judge=None suggest=False [('3', 'quantity not in state'), ('6', 'water level'), ('7', 'water level'), ('10', 'quantity not in state')]
+    FACTS p=90.9 rf=71.9 rain=107.4 river=206.65 dam=203.1 time=04:50 IST
+    | Flood probability is at 90.9%, and rain has fallen for 3 hours with 107.4 mm recorded.
+River level is at 206.65 m, Yamuna barrage stage at 203.1 m.
+Random Forest model yield is 71.9%, XGBoost at 90.9% in Yamuna Pushta/Geeta Colony zone.
+    | Updated flood probability and weather conditions are noted.
+Are Yamuna Pushta and Geeta Colony areas still under serious threat?
+    | Yes, both locations are still experiencing severe flooding.
+Yamuna Pushta flood depth is estimated at 6 meters, Geeta Colony at 7 meters.
+    | Alert 10 minutes ago, emergency services are responding.
+Ambulance team is en route to Yamuna Pushtt Pushta, while NDRF and Disaster Response teams are heading to Geeta Colony.
+### allam-2-7b 27 band=auto dep=True typed=True judge=None suggest=True []
+    FACTS p=79.3 rf=63.7 rain=129.4 river=206.86 dam=201.63 time=04:33 IST
+    | Rain and river levels continuing to escalate, Administrator. Probability standing at 79.3%. Yamuna river is currently at 206.86 meters and Yamuna barrage stage is at 201.63 meters.
+    | Updating simulation data to reflect the situation, Flood Risk Agent. Yamuna Pushta and Geeta Colony have been identified as vulnerable zones. Can you confirm the number of affected people?
+    | Unknown number of affected people in Yamuna Pushta and Geeta Colony so far. Coordinating with rescue teams to determine the exact count. Yamuna Pushta and Geeta Colony residents should be evacuated immediately.
+    | Understood. Ambulance and disaster/NDRF teams, proceed to Yamuna Pushta and Geeta Colony immediately. Coordinate with the rescue teams for evacuation details. Let's act fast to save lives.
+    | Administrator, I've contacted the rescue teams and requested their assistance. Ambulances and disaster/NDRF teams are en route to Yamuna Pushta and Geeta Colony.
+### allam-2-7b 28 band=auto dep=False typed=False judge=None suggest=False [('two', 'number word, no state quantity'), ('two', 'number word, no state quantity'), ('04:00', 'wrong time')]
+    FACTS p=96.9 rf=75.4 rain=239.9 river=207.09 dam=203.52 time=02:03 IST
+    | Flood probability increased to 96.9%. Heavy rain with 239.9 mm in two hours, river level at 207.09 m and Yamuna barrage stage at 203.52 m.
+    | Notify the disaster/NDRF team and request their immediate assistance at Yamuna Pushta and Geeta Colony. Send one ambulance to Geeta Colony as well.
+    | Emergency response: Flooding situation at Yamuna Pushta and Geeta Colony. Send two rescue boats to Geeta Colony and one rescuer to Yamuna Pushta.
+    | Current situation suggests a high flood risk. Yamuna Pushta and Geeta Colony are affected. Please deploy your team while monitoring river levels and coordinates.
+    | Alert received from Flood Risk Agent. Severe flood situation in Yamuna Pushta and Geeta Colony. Proceed to designated locations for rescue operations.
+    | Administrator here. Confirm receipt of alert and request progress updates regularly at 03:00 and 04:00 IST while actions take place.
+### allam-2-7b 29 band=auto dep=True typed=True judge=None suggest=True []
+    FACTS p=66.9 rf=67.1 rain=234.0 river=204.05 dam=203.78 time=00:32 IST
+    | Based on the updated information, the flood probability stands at 66.9% and continues to rise. Rainfall accumulated is 234 mm. River level is at 204.05 m, and the Yamuna barrage stage is at 203.78 m.
+    | Currently, it's safe to assume a flood situation in Yamuna Pushta and Geeta Colony. I've activated the rescue operations. Please inform the Rescue Team and allied agencies.
+    | Yamuna Pushta and Geeta Colony are experiencing flooding NOW. I recommend prioritizing rescue efforts at these locations. Rainfall is at 234 mm, and the river level is at 204.05 m. We don't have exact numbers for Yamuna barrage stage at the moment, but the situation warrants immediate action.
+    | Understood. Coordinate with the Rescue Team, ensuring they're aware of the priorities. I've also ordered Ambulance and Disaster/NDRF teams to proceed to Yamuna Pushta and Geeta Colony. Proceed with the rescue operations as soon as possible.
+    | The Rescue Team and relevant agencies have been informed. Ambulance and Disaster/NDRF teams are en route to Yamuna Pushta and Geeta Colony. Flood monitoring and rescue efforts will commence as soon as they arrive.
+### allam-2-7b 30 band=admin dep=False typed=False judge=None suggest=False [('204.85', 'water level'), ('13.9', 'rainfall'), ('204.85', 'water level'), ('122', 'quantity not in state'), ('87', 'unbound number'), ('219', 'unbound number'), ('87', 'unbound number'), ('122', 'unbound number'), ('4', 'unbound number'), ('10', 'unbound number')]
+    FACTS p=50.1 rf=63.7 rain=115.3 river=204.86 dam=204.63 time=15:29 IST
+    | River level at Yamuna Pushta is currently 204.85 m (50.1% chance of flooding). Rainfall in the last hour: 13.9 mm.
+    | Latest Yamuna river stage: 204.85 m, barrage stage: 204.63 m. Proceeding with emergency response plans.
+    | Performing predictive analysis updated at 15:29 IST (Random Forest: 63.7%, XGBoost: 50.1%).
+    | Awaiting updates at regular intervals. 122 people stranded in Geeta Colony, 87 in Yamuna Pushta. Total: 219 (unknown casualties).
+    | Stranded persons accounted for: Geeta Colony (87) and Yamuna Pushta (122). Current simulation stage: 4/10.
+### allam-2-7b 31 band=auto dep=False typed=False judge=None suggest=False [('13:40', 'wrong time'), ('28.6212', 'unbound number'), ('77.1423', 'unbound number'), ('28.6212', 'unbound number'), ('77.1423', 'unbound number')]
+    FACTS p=63.6 rf=45.7 rain=42.7 river=202.86 dam=203.19 time=13:39 IST
+    | Ambulance reporting that a flood has occurred in the Yamuna Pushta area due to the 63.6% likelihood of flood.
+Rainfall reached 42.7 mm, with Yamuna river at 202.86 m.
+Yamuna barrage stage: 203.19 m.
+Random Forest result: 45.7% (unknown outcome)
+Time: 13:39 IST (unknown flood impact)
+Dispatch: Ambulance, Disaster and NDRF teams to Yamuna Pushta/Geeta Colony zones for rescue operations.
+    | Request for current flood impact assessment at Yamuna Pushta/Geeta Colony using the advanced models. Inform if there are any life threats.
+Coordinates: 28.6212, 77.1423
+Time: 13:40 IST
+    | I've initiated the assessment with Random Forest (28.6212, 77.1423) predicting a severe flood.
+### allam-2-7b 32 band=auto dep=True typed=True judge=None suggest=True []
+    FACTS p=77.2 rf=68.9 rain=171.2 river=200.29 dam=203.53 time=17:25 IST
+    | Administrator, according to our latest assessment, the flood probability has increased to 77.2%. The rain meter stands at 171.2 mm, and the Yamuna river level currently reads 200.29 m.
+    | Flood Risk, I'm receiving reports of flooding in Yamuna Pushta and Geeta Colony. Activate the rescue teams and inform them of the current situation: Yamuna River level at 200.29 m, Yamuna Barrage stage at 203.53 m, and Random Forest model result, 68.9%, XGBoost model result, 77.2%.
+    | Is there any news from Disaster Response Team? And kindly provide an update on the river flow and if the rain is showing any decrease.
+    | Administrator, I have contacted the Disaster Response Team and will inform them about Yamuna Pushta and Geeta Colony. As for the rain, the recent downpour still remains at 171.2 mm, and there is no indication of any decrease in the amount of rainfall so far.
+    | Flood Risk, please bring me the current situation in Yamuna Pushta and Geeta Colony.
+### allam-2-7b 33 band=watch dep=False typed=False judge=None suggest=False [('30', 'unbound number'), ('16', 'rainfall'), ('65.5', 'probability/threshold'), ('2', 'rainfall')]
+    FACTS p=41.5 rf=43.5 rain=47.5 river=206.42 dam=200.32 time=14:55 IST
+    | River level and Yamuna barrage stage have surpassed the warning threshold. Recommending activation of flood alert for Yamuna Pushta and Geeta Colony zones.
+    | Confirmed. Evacuation procedures initiated, stay tuned for further instructions.
+    | 30-minute rainfall estimate from Random Forest algorithm suggests additional rain of 16 mm, raising flood probability to 65.5% and increasing river level by 2 mm. Prepare for potential escalation.
+    | Understood. We'll order temporary shelters to be set up and reinforce flood defences in the affected areas.
+    | Unknown rain duration in the forecast. Recommend coordinating with meteorological authorities to confirm shelter requirements and deployment strategies.
+### allam-2-7b 34 band=auto dep=False typed=False judge=None suggest=False [('ten', 'number word, no state quantity'), ('ten', 'number word, no state quantity'), ('3', 'unbound number'), ('5', 'unbound number'), ('04:43', 'wrong time'), ('3', 'unbound number'), ('5', 'unbound number'), ('2', 'unbound number')]
+    FACTS p=82.4 rf=70.8 rain=179.2 river=204.5 dam=204.5 time=04:41 IST
+    | Ten-Ten, Administrator Agent. Emergency situation at Yamuna Pushta and Geeta Colony. Probability of flooding: 82.4%, rain: 179.2 mm, river level: 204.5 m, barrage stage: 204.5 m.
+    | Roger that, Flood Risk Agent. Prepare rescue team, including ambulance and disaster/NDRF team, to stage at Yamuna Pushta and Geeta Colony immediately. Sound emergency alerts. Time now: 04:41 IST.
+    | Understood, Administrator Agent. Yamuna Pushta: 3 confirmed flood-affected, Geeta Colony: 5 reported floodwaters entering houses. Random Forest model accuracy: 70.8%, XGBoost model accuracy: 82.4%.
+    | Flood Risk Agent, prioritize Geeta Colony. Focus rescue efforts there while ensuring Yamuna Pushta is secured. Time: 04:43 IST.
+    | Copy that, Administrator Agent. I'll alert both areas now. Geeta Colony seems more critical with floodwaters entering houses. Yamuna Pushta: 3 affected, Geeta Colony: 5 affected and 2 injured.
+### allam-2-7b 35 band=auto dep=False typed=False judge=None suggest=False [('3', 'unbound number'), ('63', 'unbound number'), ('135', 'unbound number')]
+    FACTS p=68.6 rf=59.6 rain=131.6 river=207.18 dam=201.73 time=05:42 IST
+    | Update on Yamuna flood situation: Probability 68.6%, rain 131.6 mm, river level 207.18 m, Yamuna barrage stage 201.73 m, Random Forest 59.6%, XGBoost 68.6%, time now 05:42 IST, zone Yamuna Pushta / Geeta Colony.
+    | Activate emergency response. Send ambulance and disaster/NDRF team to Yamuna Pushta and Geeta Colony. Priority: save lives.
+    | Ambulance en route to Yamuna Pushta, disaster/NDRF team at Junction 3. Initiating flood assessment.
+    | Inform local authorities and coordinate with nearby communities for evacuation. Keep me updated on rescue efforts.
+    | 63 affected in Geeta Colony, 135 in Yamuna Pushta. Proceeding with rescue operations.
+### allam-2-7b 36 band=auto dep=True typed=True judge=None suggest=True []
+    FACTS p=95.9 rf=74.7 rain=109.2 river=202.59 dam=201.41 time=02:24 IST
+    | Updated flood probability: 95.9% due to heavy rain (109.2 mm). Yamuna river level is 202.59 m and the Yamuna barrage stage is 201.41 m.
+    | Understood, the Yamuna Pushta and Geeta Colony zones are at severe risk. I suggest we activate the disaster/NDRF team and request ambulances to prioritize rescue operations in these areas.
+    | Agreed. Yamuna Pushta and Geeta Colony seem to be at critical condition given the time (02:24 IST). The situation requires immediate attention from the rescue teams.
+    | Confirmed. I'll notify all relevant teams and update our tracking on the progress of the rescue operations.
+### allam-2-7b 37 band=auto dep=False typed=False judge=None suggest=False [('1', 'unbound number'), ('12', 'quantity not in state'), ('20', 'unbound number')]
+    FACTS p=91.7 rf=77.2 rain=69.5 river=203.98 dam=201.28 time=13:18 IST
+    | 69.5 mm of rain reported in the last hour, Administrator. Yamuna river level is continuing to rise. Current level: 203.98 m, barrage stage: 201.28 m. Probability of a flood: 91.7%, Random Forest: 77.2%, XGBoost: 91.7%. Flooded areas: Yamuna Pushta, Geeta Colony. Time: 13:18 IST.
+    | Confirmed flood notification at both Yamuna Pushta and Geeta Colony. Coordinate immediate rescue operations. AMB-1 is on its way, along with Disaster Response Team and NDRF. Stay updated on progress in these locations.
+    | Rescue teams are en route, Administrator. Yamuna Pushta: 12 persons reported, Geeta Colony: 20 confirmed affected. Yamuna river is rising threatens to overflow. RFS suggestion: Cut-off water flow at Yamuna Barrage to prevent further complications.
+    | Will inform Disaster Response Team and NDRF to implement the RFS recommendation. Keep monitoring the river levels and update me on evacuation efforts in Yamuna Pushta and Geeta Colony.
+### allam-2-7b 38 band=calm dep=False typed=False judge=None suggest=False [('208', 'water level'), ('2', 'unbound number'), ('4', 'unbound number'), ('0.2', 'rainfall'), ('2', 'unbound number'), ('4', 'unbound number')]
+    FACTS p=26.3 rf=57.3 rain=123.1 river=204.46 dam=200.92 time=16:50 IST
+    | Hi Administrator, keeping the flood risk low at below 40%. Probability 26.3%, rainfall 123.1 mm, river level 204.46 m, and barrage stage at 200.92 m.
+    | Good work, Flood Risk Agent. Monitor closely for Yamuna Pushta and Geeta Colony zones. Notify me if water levels surpass 208 m. Unknown if any affected area needs evacuation. Stay alert.
+    | Understood, Administrator. Yamuna Pushta: 2 affected places, Geeta Colony: 4 affected places. Keeping Random Forest at 57.3%, XGBoost at 26.3%. Rainfall reducing at 0.2 mm per hour. Yamuna river levels still decreasing.
+    | Good, Agent. Yamuna river continues to recede. Keep monitoring the affected areas. Rainfall decreasing, but I suggest announcing precaution to nearby communities to keep people informed.
+    | Will do, Administrator. Yamuna Pushta: 2 affected places, Geeta Colony: 4 affected places.
+### allam-2-7b 39 band=calm dep=True typed=False judge=None suggest=True []
+    FACTS p=27.7 rf=27.4 rain=28.2 river=208.11 dam=205.15 time=07:00 IST
+    | Good morning, Administrator Agent. As per the current simulation, the flood probability sits at 27.7%, with only 27.4% predicted by Random Forest and 27.7% by XGBoost.
+The rain continues to fall at 28.2 millimeters, while the Yamuna river level stands at 208.11 meters.
+The Yamuna barrage stage is measured at 205.15 meters.
+It's currently 07:00 IST in the Yamuna Pushta / Geeta Colony area.
+    | Good morning, Flood Risk Agent. I appreciate the detailed update.
+
+The situation appears to be manageable with the provided figures.
+    | Thank you for acknowledging, Administrator Agent.
+
+To ensure a better understanding, I would like to emphasize that we are currently at 40% below the flood warning level.
+
+Please be assured that the Yamuna river will continue to hold at this stage unless the rain intensifies or water levels rise from other sources.
+    | I understand, Flood Risk Agent.
+
+Please inform me immediately if the Yamuna river level or other critical factors surpass the warning threshold.
+
+I'll update the council accordingly.
+    | Understood, Administrator Agent.
+
+Just to summarize, as per the simulation, the river is staying below the warning level.
+
+We are tracking the river's stage closely and will inform you immediately if it rises above the threshold.
+### allam-2-7b 40 band=auto dep=True typed=True judge=None suggest=True []
+    FACTS p=98.1 rf=75.9 rain=163.2 river=207.09 dam=204.92 time=17:50 IST
+    | Administrator, we have a high risk of flooding. Probability calculated at 98.1%. River level is at 207.09 m, and the Yamuna barrage stage is 204.92 m. It's currently raining 163.2 mm, and time is 17:50 IST.
+    | Risk is significant, Flood Risk. Yamuna Pushta and Geeta Colony have been identified. Are all rescue teams ready?
+    | Yes, both ambulance and disaster/NDRF teams are prepared. They'll head to Yamuna Pushta and Geeta Colony for rescue operations.
+    | Communication is maintained with affected people in both locations? Emergency services should be informed too.
+    | I have informed the local radio station to broadcast emergency alerts. Inform emergency services to be aware of potential rescues.
+### allam-2-7b 41 band=calm dep=False typed=False judge=None suggest=False [('66.67', 'probability/threshold'), ('80.3', 'probability/threshold'), ('44.2', 'probability/threshold')]
+    FACTS p=33.7 rf=45.2 rain=49.7 river=201.33 dam=202.93 time=11:54 IST
+    | K Administrator Agent, I confirm we are in zone Yamuna Pushta / Geeta Colony and monitoring the Yamuna river level (201.33 m) and Yamuna barrage stage (202.93 m).
+    | Roger, Flood Risk Agent. As per the current situation, we have a flood probability (33.7%) and it's raining heavily (49.7 mm). Thanks for keeping me updated.
+    | Probably crucial information is not available, so I'll keep you informed when there's a change. Yamuna river level is low (66.67%) and the Random Forest model is more confident (80.3%) than the XGBoost model (44.2%).
+    | Understood, Flood Risk Agent. Please keep me updated if the situation worsens.
+    | Yes, sir. I'll notify you immediately if any significant changes occur in the weather or river levels.
+### allam-2-7b 43 band=auto dep=False typed=False judge=None suggest=False [('61', 'probability/threshold'), ('18:20', 'wrong time')]
+    FACTS p=81.0 rf=62.6 rain=144.2 river=204.78 dam=203.69 time=18:18 IST
+    | 61% flood probability, current rain: 144.2 mm. Yamuna river level at 204.78 m, Yamuna barrage stage at 203.69 m. Yamuna Pushta and Geeta Colony locations affected, time: 18:18 IST.
+    | Confirmed - initiate emergency response. Ambulance, proceed to Yamuna Pushta. Disaster/NDRF team, head to Geeta Colony. Keep me updated on operations.
+    | Ambulance initiated at 18:18 IST for Yamuna Pushta. Disaster/NDRF team initiated at 18:18 IST for Geeta Colony.
+    | 18:20 IST: Confirmed flood impact. Proceed with rescue operations.
+### allam-2-7b 44 band=admin dep=False typed=False judge=None suggest=False [('3', 'unbound number'), ('204.5', 'water level'), ('2', 'unbound number')]
+    FACTS p=58.6 rf=38.1 rain=37.5 river=201.46 dam=203.79 time=03:27 IST
+    | Greetings, Administrator. The probability of flooding in Yamuna Pushta and Geeta Colony is currently 58.6%. The total rain received is 37.5 mm.
+    | Given the current situation, I've activated Special Response Team 3 to assist. Yamuna river level at 201.46 m and barrage stage at 203.79 m. Session under way.
+    | River level is rising, Administrator. I advise increasing the barrage stage to 204.5 m to prevent further flooding.
+    | Informed. We'll escalate the situation to a Level 2 emergency as per protocol. Let's monitor the Random Forest algorithm as well, considering its 38.1% accuracy.
+### allam-2-7b 45 band=auto dep=False typed=False judge=None suggest=False [('21:00', 'wrong time')]
+    FACTS p=97.8 rf=73.7 rain=191.0 river=200.9 dam=201.19 time=20:40 IST
+    | Admin, we have a situation. According to the simulations, flood probability is at 97.8% now with 191 mm of rain. Yamuna river level stands at 200.9 m and the Yamuna barrage stage is at 201.19 m. It is currently 20:40 IST in the Yamuna Pushta and Geeta Colony zones. We recommend initiating rescue operations in those areas.
+    | Admin, I confirm the probabilities align with our simulations. Yamuna Pushta and Geeta Colony indeed face severe flood risks. I recommend dispatching the Disaster Response and NDRF teams along with the ambulance to commence rescue operations in these areas.
+    | Flood Risk Agent, I authorize the deployment of these resources. Coordinate with the relevant teams and update me on the progress at 21:00 IST.
+    | Operation Coordinator, please alert the Disaster Response and NDRF teams along with the ambulance to Yamuna Pushta and Geeta Colony. Remind them of the urgent nature of the situation and provide them with the necessary coordinates.
+    | Disaster Response Team, this is the Operation Coordinator. The flood situation at Yamuna Pushta and Geeta Colony requires immediate attention. You are directed to proceed to these locations along with the NDRF team and ambulance. Coordinates are [insert coordinates here].
+    | NDRF Team, acknowledge receipt of the coordinates and proceed to Yamuna Pushta and Geeta Colony for immediate flood relief operations. Urgent response is required.
+### allam-2-7b 46 band=calm dep=True typed=True judge=None suggest=True []
+    FACTS p=39.6 rf=61.2 rain=149.1 river=202.67 dam=200.83 time=09:59 IST
+    | Administrator Agent, this is Flood Risk Agent. We have an update: Probability of flooding is 39.6%, rain has fallen at 149.1 mm, and the Yamuna river level is currently at 202.67 meters.
+    | Flood Risk Agent, this is Administrator Agent. Thank you for providing the information. We reassure the citizens of Yamuna Pushta/Geeta Colony that their zone remains well below the red alert zone, even though the river is at a height of 202.67 meters.
+    | Understood, Administrator Agent. The situation below 40% appears to be stable so far.
+    | Keep monitoring closely, Flood Risk Agent. Please notify me if the probability reaches or exceeds 40%, or if there are any other significant changes in the river level or barrage stage.
+    | Right, Administrator Agent. I will stay updated and inform you promptly on any changes.
+### allam-2-7b 47 band=auto dep=True typed=False judge=None suggest=False [('1', 'unbound number'), ('2', 'unbound number'), ('1', 'unbound number'), ('2', 'unbound number'), ('1', 'unbound number'), ('2', 'unbound number')]
+    FACTS p=61.3 rf=51.6 rain=20.4 river=208.21 dam=199.4 time=08:26 IST
+    | 61.3% flood probability reported. Continuous heavy rain with 20.4 mm. Yamuna river level at 208.21 m, Yamuna barrage stage at 199.4 m. Assessing flood situation in Yamuna Pushta and Geeta Colony zones.
+    | Acknowledged. Random Forest predicts 51.6%, XGBoost predicts 61.3% flood likelihood. Yamuna River is at a concerning height. Coordinate with rescue teams for immediate intervention in Yamuna Pushta and Geeta Colony zones. Sound the alert.
+    | As per updated analysis, I recommend immediate rescue efforts in those areas. Yamuna Pushta and Geeta Colony have been identified as high-risk zones due to rising river levels. coordinating with rescue teams.
+    | Seems like we have to act. Contacting Rescue Team 1 for Yamuna Pushta operations, Rescue Team 2 for Geeta Colony. Request them to prioritize and deploy resources accordingly. Time of arrival unknown due to current situation.
+    | Rescue Team 1 en route to Yamuna Pushta. Rescue Team 2 mobilizing for Geeta Colony. Extreme caution advised for anyone remaining in flood-prone areas. Stay tuned for further updates.
+    | Rescue Team 1, Team Leader. Ensure priority given to affected individuals in Yamuna Pushta. Rescue Team 2, concentrate on Geeta Colony. Proceed with extreme caution due to current flood conditions. Our teams will keep you updated.
+### allam-2-7b 49 band=auto dep=True typed=True judge=None suggest=True []
+    FACTS p=96.2 rf=75.9 rain=234.3 river=203.88 dam=203.38 time=10:49 IST
+    | Administrator Agent, flood probability is 96.2%, with 234.3 mm of rain recorded. Yamuna river level is 203.88 m and the Yamuna barrage stage is 203.38 m. Time is now 10:49 IST. Proceeding with flood response in Yamuna Pushta and Geeta Colony zones.
+    | Flood Risk Agent, I acknowledge the information you provided. Please alert the rescue and ambulance teams to swiftly proceed to Yamuna Pushta and Geeta Colony zones for rescue operations. As the zones are experiencing the impact of the flood, priority should be given to save lives.
+    | Understood, Administrator Agent. I'll inform the rescue team to prioritize rescuing people at the mentioned locations. I'll also notify the ambulance to be ready for potential medical emergencies.
+    | Flood Risk Agent, please also alert the disaster relief team and the NDRF for further assistance if needed.
+    | Administrator Agent, I will inform the disaster relief team and NDRF to standby for potential involvement. Rescue, ambulance, and relief teams are in route to Yamuna Pushta and Geeta Colony zones.
+### allam-2-7b 50 band=auto dep=False typed=False judge=None suggest=False [('ETA', 'ETA (duration)'), ('20', 'unbound number')]
+    FACTS p=82.6 rf=70.6 rain=180.0 river=205.17 dam=203.16 time=12:20 IST
+    | Flood Probability at 82.6%. Continuous rainfall of 180 mm. Yamuna river level at 205.17 m, Yamuna barrage stage at 203.16 m. Action required in Yamuna Pushta and Geeta Colony zones.
+    | Understood. Please prioritize flood affected areas. Ambulance inbound. Send NDRF and Disaster team to Yamuna Pushta and Geeta Colony zones immediately.
+    | Gathering information on affected persons and buildings. Prepare rescue teams accordingly. Ambulance estimated arrival in 5 minutes.
+    | Inform me on further developments. I will update the city about the response plan.
+    | Apartment block A in Yamuna Pushta is in severe danger. Casualty estimation at 20 at Geeta Colony. Teams are getting assembled. Ambulance approaching zone A.
+### allam-2-7b 51 band=auto dep=False typed=False judge=None suggest=False [('1.33', 'water level')]
+    FACTS p=68.8 rf=67.7 rain=109.4 river=207.32 dam=203.77 time=21:23 IST
+    | We've reached a critical flood alert level (68.8% probability). Rainfall is at 109.4 mm and the river level is 207.32 meters. Yamuna barrage stage stands at 203.77 meters.
+    | Activate emergency rescue teams (including the ambulance) for Yamuna Pushta and Geeta Colony. Coordinate with the disaster/NDRF team.
+    | Understood. Be advised, the Yamuna River is currently surpassing the barrage stage. Please prepare for potential further flooding.
+    | Awareness updated. Task the ambulance to prioritize the most vulnerable residents.
+    | Rescue teams have been dispatched and are en route. The yamuna river level is increasing at an alarming rate, 1.33 m/hour.
+### allam-2-7b 52 band=auto dep=False typed=False judge=None suggest=False [('09:57', 'wrong time'), ('20', 'unbound number'), ('30', 'unbound number')]
+    FACTS p=96.8 rf=75.4 rain=231.3 river=203.03 dam=204.15 time=09:52 IST
+    | Urgent action needed due to 96.8% flood probability and rain falling at 231.3 mm. Yamuna river level at 203.03 m and Yamuna barrage stage at 204.15 m.
+    | Proceed with evacuating Yamuna Pushta and Geeta Colony zones. Rescue teams need to respond ASAP.
+    | Ambulance and disaster/NDRF team are en route (09:52 IST), while evacuation process commences.
+    | Awaiting situational updates from both zones, potential for heavy flooding.
+    | Evacuation complete in Yamuna Pushta, 20 affected residents rescued. In Geeta Colony, 30 affected individuals rescued and brought to safety (09:57 IST)
+### allam-2-7b 53 band=auto dep=False typed=False judge=None suggest=False [('300', 'unbound number'), ('400', 'unbound number'), ('0.2', 'quantity not in state'), ('09:50', 'wrong time')]
+    FACTS p=61.6 rf=66.5 rain=112.0 river=202.81 dam=204.09 time=09:44 IST
+    | Flood Risk Agent, this is Administrator Agent. Given the flood probability of 61.6%, proceed with the rescue operations. Yamuna Pushta and Geeta Colony residents need immediate assistance.
+    | Roger that, Administrator Agent. We've identified Yamuna Pushta and Geeta Colony as the most affected areas with about 300-400 residents in direct danger. Ambulances and Disaster Response and NDRF units should commence rescue operations at 09:44 IST.
+    | Estimated flood risk is up to 0.2 km upstream, so prioritize the zones accordingly. Please stay in touch with our simulation updates.
+    | Understood, Administrator Agent. I'll continue monitoring the river levels, river flow data, and Random Forest/XGBoost predictions for better guidance. I'll also keep informing you about the estimated downstream areas affected by the flood.
+    | Keep me updated on the number of residents saved and any potential risks at those zones. 09:50 IST is the next significant update on flood risk prediction.
+### allam-2-7b 54 band=auto dep=True typed=True judge=None suggest=True []
+    FACTS p=86.1 rf=69.3 rain=193.4 river=203.54 dam=203.1 time=09:49 IST
+    | 86.1% probability of flood at Yamuna Pushta and Geeta Colony locations. Heavy rain (193.4 mm) still ongoing.
+    | Confirmed, Yamuna river level (203.54 m) is above the barrage stage (203.1 m). I've alerted relevant agencies for immediate action.
+    | Base, we have a high-priority emergency situation at Yamuna Pushta and Geeta Colony. Request deployment of ambulance and Disaster Response/NDRF team immediately.
+    | Ambulance and Disaster Response/NDRV teams are en route. Keep us updated on the situation.
+    | Confirmed river flow is increasing rapidly. Yamuna Pushta and Geeta Colony residents in imminent danger.
+### allam-2-7b 55 band=auto dep=True typed=True judge=None suggest=True []
+    FACTS p=87.3 rf=60.9 rain=10.0 river=200.48 dam=205.98 time=06:35 IST
+    | Current flood probability stands at 87.3%, combined with 10 mm of rain. Yamuna river level is at 200.48 m and Yamuna barrage stage is at 205.98 m. Random Forest prediction is 60.9%, while XGBoost is at 87.3%. Coordination required with zone: Yamuna Pushta / Geeta Colony.
+    | Yamuna Pushta and Geeta Colony residents in jeopardy due to high water levels. Activate Emergency Response Plan. Send rescue teams to Yamuna Pushta and Geeta Colony immediately.
+    | Ambulance team, disaster response team, and NDRF deployed at both locations. Rescue efforts underway. Coordinating with other agencies for supplemental assistance.
+    | Inform local authorities to secure evacuation centers and provide shelter for affected residents. Track progress and update me on casualties or rescued individuals.
+### allam-2-7b 56 band=watch dep=False typed=False judge=None suggest=False [('202', 'water level')]
+    FACTS p=45.6 rf=44.1 rain=44.7 river=201.07 dam=201.48 time=03:02 IST
+    | Administrator, according to the provided information, the flood probability stands at 45.6% currently. Rainfall measures 44.7 mm. The Yamuna river level is 201.07 m and the Yamuna barrage stage is at 201.48 m.
+    | Flood Risk Agent, as per the data, the Yamuna Pushta/Geeta Colony zone is witnessing a concerning situation. Rainfall percentages like Random Forest (44.1%) and XGBoost (45.6%) indicate an elevated risk. The time is 03:02 IST.
+    | Administrator, I recommend activating high-risk protocols as the situation aligns with our simulations. We should inform residents and urge them to take necessary precautions considering the 45.6% flood probability and the 201.07 m river level.
+    | Flood Risk Agent, I concur. We should escalate the emergency alert to residents while maintaining a close watch on the river level and rainfall data for potential updates.
+    | Administrator, it's advised to deploy additional resources like boats and personnel as a precaution due to the current conditions. Additionally, let's prepare for possible evacuations if the river level exceeds 202 m.
+### allam-2-7b 57 band=auto dep=False typed=False judge=None suggest=False [('800', 'unbound number'), ('700', 'unbound number'), ('1', 'unbound number'), ('000', 'unbound number'), ('600', 'unbound number'), ('55', 'rainfall')]
+    FACTS p=97.6 rf=76.0 rain=163.7 river=204.91 dam=201.49 time=00:27 IST
+    | 00:27 IST, probability 97.6%, rain 163.7 mm, Yamuna river level 204.91 m, Yamuna barrage stage 201.49 m, Yamuna Pushta and Geeta Colony residents in severe danger. Assistance required.
+    | Rainfall at Yamuna Pushta: Unknown. River and barrage stage information confirmed. Shall I deploy ambulance and NDRF/Disaster team to Yamuna Pushta and Geeta Colony?
+    | 800 residents in Yamuna Pushta (700 at risk), 1,000 in Geeta Colony (600 at risk). Urgent response needed. Ambulance, NDRF, and Disaster team proceed.
+    | Understood. Deploying teams now. Keep me updated on Yamuna Pushta rainfall and potential damages.
+    | Yamuna Pushta rain intensity at 55 mm/hour. Inundation expected in Geeta Colony. Prepare for potential mass casualties. Ambulance, NDRF, and Disaster team prioritize Geeta Colony.
+### allam-2-7b 58 band=auto dep=False typed=False judge=None suggest=False [('40.5', 'probability/threshold'), ('3', 'quantity not in state'), ('10', 'quantity not in state'), ('41.6', 'probability/threshold'), ('20', 'quantity not in state')]
+    FACTS p=91.7 rf=67.4 rain=99.1 river=201.87 dam=199.88 time=13:42 IST
+    | Based on the current situation, Yamuna river level stands at 201.87 m, which is 40.5% higher than the barrage stage at 199.88 m. Probability of flood occurring is 91.7%.
+    | Confirmed, flood probability has reached 91.7%. We have regions designated for evacuation and rescue efforts: Yamuna Pushta and Geeta Colony. Please alert the rescue teams and coordinate with the ambulance for immediate action.
+    | Since the rain has fallen for 3 hours, accumulating 99.1 mm, we recommend starting rescue operations at both designated areas. Yamuna Pushta and Geeta Colony are in severe danger. Yamuna river elevation is crucial: 201.87 m. Please inform the relevant authorities and ensure assistance is dispatched as early as possible.
+    | We acknowledge the critical river elevation at 201.87 m and the total rain received at 99.1 mm. Yamuna Pushta and Geeta Colony residents will be prioritized for evacuation. Please notify the Medic One and dedicated disaster response teams to proceed to the affected zones.
+    | Rescue operations will be coordinated with Medic One and dedicated disaster teams. 10 minutes ago, the river elevation was 201.87 m, indicating a 41.6% rise in just half an hour. We advise deploying ambulances as well. The river might rise further and displace more residents.
+    | Immediate response is required. Update Medic One and dedicated disaster teams about the escalating situation. Coordinate with them to prioritize flood affected residents for evacuation and send the ambulances as well. Let's meet at the control room in 20 minutes. We need all available resources to handle this crisis.
+### allam-2-7b 59 band=auto dep=True typed=True judge=None suggest=True []
+    FACTS p=90.1 rf=64.9 rain=138.0 river=201.26 dam=199.16 time=08:50 IST
+    | Flood Risk Agent, this is Administrator Agent. Our current situation indicates a flood probability of 90.1%, with rain total 138 mm.
+    | Administrator Agent, I understand. The Yamuna river level is at 201.26 m and the Yamuna barrage stage is at 199.16 m.
+    | Considering these factors, Yamuna Pushta and Geeta Colony seem at high risk. Please provide immediate assistance on where to deploy the rescue teams.
+    | Administrator Agent, I recommend dispatching the ambulance and disaster/NDRF teams to Yamuna Pushta and Geeta Colony.
+    | I have notified the relevant teams. They will be on their way to Yamuna Pushta and Geeta Colony. Keep me updated on the flood situation.
+### allam-2-7b 60 band=auto dep=False typed=False judge=None suggest=False [('1000', 'unbound number'), ('5000', 'unbound number'), ('1000', 'quantity not in state'), ('5000', 'quantity not in state')]
+    FACTS p=83.7 rf=75.0 rain=72.8 river=208.15 dam=199.97 time=13:16 IST
+    | Flood probability increased to 83.7%. Proceed with rescue operations in Yamuna Pushta and Geeta Colony areas. Currently, there are 1000 residents in Yamuna Pushta and 5000 residents in Geeta Colony.
+    | Rainfall reached 72.8 mm and the river level is rising at 208.15 m. Yamuna barrage stage is at 199.97 m. Please inform rescue vehicles and teams to prioritize these locations.
+    | Yamuna Pushta and Geeta Colony residents are at risk. Activate rescue vehicles and teams in both locations immediately. Yamuna Pushta: 1000 people, Geeta Colony: 5000 people.
+    | Understood, sir. We'll dispatch the rescue squads and vehicles to Yamuna Pushta and Geeta Colony.
+    | Rescue efforts initiated. Please provide us with the progress report at 15:00 IST.
+### allam-2-7b 61 band=auto dep=True typed=False judge=None suggest=False [('5', 'quantity not in state'), ('ETA', 'ETA (duration)')]
+    FACTS p=60.9 rf=64.8 rain=158.6 river=200.32 dam=205.06 time=05:35 IST
+    | 05:35 IST - Yamuna River level: 200.32m; Yamuna Barrage Stage: 205.06m; Flood probability: 60.9% (Random Forest: 64.8%, XGBoost: 60.9%)
+    | Ambulance Agent, this is DisCo. We have received reports of flooding in Yamuna Pushta and Geeta Colony. Confirm receiving flood warning and proceed to Yamuna Pushta and Geeta Colony for urgent flood rescue operations.
+    | DisCo, this is Ambulance Agent. We have received the flood warning and have acknowledged the task. Team is mobilizing and will reach Yamuna Pushta and Geeta Colony within 5 minutes.
+    | DRT Leader, this is DisCo. Due to the high flood risk, please deploy your team to Yamuna Pushta and Geeta Colony immediately. Coordinate with Ambulance Agent for rescue efforts.
+    | DisCo, DRT Leader coordinating with Ambulance Agent. DRT team is mobilized and will respond to Yamuna Pushta and Geeta Colony. Expected arrival time: 5 minutes.
+### allam-2-7b 62 band=auto dep=True typed=True judge=None suggest=True []
+    FACTS p=97.7 rf=76.7 rain=206.8 river=204.42 dam=204.2 time=10:40 IST
+    | Given the probabilities, it seems we're about to see a major flood. Prepare our resources and emergency teams.
+    | Rainfall reached 206.8 mm and the Yamuna river level is at 204.42 m. Yamuna Barrage stage stands at 204.2 m, and the probability is 97.7%. Time is 10:40 IST. The age, counts, and percentages are unknown at this moment.
+    | Understood, our zone is Yamuna Pushta and Geeta Colony. Please notify relevant agencies about the situation, and I'll coordinate with other services.
+    | I have informed the local authorities, and they're prepared to assist. Our simulation predicts a flood event above 60% probability. Let's deploy both the ambulance and disaster/NDRF teams to Yamuna Pushta and Geeta Colony immediately.
+    | Acknowledged, I will notify the ambulance and NDRF services to send their teams. Prepare the helicopter for potential evacuations as backup.
+### allam-2-7b 63 band=admin dep=False typed=False judge=None suggest=False [('20000', 'quantity not in state')]
+    FACTS p=54.4 rf=57.8 rain=18.8 river=204.0 dam=205.79 time=20:15 IST
+    | Rainfall increased to 18.8 mm, river level at 204 m, barrage stage at 205.79 m. Update on flood probability and estimation methods.
+    | Random Forest model predicts flood probability at 57.8%, XGBoost model at 54.4%. Yamuna Pushta and Geeta Colony ages: 20000 people in the zone.
+    | Confirm the estimated flood risk. Prepare teams for immediate response.
+    | Flood risk is likely high based on the models. Proceeding with emergency response plan.
+    | Activate emergency shelters and ensure necessary supplies are available. Keep monitoring the situation and report any changes.
+### allam-2-7b 64 band=auto dep=False typed=False judge=None suggest=False [('67', 'probability/threshold'), ('500', 'unbound number'), ('200', 'unbound number'), ('30', 'quantity not in state'), ('100', 'unbound number')]
+    FACTS p=96.2 rf=74.7 rain=171.4 river=207.41 dam=203.95 time=23:57 IST
+    | 67% flood probability and continuous downpour observed in Yamuna Pushta and Geeta Colony zones. River level at 207.41 meters, Yamuna barrage stage at 203.95 meters. Report multiple incidents reported in the area.
+    | Assess the casualties and preparedness levels in affected zones. Request Disaster Response Team and NDRF for immediate rescue operations. Sound the alert for ambulance standby.
+    | Rescue teams standing by. Yamuna Pushta and Geeta Colony zones have seen 500 affected residents and 200 stranded vehicles. Random Forest model suggests severe flooding (74.7% probability) and XGBoost model predicts total flood (96.2% probability) within the next 30 minutes.
+    | Full-scale evacuation not possible due to human congestion. Focus on immediate rescue operations and prioritize vulnerable groups. Update the Command Center for further instructions.
+    | Prioritizing rescue operations at Yamuna Pushta, targeting stranded individuals and vehicles. Geeta Colony Rescue Team is on its way with 100-man capacity. Casualty count and rescue efforts will be updated regularly.
+### allam-2-7b 65 band=auto dep=True typed=True judge=None suggest=True []
+    FACTS p=87.2 rf=65.5 rain=93.2 river=202.34 dam=205.03 time=17:53 IST
+    | Based on the high flood probability (87.2%), heavy rain (93.2 mm), and Yamuna river level at 202.34 m, we recommend immediate action. Yamuna barrage stage is 205.03 m, and the simulation is ongoing at 17:53 IST.
+    | Confirmed, river and barrage conditions support the need for immediate rescue operations. Please advise specific zones and locations to target.
+    | Renewed assessment confirms Yamuna Pushta and Geeta Colony as high-risk zones. We recommend prioritizing rescue efforts at these areas.
+    | Understood. Coordinating with rescue teams at Yamuna Pushta and Geeta Colony. Please inform them of the urgent task.
+    | Rescue team, flood risk is high with 87.2% probability of flooding. Yamuna Pushta and Geeta Colony are under severe risk. Act swiftly and prioritize rescuing people at these locations.
+### allam-2-7b 66 band=auto dep=True typed=True judge=None suggest=True []
+    FACTS p=90.7 rf=67.8 rain=96.8 river=204.66 dam=202.32 time=20:29 IST
+    | Operations, this is Flood Risk Agent. We are observing flood levels above 60%. Rainfall is at 96.8 mm. Yamuna river level is 204.66 m and Yamuna barrage stage is at 202.32 m.
+    | Risk Agent, Administrator here. Urgent action is required. Send the ambulance to Yamuna Pushta and the disaster/NDRF team to Geeta Colony. Rescue efforts must commence immediately.
+    | Acknowledged. Ambulance at Yamuna Pushta and the disaster/NDR team will be dispatched to Geeta Colony. Prepare for potential rescues in these zones.
+    | Admin here. I have informed the emergency services. Please keep me updated on further developments.
+    | Understood. We are currently assessing the situation and preparing for further rescues based on updated reports.
+### allam-2-7b 67 band=auto dep=False typed=False judge=None suggest=False [('100', 'unbound number'), ('1000', 'unbound number')]
+    FACTS p=98.5 rf=76.4 rain=198.2 river=205.34 dam=200.08 time=06:10 IST
+    | Flood Risk Agent, I confirm probabilities showing a 98.5% flood probability and a 198.2 mm rainfall within the last hour. Yamuna river level stands at 205.34 meters, and the Yamuna barrage stage is at 200.08 meters. Current time is 06:10 IST, with an estimated 76.4% Random Forest prediction and 98.5% XGBoost prediction. The affected zone is Yamuna Pushta and Geeta Colony, with 100 residents in Yamuna Pushta and 1000 residents in Geeta Colony.
+    | Administrator Agent, given the severe weather conditions and high flood risk, our predictions suggest an immediate response is required. I recommend dispatching the disaster response team and disaster medical assistance team to Geeta Colony, while the ambulance should head to Yamuna Pushta due to the higher flood risk there.
+    | Flood Risk Agent, prioritize these tasks and inform neighboring agencies about potential spillover, if any. Coordinate with the Yamuna Pushta Police Station to ensure safety of first responders.
+    | Understood, Administrator Agent. I will inform neighboring agencies and coordinate with the Yamuna Pushta Police Station. Ambulance is en route to Yamuna Pushta. I've assigned the disaster response team to Geeta Colony.
+    | Flood Risk Agent, please be mindful of the risk of spillover to Kunda Nagar and Agarwal Nagar. Keep me updated on any potential spillover and status of operations.
+    | Understood, Administrator Agent. I will monitor spillover risks to Kunda Nagar and Agarwal Nagar. I'll provide regular updates on operations and the status of rescue efforts.
+### allam-2-7b 68 band=auto dep=False typed=False judge=None suggest=False [('103', 'unbound number'), ('135', 'unbound number'), ('92', 'unbound number'), ('123', 'unbound number')]
+    FACTS p=97.7 rf=75.6 rain=224.0 river=203.47 dam=199.26 time=16:44 IST
+    | Based on the current situation, flood probability has reached 97.7% and is expected to increase soon. Rainfall is at 224 mm, river level at 203.47 m, and the Yamuna barrage stage is at 199.26 m. Time is 16:44 IST. In Yamuna Pushta and Geeta Colony zones, the situation seems precarious.
+    | I understand, alerting the ambulance and disaster/NDRF team to proceed to Yamuna Pushta and Geeta Colony immediately for rescue operations. Coordinate with them and provide updated information on the affected areas.
+    | Alert received, informing both rescue teams to be prepared for extensive efforts. Yamuna Pushta currently has 103 affected persons and Geeta Colony has 135 affected individuals. Confirm the teams' readiness for a possible surge due to the elevated river level and barrage stage.
+    | Teams are alerted and mobilizing. River level at 203.47 m and barrage stage at 199.26 m confirm the risk of overflow. Keep me updated on the affected area counts, and let's prepare for potential evacuation if necessary.
+    | Ambulance and disaster/NDRF teams are en route. In Yamuna Pushta, 92 affected persons are still present, while in Geeta Colony, 123 affected individuals remain. Prepare for evacuation if flood levels continue to rise uncontrollably.
+### allam-2-7b 69 band=watch dep=True typed=False judge=None suggest=True []
+    FACTS p=45.3 rf=45.8 rain=47.3 river=206.21 dam=199.97 time=11:34 IST
+    | Got it, Administrator, based on the current flood probability of 45.3% and rain falling at 47.3 mm, we recommend a 40-50% watch-only protocol.
+    | Good analysis, Flood Risk Agent. Please update the inhabitants of Yamuna Pushta and Geeta Colony about the situation.
+    | Clearly informing the residents. River level at 206.21 m and barrage stage at 199.97 m; keeping an eye on the Random Forest (45.8%) and XGBoost models (45.3%); time is 11:34 IST.
+### allam-2-7b 70 band=auto dep=False typed=False judge=None suggest=False [('1', 'unbound number'), ('000', 'quantity not in state'), ('1', 'unbound number'), ('500', 'quantity not in state')]
+    FACTS p=84.3 rf=68.3 rain=186.2 river=207.22 dam=203.87 time=17:13 IST
+    | 60% flood probability detected in Yamuna Pushta and Geeta Colony.
+    | Activate flood response plan. Coordinate with rescue teams and inform them about the situation.
+    | Current rain intensity: 186.2 mm; Yamuna river level: 207.22 m; Yamuna barrage stage: 203.87 m; Weather forecast model: Random Forest 68.3%, XGBoost 84.3%.
+    | Rescue teams are en route. Yamuna Pushta: 1,000 people in danger; Geeta Colony: 1,500 people in danger.
+    | Task ambulance and disaster/NDRF team to assist flood victims and ensure safety.
+### allam-2-7b 71 band=auto dep=False typed=False judge=None suggest=False [('68', 'probability/threshold'), ('12:30', 'wrong time'), ('12:30', 'wrong time'), ('12:34', 'wrong time'), ('84.2', 'rainfall')]
+    FACTS p=88.0 rf=71.2 rain=80.1 river=204.58 dam=205.8 time=12:24 IST
+    | 68% flood probability, 80.1 mm rain, Yamuna river level 204.58 m, Yamuna barrage stage 205.8 m, time 12:24 IST, Yamuna Pushta/Geeta Colony zones.
+    | 60% flood occurrence at 12:30 IST marked. Requesting immediate rescue efforts.
+    | Confirmed flood occurrence at 12:30 IST. Yamuna Pushta and Geeta Colony affected.
+    | Rescue teams on way. Yamuna Pushta and Geeta Colony, priority for vulnerable populations.
+    | Rainfall intensifies at 12:34 IST, 84.2 mm. River level continues to rise.
+### allam-2-7b 72 band=auto dep=False typed=False judge=None suggest=False [('2', 'quantity not in state'), ('17:06', 'wrong time'), ('204.6', 'rainfall'), ('17:06', 'wrong time')]
+    FACTS p=96.3 rf=73.1 rain=204.0 river=200.73 dam=204.13 time=16:06 IST
+    | Recent simulations show a high probability of flooding (96.3%) in the Yamuna Pushta and Geeta Colony zones at 16:06 IST.
+Flood waters are likely to reach Yamuna river level of 200.73 m and Yamuna barrage stage of 204.13 m.
+    | Considering the severe weather conditions, let's prioritize rescue operations.
+Send an ambulance and the disaster/NDRF team to Yamuna Pushta for immediate rescue.
+Send the disaster/NDRF team to Geeta Colony as well, and provide an update on the situation.
+    | Unknown if Geeta Colony residents have been evacuated.
+Rainfall is at 204 mm, and the Yamuna river level is expected to crest in 2 hours.
+    | Confirm the disaster/NDRF team is on its way to Yamuna Pushta and Geeta Colony.
+Request an update on the river level and residents' condition in Geeta Colony in an hour (17:06 IST).
+    | 204.6 mm of rainfall recorded since early morning.
+River level at 200.73 m, approaching the barrage stage faster than expected.
+Geeta Colony residents unable to leave due to closed roads and high water levels.
+    | Ambulance and disaster/NDRF teams are en route to Geeta Colony. Request an hourly update on flood levels and Geeta Colony residents' condition at 17:06 IST.
+### allam-2-7b 73 band=auto dep=False typed=False judge=None suggest=False [('1', 'unbound number'), ('5', 'unbound number'), ('2', 'unbound number'), ('10', 'unbound number')]
+    FACTS p=81.5 rf=68.7 rain=86.7 river=206.27 dam=203.64 time=09:02 IST
+    | Based on updated data, the flood probability is now at 81.5%, and the rain intensity at 86.7 mm.
+Yamuna river level: 206.27 m, Yamuna barrage stage: 203.64 m.
+Random Forest model: 68.7%, XGBoost model: 81.5%.
+09:02 IST, Yamuna Pushta / Geeta Colony zone.
+    | Given the severe flood conditions in Yamuna Pushta and Geeta Colony, I authorize the following actions:
+
+1. Ambulance Responder: Response zone: Yamuna Pushta, count: 5, ages: unknown.
+2. Disaster Response Team: Response zone: Geeta Colony, count: 10, ages: unknown.
+    | Understood, preparing rescue teams.
+
+Ambulance Responder: I have acknowledged the task; I'll head to Yamuna Pushta.
+Disaster Response Team: We will immediately proceed to Geeta Colony, sir.
+    | Be mindful of the water level and prioritize patient extraction.
+Ambulance Responder: Understood, I will assess the situation before attempting any rescue operations.
+    | Please ensure the safety of the rescue personnel while preserving the lives of the trapped citizens.
+### allam-2-7b 74 band=calm dep=False typed=False judge=None suggest=False [('65.2', 'probability/threshold'), ('54.5', 'probability/threshold'), ('65.2', 'probability/threshold'), ('54.5', 'probability/threshold')]
+    FACTS p=35.7 rf=51.7 rain=51.5 river=202.43 dam=199.94 time=09:34 IST
+    | Morning, Administrator. According to our simulation, there's a 35.7% flood probability and today has seen 51.5 mm of rain. Yamuna river level is currently at 202.43 m and the barrage stage stands at 199.94 m. It is currently 09:34 IST in Yamuna Pushta / Geeta Colony.
+    | Alright, Flood Risk Agent. Keep monitoring the situation closely. Notify me if the probability rises above 40%. Yamuna Pushta and Geeta Colony residents should be informed of the current status. Don't hesitate to call them if needed, especially with the predictions saying 65.2% in Random Forest and 54.5% in XGBoost. (Zone: Yamuna Pushta/Geeta Colony; Ages: Unknown; Counts: Unknown)
+    | Understood, Administrator. We'll ensure residents know about the 35.7% probability and the measures in place, but please note that the Random Forest model shows 65.2% and XGBoost predicts 54.5% probability. We will continue monitoring the situation closely.
+    | Thank you, Flood Risk Agent. Stay updated frequently as the day progresses. Let's hope for the best.
+### allam-2-7b 75 band=auto dep=False typed=False judge=None suggest=False [('150', 'unbound number'), ('20', 'probability/threshold'), ('2', 'unbound number'), ('60', 'unbound number'), ('20', 'probability/threshold')]
+    FACTS p=70.3 rf=65.0 rain=100.2 river=204.08 dam=201.96 time=19:41 IST
+    | Flood probability is now at 70.3%, with 100.2 mm of rain recorded. Yamuna river level stands at 204.08 m and Yamuna barrage stage at 201.96 m. Random Forest model has a 65.0% accuracy, while XGBoost model has a 70.3% accuracy. Current time is 19:41 IST.
+    | Alert received. Yamuna Pushta and Geeta Colony have been identified as affected areas with people in need of assistance. Yamuna Pushta: 100 residents (60% elderly); Geeta Colony: 150 residents (20% children).
+    | Initially believed flood risk to be low. Now raising flood alert to Level 2 with severe flooding expected. Prepare to deploy emergency response teams and prioritize rescue operations.
+    | Understood. Ambulance and disaster/NDRF team are dispatched to Yamuna Pushta (60 elderly residents) and Geeta Colony (20% children). Prepare for ground teams at both locations.
+    | Rain intensity and river levels continue to rise rapidly. Casualties expected at both sites due to trapped individuals needing immediate assistance. Coordinate with police for extra security at evacuation centers.
+### allam-2-7b 76 band=auto dep=True typed=True judge=None suggest=True []
+    FACTS p=96.3 rf=73.1 rain=204.0 river=200.25 dam=201.2 time=23:33 IST
+    | Administrator, according to flood probability (96.3%), heavy rain (204 mm), and Yamuna river level (200.25 m) - it seems a flood has occurred.
+    | Flood Risk, I'm approving your assessment. Send emergency response teams to Yamuna Pushta and Geeta Colony, as flood levels are above the 60% mark in those areas.
+    | Understood, Administrator. Ambulance and disaster/NDRF team are dispatched to Yamuna Pushta and Geeta Colony to assist affected people. Current time is 23:33 IST.
+    | Flood Risk, prioritize Yamuna Pushta to ensure safety. Yamuna barrage stage stands at 201.2 meters.
+    | Administrator, I am redirecting the disaster/NDRF team to Yamuna Pushta first. Yamuna barrage stage confirms height concern.
+### allam-2-7b 77 band=admin dep=True typed=False judge=None suggest=False [('2', 'unbound number'), ('2', 'unbound number')]
+    FACTS p=52.9 rf=44.1 rain=40.5 river=205.68 dam=203.93 time=03:32 IST
+    | Assess flood risk and provide updates on flooded areas. Yamuna river level and barrage stage are concerning.
+    | River level is at 205.68 meters, barrage stage is at 203.93 meters. Random Forest model estimates a 44.1% probability, while XGBoost predicts a 52.9% chance of flooding in Yamuna Pushta and Geeta Colony areas.
+    | Send additional response teams to Geeta Colony and Yamuna Pushta. Coordinate with local authorities for rescue operations. Keep monitoring the rain and river levels.
+    | Rainfall is currently at 40.5 mm, and the probability of flooding continues to rise. We recommend escalating the alert level to level 2.
+    | Agreed. Level 2 alert status activated. Coordinate with other agencies for evacuation assistance and temporary shelters.
+### allam-2-7b 78 band=auto dep=False typed=False judge=None suggest=False [('30', 'quantity not in state')]
+    FACTS p=98.8 rf=77.5 rain=192.9 river=202.57 dam=202.72 time=02:23 IST
+    | Alright, Flood Risk Agent. Based on the updated information, the flood probability is 98.8% with 192.9 mm of rain recorded so far. Yamuna river level is 202.57 m and Yamuna barrage stage is 202.72 m. It is currently 02:23 IST, and the zones of concern are Yamuna Pushta and Geeta Colony.
+    | Understood, Administrator Agent. Given the high flood risk, I recommend deploying rescue teams immediately to Yamuna Pushta and Geeta Colony. Ambulance and Disaster/NDRF team, please head to these areas now to rescue stranded individuals.
+    | Acknowledged, Flood Risk Agent. I'll notify the relevant teams and make sure they have the latest information. Initiate status updates every five minutes to keep me apprised of the situation.
+    | Will do, Administrator Agent. I will also have the Random Forest and XGBoost models update their predictions for the next 30 minutes. This should provide a better understanding of the flood situation and help our decision-making.
+    | Agreed, Flood Risk Agent. I would like to inform the public of the grave situation through suitable channels. Please keep me updated on the number of affected people and their locations.
+### allam-2-7b 79 band=auto dep=True typed=True judge=None suggest=True []
+    FACTS p=87.5 rf=68.5 rain=151.9 river=208.37 dam=202.39 time=04:06 IST
+    | 60% flood probability indicates a significant risk. Yamuna river level reaches 208.37 meters, barrage stage at 202.39 meters. Continuous rain with 151.9 mm and time, 04:06 IST. Scene at Yamuna Pushta and Geeta Colony.
+    | Alert all teams and update the status: above 60% chance of flooding. Proceed with rescue operations at Yamuna Pushta and Geeta Colony immediately.
+    | Understood. Random Forest model prediction stands at 68.5%, XGBoost at 87.5%. Activating disaster/NDRF team and ambulance.
+    | Notify Fire Department as well, and ensure everyone is informed.
+    | Progress in minutes, providing regular updates. Stay on standby for further instructions.
+### allam-2-7b 80 band=auto dep=True typed=True judge=None suggest=True []
+    FACTS p=76.7 rf=68.1 rain=219.1 river=205.24 dam=203.53 time=12:16 IST
+    | 60% flood probability confirmed, Administrator Agent. Rescue teams need immediate action. Yamuna river level is at 205.24 meters and Yamuna barrage stage is 203.53 meters. Random Forest predictive model is at 68.1%, بينما XGBoost model يقدر بـ 76.7% احتمال الفيضان.
+    | Inform rescue teams, including ambulance and disaster/NDRF team, to proceed to designated locations - Yamuna Pushta and Geeta Colony.
+    | Please ensure they are aware of the situation and update me once they arrive.
+    | Teams are en route, sir. River rain total is recorded at 219.1 mm, and it is currently 12:16 IST.
+    | من فضلك، استخدم اتصالات القمر الصناعي لتنسيق العمليات وضمان سلامة الفرق.
+### allam-2-7b 83 band=calm dep=True typed=True judge=None suggest=True []
+    FACTS p=32.6 rf=30.4 rain=26.5 river=206.4 dam=200.58 time=09:16 IST
+    | Morning Admin, Yamuna river level is stable at 206.4 meters. Rainfall appears to have decreased to 26.5 mm.
+    | Thank you for the update. As of 09:16 IST, the flood probability is 32.6% and Yamuna barrage stage is 200.58 meters.
+    | Got it, Admin. Based on the updated data, I recommend not taking any immediate actions as the flood probability is below 40%. However, keep monitoring the situation closely.
+    | Understood, Flood Risk Agent. But please stay alert since the river level has held steady above the barrage stage.
+    | Will do, Admin. I'll stay on top of the situation and inform you immediately if the flood probability exceeds 40% or the river level rises above the barrage stage.
+### allam-2-7b 84 band=auto dep=True typed=True judge=None suggest=True []
+    FACTS p=82.0 rf=70.1 rain=84.6 river=207.63 dam=203.6 time=10:58 IST
+    | Flood Risk Agent, we have just received new data showing a probability of 82.0% and an ongoing heavy downpour with 84.6 mm of rain.
+    | Given these updates, it seems we have reached the threshold for rescue operations. Advise Disaster/NDRF team to proceed to Yamuna Pushta and Geeta Colony.
+    | Understood. Additionally, inform the ambulance and Disaster/NDRF teams that Yamuna river level is at 207.63 m, and the Yamuna barrage stage is at 203.6 m.
+    | They should be prepared for potential flooding in these areas. Time now is 10:58 IST, and the operations are currently in simulation mode.
+### allam-2-7b 85 band=auto dep=False typed=False judge=None suggest=False [('3', 'unbound number'), ('500', 'quantity not in state')]
+    FACTS p=68.7 rf=64.3 rain=125.8 river=206.85 dam=200.54 time=05:12 IST
+    | Administrator, based on the current simulation state, we have a flood probability of 68.7% and a rain accumulation of 125.8 mm, with the Yamuna river level at 206.85 m and Yamuna barrage stage at 200.54 m.
+    | Flood Risk, I acknowledge the information provided.
+    | In accordance with our Emergency Plan, we've identified the zones as Yamuna Pushta and Geeta Colony. We've also determined that there are around 3,500 people needing assistance in those areas.
+    | Flood Risk, based on the current situation, we need to deploy the available rescue units immediately.
+    | Understood. We suggest prioritizing the following locations for rescue operations: Geeta Colony and Yamuna Pushta.
+    | Flood Risk, start dispatching paramedics, the ambulance, and the disaster response team to Yamuna Pushta and Geeta Colony immediately.
+### allam-2-7b 87 band=auto dep=False typed=False judge=None suggest=False [('3', 'unbound number'), ('000', 'quantity not in state'), ('800', 'unbound number'), ('3', 'unbound number'), ('800', 'unbound number'), ('3', 'unbound number'), ('000', 'unbound number'), ('800', 'unbound number')]
+    FACTS p=64.1 rf=61.7 rain=57.2 river=205.58 dam=199.89 time=23:36 IST
+    | River level and barrage stage surpassed trigger thresholds. Proceeding with flood response plan.
+    | 64.1% flood probability, 57.2 mm rain, Yamuna river level at 205.58 m, Yamuna barrage stage at 199.89 m. Request coordinating rescue operations.
+    | Flood risk elevated. Yamuna Pushta and Geeta Colony residents at high risk. Send ambulance and disaster/NDRF team to Yamuna Pushta and Geeta Colony for rescue operations. Time now: 23:36 IST.
+    | (checking data) Confirmed 3,000 people in Yamuna Pushta and 800 in Geeta Colony in need of assistance. Proceed with rescue efforts.
+    | Understood, coordinating rescue of 3,800 residents (3,000 from Yamuna Pushta and 800 from Geeta Colony). Ambulance and disaster team en route.
+### allam-2-7b 88 band=auto dep=False typed=False judge=None suggest=False [('30', 'unbound number'), ('45', 'unbound number'), ('30', 'unbound number'), ('45', 'unbound number')]
+    FACTS p=91.1 rf=74.4 rain=70.6 river=207.15 dam=202.11 time=10:17 IST
+    | 60% flood alert confirmed at 10:17 IST. Yamuna river is at 207.15 m, barrage stage is 202.11 m. Probability of flood (Random Forest) is 74.4%, (XGBoost) 91.1%.
+    | Understood, prepared rescue efforts in Yamuna Pushta and Geeta Colony zones. Rainfall: 70.6 mm, probability: 91.1%, river level: 207.15 m, barrage stage: 202.11 m.
+    | Yamuna Pushta: 30 affected, Geeta Colony: 45 affected. Acknowledge rescue action to proceed immediately.
+    | Rescue efforts initiated. Yamuna Pushta: 30 affected, Geeta Colony: 45 affected.
+    | Update on rescue progress, please.
+### allam-2-7b 90 band=admin dep=False typed=False judge=None suggest=False [('6', 'unbound number'), ('0.8', 'rainfall')]
+    FACTS p=54.8 rf=30.3 rain=35.2 river=205.38 dam=201.8 time=18:29 IST
+    | Morning, Administrator. Rainfall since 6 AM amounted to 35.2 mm and the flood probability is at 54.8%. Currently, the Yamuna river level is 205.38 m, while the Yamuna barrage stage is 201.8 m.
+    | Good morning, Flood Risk Agent. I have updated the situation overview. We seem to be within the predicted range for the time being, Yamuna Pushta and Geeta Colony areas are affected.
+    | Understood, Administrator. The rain rate over the last hour is at 0.8 mm/min, indicating a steady flow of water into the affected zones. I suggest keeping a close eye on the river levels and barrage operations.
+    | Following your recommendation, I have assigned more teams to monitor the river levels and coordinate with the barrage operators. I'll also contact local residents and urge them to evacuate if necessary.
+### allam-2-7b 91 band=auto dep=True typed=True judge=None suggest=True []
+    FACTS p=83.9 rf=64.6 rain=139.7 river=202.86 dam=203.75 time=21:26 IST
+    | Flood Probability: 83.9%, Rainfall: 139.7 mm, River Level: 202.86 m, Barrage Stage: 203.75 m, Time: 21:26 IST, Ages: Unknown, Counts: Unknown (Rescue in progress)
+    | Zone: Yamuna Pushta / Geeta Colony, Places: Yamuna Pushta / Geeta Colony, Activating Disaster/NDRF Team, Coordinating with Rescue, Advise Ambulance to assist Rescue Team
+    | Rescue confirmed for affected areas, River level is rapidly increasing, Report progress and coordinating with Disaster/NDRF team.
+    | River level rising, Rescue team in the area, Coordinating with Disaster/NDRF team, No reports of casualties, Reaching out to affected citizens for information on residents' locations.
+    | Hold rescue while we assess the situation, Coordinate with Emergency Services to prioritize rescues.
+### allam-2-7b 92 band=auto dep=True typed=False judge=None suggest=False [('1', 'unbound number'), ('2', 'unbound number')]
+    FACTS p=93.2 rf=72.4 rain=231.1 river=205.51 dam=199.42 time=13:22 IST
+    | Administrator, Flood Risk alerting. Probability 93.2%, rain 231.1 mm, river level 205.51 m, barrage stage 199.42 m. Proceeding with rescue operations. Yamuna Pushta and Geeta Colony are affected.
+    | Understood, Flood Risk. Coordinating with rescue teams for immediate action. Yamuna Pushta and Geeta Colony highlighted.
+    | Administrator, Rescue Team 1 assembled. Proceeding to Yamuna Pushta now.
+    | Administrator, Rescue Team 2 arrived at Geeta Colony. Ready for rescue operations.
+    | Admin, Random Forest 72.4%, XGBoost 93.2%, time 13:22 IST. Ambulance on standby.
+### allam-2-7b 93 band=auto dep=True typed=True judge=None suggest=True []
+    FACTS p=91.6 rf=70.0 rain=102.9 river=204.75 dam=200.77 time=00:17 IST
+    | Are conditions above threshold in Yamuna Pushta/Geeta Colony? Random Forest 70.0%, XGBoost 91.6%.
+    | Yes, probability at 91.6%. Yamuna river level at 204.75 m, Yamuna barrage stage at 200.77 m. Vehicles and people trapped. Proceeding with rescue operations.
+    | Understood, initiating evacuation orders in Yamuna Pushta and Geeta Colony. Request ambulance and NDRF/Disaster team to head to the mentioned locations for rescue operations.
+    | Ambulance en route, Disaster team following. Weather rain 102.9 mm, time 00:17 IST. Proceeding with rescue operations.
+Please inform affected zone residents and urge them to move to higher grounds immediately.
+    | Informacións en terceros, precisa actuar rápidamente. Ambulance y el equipo de desastres en camino. Estacionamiento de vehículos y personas atrapados.
+### allam-2-7b 94 band=auto dep=False typed=False judge=None suggest=False [('ETA', 'ETA (duration)')]
+    FACTS p=78.0 rf=67.8 rain=86.8 river=207.56 dam=201.37 time=15:54 IST
+    | Update the flood probability to 78.0% due to heavy rain and rising river levels.
+    | Rainfall update: 86.8 mm, Yamuna river level: 207.56 m, Yamuna barrage stage: 201.37 m. Random Forest: 67.8%, XGBoost: 78.0%. Proceeding to trigger flood response.
+    | Yamuna Pushta and Geeta Colony have been identified as high-risk zones. Activate the disaster team and NDRF for flood rescue operations.
+    | Understood. Rescue team, NDRF, and ambulance are deployed to Yamuna Pushta and Geeta Colony.
+    | Estimated time for flood team arrival at Geeta Colony: 10 minutes. Ambulance on its way to Yamuna Pushta.
+### allam-2-7b 95 band=auto dep=True typed=True judge=None suggest=True []
+    FACTS p=82.8 rf=58.1 rain=14.2 river=205.62 dam=205.59 time=20:07 IST
+    | Alert: Probability of a flood at Yamuna Pushta and Geeta Colony is now at 82.8% with 14.2 mm of rain. Yamuna river level at 205.62 m and Yamuna barrage stage at 205.59 m. Proceeding with emergency response plan.
+    | Confirm action: Yamuna Pushta and Geeta Colony are now classified as High-Risk zones. Coordinate with Disaster Response Unit and NDRF for immediate rescue operations. Advise Ambulance service to prepare for potential flood victims.
+    | This is Flood Risk Agent. Yamuna Pushta and Geeta Colony are at high risk due to the combined effects of flood probability, rain, and elevated river and barrage stages. Rescue operations are required at both locations. Please coordinate with each other and Ambulance Service to handle potential flood victims. Proceeding with Emergency Response Plan.
+    | Roger, we're engaging our personnel at both Yamuna Pushta and Geeta Colony. Ambulance Service, please have your vehicles ready and keep vehicles close to the affected areas.
+    | Understood, all teams will be dispatched to Yamuna Pushta and Geeta Colony. We'll prioritize rescues from low-lying areas.
+    | Establish communication with local hospitals to ensure they are prepared for probable influx of flood victims.
+### allam-2-7b 96 band=auto dep=False typed=False judge=None suggest=False [('6', 'unbound number'), ('000', 'unbound number'), ('12', 'unbound number'), ('000', 'unbound number'), ('ETA', 'ETA (duration)'), ('6', 'unbound number'), ('000', 'quantity not in state'), ('12', 'unbound number'), ('000', 'quantity not in state')]
+    FACTS p=89.1 rf=69.3 rain=85.0 river=202.35 dam=203.41 time=14:32 IST
+    | Current flood probability is 89.1%. Heavy rain at 85 mm and rising Yamuna river level at 202.35 m with Yamuna barrage stage at 203.41 m.
+    | Roger that. We need to act fast. Proceed with evacuation at Yamuna Pushta and Geeta Colony zones.
+    | Evacuation initiated. Police assistance requested for crowd control. Yamuna Pushta: 6,000; Geeta Colony: 12,000.
+    | Understood. Coordinating with Disaster relief team and NDRF for simultaneous rescue operations at both locations. Time estimation for assistance arrival: 10 minutes.
+    | Response teams are on their way. Yamuna Pushta: 6,000 people; Geeta Colony: 12,000 people. Activate emergency shelters for both zones.
+### allam-2-7b 97 band=calm dep=False typed=False judge=None suggest=False [('16', 'probability/threshold')]
+    FACTS p=28.4 rf=32.1 rain=24.4 river=200.1 dam=199.67 time=17:49 IST
+    | It's 17:49 IST, with a flood probability of 28.4% and 24.4 mm of rain recorded so far. The Yamuna river level is 200.1 m, while the Yamuna barrage stage is at 199.67 m. In Yamuna Pushta/Geeta Colony, there are two zones being monitored.
+    | Please ensure to update me on potential rises as the night progresses. Stay vigilant for flood risks.
+    | Fear not, for the river is now below 40%. Our monitoring algorithms indicate low risk in Yamuna Pushta/Geeta Colony. I have updated the flood probability to 16% and rain total to 24.4 mm. Keep in mind that the Random Forest model is 32.1% accurate and XGBoost is 28.4% accurate.
+    | This is much appreciated, Flood Risk Agent. Please continue to monitor the situation closely throughout the night, and inform me immediately if conditions worsen.
+### allam-2-7b 98 band=auto dep=False typed=False judge=None suggest=False [('67', 'probability/threshold')]
+    FACTS p=87.5 rf=69.2 rain=85.8 river=205.15 dam=200.2 time=14:13 IST
+    | 67% probability of flooding in Yamuna Pushta and Geeta Colony. Yamuna river level at 205.15 m, barrage stage at 200.2 m. Rainfall: 85.8 mm. Transmit OPS: Acknowledge these details, Administrator.
+    | Acknowledged. OPS confirmed: 87.5% flood probability. Tasking rescue teams to Yamuna Pushta and Geeta Colony immediately.
+    | Rescue teams from the Red Cross, Fire Department, and NDRF notified. Coordinate with them for rescue operations.
+    | Delaware Towing, the Bombay Surgical, and GVK Ambulance services contacted for medical assistance to affected areas. Confirming the current time: 14:13 IST.
+    | Acknowledged, Flood Risk Agent. Coordinate with the emergency services for rescue efforts and medical assistance. Stay updated on Yamuna river level and barrage stage.
+### allam-2-7b 99 band=auto dep=True typed=True judge=None suggest=True []
+    FACTS p=80.5 rf=72.3 rain=80.8 river=205.79 dam=202.91 time=22:33 IST
+    | 60% flood probability confirms the situation in Yamuna Pushta and Geeta Colony. Rainfall: 80.8 mm, River level: 205.79 m, Barrage stage: 202.91 m, Random Forest: 72.3%, XGBoost: 80.5%.
+    | Alert Emergency services. Ambulance and Disaster Response Team, prioritize Geeta Colony.
+    | 60% flood probability. Yamuna Pushta and Geeta Colony are severely affected. People in danger. Proceeding with Emergency alert.
+    | Notification sent. Ambulance and Disaster Response Team are en route to Geeta Colony.
+    | Awaiting details on residents in Geeta Colony.
+### allam-2-7b 100 band=watch dep=False typed=False judge=None suggest=False [('88.6', 'probability/threshold')]
+    FACTS p=48.2 rf=26.8 rain=31.5 river=201.57 dam=204.14 time=13:02 IST
+    | Administrator, River Level is currently at 201.57 meters. Barrage Stage stands at 204.14 meters. The rain total is 31.5 mm.
+    | Flood Risk, Based on the Yamuna River Level and Barrage Stage, it seems we are entering the 'Watch Only' zone. We should inform residents in Yamuna Pushta and Geeta Colony.
+    | Understood, Administrator. Proceeding with alerting locals. However, it is worth mentioning that our Random Forest model's prediction is at 48.2% while XGBoost stands at 88.6%, indicating higher risk and severity.
+    | Both models point to increased risk, Agent. Please ensure all preparedness measures are in place and continue monitoring the situation closely.
+    | Affirmative, Administrator. We will be prepared for potential evacuation as per current probabilities and continue tracking updates.
+### allam-2-7b 101 band=auto dep=True typed=True judge=None suggest=True []
+    FACTS p=96.9 rf=75.2 rain=247.2 river=202.9 dam=201.43 time=21:42 IST
+    | Administrator, per our modeling and data, the flood probability stands at 96.9%, with heavy rain of 247.2 mm. Yamuna river level is 202.9 m and the Yamuna barrage stage is at 201.43 m. I advise preparation for flood across Yamuna Pushta and Geeta Colony zones. Time now is 21:42 IST.
+    | Thank you for the update. The flood situation in Geeta Colony and Yamuna Pushta seems severe. I order the ambulance and the disaster/NDRF team to initiate rescue operations at these locations now.
+    | Understood. Ambulance will focus on evaluating medical emergencies and transporting affected individuals, while disaster/NDRF team will engage in search and rescue efforts. Both teams will coordinate with local authorities for rescue.
+    | Let's hope the ongoing support from the meteorological center helps reduce the flood situation. Keep me updated on the progress.
+    | Will do, Administrator. I will continue monitoring the weather and river status for any further updates, ensuring a swift response.
+### allam-2-7b 102 band=auto dep=False typed=False judge=None suggest=False [('15:57', 'ETA (clock time)'), ('5', 'unbound number'), ('100', 'unbound number')]
+    FACTS p=94.6 rf=73.0 rain=153.6 river=202.78 dam=200.75 time=15:56 IST
+    | 94.6% flood probability, 153.6 mm rain, Yamuna river level 202.78 m, Yamuna barrage stage 200.75 m, 15:56 IST. Yamuna Pushta / Geeta Colony affected.
+    | Confirmed, flood risk very high. Yamuna Pushta and Geeta Colony residents in danger. Proceed with rescue operations immediately.
+    | Request active rescue vehicles, focusing on Yamuna Pushta and Geeta Colony. Yamuna Pushta/Geeta Colony residents in urgent need.
+    | 5 rescue vehicles en route, reaching at 15:57 IST. River flow near peak, floodwaters rising quickly.
+    | River level exceeds barrage stage, floodwaters will overflow. Move quickly to Yamuna Pushta and Geeta Colony. 100 residents risked, prioritize those in immediate danger.
+### allam-2-7b 103 band=auto dep=True typed=True judge=None suggest=True []
+    FACTS p=95.7 rf=72.2 rain=162.7 river=206.88 dam=200.78 time=00:30 IST
+    | Sir, probability for flood above 60%.
+    | Confirmed, flood warning triggered.
+    | Rainfall measured at 162.7 mm, river level at 206.88 m, and barrage stage at 200.78 m.
+    | Urgent action required. Yamuna Pushta and Geeta Colony have been identified as affected areas.
+### allam-2-7b 104 band=auto dep=True typed=True judge=None suggest=True []
+    FACTS p=97.8 rf=73.3 rain=190.0 river=204.35 dam=204.13 time=11:17 IST
+    | 60% flood probability, 190 mm of rain, river level 204.35 m, barrage stage 204.13 m, 11:17 IST, Yamuna Pushta / Geeta Colony zones.
+    | Confirm flood events near Yamuna Pushta and Geeta Colony.
+    | Confirmed, Administrator. Yamuna River is at hazardous stage.
+    | Task the ambulance and disaster/NDRF team to prioritize إنقاذ and الإخلاء operations at mentioned locations.
+    | Understood, Administrator. Coordinating with the rescue teams and vehicles to initiate the rescue operations now.
+### allam-2-7b 105 band=auto dep=False typed=False judge=None suggest=False [('1', 'unbound number'), ('2', 'unbound number'), ('4', 'unbound number'), ('5', 'unbound number'), ('4', 'unbound number'), ('5', 'unbound number')]
+    FACTS p=85.8 rf=70.9 rain=79.5 river=200.55 dam=204.05 time=13:55 IST
+    | 85.8% flood probability, 79.5 mm rain, Yamuna river level 200.55 m, Yamuna barrage stage 204.05 m, time 13:55 IST, flooded areas Yamuna Pushta and Geeta Colony
+    | Clear order: Begin evacuation of affected areas. Ensure safety of citizens.
+    | Mission 1, 2, 4 and 5 please, secure priorities as follows: Yamuna Pushta - evacuation coordination; Geeta Colony - search and rescue operations
+    | Mission 4 is en route to Yamuna Pushta for evacuation coordination assistance.
+    | Mission 5 has arrived at Geeta Colony for search and rescue operations.
+### allam-2-7b 106 band=auto dep=True typed=True judge=None suggest=True []
+    FACTS p=98.2 rf=77.9 rain=167.0 river=200.77 dam=202.57 time=15:39 IST
+    | Ambulance, flood probability at 98.2%, rain at 167 mm. River level at 200.77 m, Yamuna barrage stage at 202.57 m. Water level raising rapidly in Yamuna Pushta and Geeta Colony. Time now: 15:39 IST.
+    | Understood, prioritize flood rescue operations at Yamuna Pushta and Geeta Colony. Send disaster/NDRF teams to coordinate with the rescue efforts.
+    | Disaster/NDRF Team, flood risk is extremely high in Yamuna Pushta and Geeta Colony due to 98.2% flood probability, 167 mm of rain. River level at 200.77 m, barrage stage at 202.57 m. Move in ASAP.
+    | Received, we are en route to Yamuna Pushta and Geeta Colony. We will coordinate with the ambulance and initiate rescue operations.
+    | Flood Risk Agent, additional ambulances requested to Yamuna Pushta and Geeta Colony for potential casualties.
+    | Understood, Administrator. I'll prioritize deploying ambulances to Yamuna Pushta and Geeta Colony.
+### allam-2-7b 107 band=auto dep=True typed=True judge=None suggest=True []
+    FACTS p=85.3 rf=64.0 rain=133.0 river=205.61 dam=201.52 time=15:20 IST
+    | Flood Risk Agent, we are now at 85.3% probability for a flood in Yamuna Pushta and Geeta Colony. Yamuna river level is at 205.61 m and Yamuna barrage stage is at 201.52 m. Random Forest predicts 64.0% while XGBoost predicts 85.3%. Currently at 15:20 IST.
+    | Got it, Administrator Agent. Rainfall has reached 133 mm. I'll alert the relevant teams immediately.
+    | Roger that. Inform the Ambulance, Disaster Response Team, and NDRF about the potential flood situation.
+    | Flood Response Team, Ambulance, and NDRF, this is Flood Risk Agent. Yamuna Pushta and Geeta Colony are at risk of flooding. Proceed to Yamuna Pushta and Geeta Colony now to assist and rescue people as needed.
+### allam-2-7b 108 band=calm dep=True typed=True judge=None suggest=True []
+    FACTS p=29.7 rf=32.4 rain=24.1 river=204.49 dam=205.08 time=08:55 IST
+    | Morning, Administrator Agent. We have an update on flood risk in Yamuna Pushta and Geeta Colony.
+    | Good morning, Flood Risk Agent. How severe is the situation right now?
+    | Approximately a quarter of an hour ago, we recorded a rain total of 24.1 mm. Although the probability of flood risk is still at 32.4% for Random Forest and 29.7% for XGBoost, the river level stands at 204.49 meters.
+    | Please inform me if the river rises above 205 meters or if the probability surpasses 40%. Stay updated on current conditions.
+    | Considering the data provided, we are currently in a 'Below 40%' situation. Yamuna river is at 204.49 meters, and we have a low probability of 29.7% with XGBoost model. Let me know if the river يرتفع to 205 meters or if the risk increases beyond 40%.
+### allam-2-7b 110 band=auto dep=True typed=True judge=None suggest=True []
+    FACTS p=96.0 rf=72.5 rain=214.6 river=206.73 dam=200.89 time=16:13 IST
+    | 60% flood probability confirmed. Rainfall: 214.6 mm, Yamuna river level: 206.73 m, Yamuna barrage stage: 200.89 m. Yamuna Pushta - Geeta Colony zone. Rescue Team informed. Time now: 16:13 IST.
+    | Random Forest estimation: 72.5%, XGBoost estimation: 96.0%. Proceeding with emergency response planning.
+    | Activating Rescue Team. Yamuna Pushta and Geeta Colony - priority rescue areas. Implement immediate water pumping operations. Flooded residents to be rescued now.
+    | Understood. Rescue vehicles en route to Yamuna Pushta and Geeta Colony. Request support from Fire Brigade for additional pumping resources.
+    | Updated information received. Proceed with coordinating ambulance and disaster relief teams for priority support at designated areas.
+### allam-2-7b 113 band=auto dep=True typed=True judge=None suggest=True []
+    FACTS p=89.1 rf=68.7 rain=153.7 river=201.12 dam=204.71 time=23:09 IST
+    | Flood Risk Agent, we have reached an alert level. Probability of flood above 60% with 89.1% and the Yamuna river level is at 201.12 m.
+    | Flood situation has escalated. I advise initiating rescue operations. We need the ambulance and Disaster/NDRF team to evacuate residents from Yamuna Pushta and Geeta Colony.
+    | Acknowledged. Prepare the resources. Rescue at Yamuna Pushta first. Current time is 23:09 IST.
+    | Rescue teams are on their way. Rainfall amount, river stage, and barrage stage are as follows: Rainfall - 153.7 mm, River - 201.12 m, Barrage - 204.71 m.
+### allam-2-7b 114 band=auto dep=True typed=True judge=None suggest=True []
+    FACTS p=77.8 rf=68.6 rain=166.0 river=200.29 dam=204.53 time=21:55 IST
+    | 60% flood probability, Administrator. Rainfall: 166 mm, river level: 200.29 m, barrage stage: 204.53 m. Yamuna Pushta/Geeta Colony zones affected. Time: 21:55 IST.
+    | Validate our decision to deploy resources. Yamuna Pushta/Geeta Colony - let's coordinate with local authorities for rescue efforts.
+    | Random Forest model prediction: 68.6%, XGBoost model prediction: 77.8%. Proceeding with disaster/NDRF team and ambulance to Yamuna Pushta & Geeta Colony.
+    | Disaster/NDRF Team leader, you are dispatched to Yamuna Pushta and Geeta Colony zones. High flood risk. Proceed with rescue operations immediately.
+    | Understood. We stand by at base location to receive further instructions.
+### allam-2-7b 116 band=auto dep=True typed=True judge=None suggest=True []
+    FACTS p=64.5 rf=35.9 rain=36.4 river=200.46 dam=200.3 time=05:44 IST
+    | River level is now 200.46 m and Yamuna Barrage stage is 200.3 m, probability estimates are: Random Forest 35.9%, XGBoost 64.5%. Continue monitoring.
+    | Advise the Rescue, Ambulance, and Disaster/NDRF teams to proceed to Yamuna Pushta and Geeta Colony as floods have occurred with 64.5% probability. Coordinate with them for rescue operations. Time now is 05:44 IST.
+    | Rainfall estimate is 36.4 mm, river level well above the barrage stage, indicating severe flooding. Awaiting Rescue team at Yamuna Pushta and Geeta Colony.
+    | Rescue, proceed to Yamuna Pushta and Geeta Colony with Ambulance and Disaster/NDRF teams. Proceed with immediate rescue operations. Time is 05:44 IST.
+    | Barrage stage at 200.3 m and river level at 200.46 m. Proceed with caution due to severe flooding scenarios.
+### allam-2-7b 117 band=watch dep=False typed=False judge=None suggest=False [('10', 'unbound number'), ('000', 'unbound number'), ('5', 'unbound number'), ('000', 'unbound number'), ('7', 'unbound number'), ('500', 'unbound number')]
+    FACTS p=45.3 rf=44.8 rain=42.7 river=202.56 dam=202.6 time=17:01 IST
+    | Flood Risk Agent, we are currently at a 40-50% watch-only scenario due to the aforementioned factors. Update me on the current situation and suggest the appropriate response.
+    | Understood, Administrator Agent. Rainfall is recorded as 42.7 mm and the Yamuna river level stands at 202.56 m, while the Yamuna barrage stage is 202.6 m. The random forest algorithm predicts 44.8%, XGBoost predicts 45.3% probability of flooding in the Yamuna Pushta/Geeta Colony zone.
+    | Considering the numbers and predictions, please keep me updated on the number of affected persons and the potential displacement requirements.
+    | A total of 10,000 residents are currently in the Yamuna Pushta/Geeta Colony zone. With a 40-50% likelihood of flooding, I advise preparing for potential displacement of 5,000 to 7,500 residents.
+### allam-2-7b 118 band=auto dep=False typed=False judge=None suggest=False [('66.2', 'probability/threshold'), ('66.2', 'probability/threshold')]
+    FACTS p=76.5 rf=67.7 rain=222.6 river=206.35 dam=200.09 time=14:43 IST
+    | 66.2% flood probability, 222.6 mm rain, Yamuna river level 206.35 m, Yamuna barrage stage 200.09 m, time now 14:43 IST, zone Yamuna Pushta / Geeta Colony.
+    | Activate rescue operations. Yamuna Pushta and Geeta Colony residents in danger. Send ambulance and disaster/NDRF team to these locations.
+    | Ambulance, immediate action required. Proceed to Yamuna Pushta and Geeta Colony due to 66.2% flood probability. Sound the emergency alert and assist residents in need.
+    | Disaster/NDRF Team, priority task. Report to Yamuna Pushta and Geeta Colony zones. Ensure safety and rescue of affected citizens.
+    | Ambulance team acknowledged, heading to Yamuna Pushta and Geeta Colony. Will inform about progress and rescued people.
+### allam-2-7b 119 band=auto dep=False typed=False judge=None suggest=False [('41', 'unbound number'), ('90', 'probability/threshold'), ('100', 'unbound number'), ('10', 'unbound number'), ('34', 'unbound number'), ('84', 'probability/threshold'), ('50', 'unbound number'), ('25', 'unbound number')]
+    FACTS p=72.5 rf=67.4 rain=84.5 river=200.49 dam=201.47 time=15:00 IST
+    | 60% flood probability has been reached. The situation is escalating rapidly. Yamuna river level is at 200.49 m. Operators, prepare for potential mass rescues.
+    | Understood. I've updated the Administrator team and dispatched a rescue mission to Yamuna Pushta and Geeta Colony zones immediately. Ambulance and disaster/NDRF team, prioritize saving residents in Yamuna Pushta and Geeta Colony.
+    | Both areas are experiencing high water levels. We recommend prioritizing the following locations before proceeding with rescue operations: Yamuna Pushta (41 affected, 90% chance of flooding): 100 residents and 10 vulnerable. Geeta Colony (34 affected, 84% chance of flooding): 50 residents and 25 vulnerable. Await further updates.
+    | The Administrator team acknowledges the urgent rescue needs in Yamuna Pushta and Geeta Colony. Coordinate with the Ambulance and NDRF team on the number of units and resources required for each location.
+    | Understood, initiating immediate coordination with Rescue Response team. Ambulance team, assess the number of rescue units required in Yamuna Pushtt Pushta and Geeta Colony zones based on the number of affected and vulnerable individuals.
+### allam-2-7b 120 band=auto dep=False typed=False judge=None suggest=False [('10:58', 'wrong time')]
+    FACTS p=97.8 rf=76.3 rain=211.7 river=200.24 dam=202.52 time=10:48 IST
+    | Urgent action required! Our models indicate a 97.8% probability of a flood with 211.7 mm of rainfall.
+River level: Yamuna = 200.24 m, Yamuna barrage stage = 202.52 m.
+    | Confirmed. Brace for the worst.
+Activate Yamuna Pushta and Geeta Colony emergency operations.
+Ambulance and disaster/NDRF team, respond to Yamuna Pushta and Geeta Colony now.
+10:58 IST
+### allam-2-7b 121 band=auto dep=True typed=True judge=None suggest=True []
+    FACTS p=76.7 rf=68.2 rain=217.9 river=203.68 dam=204.83 time=13:42 IST
+    | Status update: flood probability at 76.7%, additional rain of 217.9 mm, Yamuna river level stands at 203.68 m, Yamuna barrage stage at 204.83 m, with a Random Forest prediction of 68.2% and XGBoost at 76.7%. Proceeding to activate rescue operation in Yamuna Pushta and Geeta Colony zones.
+    | Alert received for flood levels above 60%. Coordinate rescue efforts with Disaster Response and NDRF teams to prioritize recovery in Yamuna Pushta and Geeta Colony.
+    | Flood risk considered severe, proceed to Yamuna Pushta and Geeta Colony zone for immediate rescue operations. Coordinate with NDRF team for optimal assistance.
+    | Understood. Rescue teams are deploying to Yamuna Pushta and Geeta Colony zones based on your guidance. NDRF team will join upon arrival.
+    | Current time is 13:42 IST. Please provide an estimated time of arrival for the rescue teams.
+### allam-2-7b 122 band=admin dep=True typed=True judge=None suggest=True []
+    FACTS p=52.8 rf=45.7 rain=46.8 river=201.81 dam=200.11 time=21:31 IST
+    | Rainfall intensity in Yamuna Pushta/Geeta Colony: 46.8 mm.
+    | River level at 21:31 IST: Yamuna river level - 201.81 m, Yamna barrage stage - 200.11 m.
+    | Probability assessments by Random Forest and XGBoost: Random Forest - 45.7% chance, XGBoost - 52.8% chance.
+    | Awaiting updated simulation results, please provide the current flood assessment.
+    | As per the current simulation, Yamuna Pushta/Geeta Colony is facing severe flood risks. Rescue efforts remain ongoing in places with higher probabilities.
+### allam-2-7b 123 band=auto dep=False typed=False judge=None suggest=False [('20', 'unbound number'), ('000', 'quantity not in state'), ('5', 'unbound number'), ('000', 'unbound number')]
+    FACTS p=96.9 rf=75.2 rain=248.0 river=203.9 dam=201.54 time=23:27 IST
+    | 96.9% probability of significant flood, rain in the past hour 248mm. Yamuna river level at 203.9m, Yamuna barrage stage at 201.54m. Flood impact observed in Yamuna Pushta and Geeta Colony zones. Proceeding with evacuation plan.
+    | Understood. Evacuation efforts ongoing. Requesting immediate assistance from Disaster Response Unit and NDRF team. Ambulance on standby. Coordinate with respective agencies and provide them with zone and affected areas' details. Update in 5 minutes.
+    | Assigned. Coordinating with DCP and Delhi Police to ensure smooth evacuation. Update: 20,000 people affected in Yamuna Pushta and 5,000 in Geeta Colony. HQ has been informed.
+    | Good work. Assistance from MHA and NDMC is underway. Weather update: no significant change in rain intensity, but river flow increasing rapidly. Keep me informed about the rescue efforts.
+    | Understood. Team has reached Yamuna Pushta and Geeta Colony. Rescue mission initiated. Ambulance ready for casualty transportation.
+### allam-2-7b 124 band=auto dep=False typed=False judge=None suggest=False [('20:49', 'wrong time')]
+    FACTS p=64.1 rf=61.0 rain=56.2 river=203.74 dam=205.64 time=20:47 IST
+    | River level at Yamuna Pushta and Geeta Colony reached 203.74 meters. Probability of flood indicates 64.1%. Act now. Yamuna barrage stage at 205.64 meters.
+    | Rainfall reached 56.2 mm. Random Forest indicates 61.0% and XGBoost 64.1%. Emergency rescue efforts initiated. Coordinate with Rescue Team for Yamuna Pushta and Geeta Colony.
+    | Rescue Coordinator here. Prepare heavy rescue vehicles for Yamuna Pushta and Geeta Colony. Water levels continue to rise. Delay is not an option. 20:47 IST.
+    | Understood, Coordinator. Vehicles prepared for Yamuna Pushta and Geeta Colony. Rescue teams standing by.
+    | Flood Risk Agent, Emergency Coordinator here. Activate Emergency Medical Service and additional ambulances at the mentioned locations. Prepare NDRF and other disaster relief teams if required. 20:49 IST
+### allam-2-7b 125 band=admin dep=False typed=False judge=None suggest=False [('2', 'unbound number'), ('000', 'quantity not in state'), ('2', 'unbound number'), ('000', 'quantity not in state'), ('202.26', 'water level'), ('204.7', 'water level')]
+    FACTS p=50.0 rf=63.4 rain=153.6 river=201.66 dam=204.29 time=06:47 IST
+    | Based on current data, the flood probability is 50.0% and the rain has reached 153.6 mm. Yamuna river level is at 201.66 m while the Yamuna barrage stage is 204.29 m. Random Forest prediction is at 63.4%, and XGBoost is at 50.0%.
+    | Please keep monitoring the situation and update me regularly on the progress of rescue operations. Yamuna Pushta and Geeta Colony are affected zones, with approximately 2,000 people estimated to be in danger.
+    | Understood, I will keep a close eye on river level and barrage stage changes. Currently, an estimated 2,000 people are in potential danger in Yamuna Pushta and Geeta Colony.
+    | Please provide a status update in 30 minutes.
+    | River level has risen to 202.26 m and barrage stage is at 204.7 m. I am closely monitoring the situation.
+### allam-2-7b 126 band=auto dep=True typed=True judge=None suggest=True []
+    FACTS p=87.4 rf=65.5 rain=91.7 river=201.73 dam=202.04 time=03:11 IST
+    | Administrator, based on the updated probabilities, floods are highly likely. The rain amount is 91.7 mm, and the river level is 201.73 m, surpassing the barrage stage at 202.04 m.
+    | Flood Risk, we have received reports of flooding in Yamuna Pushta and Geeta Colony areas. Activate the disaster and NDRF teams. Ambulance, go to these locations immediately as well.
+    | Flood Risk, please provide any additional information on the severity of the flood. Keep me updated on the rescue efforts.
+    | Disaster Agent, based on the current factors, we are dealing with a major flood event. Yamuna Pushta and Geeta Colony are experiencing severe flooding. I recommend prioritizing Yamuna Pushta as it is at a higher risk.
+### allam-2-7b 127 band=auto dep=False typed=False judge=None suggest=False [('0.025', 'water level'), ('80', 'probability/threshold')]
+    FACTS p=98.1 rf=75.1 rain=225.4 river=208.25 dam=203.54 time=00:35 IST
+    | 60% flood probability confirmed in Yamuna Pushta and Geeta Colony zones. Coordinate emergency response efforts.
+    | Rainfall is at 225.4 mm, Yamuna river level is 208.25 m and Yamuna barrage stage stands at 203.54 m. Dispatch the rescue team to Yamuna Pushta and Geeta Colony.
+    | Ambulance teams are on their way, while the disaster/NDRF teams are mobilized. Stay informed about river and barrage stage updates.
+    | River level rising sharply at a rate of 0.025 m/hour. Yamuna barrage is operating at 80% capacity. Proceed with caution, and ensure public safety.
+    | Acknowledged. Monitoring public access to the affected areas. Please keep providing updates on evacuation necessity.
+### allam-2-7b 128 band=auto dep=False typed=False judge=None suggest=False [('62', 'probability/threshold')]
+    FACTS p=96.0 rf=76.1 rain=228.8 river=203.1 dam=199.07 time=09:47 IST
+    | 62% flood probability, rainfall 228.8 mm, Yamuna river level 203.1 m, Yamuna barrage stage 199.07 m, 09:47 IST, Yamuna Pushta/Geeta Colony.
+    | Inform the rescue teams about the updated situation on the Yamuna Pushta/Geeta Colony zone and order immediate rescue operations.
+    | Rescue teams, due to the severe flood conditions, proceed to Yamuna Pushta and Geeta Colony immediately. Focus on rescuing people from low-lying areas.
+### allam-2-7b 129 band=auto dep=False typed=False judge=None suggest=False [('135', 'rainfall'), ('6', 'quantity not in state'), ('15:00', 'wrong time'), ('208.81', 'water level'), ('210.55', 'water level'), ('199.82', 'water level')]
+    FACTS p=84.4 rf=64.0 rain=132.6 river=208.37 dam=199.75 time=11:31 IST
+    | 60% flood probability, rain 132.6 mm, river level 208.37 m, barrage stage 199.75 m.
+Target zones: Yamuna Pushta, Geeta Colony
+We need immediate rescue efforts at both locations.
+    | 60% flood probability, rain 132.6 mm, river level 208.37 m, barrage stage 199.75 m
+Rescue efforts initiated for both Yamuna Pushta and Geeta Colony.
+Ambulance, NDRF, and IHME teams, please proceed to designated locations now.
+    | Rainfall expected to peak at 135 mm within next 6 hours.
+Avoid further risk, request all teams work towards rescue of high-risk populations, prioritize vulnerable areas.
+    | Received, floodwaters already rising.
+Ambulance and NDRF teams reaching Yamuna Pushta and Geeta Colony.
+IHME team in route to reinforce support.
+    | Yamuna river stage 208.81 m (peak expected at 210.55 m, 15:00), barrage stage 199.82 m. Move emergency vehicles to higher ground.
+### allam-2-7b 131 band=auto dep=True typed=True judge=None suggest=True []
+    FACTS p=88.5 rf=57.7 rain=16.8 river=200.67 dam=202.28 time=08:43 IST
+    | 60% probability of flood and 16.8 mm rain in the last hour. Yamuna river level is at 200.67 m and Yamuna barrage stage is at 202.28 m. Situation assessment states 88.5% probability using Random Forest and 88.5% probability using XGBoost. Flash flood warning for Yamuna Pushta and Geeta Colony at 08:43 IST.
+    | Understood, prioritize rescue operations at Yamuna Pushta and Geeta Colony. Ambulance and disaster/NDRF team will proceed immediately. Report on the number of affected and trapped citizens.
+    | Inform the Disaster Response Unit and coordinate with the municipal authorities for additional resources. Update on the number of affected and trapped citizens will follow as soon as we have collected the relevant data.
+    | Rescue Unit, this is Administrator Agent. Proceed to Yamuna Pushta and Geeta Colony immediately. Ensure safety and prioritize the rescue of citizens. Alert the Disaster Response Unit and advise them of the situation. Over.
+    | Rescue Unit acknowledges, Administrator Agent. We are currently en route to Yamuna Pushta and Geeta Colony. We will ensure the safety of the citizens and carry out rescue operations accordingly.
+### allam-2-7b 132 band=calm dep=True typed=True judge=None suggest=True []
+    FACTS p=38.5 rf=55.0 rain=138.8 river=200.32 dam=203.13 time=08:18 IST
+    | Administrator Agent, Flood Risk Agent here.
+Flood probability currently stands at 38.5%, and it has rained 138.8 mm so far.
+    | Flood Risk Agent, Administrator Agent.
+We are monitoring the situation closely.
+River level at Yamuna is at 200.32 m, and Yamuna barrage stage is 203.13 m.
+    | River level at Yamuna and barrage stage are nearing, Administrator Agent.
+Random Forest model estimates are 55.0%, XGBoost model estimates are 38.5%.
+    | Flood Risk Agent, please remind the residents of Yamuna Pushta and Geeta Colony to stay updated and prepared.
+The current time is 08:18 IST.
+    | Understood, Administrator Agent.
+We will provide updates every hour from now on and advise them to call us if the situation worsens.
+### allam-2-7b 133 band=admin dep=False typed=False judge=None suggest=False [('20', 'quantity not in state')]
+    FACTS p=52.6 rf=39.8 rain=22.2 river=203.28 dam=203.52 time=18:06 IST
+    | Status update, heavy rain مستمر and river levels rising. Probability of flooding in Yamuna Pushta/Geeta Colony is 52.6%. Rainfall is 22.2 mm.
+    | Please provide an assessment on available resources and rescue efforts.
+    | Ram Mohan (rescue team) and Rajesh (ambulance) are en route. Yamuna river stage is currently at 203.28 m, barrage stage is at 203.52 m. Random Forest forecast stands at 39.8% while XGBoost forecast is at 52.6%. Estimated time to reach the affected area is approximately 20 minutes.
+    | Please provide an assessment of potential impact on nearby areas and if more resources are required.
+    | Upon analyzing the situation, the potential impact on adjacent zones cannot be ruled out. Considering the forecast and current conditions, additional resources may be required. I have requested more boats and personnel from nearby districts.
+### allam-2-7b 134 band=auto dep=False typed=False judge=None suggest=False [('2', 'unbound number'), ('3', 'unbound number')]
+    FACTS p=93.8 rf=68.2 rain=145.9 river=204.6 dam=200.07 time=19:30 IST
+    | Elevated flood probability (93.8%); heavy rainfall (145.9 mm); river level (204.6 m); barrage stage (200.07 m); flooded Yamuna Pushta & Geeta Colony (2 in Yamuna Pushta, 3 in Geeta Colony)
+    | Alert the ambulance and NDRF team. Proceed to Yamuna Pushta and Geeta Colony immediately.
+    | Understood. Ambulance and NDRF team responding. Estimated time of arrival, Admin?
+### allam-2-7b 135 band=auto dep=True typed=True judge=None suggest=False [('03:25', 'ETA (clock time)')]
+    FACTS p=76.4 rf=70.1 rain=83.0 river=200.78 dam=202.74 time=03:25 IST
+    | Alert status activated (flood probability 76.4%). Due to heavy rain (83 mm) and Yamuna river level (200.78 m) near Yamuna barrage stage (202.74 m), the situation is critical at Yamuna Pushta and Geeta Colony areas.
+    | Dispatch ambulance and disaster/NDRF teams to Yamuna Pushta and Geeta Colony. Advise them to prioritize rescue operations based on available information and response capability.
+    | Please update the flood risk status after the teams reach the zones.
+    | Understood, I'll notify the teams as soon as they arrive. Current time is 03:25 IST.
+    | Keep monitoring the situation closely. Sound the alert if Yamuna barrage nears its capacity.
+### allam-2-7b 136 band=auto dep=True typed=False judge=None suggest=False [('2', 'quantity not in state')]
+    FACTS p=91.6 rf=75.8 rain=67.5 river=206.4 dam=202.65 time=23:04 IST
+    | Admin, in our models, the Yamuna river level is at 206.4 meters, the Yamuna barrage stage is at 202.65 meters, and the probability of a flood is at 91.6%. Given these conditions, we recommend immediate actions.
+    | Risk Agent, based on the provided data, it seems likely for a flood to occur. Proceed with deploying resources to the affected zones, Yamuna Pushta and Geeta Colony.
+    | Apologies for the lack of recent updates, Admin. Based on the rain data from the last 2 hours, total rainfall is at 67.5 mm. Rescue teams should focus on prioritizing missions in these zones in line with the given probabilities.
+    | Keep providing updates about the rainfall situation, Risk Agent. We need to allocate ambulances to the scene immediately. NDRF and Dغرقت إنقاذ لـ Geeta Colony, and RITES for Yamuna Pushta.
+    | Understood, Admin, I will prioritize deployments accordingly. Have our teams stand by to assist the affected areas – Yamuna Pushta and Geeta Colony.
+### allam-2-7b 139 band=auto dep=True typed=True judge=None suggest=True []
+    FACTS p=98.2 rf=75.4 rain=212.9 river=202.12 dam=200.29 time=01:31 IST
+    | 98.2% flood probability confirmed in Yamuna Pushta and Geeta Colony zones. Rainfall: 212.9 mm. River level: 202.12 m, Yamuna Barrage stage: 200.29 m. Time: 01:31 IST.
+    | Alert issued. Random Forest prediction: 75.4%, XGBoost prediction: 98.2%. Activate rescue operations in Yamuna Pushta and Geeta Colony. Yamuna Pushta: [unknown] - [unknown]; Geeta Colony: [unknown] - [unknown].
+    | Yamuna Pushta: Rescue teams mobilized. Geeta Colony: Rescue teams mobilized. Action required from all agencies in affected areas.
+    | Understood. Coordinating with Rescue, Ambulance, and NDRF. Send additional support to Geeta Colony if required.
+### allam-2-7b 140 band=calm dep=False typed=False judge=None suggest=False [('210', 'water level')]
+    FACTS p=33.4 rf=48.3 rain=51.2 river=205.02 dam=202.38 time=18:30 IST
+    | Administrator, Flood Risk Agent, River Level has increased to 205.02 meters. The Yamuna Barrage Stage is at 202.38 meters. Probability of flooding is still 33.4%, and rain continues at 51.2 mm.
+    | Flood Risk Agent, acknowledge the updates. We assess the situation at Yamuna Pushta/Geeta Colony. Please monitor the River Level and Barrage Stage closely.
+    | Flood Risk Agent, advise the residents in Yamuna Pushta/Geeta Colony to be prepared. The Random Forest model predicts 48.3%, while XGBoost model estimates 33.4% chance of flooding.
+    | Administrator, I have informed the residents within Yamuna Pushta/Geeta Colony about the potential risk. We continue monitoring the situation.
+    | Flood Risk Agent, keep me updated regularly. At this hour, the flood stage remains below the critical 210 meters mark.
+### allam-2-7b 141 band=auto dep=False typed=False judge=None suggest=False [('15', 'quantity not in state'), ('5', 'quantity not in state'), ('500', 'unbound number'), ('2', 'quantity not in state')]
+    FACTS p=83.7 rf=61.6 rain=9.0 river=200.29 dam=202.26 time=12:46 IST
+    | Based on the current flood probability at 83.7% and river level at 200.29 m, it is evident that a flood has occurred in Yamuna Pushta and Geeta Colony. Instructing both the ambulance and disaster/NDRF team to proceed immediately for rescue operations.
+    | Understood. I have acknowledged the situation and prioritized the mobilization of resources. Ambulance and disaster/NDRF team are en route to Yamuna Pushta and Geeta Colony at 12:46 IST. Random Forest model predicts 61.6%, while XGBoost stands at 83.7%. Keep me updated on any further developments.
+    | The rain has reached 9 mm and the Yamuna barrage stage is at 202.26 m. We anticipate significant flood damage in the area. ETA of the rescue team will be approximately 15 minutes, given the current estimated distance of 5 km.
+    | Please ensure that the rescue teams are aware of the potential danger. Yamuna Pushta and Geeta Colony are facing severe flood conditions, affecting around 500 residents. Keep me posted on the success rate and estimated completion time for the mission.
+    | Updates: Rescue teams have reached the flood-affected area and are actively involved in rescuing the residents. The estimated completion time for this operation is estimated to be around 2 hours, considering the current situation.
+### allam-2-7b 142 band=auto dep=False typed=False judge=None suggest=False [('67', 'probability/threshold'), ('80', 'rainfall'), ('90', 'quantity not in state'), ('100', 'unbound number'), ('two', 'number word, no state quantity'), ('90', 'rainfall')]
+    FACTS p=72.4 rf=45.5 rain=39.4 river=202.27 dam=202.02 time=16:20 IST
+    | 67% flood probability, the river is currently at a dangerous level. Suggest we activate Yamuna Pushta/Geeta Colony flood distress teams.
+    | Confirmed. Random Forest predicts 45.5%, XGBoost indicates 72.4% chance of flooding in Yamuna Pushta and Geeta Colony.
+    | 80mm of rain in the past hour, Yamuna river stage at 202.27 meters, Yamuna barrage stage at 202.02 meters.
+    | ADRAT is monitoring, Yamuna Pushta with 90 people, Geeta Colony with 100.
+    | Rainfall increased to 90mm over the past two hours. River level continues to rise.
+### allam-2-7b 143 band=auto dep=False typed=False judge=None suggest=False [('11:27', 'wrong time'), ('11:45', 'wrong time'), ('11:32', 'ETA (clock time)')]
+    FACTS p=83.3 rf=67.8 rain=185.1 river=207.39 dam=200.16 time=11:38 IST
+    | Flood Risk Agent, we are at above 60% probability of flood.
+Ambulance and NDRF/disaster team standby in Yamuna Pushta and Geeta Colony zones.
+    | Understood, Administrator Agent.
+Yamuna river level (207.39) and Yamuna barrage stage (200.16) confirm flooding risk.
+Legal Assistance Unit advised to evacuate vulnerable areas at 11:27 IST.
+    | Patrol and rescue teams are on their way to Geeta Colony and Yamuna Pushta.
+Inform them about the priority and urgency of the situation.
+    | Ambulance and NDRF/disaster team informed.
+Patrol teams will give crucial details to emergency responders upon arrival.
+    | Keep me updated on the situation and evacuation progress.
+11:45 IST is our next checkpoint for escalation.
+    | Understood, Administrator Agent.
+Yamuna Pushta and Geeta Colony patrols en route, reaching at 11:32 IST.
+### allam-2-7b 144 band=auto dep=False typed=False judge=None suggest=False [('80', 'unbound number'), ('120', 'unbound number'), ('80', 'unbound number'), ('120', 'unbound number'), ('73', 'probability/threshold'), ('91', 'probability/threshold'), ('06:40', 'wrong time')]
+    FACTS p=86.7 rf=64.1 rain=134.9 river=200.65 dam=200.19 time=06:37 IST
+    | Based on current estimate, Yamuna river is at risk of overflowing. Level increased to 200.65 m. Yamuna Pushta and Geeta Colony residents are in potential danger.
+    | Flood probability is at an all-time high, 86.7%. Coordinate with rescue teams and instruct them to proceed to Yamuna Pushta and Geeta Colony promptly. Prepare an update with latest data.
+    | Rainfall amount reached 134.9 mm, river barrage stage at 200.19 m. Yamuna Pushta has 80 residents and Geeta Colony has 120 residents. Stay up-to-date and inform us once rescue efforts have begun. Time updated: 06:37 IST
+    | Understood. Rescue teams and ambulance are enroute to Yamuna Pushta with 80 residents and Geeta Colony with 120 residents. Random Forest indicates 73% agreement, XGBoost 91%. Yamuna Pushta residents will be at risk of immediate flooding. Proceeding with our plan.
+    | Both communities are confirmed in high flood risk now. Notify rescue teams about the urgency of the situation. Time updated: 06:40 IST
+### allam-2-7b 145 band=auto dep=True typed=True judge=None suggest=True []
+    FACTS p=70.1 rf=67.6 rain=104.3 river=208.41 dam=201.81 time=03:51 IST
+    | 60% flood probability confirmed. Rainfall at 104.3 mm, Yamuna river level at 208.41 m, and Yamuna barrage stage at 201.81 m. Situation at 03:51 IST in Yamuna Pushta and Geeta Colony.
+    | Evaluate disaster response requirements accordingly. Yamuna Pushta and Geeta Colony residents in potential danger. Coordinate with Rescue and Emergency services.
+    | Rescue team reports flooded areas and trapped residents. Urgent request for rescue operations focusing on Yamuna Pushta and Geeta Colony.
+    | Dispatch emergency vehicles and specialists. Task a Disaster Response and NDRF team to Yamuna Pushta and Geeta Colony.
+    | Rescue team requests immediate support to rescue trapped individuals. Yamuna Pushta and Geeta Colony residents in critical condition. Coordinate efforts between the Rescue, Disaster Response, and NDRF teams.
+### allam-2-7b 146 band=auto dep=True typed=True judge=None suggest=True []
+    FACTS p=66.5 rf=56.6 rain=6.4 river=206.39 dam=200.18 time=01:16 IST
+    | Based on the current simulation state, the flood probability stands at 66.5%. Continue monitoring the rain gauge (6.4 mm) and river level (Yamuna: 206.39 m, Yamuna Barrage stage: 200.18 m).
+    | Understood. Yamuna Pushta and Geeta Colony residents are in the flood zone. We have reported XGBoost model results at 66.5%, Random Forest at 56.6%. Time is 01:16 IST.
+    | The situation at both Yamuna Pushta and Geeta Colony is critical due to the current flood risk. Coordinate with local teams and deploy the ambulance and disaster/NDRF team to prioritize rescues at these two locations.
+    | Ambulance and disaster/NDRF team will be dispatched immediately. I've conveyed the situation to local teams.
+    | Updates on Yamuna's water level (206.39 m) and the barrage stage (200.18 m) are critical for the safety of residents. Please ensure continuous monitoring and provide timely notifications.
+### allam-2-7b 147 band=auto dep=False typed=False judge=None suggest=False [('4.92', 'water level'), ('2', 'unbound number'), ('200', 'unbound number'), ('150', 'unbound number'), ('200', 'unbound number'), ('2', 'unbound number'), ('150', 'unbound number'), ('200', 'unbound number')]
+    FACTS p=92.8 rf=77.0 rain=70.3 river=201.42 dam=205.38 time=02:16 IST
+    | 60% probability of flood marked. Yamuna river level above ground line at 201.42 m.
+    | Rainfall: 70.3 mm since midnight. Yamuna barrage stage at 205.38 m, exceeding flood threshold by 4.92 m.
+    | Agent at Geeta Colony reports inundation up to 2nd floor. Rescue efforts are ongoing. Estimated 200 affected people.
+    | Ambulance, prioritize assisting the affected residents at Yamuna Pushta (150 affected) and Geeta Colony (200 affected). Reportedly, floodwaters up to 2nd floor in Geeta Colony.
+    | Disaster Response Team, simultaneously mobilize to Yamuna Pushta (150 affected) and Geeta Colony (200 affected). Please be prepared for potential rescues.
+### allam-2-7b 148 band=auto dep=False typed=False judge=None suggest=False [('3.18', 'water level')]
+    FACTS p=74.2 rf=62.8 rain=58.5 river=205.67 dam=201.49 time=14:35 IST
+    | Based on the current data, the Yamuna river level has breached the barrage stage by 3.18 m, Administrator. Probability of flood is still high at 74.2% and it has rained 58.5 mm so far. Please inform the involved agencies, especially for Yamuna Pushta and Geeta Colony zones.
+    | I have updated the relevant teams about the situation, Flood Risk Agent. Ambulance, NDRF, and disaster relief teams should be headed to Yamuna Pushta and Geeta Colony zones now. Time is 14:35 IST.
+    | Very good, Administrator. I have also calculated the Random Forest algorithm at 62.8% and XGBoost at 74.2%, indicating extreme caution is required. Let's keep monitoring the situation closely.
+    | Understood, Flood Risk Agent. We'll prioritize assisting the affected residents in those areas. Please update me on any crucial changes in the forecast.
+### allam-2-7b 149 band=auto dep=True typed=True judge=None suggest=True []
+    FACTS p=98.2 rf=75.7 rain=221.3 river=207.94 dam=205.7 time=16:40 IST
+    | 98.2% flood probability, accumulated rain: 221.3 mm, current river level: 207.94 m, yangguang barrage stage: 205.7 m, simulation time: 16:40 IST - Proceed with emergency response in Yamuna Pushta and Geeta Colony zones.
+    | Confirmed, dispatching ambulance and disaster/NDRF teams to Yamuna Pushta and Geeta Colony zones. Priority on rescuing affected population.
+    | Given the current situation, flood response teams should prioritize saving individuals at higher risk: senior citizens, pregnant women, and young children. Coordinate with local Auxiliary units for additional support.
+    | Understood, Flood Risk Agent. I'll instruct the Auxiliary units to assist the disaster/NDRF teams in Yamuna Pushta and Geeta Colony zones.
+    | Please note that the flood probability forecast suggests a 98.2% chance of flooding in the next hour. Urgent action is required.

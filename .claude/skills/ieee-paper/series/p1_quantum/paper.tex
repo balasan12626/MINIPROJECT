@@ -13,13 +13,12 @@
 \usetikzlibrary{positioning,arrows.meta,fit,calc}
 \usepackage[hidelinks]{hyperref}
 \input{nums.tex}
-\newtheorem{lemma}{Lemma}
+\newtheorem{remark}{Remark}
 
 \begin{document}
 
-\title{Constraint-Preserving QAOA for Flood Shelter\\
-Assignment: A Statevector Study on\\
-Digital-Twin Instances}
+\title{One-Hot-Preserving QAOA for Flood Shelter\\
+Assignment: Pairwise Capacity Encoding and Angle Transfer}
 
 %<AUTHORS>
 \author{
@@ -52,356 +51,259 @@ abisheksengodan18@gmail.com}
 \maketitle
 
 \begin{abstract}
-Assigning evacuation groups to shelters under road closures and limited capacity is a small constrained combinatorial problem, and it is often cited as a target for quantum optimization. We test this claim on instances taken from a flood digital twin rather than on random graphs. Each instance assigns four groups to three shelters after a road closure and a shelter surge, giving a 12-qubit quadratic unconstrained binary optimization (QUBO) problem. We compare the Quantum Approximate Optimization Algorithm (QAOA) with the standard transverse-field mixer against a constraint-preserving ring-XY mixer, each trained on the mean energy and on the conditional value-at-risk (CVaR), at depths 1 to 4, using exact noiseless statevector simulation. On \NFeasInst{} feasible instances, the XY mixer placed \QXYMeanFourPopt{} of its probability on the optimal plan at depth 4, compared with \QXMeanFourPopt{} for the standard mixer and \UniOneHot{} for uniform sampling of one-hot plans, and it kept most of its probability on feasible plans at every depth. CVaR training raised the chance of finding the optimum within a fixed number of shots for both mixers. In a gate-level simulation with a 1\% two-qubit Pauli error rate, the XY mixer still reached $P_{\mathrm{opt}}=\TrajXYOne$, against \TrajXOne{} for the standard mixer. Classical methods remain far ahead at this size: exhaustive search solved every instance in \ExactMs~ms. A scaling run up to \ScaleMaxQ{} qubits shows how quickly simulation cost grows. We claim no quantum advantage. The study shows which design choices matter if such problems are moved to quantum hardware.
+Shelter assignment after a flood disruption is a small assignment problem with capacity inequalities that is often proposed for quantum optimization. We study the Quantum Approximate Optimization Algorithm (QAOA) on 12-qubit instances from a flood digital twin by exact statevector simulation. Capacity is encoded with pairwise penalties instead of slack qubits; the encoding is approximate, and its minimiser was the true optimum in \QuboExact\% of instances. A ring-XY mixer that keeps each group assigned to one shelter placed a mean probability of \SeedXYMean{} on the optimal plan at depth 4 over \NSeeds{} optimizer seeds, against at most \SeedXMax{} for the transverse-field mixer at the same CNOT count per layer. One angle set per depth, chosen among the angles trained on \NPaired{} development instances, was applied unchanged to \HoN{} held-out seeds of the same disruption pattern. Chosen by mean optimal-plan probability, which needs the optima of the development instances, it reached \SelPopt{} against \SelTrained{} for per-instance training. Chosen without optima, by mean energy or CVaR, it reached \SelEn{} and \SelCv, but fell below per-instance training in leave-one-out tests. Transfer failed without a shared energy scale. On \CityN{} instances on the road networks of \CityNCities{} Indian cities, fixed angles left the mean probability unchanged but raised the chance that 32 verified samples contain the optimum. Exhaustive search solves every instance in about a millisecond; we claim no quantum advantage.
 \end{abstract}
 
 \begin{IEEEkeywords}
-QAOA, quantum alternating operator ansatz, XY mixer, QUBO, CVaR, evacuation planning, shelter assignment, digital twin
+QAOA, XY mixer, parameter transfer, QUBO, evacuation planning
 \end{IEEEkeywords}
 
 \section{Introduction}
-When a flood closes roads and fills shelters, an emergency officer must decide again which shelter each evacuation group should go to. The decision couples travel time, flood exposure along the route and the seats left at each shelter. Written as a binary program, it becomes a constrained assignment problem of the kind that is routinely encoded as a QUBO or Ising model \cite{Lucas2014,Glover2019} and offered as an application for near-term quantum optimization \cite{Cadelina2024,Abbas2024}.
+When a flood closes roads and fills shelters, an emergency officer must decide again which shelter each evacuation group should go to, trading off travel time, flood exposure and the seats left. As a binary program this is a capacity-constrained assignment problem, the kind that is routinely encoded as a quadratic unconstrained binary optimization (QUBO) problem \cite{Lucas2014,Glover2019} and offered as an application for near-term quantum optimization \cite{Cadelina2024,Abbas2024}.
 
-Two questions are usually left open in such proposals. The first is whether the quantum circuit respects the constraints or merely penalises their violation. In the original QAOA \cite{Farhi2014}, constraints enter the cost function as penalties and the transverse-field mixer explores all $2^n$ bitstrings, most of which are not valid plans. The quantum alternating operator ansatz \cite{Hadfield2019} instead uses mixers that keep the state inside the feasible subspace of one-hot constraints, such as XY mixers \cite{WangZ2020,Fuchs2022}. The second question is how the result compares with ordinary classical methods on instances of realistic shape. Benchmarks on random graphs do not answer it for evacuation.
+Prior proposals rarely address three questions. First, does the circuit respect the constraints or only penalise violations? The original QAOA \cite{Farhi2014} explores all $2^n$ bitstrings, most of which are not plans, whereas the quantum alternating operator ansatz \cite{Hadfield2019} keeps the state inside a feasible subspace \cite{WangZ2020,Fuchs2022,Bartschi2020}. Mixer studies treat equality constraints, while shelter capacity is an inequality. Second, must the angles be trained again after every disruption, and how should a reusable angle set be chosen? Third, how do the results compare with classical methods and with what a sampler plus a feasibility check returns?
 
-We address both questions on instances generated by the digital twin of a flood decision-support prototype. Our contributions are:
+We address them on instances generated by the digital twin of a flood decision-support prototype. Our contributions are:
 \begin{enumerate}
-\item A QUBO formulation of shelter assignment built from twin state, with a pairwise capacity encoding, a penalty bound that makes every violation more expensive than any feasible plan, and a measured exactness rate for the encoding.
-\item A controlled comparison of the transverse-field and ring-XY mixers, under mean-energy and CVaR training \cite{Barkoutsos2020}, at depths 1--4 on \NFeasInst{} instances, using exact statevector simulation.
-\item A scaling study from 6 to \ScaleMaxQ{} qubits and a comparison with exhaustive search, simulated annealing \cite{Kirkpatrick1983} and a greedy rule.
+\item A shelter-assignment QUBO in which capacity is encoded by pairwise products instead of slack qubits, with a cost shift and scaling that place all instances on one energy range; we measure how often the encoding is exact and show that it admits infeasible zero-penalty plans.
+\item A comparison of transverse-field, ring-XY, Grover and feasible-subspace mixers under mean-energy and conditional value-at-risk (CVaR) training over \NSeeds{} optimizer seeds, with Holm-corrected tests and CNOT counts per layer.
+\item An angle-transfer study with three selection rules, two of which need no optima, an ablation in which transfer failed without the shared energy scale, and evidence that the performance of trained angle sets concentrates across instances.
+\item The expected optimality gap of the best verified plan among $N$ samples, and a comparison with exhaustive search, a greedy rule and simulated annealing.
 \end{enumerate}
-All results are from classical simulation of noiseless circuits. We make no claim of quantum speed-up, and the classical baselines are reported because they are faster.
+All results come from classical simulation; we make no claim of quantum speed-up.
 
 \section{Related Work}
-\textit{Formulations.} Lucas gave Ising forms for many NP-hard problems \cite{Lucas2014}, and Glover \textit{et al.} describe how assignment and capacity constraints become quadratic penalties \cite{Glover2019}. Shelter location and allocation for flood evacuation has long been studied with classical integer programming \cite{Sherali1991}. Quantum annealing has been applied to disaster resource allocation \cite{Cadelina2024}.
+\textit{Formulations.} Lucas gave Ising forms for many NP-hard problems \cite{Lucas2014}, and Glover \textit{et al.} describe how assignment and capacity constraints become quadratic penalties, with slack variables for inequalities \cite{Glover2019}. Flood shelter allocation has been solved by integer programming \cite{Sherali1991} and by quantum annealing \cite{Cadelina2024}.
 
-\textit{QAOA and mixers.} QAOA alternates a cost unitary and a mixing unitary for $p$ layers \cite{Farhi2014}. Hadfield \textit{et al.} generalised the mixer so that it preserves hard constraints \cite{Hadfield2019}. Wang \textit{et al.} analysed ring and complete XY mixers for one-hot constraints \cite{WangZ2020}, and Fuchs \textit{et al.} gave a general construction of constraint-preserving mixers \cite{Fuchs2022}. Preparing the initial superposition of one-hot states requires W-state circuits \cite{Bartschi2019}.
+\textit{Mixers.} QAOA alternates a cost unitary and a mixing unitary for $p$ layers \cite{Farhi2014,Blekos2024}. Hadfield \textit{et al.} generalised the mixer so that it preserves hard constraints \cite{Hadfield2019}. Wang \textit{et al.} analysed ring and complete XY mixers for one-hot constraints \cite{WangZ2020}, Fuchs \textit{et al.} gave general constructions of constraint-preserving mixers \cite{Fuchs2022} and mixers restricted to a subspace \cite{Fuchs2024}, and Grover mixers move the complexity into the preparation of the feasible superposition \cite{Bartschi2020}. Applied studies pair XY mixers with warm starts for vehicle routing \cite{doCarmo2025} and build coverage-preserving mixers for rostering \cite{Gupta2026}.
 
-\textit{Training and limits.} Zhou \textit{et al.} proposed interpolating optimal angles from depth $p$ to $p{+}1$ (INTERP) \cite{Zhou2020}, and Barkoutsos \textit{et al.} showed that optimising the CVaR of the energy, rather than its mean, increases the probability of good samples \cite{Barkoutsos2020}. Warm starts from classical solutions are another option \cite{Egger2021}. Most published comparisons of mixers and objectives use MaxCut or random constrained instances. Shelter assignment differs in two ways that matter for QAOA: its costs come from travel times that are close to each other, so the optimum is separated from many near-optimal plans by small energy gaps, and its capacity constraints couple groups that would otherwise be independent. We therefore evaluate on instances produced by the same digital twin that drives the decision-support prototype, after the same disruption the twin uses in its routing benchmark. On current processors, QAOA performance falls with problem size and circuit depth \cite{Harrigan2021}, and reviews of noisy intermediate-scale quantum (NISQ) algorithms stress that practical advantage in optimization has not been shown \cite{Preskill2018,Bharti2022,Abbas2024}.
+\textit{Training and transfer.} Angles can be interpolated from depth $p$ to $p{+}1$ \cite{Zhou2020}, CVaR objectives raise the probability of good samples \cite{Barkoutsos2020}, and warm starts use classical solutions \cite{Egger2021}. The objective value at fixed angles concentrates across typical instances \cite{Brandao2018}, optimal angles transfer between random graphs \cite{Galda2021}, and for weighted MaxCut a rescaling of the weights lets one parameter set serve many instances \cite{Shaydulin2023}. On hardware, QAOA performance falls with size and depth \cite{Harrigan2021}, and practical advantage has not been shown \cite{Abbas2024}.
 
-\textit{Research gap.} The mixer and objective studies above use MaxCut-style or random instances, and the disaster-response work \cite{Cadelina2024} solves a penalty QUBO on an annealer without comparing formulations. To our knowledge, constraint-preserving QAOA has not been evaluated on capacity-constrained evacuation instances against an exact optimum, classical baselines and a gate-level noise model together. This paper provides that evaluation.
+\textit{Positioning.} We do not propose a new mixer; the ring-XY mixer is that of \cite{WangZ2020}. The transfer studies \cite{Brandao2018,Galda2021,Shaydulin2023} use unconstrained MaxCut with the standard mixer. We add a capacity inequality kept as a pairwise penalty next to a one-hot-preserving mixer, compare selection rules with and without optima, and evaluate on held-out instances and other road networks with a verifier in the loop.
 
 \section{Problem Formulation}
 \subsection{Instances from the Digital Twin}
-The twin models a corridor with three population zones, nine junctions and three shelters joined by 22 roads. Every road carries a travel time, a flood-depth index and a congestion level drawn from a fixed seed. Shelters have capacities of 120, 90 and 70 people with an initial occupancy of 15--45\%, and groups have 8--22 people. Each instance applies the disruption used in the twin's routing benchmark: road R5 closes and Shelter A receives arrivals equal to half its capacity. For group $g$ and shelter $s$ we take the best open path under the twin's flood- and congestion-weighted edge cost, and define
+The twin models a corridor with three population zones, nine junctions and three shelters joined by 22 roads. Every road carries a travel time, a flood-depth index and a congestion level drawn from a seed. Shelters have capacities of 120, 90 and 70 people with an initial occupancy of 15--45\%, and groups have 8--22 people. Each instance applies the disruption used in the twin's routing benchmark: road R5 closes and Shelter A receives arrivals equal to half its capacity. For group $g$ and shelter $s$ we take the best open path under the twin's flood- and congestion-weighted edge cost and define
 \begin{equation}
 c_{gs}=T_{gs}+5H_{gs},
 \end{equation}
-where $T_{gs}$ is travel time in minutes and $H_{gs}$ is the mean flood index along the path. The pair $(g,s)$ is \emph{forbidden} if no open path exists, the shelter has failed, or the group alone exceeds the remaining seats $R_s$. With $G$ groups, binary variables $x_{gs}$ give $n=3G$ qubits. A plan is feasible if every group has exactly one shelter, no forbidden pair is used and $\sum_g n_g x_{gs}\le R_s$ for each shelter, where $n_g$ is the group size.
+where $T_{gs}$ is travel time in minutes and $H_{gs}$ the mean flood index along the path. The pair $(g,s)$ is \emph{forbidden} if no open path exists, the shelter has failed, or the group alone exceeds the remaining seats $R_s$. With $G$ groups, binary variables $x_{gs}$ give $n=3G$ qubits. We write $m_g$ for the number of people in group $g$. A plan is feasible if every group has exactly one shelter, no forbidden pair is used and
+\begin{equation}
+\textstyle\sum_g m_g x_{gs}\le R_s\quad\text{for each shelter } s.
+\end{equation}
 
 \subsection{QUBO with Pairwise Capacity}
-The capacity constraint is linear in $x$ but has an inequality, which normally needs slack qubits \cite{Glover2019}. We use a pairwise encoding instead. Let $\mathcal{O}=\{(g,h,s): n_g+n_h>R_s\}$ be the pairs of groups that cannot share shelter $s$. With shifted costs $c'_{gs}=c_{gs}-\min_{s'}c_{gs'}$, the energy is
+An inequality normally needs slack qubits \cite{Glover2019}. We use a pairwise encoding instead. Let $\mathcal{O}=\{(g,h,s): m_g+m_h>R_s\}$ be the pairs of groups that cannot share shelter $s$ and $\mathcal{F}$ the forbidden pairs. With shifted costs $c'_{gs}=c_{gs}-\min_{s'}c_{gs'}$ and penalty weight $\mu$,
 \begin{multline}
-E(\mathbf{x})=\sum_{g,s}c'_{gs}x_{gs}+P\Big[\sum_g\Big(1-\sum_s x_{gs}\Big)^2\\
-+\sum_{(g,s)\in\mathcal{F}}x_{gs}+\sum_{(g,h,s)\in\mathcal{O}}x_{gs}x_{hs}\Big],
+E(\mathbf{x})=\sum_{g,s}c'_{gs}x_{gs}+\mu\Big[\sum_g\Big(1-\sum_s x_{gs}\Big)^2\\
++\sum_{(g,s)\in\mathcal{F}}x_{gs}+\sum_{(g,h,s)\in\mathcal{O}}x_{gs}x_{hs}\Big].
 \label{eq:qubo}
 \end{multline}
-where $\mathcal{F}$ is the set of forbidden pairs.
 
-\begin{lemma}
-With $P=1+\sum_g\max_s c'_{gs}$, every bitstring that breaks a one-hot, forbidden-pair or pairwise-capacity term has higher energy than every bitstring that breaks none of them.
-\end{lemma}
-\noindent\textit{Proof.} Since $c'_{gs}\ge0$, a bitstring with no violated term has energy at most $P-1$. A violated term adds at least $P$, and the cost part is non-negative. \hfill$\blacksquare$
+\begin{remark}
+With $\mu=1+\sum_g\max_s c'_{gs}$, every bitstring that breaks a one-hot, forbidden-pair or pairwise-capacity term has higher energy than every bitstring that breaks none of them, since $c'_{gs}\ge0$ bounds the cost of a bitstring without violations by $\mu-1$ and each violation adds at least $\mu$. The bound no longer holds for the reduced weights $\lambda\mu$ with $\lambda<1$ used in the penalty sweep of Section~\ref{sec:mixres}.
+\end{remark}
 
-\smallskip
-On one-hot states, the shift subtracts the constant $\sum_g\min_s c_{gs}$, so the optimal plan is unchanged, but the energy scale now reflects only the decision being made. Without the shift, the penalty dominated the energy and QAOA learned feasibility but not cost in our preliminary runs. The pairwise encoding is exact when no three groups overload a shelter that each pair could share. When that fails, the QUBO minimiser can be infeasible, so every plan is re-checked exactly before use. We report how often the minimiser of (\ref{eq:qubo}) is the true optimum.
+On one-hot states the shift subtracts the constant $\sum_g\min_s c_{gs}$, so the optimal plan is unchanged. We divide the Hamiltonian by $\Delta=\mu-1$, which maps the energies of all penalty-free plans into $[0,1]$ for every instance. The pairwise encoding misses overloads by three or more groups whose pairs all fit, so a penalty-free plan can still be infeasible, and every sampled plan is re-checked exactly before use.
 
-\section{QAOA Variants}
-For depth $p$ and angles $(\boldsymbol\gamma,\boldsymbol\beta)$, QAOA prepares
+\section{QAOA Variants and Training}
+For depth $p$ and angles $\boldsymbol\theta=(\boldsymbol\gamma,\boldsymbol\beta)$, QAOA prepares
 \begin{equation}
-|\psi(\boldsymbol\gamma,\boldsymbol\beta)\rangle=\prod_{k=1}^{p}e^{-i\beta_k B}\,e^{-i\gamma_k \hat E/\Delta}\,|\psi_0\rangle,
+|\psi(\boldsymbol\theta)\rangle=\prod_{k=1}^{p}e^{-i\beta_k B}\,e^{-i\gamma_k \hat E/\Delta}\,|\psi_0\rangle,
 \end{equation}
-where $\hat E$ is diagonal with entries $E(\mathbf{x})$ and $\Delta=P-1$ normalises feasible energies to $[0,1]$. Substituting $x_q=(1-Z_q)/2$ turns (\ref{eq:qubo}) into an Ising Hamiltonian
-\begin{equation}
-\hat E=\sum_{q}h_qZ_q+\sum_{q<r}J_{qr}Z_qZ_r+\mathrm{const},
-\label{eq:ising}
-\end{equation}
-so the cost unitary needs one single-qubit $R_Z$ rotation per qubit and one two-qubit $ZZ$ rotation per non-zero $J_{qr}$. Each quadratic term of (\ref{eq:qubo}), whether from the one-hot penalty or from an overloaded pair, therefore adds a two-qubit gate to every layer.
+where $\hat E$ is diagonal with entries $E(\mathbf{x})$. Substituting $x_q=(1-Z_q)/2$ turns (\ref{eq:qubo}) into an Ising Hamiltonian with one $R_Z$ rotation per qubit and one $ZZ$ rotation, two CNOTs, per non-zero coupling.
 
-\textit{Transverse-field (X) mixer.} $B=\sum_q X_q$ and $|\psi_0\rangle=|+\rangle^{\otimes n}$. All $2^{n}$ bitstrings are reachable, and constraints act only through the penalties in (\ref{eq:qubo}).
+\textit{Transverse-field (X) mixer.} $B=\sum_q X_q$ and $|\psi_0\rangle=|+\rangle^{\otimes n}$; constraints act only through the penalties. A cost layer has 12 one-hot couplings and on average \OvPairs{} capacity couplings, \CnotX{} CNOTs; the mixer needs none.
 
 \textit{Ring-XY mixer.} For each group $g$ with qubits $a_g,b_g,c_g$,
 \begin{equation}
 B_{\mathrm{XY}}=\sum_{g}\ \sum_{(u,v)\in\{(a_g,b_g),(b_g,c_g),(c_g,a_g)\}}\tfrac12\big(X_uX_v+Y_uY_v\big).
 \label{eq:xy}
-\end{equation} Each term swaps amplitude between $|01\rangle$ and $|10\rangle$ and conserves the number of ones, so a one-hot group stays one-hot \cite{WangZ2020}. The start state is a product of W states, $|W_3\rangle^{\otimes G}$ with $|W_3\rangle=(|100\rangle+|010\rangle+|001\rangle)/\sqrt3$, which is the uniform superposition of the $3^G$ one-hot plans. The one-hot penalty is then constant and is dropped, which also removes $3G$ two-qubit cost terms per layer. The three ring terms do not commute and are applied in a fixed order, as in a first-order Trotter step.
+\end{equation}
+Each term swaps amplitude between $|01\rangle$ and $|10\rangle$, so a one-hot group stays one-hot \cite{WangZ2020}. The start state $|W_3\rangle^{\otimes G}$, with $|W_3\rangle=(|100\rangle+|010\rangle+|001\rangle)/\sqrt3$, is the uniform superposition of the $3^G$ one-hot plans \cite{Bartschi2019}. The one-hot penalty is then constant and dropped; the three ring terms are applied in a fixed order. Each XY rotation compiles to two CNOTs \cite{Vatan2004}, so a layer has \CnotXY{} CNOTs, the same count as the X variant. We prepare $|W_3\rangle$ with an $R_Y$ rotation, a controlled Hadamard (one CNOT) and two CNOTs, which we checked numerically; this adds \CnotW{} CNOTs once.
 
-\textit{Training.} We minimise either the mean energy $\langle\hat E\rangle$ or the conditional value-at-risk with $\alpha=0.1$ \cite{Barkoutsos2020}. Sorting bitstrings by energy, $E_{(1)}\le E_{(2)}\le\dots$, with measurement probabilities $\pi_{(k)}$ and cumulative mass $\Pi_k=\sum_{j\le k}\pi_{(j)}$,
+\textit{Grover mixer.} $B_{\mathrm{GM}}=|\psi_0\rangle\langle\psi_0|$ with the same start state, so $e^{-i\beta B_{\mathrm{GM}}}=I+(e^{-i\beta}-1)|\psi_0\rangle\langle\psi_0|$ \cite{Bartschi2020}. Each layer needs the inverse preparation, a phase on $|0\rangle^{\otimes n}$ controlled by all $n$ qubits and the preparation. With the textbook ancilla construction \cite{Nielsen2010}, the controlled phase uses $2(n-2)$ Toffoli gates of six CNOTs each, one controlled phase and $n-2=\NAnc$ ancilla qubits, \CnotMCP{} CNOTs in all, so a Grover layer has \CnotGM{} CNOTs.
+
+\textit{Feasible-subspace mixer.} As a reference, a Grover mixer starts from the uniform superposition of the fully feasible plans \cite{Bartschi2020,Fuchs2024}. Preparing it requires the feasible set, so it is a bound, not a practical circuit.
+
+\textit{Objectives and training.} We minimise either $\langle\hat E\rangle/\Delta$ or the CVaR with $\alpha=0.1$ \cite{Barkoutsos2020}. Sorting bitstrings by energy, $E_{(1)}\le E_{(2)}\le\dots$, with probabilities $\pi_{(k)}$ and cumulative mass $\Pi_k=\sum_{j\le k}\pi_{(j)}$,
 \begin{equation}
-\mathrm{CVaR}_\alpha=\frac1\alpha\sum_k E_{(k)}\,\min\!\big(\pi_{(k)},\ \max(0,\ \alpha-\Pi_{k-1})\big),
+\mathrm{CVaR}_\alpha=\frac1\alpha\sum_k E_{(k)}\,\min\!\big(\pi_{(k)},\ \max(0,\ \alpha-\Pi_{k-1})\big).
 \label{eq:cvar}
 \end{equation}
-the mean energy of the lowest $\alpha$ probability mass. Minimising it rewards the circuit for placing some probability on low-energy plans even when the rest of the distribution is poor. Angles are optimised by COBYLA \cite{Powell1994} with at most 250 evaluations per start. At $p=1$ we use two random starts. At $p>1$ we add an INTERP start built from the $p-1$ optimum \cite{Zhou2020} to two random starts and keep the best (Algorithm~\ref{alg:train}). Fig.~\ref{fig:flow} summarises the pipeline.
+Every variant is trained from scratch with the same procedure: COBYLA \cite{Powell1994} with at most 250 evaluations per start, depth by depth. At each depth $p$ we start from two random points ($\gamma_k\sim U(0,\pi)$, $\beta_k\sim U(0,\pi/2)$) and, for $p>1$, from the optimum of depth $p-1$ interpolated to $p$ layers \cite{Zhou2020}, and keep the start with the lowest objective. Training never uses the optimal plan.
 
-\begin{algorithm}[t]
-\caption{Depth-progressive QAOA training}
-\label{alg:train}
-\begin{algorithmic}[1]
-\small
-\STATE build $\hat E/\Delta$ from (\ref{eq:qubo}); choose mixer $B$ and $|\psi_0\rangle$
-\STATE $\boldsymbol\theta^{(0)}\leftarrow\emptyset$
-\FOR{$p=1$ \TO $4$}
-\STATE starts $\leftarrow$ two draws $\gamma_k\sim U(0,\pi)$, $\beta_k\sim U(0,\pi/2)$
-\IF{$p>1$}
-\STATE add INTERP$(\boldsymbol\theta^{(p-1)})$ to starts
-\ENDIF
-\STATE $\boldsymbol\theta^{(p)}\leftarrow$ best COBYLA result over starts on $\langle\hat E\rangle$ or (\ref{eq:cvar})
-\STATE record $P_{\mathrm{opt}}$, $P_{\mathrm{feas}}$ and evaluations for $\boldsymbol\theta^{(p)}$
-\ENDFOR
-\end{algorithmic}
-\end{algorithm}
+\subsection{Angle Transfer}\label{sec:transfer}
+Since the scaled Hamiltonians of all instances share the energy range $[0,1]$, we test whether trained angles carry over. Let $\Theta_p=\{\boldsymbol\theta_j^{(p)}:j\in\mathcal{D}\}$ be the angles trained on the development instances $\mathcal{D}$. We fix one set $\boldsymbol\theta^{\star}_p\in\Theta_p$ by one of three rules:
+\begin{equation}
+\boldsymbol\theta^{\star}_p=\arg\max_{\boldsymbol\theta\in\Theta_p}\ \tfrac{1}{|\mathcal{D}|}\textstyle\sum_{j\in\mathcal{D}}P_{\mathrm{opt}}(j;\boldsymbol\theta),
+\label{eq:transfer}
+\end{equation}
+or the set with the lowest mean of $\langle\hat E\rangle/\Delta$, or with the lowest mean CVaR, over $\mathcal{D}$. Rule (\ref{eq:transfer}) needs the exact optimum of every development instance, which we obtain by exhaustive search; it is an oracle on the development set, although it uses nothing from the instances it is applied to. The other two rules use only quantities that a device can estimate. We choose among whole trained sets because their coordinate-wise median, which mixes different basins of the periodic angle space, gave $P_{\mathrm{opt}}=\LooMedianFour$ in a leave-one-out test.
 
-\begin{figure}[t]
-\centering
-\begin{tikzpicture}[
-  font=\scriptsize,
-  box/.style={draw, rounded corners=1.5pt, align=center, minimum width=1.95cm, minimum height=0.6cm, inner sep=2pt},
-  q/.style={box, fill=gray!18},
-  arr/.style={-{Latex[length=1.5mm]}, semithick}]
-\node[box] (tw) {Digital twin\\(roads, shelters)};
-\node[box, right=0.38cm of tw] (ins) {Instance\\$c_{gs}$, $\mathcal{F}$, $\mathcal{O}$, $R_s$};
-\node[box, right=0.38cm of ins] (qb) {QUBO (\ref{eq:qubo})\\shift + penalty $P$};
-\node[q, below=0.55cm of qb] (circ) {QAOA circuit\\X or XY mixer};
-\node[box, left=0.38cm of circ] (opt) {COBYLA\\mean / CVaR};
-\node[box, left=0.38cm of opt] (samp) {Sample\\$N$ shots};
-\node[box, below=0.55cm of samp] (ver) {Exact feasibility\\check};
-\node[box, right=0.38cm of ver] (ref) {Exhaustive\\reference};
-\node[box, right=0.38cm of ref] (met) {$P_{\mathrm{opt}}$, $P_{\mathrm{feas}}$,\\success@$N$};
-\draw[arr] (tw) -- (ins);
-\draw[arr] (ins) -- (qb);
-\draw[arr] (qb) -- (circ);
-\draw[arr] (circ.west) -- (opt.east);
-\draw[arr] ([yshift=1.5mm]opt.east) -- ([yshift=1.5mm]circ.west);
-\draw[arr] (opt) -- (samp);
-\draw[arr] (samp) -- (ver);
-\draw[arr] (ver) -- (ref);
-\draw[arr] (ref) -- (met);
-\end{tikzpicture}
-\caption{Experimental pipeline. The shaded block is simulated exactly as a statevector. Every sampled plan is checked against the exact constraints, and the exhaustive reference gives the optimum.}
-\label{fig:flow}
-\end{figure}
+\section{Experimental Setup}\label{sec:setup}
+\textit{Instances.} The development set has \NInst{} instances from twin seeds $42+17i$, $i=0,\dots,29$, with the first four groups ($G=4$, $n=12$). All are feasible, with on average \MeanFeasAssign{} feasible plans among the 81 one-hot plans, and in \NBinding{} of them capacity changes the optimal plan (\emph{capacity-binding}). The held-out set has \HoN{} further seeds, $i=30,\dots,59$, of the same disruption pattern, used only for the final transfer test. We also built \CityAll{} instances (\CityN{} feasible, \CityBinding{} capacity-binding) on the OpenStreetMap road graphs of \CityNCities{} flood-prone Indian cities, with each city's mapped zones, shelters and road flood-exposure proxy. Demand is not mapped, so group sizes and seats follow the twin; the disruption closes the most flood-exposed road on any zone--shelter path and halves the first shelter's seats.
 
-\subsection{Simulator}
-The simulator stores the $2^{n}$ complex amplitudes in double precision and applies each layer directly. The cost unitary is diagonal, so it is one elementwise multiplication by $e^{-i\gamma_k E(\mathbf{x})/\Delta}$ with the energies of all bitstrings computed once per instance. The transverse-field mixer applies $R_X(2\beta_k)$ to one qubit at a time by reshaping the amplitude vector so that the target qubit becomes a length-2 axis. Each XY term mixes only the amplitude pairs whose two target bits are $01$ and $10$; we precompute those index pairs once and update them with a $2\times2$ rotation. One objective evaluation at 12 qubits takes under ten milliseconds on a laptop, so the cost of training is dominated by the number of objective evaluations, which we report. All random choices (instances, restarts, sampling and noise) use fixed seeds.
+\textit{Simulation.} The simulator stores all $2^n$ amplitudes in double precision; all random choices use fixed seeds.
 
-\section{Experimental Setup}
-We generated \NInst{} instances from the twin with seeds $42+17i$, $i=0,\dots,29$, and used the first four groups ($G=4$, $n=12$). All \NFeasInst{} instances had at least one feasible plan, on average \MeanFeasAssign{} of the 81 one-hot plans. In \NBinding{} instances, sending every group to its cheapest shelter overloaded a shelter, so capacity changed the optimal plan. All circuits were simulated as exact $2^{n}$-amplitude statevectors in double precision, without noise or shot noise during training.
+\textit{Metrics.} $P_{\mathrm{opt}}$ is the probability of measuring an optimal plan and $P_{\mathrm{feas}}$ that of a feasible plan. A sampler draws $N$ plans and returns the cheapest one that passes an exact feasibility check. It returns the optimum whenever the optimum is among the samples, which has probability success@$N=1-(1-P_{\mathrm{opt}})^N$, assuming independent shots. We also report the expected relative gap $(c-c^\star)/c^\star$ of the returned plan, given that a feasible plan was drawn, for $N\in\{8,32,128\}$, computed exactly from the output distribution. One evaluation is one estimate of the training objective, which on hardware is a batch of circuit executions.
 
-We report three metrics: $P_{\mathrm{opt}}$, the probability of measuring an optimal plan; $P_{\mathrm{feas}}$, the probability of measuring a feasible plan; and success@$N$, the probability that at least one of $N=\Shots$ shots is optimal, $1-(1-P_{\mathrm{opt}})^{N}$. We also count objective evaluations, since each one corresponds to a batch of circuit executions on hardware. The baselines are uniform sampling of all $2^{12}$ bitstrings ($P_{\mathrm{opt}}=\UniBits$ on average) and of the 81 one-hot plans ($\UniOneHot$); exhaustive search; single-bit-flip simulated annealing on (\ref{eq:qubo}) with one restart of 60 sweeps; and a greedy rule that places the largest group first in its cheapest shelter with seats left. The scaling study used the first ten instances with $G=2,\dots,6$ ($n=6,\dots,18$), the mean objective and $p=2$.
+\textit{Statistics.} Paired comparisons use the two-sided Wilcoxon signed-rank test on per-instance values, also for success@$N$. We apply the Holm correction within each family of tests: the four depths of one mixer comparison, the \SelFamily{} fixed-versus-trained comparisons of Table~\ref{tab:select}, and the four city comparisons. Effect sizes are median paired differences. Intervals for variants run with \NSeeds{} optimizer seeds use a two-level bootstrap that resamples instances and then one seed per instance. Because the city instances cluster by city, we also apply a sign test to the six per-city mean differences.
+
+\textit{Baselines.} Uniform sampling over the 81 one-hot plans ($P_{\mathrm{opt}}=\UniOneHot$) and over the feasible plans ($P_{\mathrm{opt}}=\UniFeas$); exhaustive search; a greedy rule that places the largest group first in its cheapest shelter with seats left; and simulated annealing (SA) \cite{Kirkpatrick1983} with 20 restarts of 200 sweeps, either with bit flips on (\ref{eq:qubo}) or with moves that reassign one group, which keep the plan one-hot. For the X mixer we swept the penalty $\lambda\mu$ with $\lambda\in\{0.25,0.5,1,2\}$.
 
 \section{Results}
-\subsection{Mixer and Objective}
-Table~\ref{tab:main} and Fig.~\ref{fig:popt} give the main results. The XY mixer was better on both metrics. At $p=4$ with the mean objective it reached $P_{\mathrm{opt}}=\QXYMeanFourPopt$, which is \GainXYoverUni{} times uniform one-hot sampling and \GainXYoverX{} times the X mixer at the same depth. Because its state never leaves the one-hot subspace, its feasibility probability depended only on capacity and forbidden pairs, and it stayed between \XYPfeasMin{} and \XYPfeasMax{} across depths. The X mixer started with almost all of its probability on invalid bitstrings ($P_{\mathrm{feas}}=\QXMeanOnePfeas$ at $p=1$) and needed every added layer to recover feasibility. With \Shots{} shots, the XY mixer at $p=4$ found the optimal plan with probability \QXYMeanFourSucc\%, against \QXMeanFourSucc\% for the X mixer.
-
-CVaR training raised the X mixer's $P_{\mathrm{opt}}$ to \QXCvarFourPopt{} at $p=4$, because it rewards the low-energy tail even when most of the state is infeasible. For the XY mixer, CVaR lowered the mean $P_{\mathrm{opt}}$ at $p=4$ to \QXYCvarFourPopt{} but raised success@\Shots{} from \QXYMeanFourSucc\% to \QXYCvarFourSucc\%. Because success@$N$ grows sublinearly with $P_{\mathrm{opt}}$, a higher mean success with a lower mean $P_{\mathrm{opt}}$ means that CVaR left fewer instances with a very small $P_{\mathrm{opt}}$. If the plan is chosen as the best of a batch of shots, as it would be in practice, CVaR is the better objective for both mixers. Deeper circuits needed more evaluations: \QXYMeanFourNfev{} on average for the XY mixer at $p=4$, including the restarts at lower depths.
+\subsection{Mixers, Objectives and Penalties}\label{sec:mixres}
+Table~\ref{tab:mixers} and Fig.~\ref{fig:popt} give the comparison. Over \NSeeds{} seeds the XY mixer reached $P_{\mathrm{opt}}=\SeedXYMean$~$\pm$~\SeedXYSd{} at $p=4$ (seed means \SeedXYMin--\SeedXYMax), against \SeedXMin--\SeedXMax{} for the X mixer. It was better on \StXYvXWinsMin--\StXYvXWinsMax{} of \NPaired{} instances at every depth (Holm-adjusted $p\le\StXYvXMaxP$), and the ranking held for every seed. Its feasibility stayed between \XYPfeasMin{} and \XYPfeasMax{} at every depth, whereas the X mixer began with $P_{\mathrm{feas}}=\QXMeanOnePfeas$ and spent its layers recovering feasibility.
 
 \begin{table}[t]
-\caption{QAOA on \NFeasInst{} twin instances (12 qubits), mean over instances}
-\label{tab:main}
+\caption{Mixers and objectives at depth 4 (\NPaired{} development instances, 12 qubits)}
+\label{tab:mixers}
 \centering
 \footnotesize
-\setlength{\tabcolsep}{3.2pt}
-\begin{tabular}{llccccc}
+\setlength{\tabcolsep}{2.6pt}
+\begin{tabular}{lcccccc}
 \toprule
-Mixer & Objective & $p$ & $P_{\mathrm{opt}}$ & $P_{\mathrm{feas}}$ & succ@\Shots{} (\%) & Evals\\
+Variant & $P_{\mathrm{opt}}$ & 95\% CI & $P_{\mathrm{feas}}$ & s@\Shots\,\% & Evals & CNOT\\
 \midrule
-\input{tab_main.tex}
+\input{tab_mixers.tex}
 \bottomrule
-\multicolumn{7}{l}{\scriptsize Uniform one-hot sampling: $P_{\mathrm{opt}}=\UniOneHot$. Evals = objective evaluations at depth $p$.}\\
+\multicolumn{7}{l}{\scriptsize X, XY: mean over \NSeeds{} seeds, CI by two-level bootstrap. Evals: objective}\\
+\multicolumn{7}{l}{\scriptsize evaluations per instance, depths 1--4. CNOT: per layer, all-to-all connectivity.}\\
 \end{tabular}
 \end{table}
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=\columnwidth]{fig_popt.pdf}
-\caption{Probability of the optimal plan (left) and of any feasible plan (right) against depth. The dotted line is uniform sampling of one-hot plans.}
+\caption{Probability of the optimal plan (left) and of any feasible plan (right) against depth, optimizer seed 0. The two panels have different $y$-axis ranges. The dotted line is uniform sampling of one-hot plans.}
 \label{fig:popt}
 \end{figure}
 
-\subsection{Instance Difficulty}
-The means in Table~\ref{tab:main} hide a wide spread between instances (Table~\ref{tab:bind}). With the mean objective at $p=4$, the XY mixer's $P_{\mathrm{opt}}$ ranged from \XYMin{} to \XYMax. It was \XYNonBind{} on the \NNonBinding{} instances where every group could use its cheapest shelter, and fell to \XYBind{} on the \NBinding{} instances where capacity forced at least one group elsewhere. In these instances the optimum is a less obvious plan and has to be separated from cheaper plans that overload a shelter. The X mixer was uniformly poor (\XNonBind{} and \XBind), so capacity did not change its result much. CVaR changed the shape of the XY distribution more than its mean: it raised the worst instance from \XYMin{} to \XYCvarMin{} and lowered the best from \XYMax{} to \XYCvarMax. This explains why CVaR improved success within \Shots{} shots while lowering the mean $P_{\mathrm{opt}}$. Fig.~\ref{fig:inst} shows the individual instances: the XY results with the mean objective include a few instances with $P_{\mathrm{opt}}$ near zero, all of them capacity-bound, and CVaR removes that tail.
+The Grover mixer reached \GMMeanFour{} at $p=4$, and its difference from XY was not significant at any depth (Holm-adjusted $p\ge\StXYvGMMinP$). The data lean towards XY: at $p=4$ it was ahead on \GmWinsFour{} of \NPaired{} instances, with a mean difference of \GmDiffFour{} (paired bootstrap interval \GmDiffLo--\GmDiffHi) and an unadjusted $p=\GmRawP$. The Grover mixer spread probability more evenly over instances, so its success@\Shots{} was higher, but its layer costs \CnotGM{} CNOTs and \NAnc{} ancillas against \CnotXY{} CNOTs for ring-XY.
 
-\begin{figure}[t]
-\centering
-\includegraphics[width=\columnwidth]{fig_inst.pdf}
-\caption{$P_{\mathrm{opt}}$ at depth 4 for each of the \NFeasInst{} instances. Filled circles: capacity changes the optimal plan; open triangles: it does not.}
-\label{fig:inst}
-\end{figure}
+CVaR training lowered the XY mixer's mean $P_{\mathrm{opt}}$ but raised success@\Shots{} from \QXYMeanFourSucc\% to \QXYCvarFourSucc\% (seed 0): the worst instance rose from \XYMin{} to \XYCvarMin. The worst instances were all capacity-binding.
 
-\begin{table}[t]
-\caption{$P_{\mathrm{opt}}$ at $p=4$ by instance type and its spread over instances}
-\label{tab:bind}
-\centering
-\footnotesize
-\setlength{\tabcolsep}{3pt}
-\begin{tabular}{lccccc}
-\toprule
- & \multicolumn{2}{c}{Mean} & \multicolumn{3}{c}{Over all instances}\\
-Variant & non-binding & binding & min & median & max\\
-\midrule
-\input{tab_bind.tex}
-\bottomrule
-\multicolumn{6}{l}{\scriptsize binding = capacity changes the optimal plan (\NBinding{} instances); non-binding: \NNonBinding.}\\
-\end{tabular}
-\end{table}
+We tested whether a smaller penalty helps the X mixer: lowering the weight to $\lambda=\PenBestLam$ raised its $P_{\mathrm{opt}}$ by \PenGain$\times$ to \PenBestPopt{} at a feasibility of only \PenBestFeas, still about half of the XY result. To bound the cost of keeping capacity as a penalty, we ran a mixer restricted to feasible plans: it reached $P_{\mathrm{opt}}=\FgFour$ at $p=4$, \FgOverUni{} times uniform sampling over the same feasible plans, and beat XY on \FgWinsFour{} of \NPaired{} instances ($p=\FgPFour$).
 
-\subsection{A Worked Instance}
-Table~\ref{tab:example} shows the first instance (seed 42) after the disruption. Shelter A has only 19 seats left, so groups G3 and G4, with 21 and 20 people, cannot use it at all, and G1 can use it only on its own. Of the 81 one-hot plans, \ExNFeas{} are feasible. The optimal plan, written as the shelter of G1--G4, is \ExOpt{} at \ExOptCost{} minutes, and the greedy rule also finds it. The runner-up, \ExSecond, costs \ExSecondCost{} minutes, only \ExGap{} minutes more.
-
-\begin{table}[t]
-\caption{Worked instance (seed 42): route cost $c_{gs}$ (min) after the disruption; -- marks a forbidden pair}
-\label{tab:example}
-\centering
-\footnotesize
-\setlength{\tabcolsep}{5pt}
-\begin{tabular}{lcccc}
-\toprule
-Group & $n_g$ & Shelter A & Shelter B & Shelter C\\
-\midrule
-\input{tab_example.tex}
-\bottomrule
-\end{tabular}
-\end{table}
-
-Table~\ref{tab:top} lists the most likely measurements of the trained depth-4 circuits. The XY circuit placed \ExXYOpt{} of its probability on the optimum and \ExXYSecond{} on the runner-up, and almost all of the rest on other feasible plans (total \ExXYFeas). The X circuit put only \ExXOpt{} on the optimum and \ExXFeas{} on feasible plans. The near-tie between the two best plans is typical of these instances: travel times of alternative routes are close, so the energy gap that QAOA must resolve is small, and a sampler that finds the runner-up has still found a good plan. This is also why success within a batch of shots is a more useful measure than $P_{\mathrm{opt}}$ alone.
-
-\begin{table}[t]
-\caption{Five most likely plans of the trained XY circuit for the worked instance, and their probability under the X circuit}
-\label{tab:top}
-\centering
-\footnotesize
-\setlength{\tabcolsep}{5pt}
-\begin{tabular}{lcccl}
-\toprule
-Plan (G1--G4) & Cost (min) & XY prob. & X prob. & \\
-\midrule
-\input{tab_top.tex}
-\bottomrule
-\end{tabular}
-\end{table}
-
-\subsection{Encoding and Circuit Resources}
-The minimiser of (\ref{eq:qubo}) was the true optimum in \QuboExact\% of the main instances. On average an instance had \OvPairs{} overloaded pairs. Per layer, the X-mixer cost unitary needed \ZZX{} two-qubit $ZZ$ rotations, while the XY variant needed \ZZXY{}, because the one-hot penalty disappears. The XY mixer itself adds three two-qubit XY rotations per group and layer, and the W-state preparation adds a fixed overhead at the start \cite{Bartschi2019}. Table~\ref{tab:res} summarises the per-layer gate budget for the 12-qubit instances. The two variants need exactly the same number of two-qubit gates per layer: the 12 one-hot couplings of the X variant become 12 XY rotations. The XY mixer's advantage in Table~\ref{tab:main} therefore does not come from a larger circuit. Compiled to CNOT gates, each $ZZ$ rotation and each XY rotation needs two CNOTs, so one layer needs about \CnotLayer{} CNOTs and a depth-4 circuit about \CnotFour{}, plus the W-state preparation for the XY variant. These counts assume all-to-all connectivity; routing on a device with nearest-neighbour coupling would add SWAP gates.
-
-\begin{table}[t]
-\caption{Gates per QAOA layer, 12-qubit instances (mean over instances)}
-\label{tab:res}
+\subsection{Angle Transfer to Held-Out Seeds}
+\begin{table*}[t]
+\caption{Angles at $p=4$ on the \HoN{} held-out seeds: per-instance training against one fixed angle set chosen on the development set}
+\label{tab:select}
 \centering
 \footnotesize
 \setlength{\tabcolsep}{4pt}
-\begin{tabular}{lcc}
+\begin{tabular}{llccccccc}
 \toprule
-Gate & X mixer & XY mixer\\
+Variant & Angles & Needs optima & Held-out $P_{\mathrm{opt}}$ & Median paired diff. & Wins of \HoN & Holm $p$ & Leave-one-out $P_{\mathrm{opt}}$ (dev.) & s@\Shots\,\%\\
 \midrule
-Cost: single-qubit $R_Z$ & 12 & 12\\
-Cost: two-qubit $ZZ$ & \ZZX & \ZZXY\\
-Mixer: single-qubit $R_X$ & 12 & 0\\
-Mixer: two-qubit XY & 0 & 12\\
-Initial state & $H^{\otimes 12}$ & $|W_3\rangle^{\otimes 4}$\\
+\input{tab_select.tex}
 \bottomrule
+\multicolumn{9}{l}{\scriptsize Fixed sets vs.\ per-instance training of the same variant (Wilcoxon signed-rank, Holm over \SelFamily{} rows). Per-instance rows: development-set mean in the leave-one-out column.}\\
 \end{tabular}
-\end{table}
+\end{table*}
 
-\subsection{Sensitivity to Gate Noise}\label{sec:noise}
-All results so far are noiseless. We estimated the effect of gate errors in two ways. The first is a global depolarising model applied to all \NInst{} trained circuits: if every two-qubit gate fails with probability $\epsilon$, the circuit returns its ideal state with probability $F=(1-\epsilon)^{N_2}$ and a uniformly random bitstring otherwise, so
-\begin{equation}
-P_{\mathrm{opt}}^{\epsilon}=F\,P_{\mathrm{opt}}+(1-F)\,\frac{n_{\mathrm{opt}}}{2^{n}},
-\label{eq:noise}
-\end{equation}
-where $n_{\mathrm{opt}}$ is the number of optimal bitstrings. We count \NtwoLayer{} two-qubit gates per layer for both mixers (Table~\ref{tab:res}) and charge the XY variant four extra two-qubit gates per W state. With this model the XY mixer kept $P_{\mathrm{opt}}=\NoiseXYOnePct$ at $\epsilon=0.01$, against \NoiseXOnePct{} for the X mixer, and depth 4 remained the best choice for both up to $\epsilon=0.02$; only the CVaR-trained XY circuits did better at depth \NoiseCvarTwoPctDepth{} at that error rate. The ranking does not change for any W-state charge from two to six gates.
+Table~\ref{tab:select} gives the held-out test. For the XY mixer with the mean objective, the set chosen by (\ref{eq:transfer}) reached $P_{\mathrm{opt}}=\SelPopt$ against \SelTrained{} for per-instance training with \HoCumFour{} evaluations (better on \SelPoptWins{} of \HoN, median difference \SelPoptMed, Holm $p=\SelPoptP$). The oracle-free sets also beat per-instance training on these seeds: \SelEn{} for the energy rule ($p=\SelEnP$) and \SelCv{} for the CVaR rule ($p=\SelCvP$). The leave-one-out test on the development set tells a different story. There, the energy rule gave \SelEnLoo{} and the CVaR rule \SelCvLoo, both below the \SelDevTrained{} of per-instance training, while rule (\ref{eq:transfer}) gave \SelPoptLoo. The same held for CVaR angles chosen by CVaR (\SelCvarCv{} on held-out seeds, \SelCvarCvLoo{} in leave-one-out against \SelCvarDevTrained). An oracle-free choice therefore did not give a reliable gain. Rule (\ref{eq:transfer}) gained in both tests; the optima it needs come offline from exhaustive search or integer programming at this size. Transfer did not rescue the X mixer (\SelXPopt).
 
-The second is a gate-level simulation by quantum trajectories on the first \TrajInst{} instances, retrained with the same procedure. In each of \TrajRuns{} runs per circuit, every two-qubit gate, including the one-hot and overload couplings, the XY mixer pairs and the W-state preparation, fails with probability $\epsilon$, and a failure applies one of the 15 non-identity two-qubit Pauli operators at random after the layer that contains the gate. Single-qubit errors are ignored. Table~\ref{tab:noise} compares the two models at depth 4 on these instances, whose noiseless $P_{\mathrm{opt}}$ was \TrajIdealXY{} for the XY mixer and \TrajIdealX{} for the X mixer. At $\epsilon=0.01$, of the order reported for two-qubit gates on current superconducting processors, the XY mixer kept $P_{\mathrm{opt}}=\TrajXYOne$, \TrajRatioOne{} times the X mixer's \TrajXOne. The global model predicted only \TrajGlobXYOne{} for the same circuits. It is pessimistic because many Pauli errors, for example $Z$ errors late in the circuit, leave the measurement distribution almost unchanged, whereas the global model replaces the whole state. The advantage of the constraint-preserving mixer survives both noise models at every error rate we tried. Fig.~\ref{fig:noise} shows the trajectory results for every depth. Deeper XY circuits stayed ahead of shallower ones at every error rate, because each added layer raised $P_{\mathrm{opt}}$ more than its extra gates cost.
+Part of the gap is a mismatch of objectives. Per-instance training minimises energy well: its mean $\langle\hat E\rangle/\Delta$ was \EnTrained{} against \EnFixed{} for the fixed set, lower on \EnLower{} of \HoN{} instances. Low energy did not imply a high $P_{\mathrm{opt}}$, since across the 30 trained sets the rank correlation between mean energy and mean $P_{\mathrm{opt}}$ on the development set was only \RhoEnPopt. Stronger optimizers stayed below: the best of five COBYLA seeds by training objective reached \SelBestFive{} with \SelBestFiveEv{} evaluations per instance, and L-BFGS-B \SelLbfgs. COBYLA started from the fixed angles did improve on them (\StrWarm{} with \StrWarmEv{} evaluations, $p=\StrWarmP$).
 
-\begin{figure}[t]
-\centering
-\includegraphics[width=\columnwidth]{fig_noise.pdf}
-\caption{Gate-level trajectory estimate of $P_{\mathrm{opt}}$ against the two-qubit error rate for each depth (\TrajInst{} instances, \TrajRuns{} runs per circuit).}
-\label{fig:noise}
-\end{figure}
+Why does a fixed set work? The performance of trained sets concentrates across instances: a set's mean $P_{\mathrm{opt}}$ on the development set predicted its mean on the held-out seeds with rank correlation \RhoDevHeld. Only \CandBeat{} of the \CandN{} trained sets beat per-instance training there (median set \CandMedian), so the choice matters. The gain came mostly from capacity-binding instances: on the \HoNBind{} binding seeds per-instance training reached \HoBindTrained{} and the fixed set \HoBindFixed, on the others \HoNonBindTrained{} and \HoNonBindFixed. We repeated training, selection and the held-out test without the scaling and with division by the standard deviation of the penalty-free plan energies. Without scaling the fixed angles reached only \NormNoneFixed, although per-instance training still reached \NormNoneDevTrained; with the other normalisation they reached \NormStdFixed, close to our \NormDepFixed. Transfer needs a common energy scale, not our particular one. The one-time cost was \OffTrain{} evaluations of training and \OffCross{} for selection, the cost of per-instance training on about \OffBreakEven{} disruptions.
+
+\subsection{Sampling with a Feasibility Check}
+Table~\ref{tab:gap} gives what the sampler of Section~\ref{sec:setup} returns. With 8 samples, the fixed XY angles came within \GapFxEight\% of the optimal cost on average, per-instance training within \GapTrEight\% and uniform one-hot sampling within \GapUniEight\%. With 32 samples every XY variant drew a feasible plan with probability \PfeasThirtyTwoMin\% to one decimal, and with 128 samples per-instance training was within \GapTrBig\%. Many plans cost close to the optimum, so success@$N$ is the stricter measure.
 
 \begin{table}[t]
-\caption{$P_{\mathrm{opt}}$ at depth 4 under two-qubit noise: gate-level trajectories vs.\ global model (\TrajInst{} instances)}
-\label{tab:noise}
+\caption{Best verified plan among $N$ samples (held-out seeds, $p=4$): mean gap to the optimal cost and chance of drawing the optimum, in \%}
+\label{tab:gap}
 \centering
 \footnotesize
-\setlength{\tabcolsep}{4pt}
-\begin{tabular}{lcccc}
+\setlength{\tabcolsep}{2.2pt}
+\begin{tabular}{lcccccc}
 \toprule
- & \multicolumn{2}{c}{X mixer} & \multicolumn{2}{c}{XY mixer}\\
-$\epsilon$ & traj. & global & traj. & global\\
+ & \multicolumn{2}{c}{$N=8$} & \multicolumn{2}{c}{$N=32$} & \multicolumn{2}{c}{$N=128$}\\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}\cmidrule(lr){6-7}
+Sampler & gap & opt. & gap & opt. & gap & opt.\\
 \midrule
-\input{tab_traj.tex}
+\input{tab_gap.tex}
 \bottomrule
-\multicolumn{5}{l}{\scriptsize traj. = mean over \TrajRuns{} Pauli-error trajectories; global = model (\ref{eq:noise}).}\\
 \end{tabular}
 \end{table}
 
-\subsection{Classical Baselines and Scaling}
-Exhaustive search over the 81 one-hot plans took \ExactMs~ms per instance and is exact. The greedy rule produced a feasible plan in \GreedyFeas\% of instances and the optimal one in \GreedyOpt\%. A single short simulated-annealing run (60 sweeps) on the same QUBO reached the optimum in only \SAOpt\% of instances and a feasible plan in \SAFeas\%, in \SAMs~ms. It is a weak baseline at this budget, and more restarts would close the gap at negligible cost. Training one QAOA configuration up to $p=4$ took several seconds of simulation. At this size, QAOA is not competitive on time, and the comparison is about solution quality per circuit, not speed.
-
-Table~\ref{tab:scale} shows the scaling run. As $G$ grows, the number of one-hot plans grows as $3^G$ and $P_{\mathrm{opt}}$ for uniform sampling falls to \ScaleUnisix{} at \ScaleMaxQ{} qubits. The XY mixer at $p=2$ kept $P_{\mathrm{opt}}=\ScaleXYsix$ at that size, while one training run took \ScaleXYmsSix~s of simulation, compared with \ScaleExactSix~ms for exhaustive search. Statevector cost doubles with each qubit, so exact simulation of this kind stops being practical well before the problem becomes hard classically. Fig.~\ref{fig:scale} plots the same data on a log scale. The XY mixer stayed above uniform one-hot sampling at every size, from \ScaleXYtwo{} at 6 qubits to \ScaleXYsix{} at \ScaleMaxQ{}. The X mixer at $p=2$ fell below uniform one-hot sampling from 12 qubits on (\ScaleXsix{} at \ScaleMaxQ{} qubits), because most of its probability sat on bitstrings that are not plans at all: its feasibility probability at \ScaleMaxQ{} qubits was \ScaleXfeasSix, against \ScaleXYfeasSix{} for the XY mixer. One of the ten 18-qubit instances had no feasible plan and was excluded.
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=\columnwidth]{fig_scale.pdf}
-\caption{Probability of the optimal plan against problem size at depth 2 (log scale). The dotted line is uniform sampling of one-hot plans.}
-\label{fig:scale}
-\end{figure}
+\subsection{Transfer to Real Road Networks}
+Table~\ref{tab:cities} breaks the city test down by city, with the angles fixed on the twin. Pooled over the \CityN{} instances, the set chosen by (\ref{eq:transfer}) reached $P_{\mathrm{opt}}=\CityFixed$ against \CityTrained{} for per-instance training (Holm $p=\CityPHolm$) and the energy-rule set \CityEnFixed{} ($p=\CityEnPHolm$). The fixed set led in only \CityPos{} of \CityK{} cities (sign test $p=\CitySignP$): no city-level gain in $P_{\mathrm{opt}}$. Per-instance training left \CityTrainedLow{} instances with $P_{\mathrm{opt}}<0.01$, the fixed set \CityFixedLow, and success@\Shots{} rose from \CitySuccTrained\% to \CitySuccFixed\% (Holm $p=\CitySuccPHolm$) and to \CityEnSucc\% for the energy rule ($p=\CityEnSuccPHolm$), in all \CitySuccPos{} cities (sign test $p=\CitySuccSignP$).
 
 \begin{table}[t]
-\caption{Scaling with the number of groups ($p=2$, mean objective)}
-\label{tab:scale}
+\caption{OpenStreetMap city instances, XY mixer, $p=4$: mean $P_{\mathrm{opt}}$ and success@\Shots\ (\%)}
+\label{tab:cities}
 \centering
 \footnotesize
 \setlength{\tabcolsep}{2.4pt}
-\begin{tabular}{ccccccccc}
+\begin{tabular}{lccccccc}
 \toprule
-$G$ & $n$ & inst. & unif. & X $P_{\mathrm{opt}}$ & XY $P_{\mathrm{opt}}$ & XY $P_{\mathrm{feas}}$ & XY s & exact ms\\
+ & & \multicolumn{3}{c}{$P_{\mathrm{opt}}$} & \multicolumn{3}{c}{s@\Shots\,\%}\\
+\cmidrule(lr){3-5}\cmidrule(lr){6-8}
+City & inst. & trained & fix-O & fix-E & trained & fix-O & fix-E\\
 \midrule
-\input{tab_scale.tex}
+\input{tab_cities.tex}
 \bottomrule
-\multicolumn{9}{l}{\scriptsize unif. = uniform one-hot $P_{\mathrm{opt}}$; XY s = simulated training time; inst. = feasible instances.}\\
+\multicolumn{8}{l}{\scriptsize fix-O: set chosen by max.\ mean $P_{\mathrm{opt}}$ (\ref{eq:transfer}); fix-E: by min.\ mean energy.}\\
 \end{tabular}
 \end{table}
 
+\subsection{Larger Instances and Gate Noise}
+We applied the 12-qubit angles of rule (\ref{eq:transfer}) unchanged to \SzFiveN{} new twin instances with five groups (15 qubits) and \SzSixN{} with six groups (18 qubits). They kept $P_{\mathrm{opt}}$ at least \SzFiveFixedMin{} at 15 qubits and \SzSixFixedMin{} at 18 qubits, \SzFiveRatio{} and \SzSixRatio{} times the mean of uniform one-hot sampling, while per-instance training fell below $0.01$ on \SzFiveTrainedLow{} and \SzSixTrainedLow{} instances. In mean $P_{\mathrm{opt}}$, \SizeCompare{} With ten instances per size, the test shows that fixed angles remain usable at 15 and 18 qubits; it does not establish a gain.
+
+We simulated gate noise by quantum trajectories (\TrajRuns{} runs per circuit) on the first \TrajInst{} development instances: every two-qubit gate, including four gates per $W_3$ preparation, fails with probability $\epsilon$ and then applies one of the 15 non-identity two-qubit Pauli operators. Each $ZZ$ and XY gate compiles to two CNOTs, so $\epsilon=0.01$ corresponds to a CNOT error near 0.5\%, of the order of the \SycIso\% (isolated) and \SycSim\% (simultaneous) two-qubit Pauli errors reported for a superconducting processor \cite{Arute2019}. At $\epsilon=0.01$ and $p=4$ the XY mixer kept $P_{\mathrm{opt}}=\TrajXYOne$, \TrajRatioOne$\times$ the X mixer's \TrajXOne. A global depolarising model, in which a circuit with $N_2$ two-qubit gates returns its ideal state with probability $F=(1-\epsilon)^{N_2}$,
+\begin{equation}
+P_{\mathrm{opt}}^{\epsilon}=F\,P_{\mathrm{opt}}+(1-F)\,|\mathcal{X}^\star|/2^{n},
+\label{eq:noise}
+\end{equation}
+with $\mathcal{X}^\star$ the optimal bitstrings, gave a lower \TrajGlobXYOne, since many Pauli errors barely change the output.
+
+\subsection{Encoding Exactness and Classical Baselines}
+In all \ZeroPenInfeasAll{} development instances some infeasible one-hot plan had zero penalty, because three groups whose pairs fit overloaded a shelter together. Such plans usually cost more than the optimum, so the minimiser of (\ref{eq:qubo}) was the true optimum in \QuboExact\% of instances. Exhaustive search took \ExactMs~ms per instance. The greedy rule found a feasible plan in \GreedyFeas\% of instances and the optimum in \GreedyOpt\%. Bit-flip SA ended at the optimum in \SATunedOpt\% of instances and SA with one-hot moves in \SAohOpt\%, the limit set by the encoding; both visited the optimum every time, so keeping the cheapest verified plan found it in \SAohVer\%.
+
 \section{Discussion and Limitations}
-Three points follow. First, building the constraint into the mixer helped more than any change to the training objective, although CVaR still improved the chance of finding the optimum within a fixed number of shots. For assignment problems with one-hot structure, the XY ansatz should be the default, and comparisons that use only the transverse-field mixer understate what QAOA can do. Second, the cost shift and penalty normalisation were necessary. Without them the energy is dominated by penalties and the optimiser learns feasibility but not cost. Third, classical methods solve these instances exactly in milliseconds. A realistic city-scale assignment with tens of groups and shelters would need hundreds of qubits and deep circuits, which is beyond the noise levels reported for current processors \cite{Harrigan2021,Bharti2022}.
+Three findings are relevant for hardware experiments. First, the one-hot constraint belongs in the mixer: at the same CNOT count, ring-XY beat the transverse-field mixer on almost every instance and seed, and a smaller penalty did not close the gap. Capacity remains open: the feasible-subspace mixer roughly doubled $P_{\mathrm{opt}}$ but needs the feasible set. Second, transfer needs a common energy scale and a good selection rule. With development-set optima, one fixed set per depth matched or exceeded per-instance training at 12 qubits after a one-time offline cost of \OffTotal{} evaluations; without optima the gain was not reliable, and part of it reflects that energy is a weak proxy for $P_{\mathrm{opt}}$. Third, the encoding admits infeasible penalty-free plans, so a verifier must check every sample.
 
-The study has clear limits. The main results are noiseless, and the noise study in Section~\ref{sec:noise} ignores single-qubit and correlated errors, so the reported probabilities are upper bounds for hardware. The instances are small and come from one synthetic network, and accessibility constraints never bound because all three shelters are accessible. The pairwise capacity encoding is approximate in general. The XY mixer was Trotterised in a single fixed order, and we did not compile circuits to a hardware gate set or count depth after routing. Finally, the angle optimiser had a limited budget, so better angles may exist at higher depths.
-
-For practitioners who want to try such formulations on hardware, our results suggest a short list of choices. Encode one-hot constraints in the mixer, not in penalties. Remove the per-group cost baseline and scale the Hamiltonian so that feasible energies span a unit interval, otherwise the angles must resolve differences that are tiny next to the penalties. Train on CVaR when the plan will be chosen as the best of a batch of shots. Finally, keep a classical exact or heuristic solver in the loop to verify every sample, because even the best variant here placed most of its probability on suboptimal plans for capacity-bound instances.
-
-Several threats to validity remain. All variants were trained with the same optimiser budget and the same random starts, so the comparison between mixers is fair, but a larger budget could change the ranking at depth 4, where evaluations reached the cap of 750. The instances share one network and one disruption, so the binding and non-binding groups differ only in seeds, not in structure. The success@$N$ metric assumes independent shots from an exact distribution. On hardware, shot noise in the training objective and device noise would both lower it. Finally, the exhaustive reference makes the optimum known, which a real deployment would not have; the verification step we recommend only checks feasibility.
-
-Future work will add single-qubit and correlated noise, transfer angles between instances, compare against slack-variable capacity encodings and test the XY ansatz on hardware through a cloud service.
+The study has clear limits. All held-out twin instances share one disruption pattern; other closures, failed shelters and capacity cuts were not tested, and the city instances use real roads but sampled demand. The size test stops at 18 qubits with ten instances per size; simulating the circuits on the $3^G$ one-hot amplitudes would allow more. The noise model charges errors per logical gate rather than per CNOT, ignores single-qubit and correlated errors and omits the Grover mixer, and no circuit was compiled for hardware. Absolute $P_{\mathrm{opt}}$ values depend on the training budget, and the Grover comparison cannot show equivalence. Future work will test varied disruptions, slack-variable encodings and hardware runs.
 
 \section{Conclusion}
-On shelter-assignment instances drawn from a flood digital twin, a constraint-preserving ring-XY mixer gave QAOA a much higher probability of the optimal plan than the standard transverse-field mixer and kept most of the state on feasible plans at every depth. CVaR training narrowed the gap for the standard mixer but did not close it, and it made success within \Shots{} shots more reliable for both mixers. Exhaustive search solved the same instances exactly in about a millisecond, so the results show which formulation choices matter for future hardware experiments, not a present-day advantage.
+On flood shelter-assignment instances, a ring-XY mixer gave QAOA a significantly higher probability of the optimal plan than the transverse-field mixer at the same CNOT count, while capacity, kept as an approximate pairwise penalty, requires a verifier. Angles fixed by mean optimal-plan probability on development instances reached $P_{\mathrm{opt}}=\SelPopt$ on held-out seeds of the same disruption pattern, above per-instance training; rules without optima were not reliable, and transfer failed without a shared energy scale. Exhaustive search solves these instances in about a millisecond, so the results guide choices for hardware experiments and show no present-day advantage.
 
 \section*{Acknowledgment}
-The authors thank the OpenStreetMap contributors and Open-Meteo for openly available data used by the digital twin.
-In line with the IEEE policy on AI-generated content, the authors disclose that Claude (Anthropic) was used to help edit and restructure the text of all sections and to draft the simulation, experiment and plotting scripts. All experiments use the authors' own software and can be reproduced with fixed seeds. The authors checked every number, claim and reference and take full responsibility for the content.
+We thank the OpenStreetMap contributors and Open-Meteo for open data used by the twin.
+In line with the IEEE policy on AI-generated content, the authors disclose that Claude (Anthropic) was used to help edit and restructure the text of all sections and to draft the simulation, experiment and plotting scripts. All experiments are reproducible with fixed seeds. The authors checked every number, claim and reference and take full responsibility for the content.
 
 \balance
 \begin{thebibliography}{00}
-\bibitem{Lucas2014} A. Lucas, ``Ising formulations of many NP problems,'' \textit{Front. Phys.}, vol. 2, Art. no. 5, 2014.
-\bibitem{Glover2019} F. Glover, G. Kochenberger, and Y. Du, ``Quantum bridge analytics I: A tutorial on formulating and using QUBO models,'' \textit{4OR}, vol. 17, no. 4, pp. 335--371, 2019.
-\bibitem{Cadelina2024} A. R. Cadeli\~{n}a \textit{et al.}, ``D-Wave implementation of quantum annealing for optimal resource allocation in disaster response operation of Marikina City,'' \textit{ECTI Trans. Comput. Inf. Technol.}, vol. 18, no. 1, pp. 24--33, 2024.
-\bibitem{Abbas2024} A. Abbas \textit{et al.}, ``Challenges and opportunities in quantum optimization,'' \textit{Nat. Rev. Phys.}, vol. 6, pp. 718--735, 2024.
+\bibitem{Lucas2014} A. Lucas, ``Ising formulations of many NP problems,'' \textit{Front. Phys.}, vol. 2, Art. no. 5, 2014, doi: 10.3389/fphy.2014.00005.
+\bibitem{Glover2019} F. Glover, G. Kochenberger, and Y. Du, ``Quantum bridge analytics I: A tutorial on formulating and using QUBO models,'' \textit{4OR}, vol. 17, no. 4, pp. 335--371, 2019, doi: 10.1007/s10288-019-00424-y.
+\bibitem{Cadelina2024} A. R. Cadeli\~{n}a \textit{et al.}, ``D-Wave implementation of quantum annealing for optimal resource allocation in disaster response operation of Marikina City,'' \textit{ECTI Trans. Comput. Inf. Technol.}, vol. 18, no. 1, pp. 24--33, 2024, doi: 10.37936/ecti-cit.2024181.253577.
+\bibitem{Abbas2024} A. Abbas \textit{et al.}, ``Challenges and opportunities in quantum optimization,'' \textit{Nat. Rev. Phys.}, vol. 6, pp. 718--735, 2024, doi: 10.1038/s42254-024-00770-9.
 \bibitem{Farhi2014} E. Farhi, J. Goldstone, and S. Gutmann, ``A quantum approximate optimization algorithm,'' arXiv:1411.4028, 2014.
-\bibitem{Hadfield2019} S. Hadfield, Z. Wang, B. O'Gorman, E. G. Rieffel, D. Venturelli, and R. Biswas, ``From the quantum approximate optimization algorithm to a quantum alternating operator ansatz,'' \textit{Algorithms}, vol. 12, no. 2, Art. no. 34, 2019.
-\bibitem{WangZ2020} Z. Wang, N. C. Rubin, J. M. Dominy, and E. G. Rieffel, ``XY mixers: Analytical and numerical results for the quantum alternating operator ansatz,'' \textit{Phys. Rev. A}, vol. 101, no. 1, Art. no. 012320, 2020.
-\bibitem{Fuchs2022} F. G. Fuchs, K. O. Lye, H. M. Nilsen, A. J. Stasik, and G. Sartor, ``Constraint preserving mixers for the quantum approximate optimization algorithm,'' \textit{Algorithms}, vol. 15, no. 6, Art. no. 202, 2022.
-\bibitem{Barkoutsos2020} P. K. Barkoutsos, G. Nannicini, A. Robert, I. Tavernelli, and S. Woerner, ``Improving variational quantum optimization using CVaR,'' \textit{Quantum}, vol. 4, Art. no. 256, 2020.
-\bibitem{Kirkpatrick1983} S. Kirkpatrick, C. D. Gelatt, and M. P. Vecchi, ``Optimization by simulated annealing,'' \textit{Science}, vol. 220, no. 4598, pp. 671--680, 1983.
-\bibitem{Sherali1991} H. D. Sherali, T. B. Carter, and A. G. Hobeika, ``A location-allocation model and algorithm for evacuation planning under hurricane/flood conditions,'' \textit{Transp. Res. B, Methodol.}, vol. 25, no. 6, pp. 439--452, 1991.
-\bibitem{Bartschi2019} A. B\"{a}rtschi and S. Eidenbenz, ``Deterministic preparation of Dicke states,'' in \textit{Fundamentals of Computation Theory} (LNCS, vol. 11651). Cham, Switzerland: Springer, 2019, pp. 126--139.
-\bibitem{Zhou2020} L. Zhou, S.-T. Wang, S. Choi, H. Pichler, and M. D. Lukin, ``Quantum approximate optimization algorithm: Performance, mechanism, and implementation on near-term devices,'' \textit{Phys. Rev. X}, vol. 10, no. 2, Art. no. 021067, 2020.
-\bibitem{Egger2021} D. J. Egger, J. Mare\v{c}ek, and S. Woerner, ``Warm-starting quantum optimization,'' \textit{Quantum}, vol. 5, Art. no. 479, 2021.
-\bibitem{Harrigan2021} M. P. Harrigan \textit{et al.}, ``Quantum approximate optimization of non-planar graph problems on a planar superconducting processor,'' \textit{Nat. Phys.}, vol. 17, pp. 332--336, 2021.
-\bibitem{Preskill2018} J. Preskill, ``Quantum computing in the NISQ era and beyond,'' \textit{Quantum}, vol. 2, Art. no. 79, 2018.
-\bibitem{Bharti2022} K. Bharti \textit{et al.}, ``Noisy intermediate-scale quantum algorithms,'' \textit{Rev. Mod. Phys.}, vol. 94, no. 1, Art. no. 015004, 2022.
-\bibitem{Powell1994} M. J. D. Powell, ``A direct search optimization method that models the objective and constraint functions by linear interpolation,'' in \textit{Advances in Optimization and Numerical Analysis}, S. Gomez and J.-P. Hennart, Eds. Dordrecht, The Netherlands: Kluwer, 1994, pp. 51--67.
+\bibitem{Hadfield2019} S. Hadfield, Z. Wang, B. O'Gorman, E. G. Rieffel, D. Venturelli, and R. Biswas, ``From the quantum approximate optimization algorithm to a quantum alternating operator ansatz,'' \textit{Algorithms}, vol. 12, no. 2, Art. no. 34, 2019, doi: 10.3390/a12020034.
+\bibitem{WangZ2020} Z. Wang, N. C. Rubin, J. M. Dominy, and E. G. Rieffel, ``XY mixers: Analytical and numerical results for the quantum alternating operator ansatz,'' \textit{Phys. Rev. A}, vol. 101, no. 1, Art. no. 012320, 2020, doi: 10.1103/PhysRevA.101.012320.
+\bibitem{Fuchs2022} F. G. Fuchs, K. O. Lye, H. M. Nilsen, A. J. Stasik, and G. Sartor, ``Constraint preserving mixers for the quantum approximate optimization algorithm,'' \textit{Algorithms}, vol. 15, no. 6, Art. no. 202, 2022, doi: 10.3390/a15060202.
+\bibitem{Bartschi2020} A. B\"{a}rtschi and S. Eidenbenz, ``Grover mixers for QAOA: Shifting complexity from mixer design to state preparation,'' in \textit{Proc. IEEE Int. Conf. Quantum Comput. Eng. (QCE)}, 2020, pp. 72--82, doi: 10.1109/QCE49297.2020.00020.
+\bibitem{Sherali1991} H. D. Sherali, T. B. Carter, and A. G. Hobeika, ``A location-allocation model and algorithm for evacuation planning under hurricane/flood conditions,'' \textit{Transp. Res. B, Methodol.}, vol. 25, no. 6, pp. 439--452, 1991, doi: 10.1016/0191-2615(91)90037-J.
+\bibitem{Blekos2024} K. Blekos \textit{et al.}, ``A review on quantum approximate optimization algorithm and its variants,'' \textit{Phys. Rep.}, vol. 1068, pp. 1--66, 2024, doi: 10.1016/j.physrep.2024.03.002.
+\bibitem{Fuchs2024} F. G. Fuchs and R. Pariente Bassa, ``LX-mixers for QAOA: Optimal mixers restricted to subspaces and the stabilizer formalism,'' \textit{Quantum}, vol. 8, Art. no. 1535, 2024, doi: 10.22331/q-2024-11-25-1535.
+\bibitem{doCarmo2025} R. S. do Carmo, M. C. S. Santana, F. F. Fanchini, V. H. C. de Albuquerque, and J. P. Papa, ``Warm-starting QAOA with XY mixers: A novel approach for quantum-enhanced vehicle routing optimization,'' arXiv:2504.19934, 2025.
+\bibitem{Gupta2026} A. Gupta and S. R. Hassan, ``Constraint-preserving QAOA for personnel rostering: Coverage-preserving and guarded-XY mixer constructions,'' arXiv:2607.09145, 2026.
+\bibitem{Zhou2020} L. Zhou, S.-T. Wang, S. Choi, H. Pichler, and M. D. Lukin, ``Quantum approximate optimization algorithm: Performance, mechanism, and implementation on near-term devices,'' \textit{Phys. Rev. X}, vol. 10, no. 2, Art. no. 021067, 2020, doi: 10.1103/PhysRevX.10.021067.
+\bibitem{Barkoutsos2020} P. K. Barkoutsos, G. Nannicini, A. Robert, I. Tavernelli, and S. Woerner, ``Improving variational quantum optimization using CVaR,'' \textit{Quantum}, vol. 4, Art. no. 256, 2020, doi: 10.22331/q-2020-04-20-256.
+\bibitem{Egger2021} D. J. Egger, J. Mare\v{c}ek, and S. Woerner, ``Warm-starting quantum optimization,'' \textit{Quantum}, vol. 5, Art. no. 479, 2021, doi: 10.22331/q-2021-06-17-479.
+\bibitem{Brandao2018} F. G. S. L. Brand\~{a}o, M. Broughton, E. Farhi, S. Gutmann, and H. Neven, ``For fixed control parameters the quantum approximate optimization algorithm's objective function value concentrates for typical instances,'' arXiv:1812.04170, 2018.
+\bibitem{Galda2021} A. Galda, X. Liu, D. Lykov, Y. Alexeev, and I. Safro, ``Transferability of optimal QAOA parameters between random graphs,'' in \textit{Proc. IEEE Int. Conf. Quantum Comput. Eng. (QCE)}, 2021, pp. 171--180, doi: 10.1109/QCE52317.2021.00034.
+\bibitem{Shaydulin2023} R. Shaydulin, P. C. Lotshaw, J. Larson, J. Ostrowski, and T. S. Humble, ``Parameter transfer for quantum approximate optimization of weighted MaxCut,'' \textit{ACM Trans. Quantum Comput.}, vol. 4, no. 3, Art. no. 19, 2023, doi: 10.1145/3584706.
+\bibitem{Harrigan2021} M. P. Harrigan \textit{et al.}, ``Quantum approximate optimization of non-planar graph problems on a planar superconducting processor,'' \textit{Nat. Phys.}, vol. 17, pp. 332--336, 2021, doi: 10.1038/s41567-020-01105-y.
+\bibitem{Bartschi2019} A. B\"{a}rtschi and S. Eidenbenz, ``Deterministic preparation of Dicke states,'' in \textit{Fundamentals of Computation Theory} (LNCS, vol. 11651). Cham, Switzerland: Springer, 2019, pp. 126--139, doi: 10.1007/978-3-030-25027-0\_9.
+\bibitem{Vatan2004} F. Vatan and C. Williams, ``Optimal quantum circuits for general two-qubit gates,'' \textit{Phys. Rev. A}, vol. 69, no. 3, Art. no. 032315, 2004, doi: 10.1103/PhysRevA.69.032315.
+\bibitem{Nielsen2010} M. A. Nielsen and I. L. Chuang, \textit{Quantum Computation and Quantum Information}, 10th anniversary ed. Cambridge, U.K.: Cambridge Univ. Press, 2010, doi: 10.1017/CBO9780511976667.
+\bibitem{Powell1994} M. J. D. Powell, ``A direct search optimization method that models the objective and constraint functions by linear interpolation,'' in \textit{Advances in Optimization and Numerical Analysis}, S. Gomez and J.-P. Hennart, Eds. Dordrecht, The Netherlands: Kluwer, 1994, pp. 51--67, doi: 10.1007/978-94-015-8330-5\_4.
+\bibitem{Kirkpatrick1983} S. Kirkpatrick, C. D. Gelatt, and M. P. Vecchi, ``Optimization by simulated annealing,'' \textit{Science}, vol. 220, no. 4598, pp. 671--680, 1983, doi: 10.1126/science.220.4598.671.
+\bibitem{Arute2019} F. Arute \textit{et al.}, ``Quantum supremacy using a programmable superconducting processor,'' \textit{Nature}, vol. 574, no. 7779, pp. 505--510, 2019, doi: 10.1038/s41586-019-1666-5.
 \end{thebibliography}
 
 \end{document}

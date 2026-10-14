@@ -5,7 +5,9 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 FILES = {"P1": ROOT / "series/p1_quantum/paper.tex", "P2": ROOT / "series/p2_agentic/paper.tex",
-         "P3": ROOT / "series/p3_qagentic/paper.tex", "P4": ROOT / "scripts/paper.tex"}
+         "P3": ROOT / "series/p3_qagentic/paper.tex", "P4": ROOT / "scripts/paper.tex",
+         "P4F": ROOT / "series/p4_forecast/paper.tex",
+         "P5": ROOT / "series/p5_merged/paper.tex"}
 ok = True
 for name, f in FILES.items():
     t = f.read_text(encoding="utf-8")

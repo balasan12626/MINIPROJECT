@@ -1,0 +1,233 @@
+{
+ "n_test": 910,
+ "tau": 0.6,
+ "costs": [
+  [
+   1,
+   1,
+   0.2
+  ],
+  [
+   1,
+   5,
+   0.2
+  ],
+  [
+   1,
+   5,
+   0.5
+  ]
+ ],
+ "rules": {
+  "none": {
+   "hold_pct": 0.0,
+   "err_recall_pct": 0.0,
+   "errors_reaching": 226,
+   "fd": 93,
+   "md": 133,
+   "holds": 0,
+   "caught": 0,
+   "errors": 226,
+   "cost_1_1_0.2": 24.835164835164836,
+   "cost_1_5_0.2": 83.2967032967033,
+   "cost_1_5_0.5": 83.2967032967033,
+   "ci": {
+    "hold_pct": [
+     0.0,
+     0.0
+    ],
+    "err_recall_pct": [
+     0.0,
+     0.0
+    ],
+    "errors_reaching": [
+     200.0,
+     252.0
+    ]
+   }
+  },
+  "deployed": {
+   "hold_pct": 26.923076923076923,
+   "err_recall_pct": 40.26548672566372,
+   "errors_reaching": 135,
+   "fd": 38,
+   "md": 97,
+   "holds": 245,
+   "caught": 91,
+   "errors": 226,
+   "cost_1_1_0.2": 20.21978021978022,
+   "cost_1_5_0.2": 62.857142857142854,
+   "cost_1_5_0.5": 70.93406593406593,
+   "ci": {
+    "hold_pct": [
+     23.956043956043956,
+     29.78021978021978
+    ],
+    "err_recall_pct": [
+     34.09090909090909,
+     46.52229012221999
+    ],
+    "errors_reaching": [
+     114.0,
+     156.0
+    ]
+   }
+  },
+  "delta95": {
+   "hold_pct": 9.12087912087912,
+   "err_recall_pct": 17.699115044247787,
+   "errors_reaching": 186,
+   "fd": 60,
+   "md": 126,
+   "holds": 83,
+   "caught": 40,
+   "errors": 226,
+   "cost_1_1_0.2": 22.263736263736263,
+   "cost_1_5_0.2": 77.64835164835165,
+   "cost_1_5_0.5": 80.38461538461539,
+   "ci": {
+    "hold_pct": [
+     7.252747252747253,
+     10.991758241758227
+    ],
+    "err_recall_pct": [
+     12.91633064516129,
+     22.943722943722943
+    ],
+    "errors_reaching": [
+     162.0,
+     210.0
+    ]
+   }
+  },
+  "straddle": {
+   "hold_pct": 7.582417582417582,
+   "err_recall_pct": 15.929203539823009,
+   "errors_reaching": 190,
+   "fd": 62,
+   "md": 128,
+   "holds": 69,
+   "caught": 36,
+   "errors": 226,
+   "cost_1_1_0.2": 22.395604395604394,
+   "cost_1_5_0.2": 78.65934065934066,
+   "cost_1_5_0.5": 80.93406593406593,
+   "ci": {
+    "hold_pct": [
+     5.934065934065934,
+     9.340659340659341
+    ],
+    "err_recall_pct": [
+     11.403508771929825,
+     21.030085496287214
+    ],
+    "errors_reaching": [
+     166.0,
+     214.0
+    ]
+   }
+  },
+  "calibrated_1_1": {
+   "hold_pct": 0.0,
+   "err_recall_pct": 0.0,
+   "errors_reaching": 223,
+   "fd": 90,
+   "md": 133,
+   "holds": 0,
+   "caught": 0,
+   "errors": 223,
+   "cost_1_1_0.2": 24.505494505494507,
+   "cost_1_5_0.2": 82.96703296703296,
+   "cost_1_5_0.5": 82.96703296703296,
+   "ci": {
+    "hold_pct": [
+     0.0,
+     0.0
+    ],
+    "err_recall_pct": [
+     0.0,
+     0.0
+    ],
+    "errors_reaching": [
+     197.0,
+     248.02499999999986
+    ]
+   },
+   "threshold": 0.48999999999999994
+  },
+  "calibrated_1_5": {
+   "hold_pct": 0.0,
+   "err_recall_pct": 0.0,
+   "errors_reaching": 347,
+   "fd": 320,
+   "md": 27,
+   "holds": 0,
+   "caught": 0,
+   "errors": 347,
+   "cost_1_1_0.2": 38.13186813186813,
+   "cost_1_5_0.2": 50.0,
+   "cost_1_5_0.5": 50.0,
+   "ci": {
+    "hold_pct": [
+     0.0,
+     0.0
+    ],
+    "err_recall_pct": [
+     0.0,
+     0.0
+    ],
+    "errors_reaching": [
+     318.0,
+     376.0
+    ]
+   },
+   "threshold": 0.18
+  }
+ },
+ "straddle_minus_deployed_errors_reaching": {
+  "value": 55,
+  "ci": [
+   42.0,
+   69.0
+  ]
+ },
+ "data": {
+  "dataset": "INDOFLOODS",
+  "target": "Flood Type == 'Severe Flood' (an event-level label)",
+  "n_events": 4548,
+  "n_train": 3638,
+  "n_test": 910,
+  "pos_rate_train": 0.35816382627817483,
+  "pos_rate_test": 0.35824175824175825,
+  "n_gauges": 155,
+  "n_numeric": 55,
+  "n_categorical": 4,
+  "n_precip": 10,
+  "n_catch_num": 21,
+  "auc": {
+   "random_forest": 0.8184248676359358,
+   "xgboost": 0.8059921001764854
+  },
+  "brier": {
+   "random_forest": 0.16297336428512216,
+   "xgboost": 0.18191823363304138
+  },
+  "acc_at_tau": {
+   "random_forest": 0.7549450549450549,
+   "xgboost": 0.7516483516483516
+  },
+  "t1d_train_pct": {
+   "50": 24.91044294,
+   "90": 93.90919476000005,
+   "99": 188.295998348
+  },
+  "t1d_train_max": 367.7128925,
+  "rf": "650 trees, depth 20, balanced class weights",
+  "xgb": "650 trees, depth 7, lr 0.035, scale_pos_weight"
+ },
+ "sweep": {
+  "n": 604,
+  "rain_max": 300,
+  "share_rain_above_train_p99": 0.3708609271523179
+ }
+}

@@ -274,6 +274,33 @@ assert best_depth[(0.02, "xy", 1.0)][0] == 4, "text: XY mean keeps depth 4 even 
 assert best_depth[(0.02, "xy", 0.1)][0] < 4, "text: CVaR variant prefers a shallower circuit at 2% error"
 assert best_depth[(0.02, "xy", 1.0)][1] > best_depth[(0.02, "x", 1.0)][1], "text: XY ahead of X at 2%"
 
+import post_p1_v2  # noqa: E402  revision experiments (seeds, Grover mixer, penalty sweep, angle transfer)
+
+V2POP, V2FEAS = post_p1_v2.extend(put, WORK, OUT, j)
+import post_p1_size  # noqa: E402  transfer across problem size and under gate noise
+
+post_p1_size.extend(put, WORK, OUT)
+put("SANSweeps", "60")
+import post_p1_r2  # noqa: E402  second revision: feasible-subspace mixer, normalisation ablation, strong baselines
+
+R2 = post_p1_r2.extend(put, WORK, OUT)
+assert R2["fg"][4].mean() > 1.5 * R2["xy"][4].mean(), "text: the feasible-subspace mixer is far ahead of ring-XY"
+dep_f, none_f, std_f = R2["norm"]
+assert none_f < 0.25 * dep_f, "text: without scaling the transferred angles collapse"
+assert abs(std_f - dep_f) < 0.05, "text: another normalisation transfers about as well"
+sv = R2["strong"]
+assert dep_f > sv["cobyla5"][0] and dep_f > sv["lbfgs"][0], "text: fixed angles beat best-of-5 COBYLA and L-BFGS-B"
+assert sv["warm250"][0] > dep_f, "text: a warm start from the fixed angles improves on them"
+assert sv["warm250"][2] < 0.01, "text: the warm-start gain is significant"
+import post_p1_r3  # noqa: E402  third revision: oracle-free selection, Holm, per city, best-of-N gap, CNOTs
+
+R3 = post_p1_r3.extend(put, WORK, OUT)
+assert R2["fg"][4].mean() > 5 * R3["unifeas"], "text: feasible-subspace mixer far above uniform over feasible plans"
+put("FgOverUni", f"{R2['fg'][4].mean() / R3['unifeas']:.1f}")
+import post_p1_r4  # noqa: E402  fourth revision: fixed angles at 15-27 qubits and under other disruption patterns
+
+R4 = post_p1_r4.extend(put, WORK, OUT)
+
 with open(OUT / "nums.tex", "w", encoding="utf-8") as f:
     for k, v in M.items():
         f.write(f"\\newcommand{{\\{k}}}{{{v}}}\n")
@@ -281,12 +308,15 @@ with open(OUT / "nums.tex", "w", encoding="utf-8") as f:
 # figure: P_opt and P_feas vs depth
 plt.rcParams.update({"font.family": "serif", "font.serif": ["Times New Roman"], "font.size": 8,
                      "pdf.fonttype": 42, "ps.fonttype": 42})
-fig, axs = plt.subplots(1, 2, figsize=(3.45, 1.85))
+fig, axs = plt.subplots(1, 2, figsize=(3.45, 2.05))
 sty = {("x", 1.0): ("o-", "0.55", "X, mean"), ("x", 0.1): ("s--", "0.55", "X, CVaR"),
        ("xy", 1.0): ("o-", "0.05", "XY, mean"), ("xy", 0.1): ("s--", "0.05", "XY, CVaR")}
 for (k, a), (m, c, lab) in sty.items():
     for ax, key in zip(axs, ("popt", "pfeas")):
         ax.plot([1, 2, 3, 4], [Qd[(a, k, p)][key] for p in (1, 2, 3, 4)], m, color=c, ms=3, lw=0.9, label=lab)
+for ax, src in zip(axs, (V2POP, V2FEAS)):  # Grover mixer (revision run), mean objective
+    ax.plot([1, 2, 3, 4], [src[(("grover", 1.0), p)][0].mean() for p in (1, 2, 3, 4)], "D:", color="0.3",
+            ms=2.6, lw=0.9, label="Grover, mean")
 axs[0].axhline(s["uniform_onehot_popt"], color="black", lw=0.5, ls=":")
 axs[0].set_ylabel("$P_{\\mathrm{opt}}$")
 axs[1].set_ylabel("$P_{\\mathrm{feas}}$")
@@ -295,8 +325,9 @@ for ax in axs:
     ax.set_xticks([1, 2, 3, 4])
     ax.grid(lw=0.3)
 axs[1].set_ylim(0, 1.02)
-axs[0].legend(fontsize=5.8, frameon=False, loc="upper left")
-fig.tight_layout(pad=0.3, w_pad=0.8)
+h, l = axs[0].get_legend_handles_labels()
+fig.legend(h, l, fontsize=5.6, frameon=False, loc="upper center", ncol=5, handlelength=2.2, columnspacing=0.8)
+fig.tight_layout(pad=0.3, w_pad=0.8, rect=(0, 0, 1, 0.88))
 fig.savefig(OUT / "fig_popt.pdf")
 
 # claims in the text

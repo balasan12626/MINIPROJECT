@@ -1,0 +1,1451 @@
+{
+ "n_episodes": 30,
+ "e5_infeasible": 27,
+ "e5_escalated": 27,
+ "correct_escalations": 27,
+ "wrong_escalations": 0,
+ "missed_escalations": 0,
+ "raw_invalid_at_infeasible": 27,
+ "rows": [
+  {
+   "seed": 42,
+   "event": 0,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 42,
+   "event": 1,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 42,
+   "event": 2,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 42,
+   "event": 3,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 42,
+   "event": 4,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 42,
+   "event": 5,
+   "feasible": false,
+   "escalated": true,
+   "how": "exact",
+   "raw_invalid": true
+  },
+  {
+   "seed": 59,
+   "event": 0,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 59,
+   "event": 1,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 59,
+   "event": 2,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 59,
+   "event": 3,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 59,
+   "event": 4,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 59,
+   "event": 5,
+   "feasible": false,
+   "escalated": true,
+   "how": "exact",
+   "raw_invalid": true
+  },
+  {
+   "seed": 76,
+   "event": 0,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 76,
+   "event": 1,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 76,
+   "event": 2,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 76,
+   "event": 3,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 76,
+   "event": 4,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": true
+  },
+  {
+   "seed": 76,
+   "event": 5,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 93,
+   "event": 0,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 93,
+   "event": 1,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 93,
+   "event": 2,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 93,
+   "event": 3,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 93,
+   "event": 4,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 93,
+   "event": 5,
+   "feasible": false,
+   "escalated": true,
+   "how": "exact",
+   "raw_invalid": true
+  },
+  {
+   "seed": 110,
+   "event": 0,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 110,
+   "event": 1,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 110,
+   "event": 2,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 110,
+   "event": 3,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 110,
+   "event": 4,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 110,
+   "event": 5,
+   "feasible": false,
+   "escalated": true,
+   "how": "exact",
+   "raw_invalid": true
+  },
+  {
+   "seed": 127,
+   "event": 0,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 127,
+   "event": 1,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 127,
+   "event": 2,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 127,
+   "event": 3,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": true
+  },
+  {
+   "seed": 127,
+   "event": 4,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": true
+  },
+  {
+   "seed": 127,
+   "event": 5,
+   "feasible": false,
+   "escalated": true,
+   "how": "exact",
+   "raw_invalid": true
+  },
+  {
+   "seed": 144,
+   "event": 0,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 144,
+   "event": 1,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 144,
+   "event": 2,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 144,
+   "event": 3,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 144,
+   "event": 4,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 144,
+   "event": 5,
+   "feasible": false,
+   "escalated": true,
+   "how": "exact",
+   "raw_invalid": true
+  },
+  {
+   "seed": 161,
+   "event": 0,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 161,
+   "event": 1,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 161,
+   "event": 2,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 161,
+   "event": 3,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 161,
+   "event": 4,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 161,
+   "event": 5,
+   "feasible": false,
+   "escalated": true,
+   "how": "exact",
+   "raw_invalid": true
+  },
+  {
+   "seed": 178,
+   "event": 0,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 178,
+   "event": 1,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 178,
+   "event": 2,
+   "feasible": true,
+   "escalated": false,
+   "how": "greedy",
+   "raw_invalid": true
+  },
+  {
+   "seed": 178,
+   "event": 3,
+   "feasible": true,
+   "escalated": false,
+   "how": "greedy",
+   "raw_invalid": true
+  },
+  {
+   "seed": 178,
+   "event": 4,
+   "feasible": true,
+   "escalated": false,
+   "how": "greedy",
+   "raw_invalid": true
+  },
+  {
+   "seed": 178,
+   "event": 5,
+   "feasible": false,
+   "escalated": true,
+   "how": "exact",
+   "raw_invalid": true
+  },
+  {
+   "seed": 195,
+   "event": 0,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 195,
+   "event": 1,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 195,
+   "event": 2,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 195,
+   "event": 3,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": true
+  },
+  {
+   "seed": 195,
+   "event": 4,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 195,
+   "event": 5,
+   "feasible": false,
+   "escalated": true,
+   "how": "exact",
+   "raw_invalid": true
+  },
+  {
+   "seed": 212,
+   "event": 0,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 212,
+   "event": 1,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 212,
+   "event": 2,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 212,
+   "event": 3,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 212,
+   "event": 4,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": true
+  },
+  {
+   "seed": 212,
+   "event": 5,
+   "feasible": false,
+   "escalated": true,
+   "how": "exact",
+   "raw_invalid": true
+  },
+  {
+   "seed": 229,
+   "event": 0,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 229,
+   "event": 1,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 229,
+   "event": 2,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 229,
+   "event": 3,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 229,
+   "event": 4,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 229,
+   "event": 5,
+   "feasible": false,
+   "escalated": true,
+   "how": "exact",
+   "raw_invalid": true
+  },
+  {
+   "seed": 246,
+   "event": 0,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 246,
+   "event": 1,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 246,
+   "event": 2,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 246,
+   "event": 3,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 246,
+   "event": 4,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 246,
+   "event": 5,
+   "feasible": false,
+   "escalated": true,
+   "how": "exact",
+   "raw_invalid": true
+  },
+  {
+   "seed": 263,
+   "event": 0,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 263,
+   "event": 1,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 263,
+   "event": 2,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 263,
+   "event": 3,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": true
+  },
+  {
+   "seed": 263,
+   "event": 4,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": true
+  },
+  {
+   "seed": 263,
+   "event": 5,
+   "feasible": false,
+   "escalated": true,
+   "how": "exact",
+   "raw_invalid": true
+  },
+  {
+   "seed": 280,
+   "event": 0,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 280,
+   "event": 1,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 280,
+   "event": 2,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 280,
+   "event": 3,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 280,
+   "event": 4,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 280,
+   "event": 5,
+   "feasible": false,
+   "escalated": true,
+   "how": "exact",
+   "raw_invalid": true
+  },
+  {
+   "seed": 297,
+   "event": 0,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 297,
+   "event": 1,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 297,
+   "event": 2,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 297,
+   "event": 3,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 297,
+   "event": 4,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 297,
+   "event": 5,
+   "feasible": false,
+   "escalated": true,
+   "how": "exact",
+   "raw_invalid": true
+  },
+  {
+   "seed": 314,
+   "event": 0,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 314,
+   "event": 1,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 314,
+   "event": 2,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": true
+  },
+  {
+   "seed": 314,
+   "event": 3,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": true
+  },
+  {
+   "seed": 314,
+   "event": 4,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 314,
+   "event": 5,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 331,
+   "event": 0,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 331,
+   "event": 1,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 331,
+   "event": 2,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 331,
+   "event": 3,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 331,
+   "event": 4,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 331,
+   "event": 5,
+   "feasible": false,
+   "escalated": true,
+   "how": "exact",
+   "raw_invalid": true
+  },
+  {
+   "seed": 348,
+   "event": 0,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 348,
+   "event": 1,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 348,
+   "event": 2,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": true
+  },
+  {
+   "seed": 348,
+   "event": 3,
+   "feasible": true,
+   "escalated": false,
+   "how": "greedy",
+   "raw_invalid": true
+  },
+  {
+   "seed": 348,
+   "event": 4,
+   "feasible": true,
+   "escalated": false,
+   "how": "greedy",
+   "raw_invalid": true
+  },
+  {
+   "seed": 348,
+   "event": 5,
+   "feasible": false,
+   "escalated": true,
+   "how": "exact",
+   "raw_invalid": true
+  },
+  {
+   "seed": 365,
+   "event": 0,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 365,
+   "event": 1,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 365,
+   "event": 2,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 365,
+   "event": 3,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 365,
+   "event": 4,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 365,
+   "event": 5,
+   "feasible": false,
+   "escalated": true,
+   "how": "exact",
+   "raw_invalid": true
+  },
+  {
+   "seed": 382,
+   "event": 0,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 382,
+   "event": 1,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 382,
+   "event": 2,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 382,
+   "event": 3,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 382,
+   "event": 4,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 382,
+   "event": 5,
+   "feasible": false,
+   "escalated": true,
+   "how": "exact",
+   "raw_invalid": true
+  },
+  {
+   "seed": 399,
+   "event": 0,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 399,
+   "event": 1,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 399,
+   "event": 2,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 399,
+   "event": 3,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 399,
+   "event": 4,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": true
+  },
+  {
+   "seed": 399,
+   "event": 5,
+   "feasible": false,
+   "escalated": true,
+   "how": "exact",
+   "raw_invalid": true
+  },
+  {
+   "seed": 416,
+   "event": 0,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 416,
+   "event": 1,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 416,
+   "event": 2,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 416,
+   "event": 3,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 416,
+   "event": 4,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 416,
+   "event": 5,
+   "feasible": false,
+   "escalated": true,
+   "how": "exact",
+   "raw_invalid": true
+  },
+  {
+   "seed": 433,
+   "event": 0,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 433,
+   "event": 1,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 433,
+   "event": 2,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": true
+  },
+  {
+   "seed": 433,
+   "event": 3,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": true
+  },
+  {
+   "seed": 433,
+   "event": 4,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 433,
+   "event": 5,
+   "feasible": false,
+   "escalated": true,
+   "how": "exact",
+   "raw_invalid": true
+  },
+  {
+   "seed": 450,
+   "event": 0,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 450,
+   "event": 1,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 450,
+   "event": 2,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 450,
+   "event": 3,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 450,
+   "event": 4,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": true
+  },
+  {
+   "seed": 450,
+   "event": 5,
+   "feasible": false,
+   "escalated": true,
+   "how": "exact",
+   "raw_invalid": true
+  },
+  {
+   "seed": 467,
+   "event": 0,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 467,
+   "event": 1,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 467,
+   "event": 2,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 467,
+   "event": 3,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": true
+  },
+  {
+   "seed": 467,
+   "event": 4,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 467,
+   "event": 5,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 484,
+   "event": 0,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 484,
+   "event": 1,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 484,
+   "event": 2,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 484,
+   "event": 3,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 484,
+   "event": 4,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": true
+  },
+  {
+   "seed": 484,
+   "event": 5,
+   "feasible": false,
+   "escalated": true,
+   "how": "exact",
+   "raw_invalid": true
+  },
+  {
+   "seed": 501,
+   "event": 0,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 501,
+   "event": 1,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 501,
+   "event": 2,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 501,
+   "event": 3,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 501,
+   "event": 4,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 501,
+   "event": 5,
+   "feasible": false,
+   "escalated": true,
+   "how": "exact",
+   "raw_invalid": true
+  },
+  {
+   "seed": 518,
+   "event": 0,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 518,
+   "event": 1,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 518,
+   "event": 2,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": true
+  },
+  {
+   "seed": 518,
+   "event": 3,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 518,
+   "event": 4,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 518,
+   "event": 5,
+   "feasible": false,
+   "escalated": true,
+   "how": "exact",
+   "raw_invalid": true
+  },
+  {
+   "seed": 535,
+   "event": 0,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 535,
+   "event": 1,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 535,
+   "event": 2,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 535,
+   "event": 3,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 535,
+   "event": 4,
+   "feasible": true,
+   "escalated": false,
+   "how": "qaoa",
+   "raw_invalid": false
+  },
+  {
+   "seed": 535,
+   "event": 5,
+   "feasible": false,
+   "escalated": true,
+   "how": "exact",
+   "raw_invalid": true
+  }
+ ]
+}

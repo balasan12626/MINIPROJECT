@@ -294,3 +294,122 @@ def greedy(inst: dict, order: list[int]) -> tuple | None:
         a[g] = s
         rem[s] -= inst["sizes"][g]
     return tuple(a)
+
+
+# ----------------------------------------------------------------------------- one-hot subspace (added for P1 round 3)
+# The ring-XY and Grover mixers never leave the span of the S^G one-hot plans, and the cost operator is
+# diagonal, so both circuits can be simulated exactly on S^G amplitudes instead of 2^(G S). Nothing above
+# is changed; these functions are additive.
+def onehot_plans(G: int, S: int) -> np.ndarray:
+    """All S^G plans as an (S^G, G) int array; row k is the plan of subspace index k (group 0 slowest)."""
+    return np.array(list(itertools.product(range(S), repeat=G)), dtype=np.int64).reshape(-1, G)
+
+
+def subspace_diag(inst: dict) -> dict:
+    """Energies and true feasibility/cost of the S^G one-hot plans (same terms as diagonals())."""
+    G, S = inst["G"], inst["S"]
+    A = onehot_plans(G, S)
+    rows = np.arange(G)
+    c = inst["cost"] + inst["stab"]
+    cs = shifted_cost(inst)
+    lin = c[rows, A].sum(axis=1)
+    lin_s = cs[rows, A].sum(axis=1)
+    P = penalty_weight(inst)
+    forb_viol = inst["forb"][rows, A].sum(axis=1).astype(np.float64)
+    pair_viol = np.zeros(len(A))
+    for g, h, s in overload_pairs(inst):
+        pair_viol += ((A[:, g] == s) & (A[:, h] == s))
+    h_xy = lin_s + P * (forb_viol + pair_viol)
+    load = np.zeros((len(A), S))
+    for g in range(G):
+        load[np.arange(len(A)), A[:, g]] += inst["sizes"][g]
+    feas = (forb_viol == 0) & (load <= inst["rem"][None, :]).all(axis=1)
+    true_cost = np.where(feas, inst["cost"][rows, A].sum(axis=1), np.inf)
+    obj = np.where(feas, lin, np.inf)
+    full_index = np.array([assign_to_index(a, S) for a in A], dtype=np.int64)
+    return {"plans": A, "h_xy": h_xy, "feas": feas, "cost": true_cost, "obj": obj, "P": P, "full_index": full_index}
+
+
+class SubQaoa(Qaoa):
+    """Ring-XY ("xy") or Grover ("grover") QAOA simulated on the S^G one-hot amplitudes.
+
+    Same angles, scaling (divide by P - 1), objectives and optimiser as Qaoa; state() returns the S^G
+    amplitudes ordered as onehot_plans(). Agrees with Qaoa(kind="xy") on the one-hot entries.
+    """
+
+    def __init__(self, inst: dict, kind: str = "xy", sd: dict | None = None, alpha: float = 1.0):
+        self.inst, self.kind, self.alpha = inst, kind, alpha
+        self.G, self.S = inst["G"], inst["S"]
+        self.n = self.G * self.S
+        self.d = sd or subspace_diag(inst)
+        self.h = self.d["h_xy"]
+        self.scale = max(self.d["P"] - 1.0, 1e-9)
+        self.hn = self.h / self.scale
+        self.order = np.argsort(self.hn, kind="stable")
+        self.hn_sorted = self.hn[self.order]
+        self.psi0 = np.full(self.S ** self.G, self.S ** (-self.G / 2), dtype=np.complex128)
+        self.pairs = None
+        self.ring = [(i, (i + 1) % self.S) for i in range(self.S)] if self.S > 2 else [(0, 1)]
+        self.nfev = 0
+
+    def _mix_xy(self, psi: np.ndarray, beta: float) -> np.ndarray:
+        c, s = math.cos(beta), -1j * math.sin(beta)
+        v = psi.reshape((self.S,) * self.G)
+        for g in range(self.G):
+            for i, j in self.ring:
+                ix = [slice(None)] * self.G
+                jx = [slice(None)] * self.G
+                ix[g], jx[g] = i, j
+                ai, aj = v[tuple(ix)].copy(), v[tuple(jx)].copy()
+                v[tuple(ix)] = c * ai + s * aj
+                v[tuple(jx)] = c * aj + s * ai
+        return psi
+
+    def state(self, theta: np.ndarray) -> np.ndarray:
+        p = len(theta) // 2
+        psi = self.psi0.copy()
+        for k in range(p):
+            psi *= np.exp(-1j * theta[k] * self.hn)
+            if self.kind == "grover":
+                psi += (np.exp(-1j * theta[p + k]) - 1.0) * np.vdot(self.psi0, psi) * self.psi0
+            else:
+                self._mix_xy(psi, theta[p + k])
+        return psi
+
+
+def sa_onehot(inst: dict, sd: dict, rng: np.random.Generator, restarts: int, sweeps: int = 200,
+              moves_per_sweep: int | None = None) -> dict:
+    """SA over one-hot plans: a move reassigns one group to another shelter (one-hot never broken).
+
+    Minimises the same penalised energy h_xy as the XY circuit, with the schedule of simulated_annealing
+    (T0 = 2 (P - 1), T *= 0.9 per sweep). Returns the final best plan by energy and, separately, the
+    cheapest verified-feasible plan visited (a verifier in the loop).
+    """
+    G, S = inst["G"], inst["S"]
+    m = moves_per_sweep or G * S
+    h = sd["h_xy"]
+    w = S ** np.arange(G - 1, -1, -1)  # subspace index of a plan
+    scale = max(sd["P"] - 1.0, 1e-9)
+    best_k, best_e, best_feas_k, best_feas_c = None, math.inf, None, math.inf
+    t0 = time.perf_counter()
+    for _ in range(restarts):
+        a = rng.integers(0, S, G)
+        k = int(a @ w)
+        e = h[k]
+        T = 2.0 * scale
+        for _ in range(sweeps):
+            for _ in range(m):
+                g = int(rng.integers(G))
+                s_new = (a[g] + 1 + int(rng.integers(S - 1))) % S
+                k2 = k + (s_new - a[g]) * int(w[g])
+                de = h[k2] - e
+                if de <= 0 or rng.random() < math.exp(-de / T):
+                    a[g], k, e = s_new, k2, h[k2]
+                    if sd["feas"][k] and sd["cost"][k] < best_feas_c:
+                        best_feas_k, best_feas_c = k, sd["cost"][k]
+            T *= 0.9
+        if sd["feas"][k] and sd["cost"][k] < best_feas_c:
+            best_feas_k, best_feas_c = k, sd["cost"][k]
+        if e < best_e:
+            best_k, best_e = k, e
+    return {"k": best_k, "feas_k": best_feas_k, "ms": (time.perf_counter() - t0) * 1000}

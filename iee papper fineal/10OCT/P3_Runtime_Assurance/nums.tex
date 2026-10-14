@@ -1,0 +1,81 @@
+\newcommand{\Shots}{64}
+\newcommand{\Batch}{8}
+\newcommand{\TwinSeeds}{30}
+\newcommand{\TwinEvents}{180}
+\newcommand{\TwinInfeasible}{27}
+\newcommand{\TwinRawQ}{29.1}
+\newcommand{\TwinRawSA}{20.6}
+\newcommand{\TwinMilpMs}{6.9}
+\newcommand{\TwinEnumMs}{1.4}
+\newcommand{\TwinQaoaS}{13.0}
+\newcommand{\TwinLowPfeas}{19}
+\newcommand{\TwinText}{Dispatching the most frequent sample unchecked would have been unsafe in 29.1\% of event draws for QAOA and 20.6\% for simulated annealing. These include the 27 infeasible events, where any answer a sampler gives is wrong. The verified loop dispatched no invalid plan, escalated every infeasible event and no feasible one, and dispatched an optimal plan in 93.1\% (QAOA) and 95.4\% (annealing) of feasible draws. At this size the uncertified loop also behaved well (0.0\% and 0.0\% false escalations), because the greedy rule found a plan whenever the sampler did not. The MILP took a median of 6.9~ms against 1.4~ms for full enumeration, while one QAOA training took 13.0~s of simulation.}
+\newcommand{\CityTimeout}{3}
+\newcommand{\CityLimitS}{60}
+\newcommand{\LongLimitS}{1800}
+\newcommand{\TimeoutG}{32}
+\newcommand{\TimeoutDemand}{90}
+\newcommand{\TimeoutSettled}{3}
+\newcommand{\TimeoutFeasible}{3}
+\newcommand{\TimeoutInfeasible}{0}
+\newcommand{\TimeoutMaxS}{118}
+\newcommand{\TimeoutMinS}{1}
+\newcommand{\CityN}{360}
+\newcommand{\CityMinVars}{80}
+\newcommand{\CityMaxVars}{320}
+\newcommand{\CityFalseEsc}{11.9}
+\newcommand{\CitySAFoundEight}{67.9}
+\newcommand{\CitySAFoundThirtyTwo}{0.0}
+\newcommand{\MilpMaxS}{23.8}
+\newcommand{\CitySettled}{357}
+\newcommand{\CityInfeasible}{112}
+\newcommand{\CityFalseTight}{31.5}
+\newcommand{\CityFalseLoose}{0.0}
+\newcommand{\CityGreedyGap}{17.3}
+\newcommand{\CityText}{As the problem grew from 8 to 32 groups, simulated annealing produced a valid plan in 67.9\% and then 0.0\% of calls on solvable instances; Section~\ref{sec:viol} shows that at this scale most samples were not even complete assignments. Dispatching the top sample unchecked would have been unsafe in most calls at every size. With 8 groups at 90\% demand each group is about as large as the free seats of an average shelter, and no instance had a valid plan. The uncertified loop escalated 11.9\% of solvable cases overall (31.5\% at 90\% demand, 0.0\% at 60\%), because the greedy rule also fails when capacity is tight. Where the greedy rule did find a plan, its median cost was 17.3\% above the optimum. Within the 60~s limit the MILP settled 357 of the 360 instances, finding the optimal plan or proving that none exists, in at most 23.8~s. The other 3, all with 32 groups at 90\% demand, hit the 60~s limit with neither a plan nor a proof, so the loop would have escalated them without a certificate. Given up to 1800~s, the solver found an optimal plan for all 3 in at most 118~s, one of them in 1~s, so solve times vary with machine load. Treating a time-out as proof of infeasibility would have sent solvable cases to a human.}
+\newcommand{\AdaptShots}{18.4}
+\newcommand{\AdaptSame}{100.0}
+\newcommand{\AdaptOptQ}{68.8}
+\newcommand{\FixedOptQ}{93.1}
+\newcommand{\AdaptOptSA}{95.4}
+\newcommand{\FixedOptSA}{95.4}
+\newcommand{\CityAdaptShots}{58.2}
+\newcommand{\ShotText}{With the adaptive budget the twin loop used 18.4 shots per event on average instead of 64 and took the same escalation decision in every draw. Plan quality did change for QAOA: it dispatched an optimal plan in 68.8\% of feasible draws against 93.1\% with the full budget, because the loop keeps the cheapest valid sample of the first successful batch rather than of all 64 shots. Annealing dispatched an optimal plan whenever it found a valid one, with either budget, so its rate stayed at 95.4\%. At city scale, where valid samples are rare, the adaptive rule used 58.2 shots per call and saved little.}
+\newcommand{\TwinRawFeasQ}{16.6}
+\newcommand{\TwinRawFeasSA}{6.5}
+\newcommand{\EvFiveInf}{27}
+\newcommand{\EvFourQ}{33.0}
+\newcommand{\EvFourSA}{13.3}
+\newcommand{\EventText}{In the initial state and after the first road closure the most frequent sample was almost always valid. The risk appeared once capacity became tight: after the shelter surge, a second closure and the failure of shelter A, the unsafe rate of QAOA rose from 23.7\% to 33.0\%, and that of annealing from 7.7\% to 13.3\%. After shelter B also failed, 27 of 30 events had no valid plan at all. Counting solvable events only, unverified dispatch would still have been unsafe in 16.6\% (QAOA) and 6.5\% (annealing) of draws.}
+\newcommand{\ReproInst}{358}
+\newcommand{\ReproDrawPct}{99.9}
+\newcommand{\ViolBlindQ}{97.7}
+\newcommand{\ViolBlindSA}{94.6}
+\newcommand{\ViolBlindEight}{31.0}
+\newcommand{\ViolOnehotEight}{65.5}
+\newcommand{\ViolOnehotSixteen}{94.2}
+\newcommand{\ViolText}{On the twin,97.7\% of the unsafe QAOA samples and 94.6\% of the annealing samples overfilled a shelter although every pair of groups in it fitted, so the QUBO assigned them no penalty at all. Overloads with a penalized pair almost never reached the top, and the XY mixer never broke the one-hot rule. At city scale the picture changes: the annealer, run for a fixed 40 sweeps, left groups with no shelter or with several in 65.5\% of unsafe samples at 8 groups, 94.2\% at 16 and all of them at 32, while penalty-free overloads fell from 31.0\% to none. A small instance fails through the encoding and a large one through the search, and the verifier catches both. The re-run that produced these classes reproduced the original flags in every twin draw and in 358 of 360 city instances (99.9\% of draws); we attribute the few differences to floating-point ordering in the vectorized annealer.}
+\newcommand{\TraceSeedNo}{178}
+\newcommand{\TracePfTwo}{0.02}
+\newcommand{\TracePfThree}{0.00}
+\newcommand{\TraceGreedyGap}{5.3}
+\newcommand{\TwinRawQLo}{22.7}
+\newcommand{\TwinRawQHi}{35.6}
+\newcommand{\TwinRawSALo}{14.3}
+\newcommand{\TwinRawSAHi}{26.4}
+\newcommand{\PairQWorse}{24}
+\newcommand{\PairSAWorse}{7}
+\newcommand{\PairTie}{122}
+\newcommand{\PairN}{153}
+\newcommand{\PairP}{2.4\times10^{-4}}
+\newcommand{\CityFalseLo}{8.1}
+\newcommand{\CityFalseHi}{15.9}
+\newcommand{\StatText}{Resampling events gives 95\% intervals of 22.7--35.6\% for QAOA and 14.3--26.4\% for annealing. On the 153 solvable events, the top QAOA sample was unsafe more often than the top annealing sample in 24 events and less often in 7 (Wilcoxon signed-rank $p=2.4\times10^{-4}$), so the difference is consistent across events and not an effect of a few draws.}
+\newcommand{\KolFeas}{4}
+\newcommand{\WorstCity}{Delhi}
+\newcommand{\WorstFalse}{27.1}
+\newcommand{\WorstGreedy}{72.9}
+\newcommand{\MinUnsafeCity}{87.7}
+\newcommand{\ByCityText}{Unverified dispatch was unsafe in at least 87.7\% of calls in every city. In Kolkata the three closures cut one of the six zones off from every shelter, so any instance with a group there has no valid plan, and only 4 of 60 were solvable. Delhi had the most false escalations (27.1\%) and the weakest greedy rule, which found a plan in 72.9\% of its solvable instances. The failures of the uncertified loop therefore depend on the city network as well as on the problem size.}
+\newcommand{\MilpMedEight}{0.02}
+\newcommand{\MilpMedThirtyTwo}{0.74}

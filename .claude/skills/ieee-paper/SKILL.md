@@ -87,6 +87,9 @@ P3 agentic + quantum (`series/p3_qagentic`), P4 = the master paper above. Output
 - Both builds fail if the PDF text contains a broken command name (`extit`, …) or the source contains a tab:
   a collapsed `\t` in a Python string once printed "extitReproducibility" into P4.
 - Do not submit overlapping papers to the same venue at the same time.
+- Now five papers: `p4_forecast` (CAMELS-IND benchmark) and `p5_merged` (merged system paper built from P1–P4 numbers,
+  macro prefixes Fc/Qa/Ra/Ag, bibliography via `p5_merged/fill_bib.py`). Build all with `PAPER_MAX_PAGES=6`.
+  P5 duplicates P1–P4 results: submit P5 or the separate papers, never both. Details in `CLAUDE.md` ("IEEE paper series").
 
 ## Verify after every rebuild
 

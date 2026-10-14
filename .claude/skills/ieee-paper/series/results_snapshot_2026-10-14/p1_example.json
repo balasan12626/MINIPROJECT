@@ -1,0 +1,206 @@
+{
+ "sizes": [
+  18,
+  13,
+  21,
+  20
+ ],
+ "remaining": [
+  19,
+  76,
+  54
+ ],
+ "cost": [
+  [
+   16.62,
+   23.58,
+   28.89
+  ],
+  [
+   21.54,
+   20.37,
+   24.97
+  ],
+  [
+   25.33,
+   20.31,
+   20.3
+  ],
+  [
+   16.62,
+   23.58,
+   28.89
+  ]
+ ],
+ "forbidden": [
+  [
+   false,
+   false,
+   false
+  ],
+  [
+   false,
+   false,
+   false
+  ],
+  [
+   true,
+   false,
+   false
+  ],
+  [
+   true,
+   false,
+   false
+  ]
+ ],
+ "optimum": [
+  0,
+  1,
+  2,
+  1
+ ],
+ "opt_cost": 80.86,
+ "greedy": [
+  0,
+  1,
+  2,
+  1
+ ],
+ "greedy_cost": 80.86,
+ "n_feasible": 29,
+ "samples": {
+  "xy": {
+   "p_opt": 0.31914441023462115,
+   "p_feas": 0.9816842817767962,
+   "top": [
+    {
+     "assign": [
+      0,
+      1,
+      2,
+      1
+     ],
+     "prob": 0.31914441023462115,
+     "feasible": true,
+     "optimal": true,
+     "cost": 80.86
+    },
+    {
+     "assign": [
+      0,
+      1,
+      1,
+      1
+     ],
+     "prob": 0.3029878394103368,
+     "feasible": true,
+     "optimal": false,
+     "cost": 80.88
+    },
+    {
+     "assign": [
+      1,
+      1,
+      2,
+      1
+     ],
+     "prob": 0.060257115117424286,
+     "feasible": true,
+     "optimal": false,
+     "cost": 87.82
+    },
+    {
+     "assign": [
+      1,
+      1,
+      1,
+      1
+     ],
+     "prob": 0.057206620366956853,
+     "feasible": true,
+     "optimal": false,
+     "cost": 87.83
+    },
+    {
+     "assign": [
+      0,
+      2,
+      2,
+      1
+     ],
+     "prob": 0.04639718695589957,
+     "feasible": true,
+     "optimal": false,
+     "cost": 85.47
+    }
+   ]
+  },
+  "x": {
+   "p_opt": 0.048824368581864064,
+   "p_feas": 0.6806586722310565,
+   "top": [
+    {
+     "assign": [
+      0,
+      1,
+      2,
+      1
+     ],
+     "prob": 0.048824368581864064,
+     "feasible": true,
+     "optimal": true,
+     "cost": 80.86
+    },
+    {
+     "assign": [
+      0,
+      1,
+      1,
+      1
+     ],
+     "prob": 0.048794425296933716,
+     "feasible": true,
+     "optimal": false,
+     "cost": 80.88
+    },
+    {
+     "assign": [
+      1,
+      1,
+      2,
+      1
+     ],
+     "prob": 0.03526714220079974,
+     "feasible": true,
+     "optimal": false,
+     "cost": 87.82
+    },
+    {
+     "assign": [
+      1,
+      1,
+      1,
+      1
+     ],
+     "prob": 0.03524551336834843,
+     "feasible": true,
+     "optimal": false,
+     "cost": 87.83
+    },
+    {
+     "assign": [
+      0,
+      1,
+      2,
+      2
+     ],
+     "prob": 0.03471108861771357,
+     "feasible": true,
+     "optimal": false,
+     "cost": 86.18
+    }
+   ]
+  }
+ }
+}
