@@ -123,8 +123,10 @@ async def run_pipeline(mode: str = "live", observations: dict[str, Any] | None =
         model_name=pretty,
         model_version=status.get("model_version"),
     )
-    pred = predict_live(rainfall_24h_mm=rain_24, forecast_daily_mm=daily)
-    pred_v2 = predict_peak_level_v2(rain_24, daily)
+    # F7: a city with an INDOFLOODS gauge passes that gauge's real catchment.
+    catchment = (observations or {}).get("catchment") or None
+    pred = predict_live(rainfall_24h_mm=rain_24, forecast_daily_mm=daily, catchment=catchment)
+    pred_v2 = predict_peak_level_v2(rain_24, daily, catchment=catchment)
     pred["v2"] = pred_v2
     ml_prior = pred.get("flood_probability")
     if pred_v2.get("available") and pred_v2.get("flood_type_probability") is not None:
@@ -192,9 +194,15 @@ async def run_pipeline(mode: str = "live", observations: dict[str, Any] | None =
     await publish_progress(mode, "policy", f"Decision policy: {policy['action']}", action=policy["action"], model=model_name, model_name=pretty)
     await mongo.insert("risk_events", {"policy": policy, "prediction": pred, "mode": mode})
 
-    roads = await mongo.find_many("roads", {}, limit=50) or ROADS
+    # Copies: the flood rule below must never mutate the seed ROADS constant.
+    roads = [dict(r) for r in (await mongo.find_many("roads", {}, limit=50) or ROADS)]
     p = pred.get("flood_probability") or 0
+    road_overrides = (observations or {}).get("road_overrides") or {}
     for r in roads:
+        if r.get("road_id") in road_overrides:  # operator decision wins (simulation F1)
+            r["blocked"] = bool(road_overrides[r["road_id"]])
+            r["accessible"] = not r["blocked"]
+            continue
         if float(r.get("flood_exposure") or 0) >= 0.75 and p >= 0.55:
             r["blocked"] = True
             r["accessible"] = False

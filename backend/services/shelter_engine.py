@@ -33,7 +33,7 @@ def score_shelter(
     shelter: dict[str, Any],
     origin_lat: float,
     origin_lon: float,
-    population: int,
+    population: int | None,
     traffic: float,
     zone_risk: float,
 ) -> dict[str, Any]:
@@ -41,7 +41,8 @@ def score_shelter(
     travel_min = dist / max(0.18, 0.42 - 0.25 * traffic) * 60 / 1.0  # ~15-40 km/h mixed urban
     flood_risk = float(shelter.get("flood_risk") or 0)
     seats = max(_available_seats(shelter), 1)
-    overload = max(0.0, (population - seats) / max(seats, 1))
+    # population is null for OSM city zones (unknown, never guessed): no overload term then
+    overload = max(0.0, (population - seats) / max(seats, 1)) if population is not None else 0.0
     road_safety = 1.0 - min(1.0, flood_risk * 0.7 + zone_risk * 0.3)
     score = (
         0.22 * dist

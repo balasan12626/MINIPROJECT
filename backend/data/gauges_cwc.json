@@ -1,0 +1,42 @@
+{
+  "_about": "F17: Central Water Commission (CWC) level-forecast stations used where INDOFLOODS has no gauge within 30 km. Levels are copied from the official CWC Daily Flood Bulletin named in source_url (warning / danger / highest flood level as printed there). Station coordinates are from Google Flood Hub's page for the same CWC station id (location_source). Cities with no entry stay rainfall-driven.",
+  "guwahati": {
+    "station": "Guwahati (D.C. Court)",
+    "river": "Brahmaputra",
+    "cwc_station_id": "CWC_001-MBDGHY",
+    "district": "Kamrup",
+    "state": "Assam",
+    "lat": 26.1947,
+    "lon": 91.7431,
+    "location_source": "https://sites.research.google/floods/l/26.1947/91.7431/13/g/CWC_001-MBDGHY",
+    "warning_level_m": 48.68,
+    "danger_level_m": 49.68,
+    "hfl_m": 51.46,
+    "hfl_date": "2004-07-21",
+    "source": "CWC Daily Flood Bulletin 17/07/2019, Part I-B (Central Flood Control Room, New Delhi)",
+    "source_url": "https://cwc.gov.in/sites/default/files/cfcr-cwcdfb-17072019.pdf",
+    "retrieved_at": "2026-10-11"
+  },
+  "patna": {
+    "station": "Patna Gandhighat",
+    "river": "Ganga",
+    "cwc_station_id": "CWC_003-MGD5PTN",
+    "district": "Patna",
+    "state": "Bihar",
+    "lat": 25.623333,
+    "lon": 85.171111,
+    "location_source": "https://sites.research.google/floods/l/25.6233/85.1711/13/g/CWC_003-MGD5PTN",
+    "warning_level_m": 47.6,
+    "danger_level_m": 48.6,
+    "hfl_m": 50.52,
+    "hfl_date": "2016-08-21",
+    "source": "CWC Daily Flood Bulletin 01/10/2019, Part I-B (Central Flood Control Room, New Delhi)",
+    "source_url": "https://cwc.gov.in/sites/default/files/cfcr-cwcdfb-01102019.pdf",
+    "retrieved_at": "2026-10-11"
+  },
+  "_none_found": {
+    "mumbai": "No CWC level-forecast station in or near Mumbai in the CWC daily flood bulletins checked (08/07, 14-17/07, 30/09, 01/10/2019); stays rainfall-driven.",
+    "chennai": "No CWC level-forecast station in or near Chennai in the CWC daily flood bulletins checked; stays rainfall-driven.",
+    "kolkata": "The nearest CWC level-forecast site in the bulletins checked is Farakka (Ganga), far more than 30 km away; the Hooghly at Kolkata is tidal and has no CWC level-forecast entry there. Stays rainfall-driven."
+  }
+}

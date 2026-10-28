@@ -1,0 +1,61 @@
+{
+ "variants": {
+  "base": {
+   "calls": 100,
+   "parsed": 100,
+   "unsup": 28,
+   "unsup_pct": 28.0,
+   "unsup_ci": [
+    20.13955916759837,
+    37.488212361345724
+   ],
+   "eta_pct": 26.0,
+   "dep_rej_pct": 26.0,
+   "fallback_pct": 26.0,
+   "claim_pct": 8.0,
+   "tokens": 634.41,
+   "out_tokens": 258.65,
+   "words": 63.87,
+   "dep_miss": 8
+  },
+  "noeta": {
+   "calls": 233,
+   "parsed": 233,
+   "unsup": 8,
+   "unsup_pct": 3.4334763948497855,
+   "unsup_ci": [
+    1.7498515609729508,
+    6.627730755647103
+   ],
+   "eta_pct": 0.4291845493562232,
+   "dep_rej_pct": 2.575107296137339,
+   "fallback_pct": 2.575107296137339,
+   "claim_pct": 17.59656652360515,
+   "tokens": 664.2789699570816,
+   "out_tokens": 253.8540772532189,
+   "words": 67.1931330472103,
+   "dep_miss": 3
+  },
+  "slots": {
+   "calls": 234,
+   "parsed": 234,
+   "unsup": 4,
+   "unsup_pct": 1.7094017094017093,
+   "unsup_ci": [
+    0.666699031790129,
+    4.312076758483734
+   ],
+   "eta_pct": 0.42735042735042733,
+   "dep_rej_pct": 0.0,
+   "fallback_pct": 0.0,
+   "claim_pct": 5.128205128205129,
+   "tokens": 733.7521367521367,
+   "out_tokens": 202.31623931623932,
+   "words": 57.24786324786325,
+   "dep_miss": 4,
+   "slot_viol_pct": 2.1367521367521367,
+   "fallback_slot_pct": 2.1367521367521367,
+   "unsup_after_slotcheck": 1
+  }
+ }
+}

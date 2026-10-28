@@ -1,0 +1,261 @@
+{
+  "name": "ai_eval_v1",
+  "title": "AI Assistant Accuracy and Groundedness Evaluation",
+  "evaluated_at": "2026-10-11T10:54:42.194798+00:00",
+  "model": "llama-3.1-8b-instant",
+  "seed": 42,
+  "total_questions": 200,
+  "with_grounding": {
+    "total_questions": 200,
+    "accuracy_pct": 70.5,
+    "grounded_pct": 100.0,
+    "hallucination_rate_pct": 0.0,
+    "refusal_accuracy_pct": 63.0,
+    "by_category": {
+      "person": {
+        "total": 46,
+        "correct": 28,
+        "grounded": 46,
+        "accuracy_pct": 60.9,
+        "grounded_pct": 100.0
+      },
+      "dam": {
+        "total": 20,
+        "correct": 18,
+        "grounded": 20,
+        "accuracy_pct": 90.0,
+        "grounded_pct": 100.0
+      },
+      "unknown_person": {
+        "total": 54,
+        "correct": 34,
+        "grounded": 54,
+        "accuracy_pct": 63.0,
+        "grounded_pct": 100.0
+      },
+      "shelter": {
+        "total": 29,
+        "correct": 29,
+        "grounded": 29,
+        "accuracy_pct": 100.0,
+        "grounded_pct": 100.0
+      },
+      "fleet": {
+        "total": 30,
+        "correct": 28,
+        "grounded": 30,
+        "accuracy_pct": 93.3,
+        "grounded_pct": 100.0
+      },
+      "flood_risk": {
+        "total": 21,
+        "correct": 4,
+        "grounded": 21,
+        "accuracy_pct": 19.0,
+        "grounded_pct": 100.0
+      }
+    }
+  },
+  "without_grounding_ablation": {
+    "total_questions": 200,
+    "accuracy_pct": 65.5,
+    "grounded_pct": 100.0,
+    "hallucination_rate_pct": 0.0,
+    "refusal_accuracy_pct": 61.1,
+    "by_category": {
+      "person": {
+        "total": 46,
+        "correct": 27,
+        "grounded": 46,
+        "accuracy_pct": 58.7,
+        "grounded_pct": 100.0
+      },
+      "dam": {
+        "total": 20,
+        "correct": 14,
+        "grounded": 20,
+        "accuracy_pct": 70.0,
+        "grounded_pct": 100.0
+      },
+      "unknown_person": {
+        "total": 54,
+        "correct": 33,
+        "grounded": 54,
+        "accuracy_pct": 61.1,
+        "grounded_pct": 100.0
+      },
+      "shelter": {
+        "total": 29,
+        "correct": 29,
+        "grounded": 29,
+        "accuracy_pct": 100.0,
+        "grounded_pct": 100.0
+      },
+      "fleet": {
+        "total": 30,
+        "correct": 28,
+        "grounded": 30,
+        "accuracy_pct": 93.3,
+        "grounded_pct": 100.0
+      },
+      "flood_risk": {
+        "total": 21,
+        "correct": 0,
+        "grounded": 21,
+        "accuracy_pct": 0.0,
+        "grounded_pct": 100.0
+      }
+    }
+  },
+  "sample_evaluations": [
+    {
+      "id": "q_person_045",
+      "category": "person",
+      "question": "Has Kavita Rao's driver accepted?",
+      "answer": "No information available.",
+      "source": "groq",
+      "verdict": "false_refusal",
+      "correct": false,
+      "is_refusal": true,
+      "all_numbers_grounded": true,
+      "hallucinated_numbers": []
+    },
+    {
+      "id": "q_dam_197",
+      "category": "dam",
+      "question": "What is the fill percentage of Srisailam Dam?",
+      "answer": "The fill percentage of Srisailam Dam is 77.86%.",
+      "source": "groq",
+      "verdict": "correct",
+      "correct": true,
+      "is_refusal": false,
+      "all_numbers_grounded": true,
+      "hallucinated_numbers": []
+    },
+    {
+      "id": "q_person_010",
+      "category": "person",
+      "question": "What is the route distance to Priya Sharma in km?",
+      "answer": "The route distance to Priya Sharma is 4.2 km.",
+      "source": "groq",
+      "verdict": "correct",
+      "correct": true,
+      "is_refusal": false,
+      "all_numbers_grounded": true,
+      "hallucinated_numbers": []
+    },
+    {
+      "id": "q_unknown_086",
+      "category": "unknown_person",
+      "question": "Where is Rohan Deshmukh?",
+      "answer": "I could not find that person in this run's SOS list.",
+      "source": "rules",
+      "verdict": "refused_correctly",
+      "correct": true,
+      "is_refusal": true,
+      "all_numbers_grounded": true,
+      "hallucinated_numbers": []
+    },
+    {
+      "id": "q_unknown_080",
+      "category": "unknown_person",
+      "question": "Has Siddharth Sen been rescued yet?",
+      "answer": "No information about Siddharth Sen is provided in the facts.",
+      "source": "groq",
+      "verdict": "refused_correctly",
+      "correct": true,
+      "is_refusal": true,
+      "all_numbers_grounded": true,
+      "hallucinated_numbers": []
+    },
+    {
+      "id": "q_unknown_073",
+      "category": "unknown_person",
+      "question": "Which shelter was Vikram Malhotra taken to?",
+      "answer": "The facts do not state which shelter Vikram Malhotra was taken to.",
+      "source": "groq",
+      "verdict": "hallucinated_entity",
+      "correct": false,
+      "is_refusal": false,
+      "all_numbers_grounded": true,
+      "hallucinated_numbers": []
+    },
+    {
+      "id": "q_shelter_186",
+      "category": "shelter",
+      "question": "How many people have reached Thyagaraj Stadium?",
+      "answer": "0",
+      "source": "groq",
+      "verdict": "correct",
+      "correct": true,
+      "is_refusal": false,
+      "all_numbers_grounded": true,
+      "hallucinated_numbers": []
+    },
+    {
+      "id": "q_person_053",
+      "category": "person",
+      "question": "Which unit is assigned to Mohammad Irfan?",
+      "answer": "Ambulance Unit 3",
+      "source": "groq",
+      "verdict": "correct",
+      "correct": true,
+      "is_refusal": false,
+      "all_numbers_grounded": true,
+      "hallucinated_numbers": []
+    },
+    {
+      "id": "q_dam_211",
+      "category": "dam",
+      "question": "What is the fill percentage of Bhakra Dam?",
+      "answer": "The Bhakra Dam is 65.03% filled. Its full capacity level is 512.064 m MSL and its live capacity is 7436.03 MCM.",
+      "source": "groq",
+      "verdict": "correct",
+      "correct": true,
+      "is_refusal": false,
+      "all_numbers_grounded": true,
+      "hallucinated_numbers": []
+    },
+    {
+      "id": "q_unknown_113",
+      "category": "unknown_person",
+      "question": "Which shelter was Manish Pandey taken to?",
+      "answer": "The facts do not mention Manish Pandey.",
+      "source": "groq",
+      "verdict": "hallucinated_entity",
+      "correct": false,
+      "is_refusal": false,
+      "all_numbers_grounded": true,
+      "hallucinated_numbers": []
+    },
+    {
+      "id": "q_shelter_187",
+      "category": "shelter",
+      "question": "How many seats are left at Thyagaraj Stadium?",
+      "answer": "820 seats are free at Thyagaraj Stadium.",
+      "source": "groq",
+      "verdict": "correct",
+      "correct": true,
+      "is_refusal": false,
+      "all_numbers_grounded": true,
+      "hallucinated_numbers": []
+    },
+    {
+      "id": "q_shelter_191",
+      "category": "shelter",
+      "question": "What is the capacity of Thyagaraj Stadium?",
+      "answer": "The capacity of Thyagaraj Stadium is 850 seats.",
+      "source": "groq",
+      "verdict": "correct",
+      "correct": true,
+      "is_refusal": false,
+      "all_numbers_grounded": true,
+      "hallucinated_numbers": []
+    }
+  ],
+  "notes": [
+    "Evaluated against Groq model llama-3.1-8b-instant with seed 42.",
+    "Grounded verification rule: every emitted figure must trace to real facts.",
+    "Refusal evaluation tests unknown entities to ensure no fictitious reports are invented."
+  ]
+}

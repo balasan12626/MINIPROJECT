@@ -369,3 +369,20 @@ describe("bearing", () => {
     expect(bearingDeg([28.6, 77.2], [28.6, 77.3])).toBeCloseTo(90, 1);
   });
 });
+
+describe("F30 merged SOS", () => {
+  it("a merged SOS is listed as merged, not drawn as a second person", () => {
+    const s = {
+      citizens: [
+        { citizen_name: "Asha Devi", lat: 28.65, lon: 77.26, ops_status: "queued", people: 3, merged_from: ["Asha Devi."] },
+        { citizen_name: "Asha Devi.", lat: 28.65, lon: 77.26, ops_status: "merged", merged_into: "Asha Devi", people: 3 },
+      ],
+      contact_log: [],
+    };
+    const out = deriveRescueOps(s, Date.now());
+    expect(out.people.map((p) => p.name)).toEqual(["Asha Devi"]);
+    expect(out.people[0].mergedFrom).toEqual(["Asha Devi."]);
+    expect(out.merged).toEqual([{ name: "Asha Devi.", into: "Asha Devi" }]);
+    expect(out.counters.totalSos).toBe(1);
+  });
+});

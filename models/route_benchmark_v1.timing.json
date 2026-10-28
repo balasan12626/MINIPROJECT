@@ -1,0 +1,42 @@
+{
+  "benchmark": "route_choice_v1",
+  "note": "wall time of one cold qaoa_choose per trip, ms",
+  "levels": [
+    {
+      "blockage": 0.0,
+      "qaoa_ms": {
+        "n": 165,
+        "mean": 661.056,
+        "median": 662.526,
+        "p95": 845.039
+      }
+    },
+    {
+      "blockage": 0.1,
+      "qaoa_ms": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "p95": null
+      }
+    },
+    {
+      "blockage": 0.2,
+      "qaoa_ms": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "p95": null
+      }
+    },
+    {
+      "blockage": 0.3,
+      "qaoa_ms": {
+        "n": 0,
+        "mean": null,
+        "median": null,
+        "p95": null
+      }
+    }
+  ]
+}

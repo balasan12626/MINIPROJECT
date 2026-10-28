@@ -22,6 +22,10 @@ const api = vi.hoisted(() => ({
   hqrlBenchmark: vi.fn(),
   fetchMlBenchmarkV4: vi.fn(),
   hqrlAblation: vi.fn(),
+  fetchRouteBenchmark: vi.fn(() => Promise.resolve(null)),
+  fetchOpsBenchmark: vi.fn(() => Promise.resolve(null)),
+  fetchCities: vi.fn(() => Promise.resolve({ cities: [], active: "delhi_seed" })),
+  fetchRuns: vi.fn(() => Promise.resolve({ runs: [], persisted: false })),
 }));
 
 vi.mock("../services/api.js", () => api);
@@ -37,13 +41,13 @@ function Probe() {
   return <span>{ctx.scenario.label}</span>;
 }
 
-async function mount({ outputs = false } = {}) {
+async function mount({ outputs = false, tab = "algorithms" } = {}) {
   ctx = null;
   await act(async () => {
     render(
       <ScenarioProvider>
         <Probe />
-        {outputs ? <ScenarioOutputs /> : null}
+        {outputs ? <ScenarioOutputs tab={tab} /> : null}
       </ScenarioProvider>
     );
   });
@@ -280,9 +284,18 @@ describe("unified scenario state", () => {
     await mount();
     expect(ctx.damId).toBe("bhakra");
     expect(ctx.evacuationRegion.name).toMatch(/Yamuna/);
-    await act(async () => ctx.setDamId("mettur"));
     await act(async () => ctx.selectScenario("extreme_rainfall"));
     expect(ctx.damId).toBe("bhakra");
+  });
+
+  it("keeps a dam the operator picked, and its edits, when a scenario is loaded", async () => {
+    await mount();
+    await act(async () => ctx.setDamId("mettur"));
+    await act(async () => ctx.patchInputs({ capacity_override_m: 242, rainfall_mm: 999 }));
+    await act(async () => ctx.selectScenario("extreme_rainfall"));
+    expect(ctx.damId).toBe("mettur");
+    expect(ctx.damFrlOverride).toBe(242);
+    expect(ctx.inputs.rainfall_mm).not.toBe(999); // scenario inputs still reset
   });
 
   it("never copies the reservoir level into the barrage stage; a dam switch drops a typed reservoir level", async () => {

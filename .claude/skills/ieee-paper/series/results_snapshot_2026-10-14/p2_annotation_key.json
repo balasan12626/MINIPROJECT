@@ -1,0 +1,1730 @@
+{
+"0": [
+"allam-2-7b",
+110
+],
+"1": [
+"openai/gpt-oss-20b",
+117
+],
+"2": [
+"openai/gpt-oss-20b",
+124
+],
+"3": [
+"openai/gpt-oss-20b",
+140
+],
+"4": [
+"openai/gpt-oss-20b",
+13
+],
+"5": [
+"openai/gpt-oss-120b",
+111
+],
+"6": [
+"openai/gpt-oss-120b",
+93
+],
+"7": [
+"allam-2-7b",
+117
+],
+"8": [
+"openai/gpt-oss-20b",
+15
+],
+"9": [
+"openai/gpt-oss-120b",
+84
+],
+"10": [
+"openai/gpt-oss-20b",
+135
+],
+"11": [
+"openai/gpt-oss-20b",
+88
+],
+"12": [
+"openai/gpt-oss-120b",
+119
+],
+"13": [
+"allam-2-7b",
+6
+],
+"14": [
+"openai/gpt-oss-20b",
+28
+],
+"15": [
+"openai/gpt-oss-120b",
+13
+],
+"16": [
+"allam-2-7b",
+58
+],
+"17": [
+"allam-2-7b",
+32
+],
+"18": [
+"openai/gpt-oss-120b",
+21
+],
+"19": [
+"openai/gpt-oss-120b",
+133
+],
+"20": [
+"allam-2-7b",
+26
+],
+"21": [
+"allam-2-7b",
+129
+],
+"22": [
+"openai/gpt-oss-120b",
+43
+],
+"23": [
+"allam-2-7b",
+126
+],
+"24": [
+"allam-2-7b",
+4
+],
+"25": [
+"openai/gpt-oss-20b",
+142
+],
+"26": [
+"openai/gpt-oss-120b",
+122
+],
+"27": [
+"allam-2-7b",
+69
+],
+"28": [
+"allam-2-7b",
+124
+],
+"29": [
+"openai/gpt-oss-120b",
+72
+],
+"30": [
+"allam-2-7b",
+90
+],
+"31": [
+"openai/gpt-oss-20b",
+33
+],
+"32": [
+"openai/gpt-oss-20b",
+148
+],
+"33": [
+"openai/gpt-oss-120b",
+126
+],
+"34": [
+"openai/gpt-oss-20b",
+35
+],
+"35": [
+"openai/gpt-oss-20b",
+134
+],
+"36": [
+"openai/gpt-oss-20b",
+99
+],
+"37": [
+"openai/gpt-oss-120b",
+59
+],
+"38": [
+"allam-2-7b",
+147
+],
+"39": [
+"openai/gpt-oss-20b",
+49
+],
+"40": [
+"openai/gpt-oss-120b",
+132
+],
+"41": [
+"openai/gpt-oss-120b",
+86
+],
+"42": [
+"allam-2-7b",
+40
+],
+"43": [
+"openai/gpt-oss-120b",
+36
+],
+"44": [
+"openai/gpt-oss-120b",
+23
+],
+"45": [
+"openai/gpt-oss-20b",
+130
+],
+"46": [
+"openai/gpt-oss-20b",
+68
+],
+"47": [
+"openai/gpt-oss-120b",
+94
+],
+"48": [
+"openai/gpt-oss-20b",
+24
+],
+"49": [
+"allam-2-7b",
+65
+],
+"50": [
+"allam-2-7b",
+18
+],
+"51": [
+"openai/gpt-oss-20b",
+87
+],
+"52": [
+"allam-2-7b",
+45
+],
+"53": [
+"openai/gpt-oss-20b",
+16
+],
+"54": [
+"openai/gpt-oss-20b",
+69
+],
+"55": [
+"openai/gpt-oss-20b",
+78
+],
+"56": [
+"openai/gpt-oss-20b",
+141
+],
+"57": [
+"openai/gpt-oss-120b",
+31
+],
+"58": [
+"openai/gpt-oss-120b",
+14
+],
+"59": [
+"allam-2-7b",
+36
+],
+"60": [
+"allam-2-7b",
+23
+],
+"61": [
+"openai/gpt-oss-120b",
+2
+],
+"62": [
+"openai/gpt-oss-120b",
+110
+],
+"63": [
+"openai/gpt-oss-20b",
+10
+],
+"64": [
+"allam-2-7b",
+123
+],
+"65": [
+"allam-2-7b",
+37
+],
+"66": [
+"allam-2-7b",
+128
+],
+"67": [
+"openai/gpt-oss-120b",
+7
+],
+"68": [
+"openai/gpt-oss-20b",
+74
+],
+"69": [
+"allam-2-7b",
+113
+],
+"70": [
+"openai/gpt-oss-120b",
+105
+],
+"71": [
+"openai/gpt-oss-120b",
+70
+],
+"72": [
+"openai/gpt-oss-120b",
+1
+],
+"73": [
+"openai/gpt-oss-20b",
+118
+],
+"74": [
+"allam-2-7b",
+70
+],
+"75": [
+"openai/gpt-oss-120b",
+15
+],
+"76": [
+"openai/gpt-oss-20b",
+143
+],
+"77": [
+"openai/gpt-oss-20b",
+98
+],
+"78": [
+"openai/gpt-oss-120b",
+145
+],
+"79": [
+"openai/gpt-oss-120b",
+127
+],
+"80": [
+"openai/gpt-oss-120b",
+50
+],
+"81": [
+"openai/gpt-oss-20b",
+48
+],
+"82": [
+"allam-2-7b",
+132
+],
+"83": [
+"openai/gpt-oss-20b",
+90
+],
+"84": [
+"allam-2-7b",
+107
+],
+"85": [
+"openai/gpt-oss-20b",
+12
+],
+"86": [
+"openai/gpt-oss-120b",
+128
+],
+"87": [
+"openai/gpt-oss-120b",
+5
+],
+"88": [
+"openai/gpt-oss-120b",
+35
+],
+"89": [
+"openai/gpt-oss-20b",
+86
+],
+"90": [
+"openai/gpt-oss-120b",
+54
+],
+"91": [
+"openai/gpt-oss-20b",
+62
+],
+"92": [
+"openai/gpt-oss-20b",
+91
+],
+"93": [
+"allam-2-7b",
+20
+],
+"94": [
+"allam-2-7b",
+30
+],
+"95": [
+"allam-2-7b",
+68
+],
+"96": [
+"allam-2-7b",
+120
+],
+"97": [
+"allam-2-7b",
+55
+],
+"98": [
+"openai/gpt-oss-120b",
+140
+],
+"99": [
+"openai/gpt-oss-20b",
+75
+],
+"100": [
+"openai/gpt-oss-20b",
+0
+],
+"101": [
+"allam-2-7b",
+66
+],
+"102": [
+"openai/gpt-oss-120b",
+12
+],
+"103": [
+"allam-2-7b",
+75
+],
+"104": [
+"openai/gpt-oss-20b",
+54
+],
+"105": [
+"openai/gpt-oss-20b",
+80
+],
+"106": [
+"openai/gpt-oss-20b",
+104
+],
+"107": [
+"openai/gpt-oss-120b",
+47
+],
+"108": [
+"allam-2-7b",
+60
+],
+"109": [
+"openai/gpt-oss-120b",
+102
+],
+"110": [
+"openai/gpt-oss-120b",
+138
+],
+"111": [
+"openai/gpt-oss-120b",
+77
+],
+"112": [
+"allam-2-7b",
+133
+],
+"113": [
+"openai/gpt-oss-20b",
+3
+],
+"114": [
+"openai/gpt-oss-120b",
+38
+],
+"115": [
+"allam-2-7b",
+72
+],
+"116": [
+"openai/gpt-oss-120b",
+131
+],
+"117": [
+"allam-2-7b",
+43
+],
+"118": [
+"allam-2-7b",
+15
+],
+"119": [
+"allam-2-7b",
+44
+],
+"120": [
+"openai/gpt-oss-120b",
+92
+],
+"121": [
+"openai/gpt-oss-120b",
+85
+],
+"122": [
+"openai/gpt-oss-20b",
+53
+],
+"123": [
+"openai/gpt-oss-20b",
+77
+],
+"124": [
+"openai/gpt-oss-20b",
+55
+],
+"125": [
+"openai/gpt-oss-120b",
+10
+],
+"126": [
+"openai/gpt-oss-20b",
+126
+],
+"127": [
+"openai/gpt-oss-20b",
+64
+],
+"128": [
+"openai/gpt-oss-120b",
+57
+],
+"129": [
+"openai/gpt-oss-120b",
+87
+],
+"130": [
+"allam-2-7b",
+118
+],
+"131": [
+"openai/gpt-oss-120b",
+6
+],
+"132": [
+"openai/gpt-oss-20b",
+107
+],
+"133": [
+"allam-2-7b",
+106
+],
+"134": [
+"openai/gpt-oss-20b",
+47
+],
+"135": [
+"openai/gpt-oss-20b",
+127
+],
+"136": [
+"openai/gpt-oss-20b",
+111
+],
+"137": [
+"allam-2-7b",
+108
+],
+"138": [
+"openai/gpt-oss-20b",
+56
+],
+"139": [
+"allam-2-7b",
+135
+],
+"140": [
+"openai/gpt-oss-120b",
+63
+],
+"141": [
+"openai/gpt-oss-20b",
+59
+],
+"142": [
+"openai/gpt-oss-120b",
+73
+],
+"143": [
+"allam-2-7b",
+56
+],
+"144": [
+"allam-2-7b",
+141
+],
+"145": [
+"openai/gpt-oss-20b",
+81
+],
+"146": [
+"openai/gpt-oss-20b",
+116
+],
+"147": [
+"openai/gpt-oss-20b",
+2
+],
+"148": [
+"allam-2-7b",
+39
+],
+"149": [
+"allam-2-7b",
+16
+],
+"150": [
+"openai/gpt-oss-120b",
+46
+],
+"151": [
+"openai/gpt-oss-120b",
+124
+],
+"152": [
+"allam-2-7b",
+136
+],
+"153": [
+"allam-2-7b",
+13
+],
+"154": [
+"openai/gpt-oss-20b",
+20
+],
+"155": [
+"allam-2-7b",
+63
+],
+"156": [
+"openai/gpt-oss-120b",
+112
+],
+"157": [
+"allam-2-7b",
+127
+],
+"158": [
+"openai/gpt-oss-120b",
+96
+],
+"159": [
+"openai/gpt-oss-20b",
+79
+],
+"160": [
+"openai/gpt-oss-120b",
+97
+],
+"161": [
+"allam-2-7b",
+9
+],
+"162": [
+"openai/gpt-oss-20b",
+66
+],
+"163": [
+"openai/gpt-oss-20b",
+25
+],
+"164": [
+"openai/gpt-oss-20b",
+22
+],
+"165": [
+"allam-2-7b",
+87
+],
+"166": [
+"openai/gpt-oss-20b",
+105
+],
+"167": [
+"openai/gpt-oss-20b",
+42
+],
+"168": [
+"openai/gpt-oss-20b",
+121
+],
+"169": [
+"openai/gpt-oss-120b",
+25
+],
+"170": [
+"allam-2-7b",
+50
+],
+"171": [
+"openai/gpt-oss-120b",
+148
+],
+"172": [
+"openai/gpt-oss-20b",
+5
+],
+"173": [
+"allam-2-7b",
+24
+],
+"174": [
+"openai/gpt-oss-20b",
+41
+],
+"175": [
+"allam-2-7b",
+140
+],
+"176": [
+"openai/gpt-oss-120b",
+103
+],
+"177": [
+"allam-2-7b",
+57
+],
+"178": [
+"allam-2-7b",
+49
+],
+"179": [
+"openai/gpt-oss-20b",
+84
+],
+"180": [
+"openai/gpt-oss-20b",
+114
+],
+"181": [
+"openai/gpt-oss-120b",
+0
+],
+"182": [
+"openai/gpt-oss-20b",
+102
+],
+"183": [
+"openai/gpt-oss-120b",
+91
+],
+"184": [
+"allam-2-7b",
+131
+],
+"185": [
+"openai/gpt-oss-20b",
+57
+],
+"186": [
+"allam-2-7b",
+51
+],
+"187": [
+"openai/gpt-oss-120b",
+123
+],
+"188": [
+"openai/gpt-oss-20b",
+95
+],
+"189": [
+"openai/gpt-oss-20b",
+149
+],
+"190": [
+"allam-2-7b",
+99
+],
+"191": [
+"openai/gpt-oss-120b",
+32
+],
+"192": [
+"openai/gpt-oss-120b",
+116
+],
+"193": [
+"allam-2-7b",
+100
+],
+"194": [
+"openai/gpt-oss-120b",
+98
+],
+"195": [
+"openai/gpt-oss-120b",
+40
+],
+"196": [
+"openai/gpt-oss-120b",
+33
+],
+"197": [
+"openai/gpt-oss-20b",
+39
+],
+"198": [
+"allam-2-7b",
+80
+],
+"199": [
+"allam-2-7b",
+134
+],
+"200": [
+"allam-2-7b",
+77
+],
+"201": [
+"openai/gpt-oss-120b",
+88
+],
+"202": [
+"allam-2-7b",
+94
+],
+"203": [
+"openai/gpt-oss-20b",
+109
+],
+"204": [
+"openai/gpt-oss-20b",
+52
+],
+"205": [
+"openai/gpt-oss-20b",
+139
+],
+"206": [
+"openai/gpt-oss-20b",
+8
+],
+"207": [
+"openai/gpt-oss-20b",
+106
+],
+"208": [
+"openai/gpt-oss-20b",
+101
+],
+"209": [
+"openai/gpt-oss-120b",
+118
+],
+"210": [
+"openai/gpt-oss-120b",
+34
+],
+"211": [
+"allam-2-7b",
+98
+],
+"212": [
+"openai/gpt-oss-120b",
+125
+],
+"213": [
+"openai/gpt-oss-20b",
+61
+],
+"214": [
+"openai/gpt-oss-20b",
+7
+],
+"215": [
+"openai/gpt-oss-120b",
+65
+],
+"216": [
+"openai/gpt-oss-20b",
+128
+],
+"217": [
+"allam-2-7b",
+142
+],
+"218": [
+"openai/gpt-oss-120b",
+81
+],
+"219": [
+"openai/gpt-oss-20b",
+113
+],
+"220": [
+"openai/gpt-oss-20b",
+58
+],
+"221": [
+"openai/gpt-oss-120b",
+48
+],
+"222": [
+"openai/gpt-oss-20b",
+120
+],
+"223": [
+"openai/gpt-oss-20b",
+94
+],
+"224": [
+"allam-2-7b",
+88
+],
+"225": [
+"openai/gpt-oss-20b",
+129
+],
+"226": [
+"allam-2-7b",
+11
+],
+"227": [
+"openai/gpt-oss-20b",
+82
+],
+"228": [
+"openai/gpt-oss-120b",
+137
+],
+"229": [
+"openai/gpt-oss-120b",
+45
+],
+"230": [
+"allam-2-7b",
+102
+],
+"231": [
+"openai/gpt-oss-120b",
+66
+],
+"232": [
+"openai/gpt-oss-120b",
+71
+],
+"233": [
+"openai/gpt-oss-120b",
+69
+],
+"234": [
+"openai/gpt-oss-20b",
+1
+],
+"235": [
+"openai/gpt-oss-20b",
+136
+],
+"236": [
+"openai/gpt-oss-20b",
+6
+],
+"237": [
+"openai/gpt-oss-20b",
+67
+],
+"238": [
+"openai/gpt-oss-120b",
+129
+],
+"239": [
+"openai/gpt-oss-120b",
+68
+],
+"240": [
+"openai/gpt-oss-20b",
+63
+],
+"241": [
+"allam-2-7b",
+76
+],
+"242": [
+"openai/gpt-oss-20b",
+46
+],
+"243": [
+"allam-2-7b",
+27
+],
+"244": [
+"openai/gpt-oss-20b",
+32
+],
+"245": [
+"openai/gpt-oss-120b",
+134
+],
+"246": [
+"openai/gpt-oss-120b",
+142
+],
+"247": [
+"openai/gpt-oss-20b",
+145
+],
+"248": [
+"openai/gpt-oss-120b",
+107
+],
+"249": [
+"openai/gpt-oss-20b",
+100
+],
+"250": [
+"allam-2-7b",
+52
+],
+"251": [
+"openai/gpt-oss-20b",
+29
+],
+"252": [
+"openai/gpt-oss-120b",
+4
+],
+"253": [
+"openai/gpt-oss-120b",
+121
+],
+"254": [
+"openai/gpt-oss-120b",
+78
+],
+"255": [
+"openai/gpt-oss-120b",
+61
+],
+"256": [
+"openai/gpt-oss-20b",
+133
+],
+"257": [
+"openai/gpt-oss-20b",
+27
+],
+"258": [
+"openai/gpt-oss-20b",
+60
+],
+"259": [
+"openai/gpt-oss-20b",
+131
+],
+"260": [
+"openai/gpt-oss-120b",
+17
+],
+"261": [
+"openai/gpt-oss-120b",
+8
+],
+"262": [
+"openai/gpt-oss-120b",
+113
+],
+"263": [
+"openai/gpt-oss-20b",
+21
+],
+"264": [
+"openai/gpt-oss-120b",
+117
+],
+"265": [
+"openai/gpt-oss-120b",
+135
+],
+"266": [
+"openai/gpt-oss-120b",
+143
+],
+"267": [
+"openai/gpt-oss-120b",
+100
+],
+"268": [
+"allam-2-7b",
+79
+],
+"269": [
+"openai/gpt-oss-120b",
+18
+],
+"270": [
+"openai/gpt-oss-20b",
+4
+],
+"271": [
+"allam-2-7b",
+35
+],
+"272": [
+"openai/gpt-oss-20b",
+17
+],
+"273": [
+"openai/gpt-oss-20b",
+132
+],
+"274": [
+"openai/gpt-oss-120b",
+90
+],
+"275": [
+"allam-2-7b",
+97
+],
+"276": [
+"allam-2-7b",
+61
+],
+"277": [
+"openai/gpt-oss-120b",
+79
+],
+"278": [
+"openai/gpt-oss-20b",
+138
+],
+"279": [
+"allam-2-7b",
+73
+],
+"280": [
+"openai/gpt-oss-20b",
+31
+],
+"281": [
+"openai/gpt-oss-120b",
+39
+],
+"282": [
+"openai/gpt-oss-120b",
+120
+],
+"283": [
+"openai/gpt-oss-20b",
+9
+],
+"284": [
+"allam-2-7b",
+33
+],
+"285": [
+"openai/gpt-oss-20b",
+85
+],
+"286": [
+"openai/gpt-oss-120b",
+83
+],
+"287": [
+"openai/gpt-oss-120b",
+101
+],
+"288": [
+"openai/gpt-oss-20b",
+40
+],
+"289": [
+"openai/gpt-oss-20b",
+44
+],
+"290": [
+"allam-2-7b",
+139
+],
+"291": [
+"allam-2-7b",
+19
+],
+"292": [
+"openai/gpt-oss-120b",
+75
+],
+"293": [
+"openai/gpt-oss-120b",
+141
+],
+"294": [
+"allam-2-7b",
+47
+],
+"295": [
+"allam-2-7b",
+29
+],
+"296": [
+"allam-2-7b",
+93
+],
+"297": [
+"openai/gpt-oss-120b",
+115
+],
+"298": [
+"openai/gpt-oss-20b",
+73
+],
+"299": [
+"allam-2-7b",
+85
+],
+"300": [
+"allam-2-7b",
+46
+],
+"301": [
+"openai/gpt-oss-20b",
+76
+],
+"302": [
+"openai/gpt-oss-20b",
+93
+],
+"303": [
+"openai/gpt-oss-120b",
+30
+],
+"304": [
+"openai/gpt-oss-120b",
+27
+],
+"305": [
+"allam-2-7b",
+54
+],
+"306": [
+"openai/gpt-oss-120b",
+147
+],
+"307": [
+"openai/gpt-oss-120b",
+9
+],
+"308": [
+"openai/gpt-oss-20b",
+30
+],
+"309": [
+"allam-2-7b",
+84
+],
+"310": [
+"openai/gpt-oss-120b",
+53
+],
+"311": [
+"openai/gpt-oss-20b",
+43
+],
+"312": [
+"openai/gpt-oss-120b",
+42
+],
+"313": [
+"allam-2-7b",
+121
+],
+"314": [
+"allam-2-7b",
+53
+],
+"315": [
+"openai/gpt-oss-120b",
+89
+],
+"316": [
+"allam-2-7b",
+21
+],
+"317": [
+"openai/gpt-oss-120b",
+19
+],
+"318": [
+"openai/gpt-oss-120b",
+56
+],
+"319": [
+"openai/gpt-oss-20b",
+19
+],
+"320": [
+"allam-2-7b",
+62
+],
+"321": [
+"openai/gpt-oss-20b",
+45
+],
+"322": [
+"allam-2-7b",
+146
+],
+"323": [
+"openai/gpt-oss-120b",
+136
+],
+"324": [
+"openai/gpt-oss-20b",
+72
+],
+"325": [
+"openai/gpt-oss-120b",
+130
+],
+"326": [
+"openai/gpt-oss-120b",
+44
+],
+"327": [
+"openai/gpt-oss-120b",
+104
+],
+"328": [
+"allam-2-7b",
+143
+],
+"329": [
+"allam-2-7b",
+67
+],
+"330": [
+"openai/gpt-oss-20b",
+123
+],
+"331": [
+"openai/gpt-oss-20b",
+37
+],
+"332": [
+"allam-2-7b",
+103
+],
+"333": [
+"allam-2-7b",
+28
+],
+"334": [
+"openai/gpt-oss-120b",
+99
+],
+"335": [
+"allam-2-7b",
+5
+],
+"336": [
+"openai/gpt-oss-20b",
+14
+],
+"337": [
+"openai/gpt-oss-120b",
+60
+],
+"338": [
+"openai/gpt-oss-120b",
+55
+],
+"339": [
+"openai/gpt-oss-120b",
+82
+],
+"340": [
+"openai/gpt-oss-120b",
+149
+],
+"341": [
+"allam-2-7b",
+12
+],
+"342": [
+"openai/gpt-oss-120b",
+74
+],
+"343": [
+"openai/gpt-oss-20b",
+146
+],
+"344": [
+"openai/gpt-oss-20b",
+89
+],
+"345": [
+"allam-2-7b",
+149
+],
+"346": [
+"allam-2-7b",
+34
+],
+"347": [
+"allam-2-7b",
+101
+],
+"348": [
+"openai/gpt-oss-120b",
+109
+],
+"349": [
+"openai/gpt-oss-20b",
+70
+],
+"350": [
+"allam-2-7b",
+105
+],
+"351": [
+"openai/gpt-oss-120b",
+29
+],
+"352": [
+"openai/gpt-oss-120b",
+114
+],
+"353": [
+"openai/gpt-oss-120b",
+24
+],
+"354": [
+"openai/gpt-oss-120b",
+49
+],
+"355": [
+"openai/gpt-oss-120b",
+26
+],
+"356": [
+"openai/gpt-oss-20b",
+83
+],
+"357": [
+"openai/gpt-oss-120b",
+41
+],
+"358": [
+"openai/gpt-oss-20b",
+147
+],
+"359": [
+"openai/gpt-oss-20b",
+23
+],
+"360": [
+"allam-2-7b",
+2
+],
+"361": [
+"openai/gpt-oss-20b",
+18
+],
+"362": [
+"openai/gpt-oss-20b",
+26
+],
+"363": [
+"openai/gpt-oss-120b",
+22
+],
+"364": [
+"openai/gpt-oss-120b",
+37
+],
+"365": [
+"allam-2-7b",
+38
+],
+"366": [
+"openai/gpt-oss-120b",
+3
+],
+"367": [
+"allam-2-7b",
+83
+],
+"368": [
+"openai/gpt-oss-20b",
+103
+],
+"369": [
+"openai/gpt-oss-120b",
+80
+],
+"370": [
+"openai/gpt-oss-120b",
+52
+],
+"371": [
+"allam-2-7b",
+14
+],
+"372": [
+"openai/gpt-oss-120b",
+20
+],
+"373": [
+"openai/gpt-oss-120b",
+64
+],
+"374": [
+"allam-2-7b",
+114
+],
+"375": [
+"openai/gpt-oss-20b",
+144
+],
+"376": [
+"openai/gpt-oss-20b",
+119
+],
+"377": [
+"allam-2-7b",
+119
+],
+"378": [
+"openai/gpt-oss-20b",
+38
+],
+"379": [
+"openai/gpt-oss-20b",
+65
+],
+"380": [
+"openai/gpt-oss-120b",
+144
+],
+"381": [
+"allam-2-7b",
+116
+],
+"382": [
+"openai/gpt-oss-120b",
+28
+],
+"383": [
+"openai/gpt-oss-120b",
+16
+],
+"384": [
+"allam-2-7b",
+96
+],
+"385": [
+"allam-2-7b",
+95
+],
+"386": [
+"openai/gpt-oss-20b",
+122
+],
+"387": [
+"allam-2-7b",
+122
+],
+"388": [
+"allam-2-7b",
+3
+],
+"389": [
+"allam-2-7b",
+0
+],
+"390": [
+"allam-2-7b",
+74
+],
+"391": [
+"allam-2-7b",
+71
+],
+"392": [
+"openai/gpt-oss-120b",
+95
+],
+"393": [
+"openai/gpt-oss-20b",
+112
+],
+"394": [
+"openai/gpt-oss-20b",
+34
+],
+"395": [
+"allam-2-7b",
+78
+],
+"396": [
+"allam-2-7b",
+41
+],
+"397": [
+"openai/gpt-oss-20b",
+108
+],
+"398": [
+"allam-2-7b",
+92
+],
+"399": [
+"openai/gpt-oss-120b",
+67
+],
+"400": [
+"openai/gpt-oss-20b",
+110
+],
+"401": [
+"allam-2-7b",
+104
+],
+"402": [
+"openai/gpt-oss-120b",
+11
+],
+"403": [
+"openai/gpt-oss-120b",
+76
+],
+"404": [
+"allam-2-7b",
+125
+],
+"405": [
+"openai/gpt-oss-20b",
+92
+],
+"406": [
+"allam-2-7b",
+8
+],
+"407": [
+"openai/gpt-oss-20b",
+137
+],
+"408": [
+"openai/gpt-oss-20b",
+11
+],
+"409": [
+"allam-2-7b",
+59
+],
+"410": [
+"openai/gpt-oss-120b",
+146
+],
+"411": [
+"openai/gpt-oss-120b",
+62
+],
+"412": [
+"allam-2-7b",
+144
+],
+"413": [
+"openai/gpt-oss-120b",
+108
+],
+"414": [
+"openai/gpt-oss-120b",
+58
+],
+"415": [
+"allam-2-7b",
+64
+],
+"416": [
+"allam-2-7b",
+91
+],
+"417": [
+"allam-2-7b",
+31
+],
+"418": [
+"openai/gpt-oss-20b",
+50
+],
+"419": [
+"allam-2-7b",
+145
+],
+"420": [
+"openai/gpt-oss-20b",
+115
+],
+"421": [
+"openai/gpt-oss-120b",
+106
+],
+"422": [
+"allam-2-7b",
+17
+],
+"423": [
+"openai/gpt-oss-120b",
+139
+],
+"424": [
+"openai/gpt-oss-20b",
+51
+],
+"425": [
+"openai/gpt-oss-20b",
+96
+],
+"426": [
+"openai/gpt-oss-20b",
+71
+],
+"427": [
+"openai/gpt-oss-20b",
+125
+],
+"428": [
+"openai/gpt-oss-120b",
+51
+],
+"429": [
+"openai/gpt-oss-20b",
+97
+],
+"430": [
+"allam-2-7b",
+148
+],
+"431": [
+"openai/gpt-oss-20b",
+36
+]
+}

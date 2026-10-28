@@ -1,0 +1,110 @@
+{
+  "name": "hand_compare_v1",
+  "city": "chennai",
+  "title": "Height-based road flood risk (HAND vs distance) \u2014 Chennai",
+  "citation": {
+    "method": "Height Above Nearest Drainage (HAND)",
+    "paper": "Renn\u00f3 et al. (2008), HAND, a new terrain descriptor using SRTM-DEM, Remote Sensing of Environment",
+    "dem_dataset": "Copernicus DEM GLO-30 (30 m resolution, Open Access)",
+    "licence": "Copernicus Open Access / European Space Agency",
+    "url": "https://spacedata.copernicus.eu/collections/copernicus-digital-elevation-model"
+  },
+  "total_roads": 603,
+  "hand_stats": {
+    "min_m": 0.0,
+    "median_m": 13.61,
+    "mean_m": 12.14,
+    "max_m": 22.26
+  },
+  "spearman_rank_correlation": -0.083,
+  "roads_closing_earlier_in_v2": [
+    {
+      "road_id": "CHE-R012",
+      "name": "EVR Periyar Salai (part 2)",
+      "v1_exposure": 0.796,
+      "v2_exposure": 0.06,
+      "hand_m": 14.73,
+      "why": "Low-lying road with small height above drainage; floods earlier under topography model"
+    },
+    {
+      "road_id": "CHE-R041",
+      "name": "Kamarajar Promenade (part 2)",
+      "v1_exposure": 0.768,
+      "v2_exposure": 0.06,
+      "hand_m": 17.7,
+      "why": "Low-lying road with small height above drainage; floods earlier under topography model"
+    },
+    {
+      "road_id": "CHE-R047",
+      "name": "Muthuswamy Road",
+      "v1_exposure": 0.801,
+      "v2_exposure": 0.06,
+      "hand_m": 18.4,
+      "why": "Low-lying road with small height above drainage; floods earlier under topography model"
+    },
+    {
+      "road_id": "CHE-R581",
+      "name": "Unnamed secondary road",
+      "v1_exposure": 0.782,
+      "v2_exposure": 0.06,
+      "hand_m": 17.25,
+      "why": "Low-lying road with small height above drainage; floods earlier under topography model"
+    },
+    {
+      "road_id": "CHE-R588",
+      "name": "Unnamed secondary road",
+      "v1_exposure": 0.769,
+      "v2_exposure": 0.06,
+      "hand_m": 17.72,
+      "why": "Low-lying road with small height above drainage; floods earlier under topography model"
+    }
+  ],
+  "roads_closing_later_in_v2": [
+    {
+      "road_id": "CHE-R038",
+      "name": "Arcot Road (part 1)",
+      "v1_exposure": 0.099,
+      "v2_exposure": 0.257,
+      "hand_m": 3.59,
+      "why": "High ridge / elevated terrain road; stays passable longer despite proximity to water"
+    },
+    {
+      "road_id": "CHE-R093",
+      "name": "Arcot Road (part 2)",
+      "v1_exposure": 0.106,
+      "v2_exposure": 0.147,
+      "hand_m": 5.26,
+      "why": "High ridge / elevated terrain road; stays passable longer despite proximity to water"
+    },
+    {
+      "road_id": "CHE-R466",
+      "name": "Unnamed primary road",
+      "v1_exposure": 0.089,
+      "v2_exposure": 0.112,
+      "hand_m": 6.07,
+      "why": "High ridge / elevated terrain road; stays passable longer despite proximity to water"
+    },
+    {
+      "road_id": "CHE-R007",
+      "name": "Chennai - Tiruttani - Renigunta Road",
+      "v1_exposure": 0.097,
+      "v2_exposure": 0.115,
+      "hand_m": 6.01,
+      "why": "High ridge / elevated terrain road; stays passable longer despite proximity to water"
+    },
+    {
+      "road_id": "CHE-R573",
+      "name": "Unnamed primary road",
+      "v1_exposure": 0.067,
+      "v2_exposure": 0.102,
+      "hand_m": 6.35,
+      "why": "High ridge / elevated terrain road; stays passable longer despite proximity to water"
+    }
+  ],
+  "notes": [
+    "v1 uses planar distance-to-water decay proxy.",
+    "v2 uses Height Above Nearest Drainage (HAND, Copernicus DEM 30m).",
+    "HAND >= 0 everywhere by D8 flow-direction construction.",
+    "Closure rule (effective_exposure >= 0.85 - blockage) remains identical between models."
+  ]
+}

@@ -1,0 +1,269 @@
+{
+  "benchmark": "ops_regret_v1",
+  "runs": [
+    {
+      "run_id": "SIM-1791708274",
+      "city": "guwahati",
+      "scenario": "heavy_rainfall",
+      "started_at": "2026-10-11T08:44:34.739110+00:00",
+      "frames": 21,
+      "people": 6,
+      "hindsight_bound_mean_min": 18.73,
+      "recorded": {
+        "mean_min": 54.84,
+        "served": 6,
+        "regret_min": 36.1
+      },
+      "replayed": {
+        "first_free": {
+          "mean_min": 42.4,
+          "served": 6,
+          "regret_min": 23.67
+        },
+        "greedy": {
+          "mean_min": 39.47,
+          "served": 6,
+          "regret_min": 20.73
+        },
+        "optimal": {
+          "mean_min": 39.47,
+          "served": 6,
+          "regret_min": 20.73
+        }
+      },
+      "fidelity": {
+        "policy": "unknown (run recorded before F34 stored the policy)",
+        "people_compared": 0,
+        "mean_abs_diff_min": null
+      },
+      "best_policy_in_hindsight": "greedy"
+    },
+    {
+      "run_id": "SIM-1791708130",
+      "city": "delhi",
+      "scenario": "river_rise",
+      "started_at": "2026-10-11T08:42:10.851690+00:00",
+      "frames": 22,
+      "people": 6,
+      "hindsight_bound_mean_min": 22.41,
+      "recorded": {
+        "mean_min": 87.27,
+        "served": 6,
+        "regret_min": 64.86
+      },
+      "replayed": {
+        "first_free": {
+          "mean_min": 69.75,
+          "served": 6,
+          "regret_min": 47.34
+        },
+        "greedy": {
+          "mean_min": 65.95,
+          "served": 6,
+          "regret_min": 43.54
+        },
+        "optimal": {
+          "mean_min": 65.95,
+          "served": 6,
+          "regret_min": 43.54
+        }
+      },
+      "fidelity": {
+        "policy": "unknown (run recorded before F34 stored the policy)",
+        "people_compared": 0,
+        "mean_abs_diff_min": null
+      },
+      "best_policy_in_hindsight": "greedy"
+    },
+    {
+      "run_id": "SIM-1791707125",
+      "city": "delhi",
+      "scenario": "heavy_rainfall",
+      "started_at": "2026-10-11T08:25:25.664168+00:00",
+      "frames": 12,
+      "people": 12,
+      "hindsight_bound_mean_min": 21.81,
+      "recorded": {
+        "mean_min": 93.38,
+        "served": 12,
+        "regret_min": 71.57
+      },
+      "replayed": {
+        "first_free": {
+          "mean_min": 66.97,
+          "served": 12,
+          "regret_min": 45.15
+        },
+        "greedy": {
+          "mean_min": 59.88,
+          "served": 12,
+          "regret_min": 38.06
+        },
+        "optimal": {
+          "mean_min": 59.88,
+          "served": 12,
+          "regret_min": 38.06
+        }
+      },
+      "fidelity": {
+        "policy": "unknown (run recorded before F34 stored the policy)",
+        "people_compared": 0,
+        "mean_abs_diff_min": null
+      },
+      "best_policy_in_hindsight": "greedy"
+    },
+    {
+      "run_id": "SIM-1791705891",
+      "city": "delhi",
+      "scenario": "river_rise",
+      "started_at": "2026-10-11T08:04:51.799634+00:00",
+      "frames": 25,
+      "people": 6,
+      "hindsight_bound_mean_min": 22.41,
+      "recorded": {
+        "mean_min": 88.1,
+        "served": 6,
+        "regret_min": 65.69
+      },
+      "replayed": {
+        "first_free": {
+          "mean_min": 65.92,
+          "served": 6,
+          "regret_min": 43.51
+        },
+        "greedy": {
+          "mean_min": 65.68,
+          "served": 6,
+          "regret_min": 43.27
+        },
+        "optimal": {
+          "mean_min": 65.68,
+          "served": 6,
+          "regret_min": 43.27
+        }
+      },
+      "fidelity": {
+        "policy": "unknown (run recorded before F34 stored the policy)",
+        "people_compared": 0,
+        "mean_abs_diff_min": null
+      },
+      "best_policy_in_hindsight": "greedy"
+    },
+    {
+      "run_id": "SIM-1791705780",
+      "city": "chennai",
+      "scenario": "heavy_rainfall",
+      "started_at": "2026-10-11T08:03:00.851718+00:00",
+      "frames": 8,
+      "people": 10,
+      "hindsight_bound_mean_min": 21.9,
+      "recorded": {
+        "mean_min": 77.12,
+        "served": 9,
+        "regret_min": 54.82
+      },
+      "replayed": {
+        "first_free": {
+          "mean_min": 68.93,
+          "served": 10,
+          "regret_min": 47.03
+        },
+        "greedy": {
+          "mean_min": 59.42,
+          "served": 10,
+          "regret_min": 37.52
+        },
+        "optimal": {
+          "mean_min": 59.42,
+          "served": 10,
+          "regret_min": 37.52
+        }
+      },
+      "fidelity": {
+        "policy": "unknown (run recorded before F34 stored the policy)",
+        "people_compared": 0,
+        "mean_abs_diff_min": null
+      },
+      "best_policy_in_hindsight": "greedy"
+    },
+    {
+      "run_id": "SIM-1791658726",
+      "city": "guwahati",
+      "scenario": "river_rise",
+      "started_at": "2026-10-10T18:58:46.592106+00:00",
+      "frames": 25,
+      "people": 6,
+      "hindsight_bound_mean_min": 18.73,
+      "recorded": {
+        "mean_min": 49.0,
+        "served": 6,
+        "regret_min": 30.27
+      },
+      "replayed": {
+        "first_free": {
+          "mean_min": 38.17,
+          "served": 6,
+          "regret_min": 19.43
+        },
+        "greedy": {
+          "mean_min": 34.78,
+          "served": 6,
+          "regret_min": 16.05
+        },
+        "optimal": {
+          "mean_min": 34.78,
+          "served": 6,
+          "regret_min": 16.05
+        }
+      },
+      "fidelity": {
+        "policy": "unknown (run recorded before F34 stored the policy)",
+        "people_compared": 0,
+        "mean_abs_diff_min": null
+      },
+      "best_policy_in_hindsight": "greedy"
+    },
+    {
+      "run_id": "SIM-1791658521",
+      "city": "guwahati",
+      "scenario": "river_rise",
+      "started_at": "2026-10-10T18:55:21.729345+00:00",
+      "frames": 25,
+      "people": 6,
+      "hindsight_bound_mean_min": 18.73,
+      "recorded": {
+        "mean_min": 50.65,
+        "served": 6,
+        "regret_min": 31.92
+      },
+      "replayed": {
+        "first_free": {
+          "mean_min": 38.77,
+          "served": 6,
+          "regret_min": 20.04
+        },
+        "greedy": {
+          "mean_min": 35.38,
+          "served": 6,
+          "regret_min": 16.65
+        },
+        "optimal": {
+          "mean_min": 35.38,
+          "served": 6,
+          "regret_min": 16.65
+        }
+      },
+      "fidelity": {
+        "policy": "unknown (run recorded before F34 stored the policy)",
+        "people_compared": 0,
+        "mean_abs_diff_min": null
+      },
+      "best_policy_in_hindsight": "greedy"
+    }
+  ],
+  "hindsight_bound": "per person: first dispatch slot + roll-out + shortest open road from the nearest depot or shelter + shortest open road to the nearest shelter; no queueing. A LOWER BOUND, not achievable live.",
+  "notes": [
+    "Replays use shortest-path routes; the live runs used the QAOA route chooser.",
+    "Regret = mean time to safety \u2212 mean hindsight bound over the people the bound can reach."
+  ]
+}

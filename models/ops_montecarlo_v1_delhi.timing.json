@@ -1,0 +1,10 @@
+{
+  "benchmark": "ops_montecarlo_v1",
+  "seconds_per_policy": {
+    "nearest_depot": 360.7,
+    "first_free": 448.4,
+    "greedy": 447.1,
+    "optimal": 431.2,
+    "optimal+prepos": 451.6
+  }
+}

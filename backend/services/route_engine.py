@@ -5,7 +5,7 @@ from typing import Any
 import networkx as nx
 
 from backend.database import mongo
-from backend.services.seed import GRAPH_EDGES, GRAPH_NODES, ROADS
+from backend.services.seed import GRAPH_EDGE_INFO, GRAPH_EDGES, GRAPH_NODES, ROADS
 from backend.utils.geo import haversine_km
 
 
@@ -24,12 +24,31 @@ def _road_lookup(roads: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
     return {r["road_id"]: r for r in roads}
 
 
+def edge_km(u: str, v: str) -> float:
+    """Real road length when the city has it (OSM cities), else the straight line."""
+    info = GRAPH_EDGE_INFO.get(f"{u}|{v}") or GRAPH_EDGE_INFO.get(f"{v}|{u}")
+    if info and info.get("km") is not None:
+        return float(info["km"])
+    lat1, lon1 = GRAPH_NODES[u]
+    lat2, lon2 = GRAPH_NODES[v]
+    return haversine_km(lat1, lon1, lat2, lon2)
+
+
+def edge_points(u: str, v: str) -> list[list[float]]:
+    """Road shape from u to v (OSM cities keep it), else the two end points."""
+    info = GRAPH_EDGE_INFO.get(f"{u}|{v}")
+    if info and info.get("pts"):
+        return [list(p) for p in info["pts"]]
+    info = GRAPH_EDGE_INFO.get(f"{v}|{u}")
+    if info and info.get("pts"):
+        return [list(p) for p in reversed(info["pts"])]
+    return [list(GRAPH_NODES[u]), list(GRAPH_NODES[v])]
+
+
 def _edge_cost(u: str, v: str, road: dict[str, Any] | None, dest_lat: float, dest_lon: float) -> float | None:
     if road and (road.get("blocked") or not road.get("accessible", True)):
         return None
-    lat1, lon1 = GRAPH_NODES[u]
-    lat2, lon2 = GRAPH_NODES[v]
-    dist = haversine_km(lat1, lon1, lat2, lon2)
+    dist = edge_km(u, v)
     traffic = float((road or {}).get("traffic") or 0.4)
     flood = float((road or {}).get("flood_exposure") or 0.2)
     travel = dist * (1.0 + 0.8 * traffic + 1.4 * flood)
@@ -40,19 +59,54 @@ def _nearest_node(lat: float, lon: float) -> str:
     return min(GRAPH_NODES, key=lambda n: haversine_km(lat, lon, *GRAPH_NODES[n]))
 
 
+# Graphs are rebuilt only when the road state actually changes. Callers treat
+# the returned graph as READ-ONLY (it is shared).
+_GRAPH_CACHE: dict[tuple, nx.Graph] = {}
+
+
+def clear_graph_cache() -> None:
+    _GRAPH_CACHE.clear()
+
+
 def build_graph(roads: list[dict[str, Any]]) -> nx.Graph:
     lookup = _road_lookup(roads)
+    key = (
+        len(GRAPH_NODES),
+        len(GRAPH_EDGES),
+        next(iter(GRAPH_NODES), None),
+        tuple(
+            sorted(
+                (rid, bool(r.get("blocked")), bool(r.get("accessible", True)), r.get("flood_exposure"), r.get("traffic"))
+                for rid, r in lookup.items()
+            )
+        ),
+    )
+    hit = _GRAPH_CACHE.get(key)
+    if hit is not None:
+        return hit
     g = nx.Graph()
     for node, (lat, lon) in GRAPH_NODES.items():
         g.add_node(node, lat=lat, lon=lon)
     for u, v, rid in GRAPH_EDGES:
         road = lookup.get(rid)
-        lat1, lon1 = GRAPH_NODES[u]
         lat2, lon2 = GRAPH_NODES[v]
         cost = _edge_cost(u, v, road, lat2, lon2)
         if cost is None:
             continue
-        g.add_edge(u, v, weight=cost, road_id=rid, distance_km=haversine_km(lat1, lon1, lat2, lon2))
+        # Two junctions joined by two roads: keep the cheaper one.
+        if g.has_edge(u, v) and g.edges[u, v]["weight"] <= cost:
+            continue
+        g.add_edge(
+            u,
+            v,
+            weight=cost,
+            road_id=rid,
+            distance_km=edge_km(u, v),
+            flood_exposure=float((road or {}).get("flood_exposure") or 0.2),
+        )
+    if len(_GRAPH_CACHE) > 64:
+        _GRAPH_CACHE.clear()
+    _GRAPH_CACHE[key] = g
     return g
 
 
@@ -77,7 +131,7 @@ def path_payload(g: nx.Graph, nodes: list[str]) -> dict[str, Any]:
 
 
 async def candidate_routes(origin_lat: float, origin_lon: float, dest_lat: float, dest_lon: float, k: int = 3) -> list[dict[str, Any]]:
-    stored = await mongo.find_many("roads", {}, limit=50, sort_field="road_id", direction=1)
+    stored = await mongo.find_many("roads", {}, limit=5000, sort_field="road_id", direction=1)
     roads = stored or ROADS
     g = build_graph(roads)
     src = _nearest_node(origin_lat, origin_lon)

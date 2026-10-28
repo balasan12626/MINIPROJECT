@@ -1,5 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import {
+  fetchCities,
   fetchDams,
   fetchMlBenchmarkV4,
   hqrlAblation,
@@ -95,16 +96,59 @@ export function ScenarioProvider({ children }) {
     };
   }, []);
 
+  // ---- cities (F7: reference data, read once) -----------------------------
+  // The run plans on one city's real road network (backend/data/cities).
+  const [cities, setCities] = useState([]);
+  const [cityId, setCityId] = useState("delhi");
+  useEffect(() => {
+    let alive = true;
+    Promise.resolve()
+      .then(() => fetchCities())
+      .then((res) => {
+        if (!alive) return;
+        const list = res?.cities || [];
+        setCities(list);
+        // Keep "delhi" when it exists, else whatever the backend has first.
+        setCityId((prev) => (list.some((c) => c.id === prev) ? prev : list[0]?.id || prev));
+      })
+      .catch(() => alive && setCities([]));
+    return () => {
+      alive = false;
+    };
+  }, []);
+  const city = useMemo(() => cities.find((c) => c.id === cityId) || null, [cities, cityId]);
+  // F8 / F9: which free ambulance serves an SOS, and whether idle ones pre-position.
+  const [dispatchPolicy, setDispatchPolicy] = useState("optimal");
+  const [preposition, setPreposition] = useState(true);
+  // F18: "forecast" = Open-Meteo hourly rain for the city drives the run (labelled forecast).
+  const [rainSource, setRainSource] = useState("scenario");
+  // F23: ASSUMED share of a warned zone that leaves early (0 = off; used by the what-if planner).
+  const [warningCompliance, setWarningCompliance] = useState(0);
+  // F25: assumed crew shift / fuel rules (off = today's unlimited crews).
+  const [crewRules, setCrewRules] = useState(false);
+  // F32: fairness knob of the "fair" dispatch policy.
+  const [fairLambda, setFairLambda] = useState(1);
+  // F28: food / water supply runs with an assumed truck fleet (off by default).
+  const [supplyOn, setSupplyOn] = useState(false);
+  // F22: assumed boat fleet for cut-off people (0 = off by default).
+  const [boatsCount, setBoatsCount] = useState(0);
+  // F26: road flood exposure model ("distance" = proxy v1, "hand" = height above nearest drainage v2).
+  const [exposureModel, setExposureModel] = useState("distance");
+
   const selectedDam = useMemo(() => dams.find((d) => d.id === damId) || null, [dams, damId]);
 
   /** Changing the reservoir drops a typed reservoir level: that number was an
    * elevation (m MSL) for the previous dam and means nothing for another one. */
+  // Once the operator picks a dam, loading a scenario must not swap it back.
+  const userPickedDam = useRef(false);
   const setDamId = useCallback((id) => {
+    userPickedDam.current = true;
     setDamIdRaw(id);
     setOverrides((prev) => {
-      if (prev.current_level_m == null) return prev;
+      if (prev.current_level_m == null && prev.capacity_override_m == null) return prev;
       const next = { ...prev };
       delete next.current_level_m;
+      delete next.capacity_override_m;
       return next;
     });
   }, []);
@@ -113,6 +157,9 @@ export function ScenarioProvider({ children }) {
   // edited. This is NOT the evacuation-side `dam_level` (Yamuna barrage stage,
   // from scenario.sim.params) — the two are never copied into each other.
   const damLevel = overrides.current_level_m ?? selectedDam?.current_level_m ?? null;
+  // Edited full reservoir level (m MSL) — the backend's `capacity_override_m`.
+  // Unset means the registry's own FRL is used.
+  const damFrlOverride = typeof overrides.capacity_override_m === "number" ? overrides.capacity_override_m : null;
 
   // ---- people roster -----------------------------------------------------
   const [citizens, setCitizens] = useState(() => roster(10));
@@ -142,19 +189,22 @@ export function ScenarioProvider({ children }) {
 
   // ---- derived -----------------------------------------------------------
   const changedFields = useMemo(() => {
-    const diverged = divergedFields(scenario, inputs);
+    const diverged = divergedFields(scenario, inputs).filter((k) => k !== "capacity_override_m");
     if (overrides.current_level_m != null && overrides.current_level_m !== selectedDam?.current_level_m) {
-      return [...diverged, "current_level_m"];
+      diverged.push("current_level_m");
+    }
+    if (damFrlOverride != null && damFrlOverride !== selectedDam?.full_reservoir_level_m) {
+      diverged.push("capacity_override_m");
     }
     return diverged;
-  }, [scenario, inputs, overrides.current_level_m, selectedDam?.current_level_m]);
+  }, [scenario, inputs, overrides.current_level_m, selectedDam?.current_level_m, selectedDam?.full_reservoir_level_m, damFrlOverride]);
 
   const isCustom = changedFields.length > 0;
 
   /** Everything a run consumes — used to detect "results are stale". */
   const signature = useMemo(
-    () => JSON.stringify({ inputs, damId, damLevel, citizens, features }),
-    [inputs, damId, damLevel, citizens, features]
+    () => JSON.stringify({ inputs, damId, damLevel, citizens, features, cityId, dispatchPolicy, preposition, rainSource, warningCompliance, crewRules, fairLambda, supplyOn, boatsCount, exposureModel }),
+    [inputs, damId, damLevel, citizens, features, cityId, dispatchPolicy, preposition, rainSource, warningCompliance, crewRules, fairLambda, supplyOn, boatsCount, exposureModel]
   );
 
   const hasResults = Boolean(results.dam || results.run || results.benchmark || results.ml);
@@ -182,11 +232,17 @@ export function ScenarioProvider({ children }) {
     (id) => {
       if (!getScenario(id)) return;
       setActiveId(id);
-      setOverrides({});
-      // The reservoir follows the scenario's evacuation region (this backend
-      // simulates one region, so there is one region dam). The barrage stage
-      // comes from the scenario's own sim.params via the cleared overrides.
-      if (regionDam?.dam_id) setDamIdRaw(regionDam.dam_id);
+      // Scenario presets reset every scenario input, but the reservoir level
+      // and capacity belong to the chosen DAM, not the scenario — keep them.
+      setOverrides((prev) => {
+        const keep = {};
+        if (prev.current_level_m != null) keep.current_level_m = prev.current_level_m;
+        if (prev.capacity_override_m != null) keep.capacity_override_m = prev.capacity_override_m;
+        return keep;
+      });
+      // Until the operator picks a dam, the reservoir follows the scenario's
+      // evacuation region. A dam the operator clicked is kept.
+      if (!userPickedDam.current && regionDam?.dam_id) setDamIdRaw(regionDam.dam_id);
       setRevision((r) => r + 1);
     },
     [regionDam]
@@ -281,6 +337,7 @@ export function ScenarioProvider({ children }) {
             dam_id: damId,
             ...damControls,
             ...(damLevel != null ? { current_level_m: Number(damLevel) } : {}),
+            ...(damFrlOverride != null && damFrlOverride > 0 ? { capacity_override_m: damFrlOverride } : {}),
           });
           if (stale()) return;
           if (dam?.available === false) throw new Error(dam.message || "Dam simulation unavailable");
@@ -301,6 +358,16 @@ export function ScenarioProvider({ children }) {
             sos_count: citizens.length,
             citizens,
             features,
+            ...(cities.length ? { city: cityId } : {}),
+            dispatch_policy: dispatchPolicy,
+            preposition,
+            rain_source: rainSource,
+            warning_compliance: warningCompliance,
+            crew_rules: crewRules ? { on: true } : null,
+            fair_lambda: fairLambda,
+            supply: supplyOn ? { on: true } : null,
+            boats: Number(boatsCount) || 0,
+            exposure_model: exposureModel,
           });
           if (stale()) return;
           const engineRunId = state?.run_id;
@@ -312,6 +379,7 @@ export function ScenarioProvider({ children }) {
               scenario: scenario.sim.scenario,
               title: scenario.label,
               features,
+              city: city ? { id: city.id, name: city.name } : null,
               region: evacuationRegion,
               dam: selectedDam
                 ? {
@@ -374,7 +442,7 @@ export function ScenarioProvider({ children }) {
       patchRun((r) => ({ ...r, finishedAt: new Date().toISOString() }));
       setRunning(false);
     },
-    [running, scenario, currentRun, activeId, signature, inputs, damId, damLevel, citizens, features, selectedDam, evacuationRegion]
+    [running, scenario, currentRun, activeId, signature, inputs, damId, damLevel, damFrlOverride, citizens, features, selectedDam, evacuationRegion, cities, cityId, city, dispatchPolicy, preposition, rainSource, warningCompliance, crewRules, fairLambda, supplyOn]
   );
 
   const value = useMemo(
@@ -401,9 +469,33 @@ export function ScenarioProvider({ children }) {
       setDamId,
       selectedDam,
       damLevel,
+      damFrlOverride,
       damsError,
       evacuationRegion,
       regionDam,
+      // city (F7)
+      cities,
+      cityId,
+      setCityId,
+      city,
+      dispatchPolicy,
+      setDispatchPolicy,
+      preposition,
+      setPreposition,
+      rainSource,
+      setRainSource,
+      warningCompliance,
+      setWarningCompliance,
+      crewRules,
+      setCrewRules,
+      fairLambda,
+      setFairLambda,
+      supplyOn,
+      setSupplyOn,
+      boatsCount,
+      setBoatsCount,
+      exposureModel,
+      setExposureModel,
       // run (all result readers go through currentRun)
       steps,
       results,
@@ -420,7 +512,8 @@ export function ScenarioProvider({ children }) {
     [
       activeId, scenario, revision, selectScenario, resetToScenario,
       inputs, presetInputs, patchInputs, changedFields, isCustom,
-      features, citizens, dams, damId, setDamId, selectedDam, damLevel, damsError, evacuationRegion, regionDam,
+      features, citizens, dams, damId, setDamId, selectedDam, damLevel, damFrlOverride, damsError, evacuationRegion, regionDam,
+      cities, cityId, city, dispatchPolicy, preposition, rainSource, warningCompliance, crewRules, fairLambda, supplyOn, boatsCount, exposureModel,
       steps, results, runs, currentRunId, currentRun, running, hasResults, isOutdated, lastRun, runScenario, clearResults,
     ]
   );

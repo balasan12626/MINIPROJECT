@@ -21,6 +21,12 @@ import numpy as np
 from backend.utils.geo import haversine_km
 
 
+
+def _pop(z: dict) -> int:
+    """Zone population; OSM cities leave it null (unknown, never guessed) — it
+    then adds no load to any shelter rather than crashing the solver."""
+    return int(z.get("population") or 0)
+
 def build_cost_matrix(zones: list[dict], shelters: list[dict], traffic: float) -> np.ndarray:
     n, m = len(zones), len(shelters)
     c = np.zeros((n, m), dtype=float)
@@ -30,7 +36,7 @@ def build_cost_matrix(zones: list[dict], shelters: list[dict], traffic: float) -
             travel = dist * (1.0 + 0.7 * traffic)
             flood = float(s.get("flood_risk") or 0) * 8.0
             seats = max(int(s.get("capacity", 0)) - int(s.get("occupancy", 0)), 1)
-            overload = max(0.0, z["population"] / seats)
+            overload = max(0.0, _pop(z) / seats)
             c[i, j] = 0.30 * travel + 0.25 * dist + 0.20 * flood + 0.10 * traffic * 5 + 0.15 * overload
     return c
 
@@ -57,14 +63,14 @@ def evaluate_assignment(assign: list[int], zones: list[dict], shelters: list[dic
             continue
         total += float(cost[i, j])
         dist += haversine_km(zones[i]["lat"], zones[i]["lon"], shelters[j]["lat"], shelters[j]["lon"])
-        used[j] += int(zones[i]["population"])
-        exposure += float(shelters[j].get("flood_risk") or 0) * zones[i]["population"]
+        used[j] += _pop(zones[i])
+        exposure += float(shelters[j].get("flood_risk") or 0) * _pop(zones[i])
         seats = int(shelters[j].get("capacity", 0)) - int(shelters[j].get("occupancy", 0))
         if used[j] > max(seats, 0):
             violations += 1
         if float(shelters[j].get("flood_risk") or 0) >= 0.65:
             violations += 1
-    pop = sum(z["population"] for z in zones) or 1
+    pop = sum(_pop(z) for z in zones) or 1
     util = []
     for j, s in enumerate(shelters):
         cap = max(int(s.get("capacity") or 1), 1)
@@ -98,10 +104,10 @@ def greedy_solve(zones, shelters, cost) -> list[int]:
         order = np.argsort(cost[i])
         chosen = int(order[0])
         for j in order:
-            if remaining[int(j)] >= zones[i]["population"] * 0.3:
+            if remaining[int(j)] >= _pop(zones[i]) * 0.3:
                 chosen = int(j)
                 break
-        remaining[chosen] = max(0, remaining[chosen] - zones[i]["population"])
+        remaining[chosen] = max(0, remaining[chosen] - _pop(zones[i]))
         assign.append(chosen)
     return assign
 

@@ -1,0 +1,321 @@
+{
+  "benchmark": "ops_montecarlo_v1",
+  "city": "mumbai",
+  "synthetic": true,
+  "description": "python scripts/monte_carlo_ops.py --city delhi --runs 60 --seed 1\n    \u2192 models/ops_montecarlo_v1_<city>.json",
+  "settings": {
+    "runs": 60,
+    "seed": 1,
+    "initial_sos": 30,
+    "surge_sos": 15,
+    "policies": [
+      "nearest_depot",
+      "first_free",
+      "greedy",
+      "optimal",
+      "optimal+prepos"
+    ],
+    "step_wall_s": 2.0,
+    "ticks_with_flood_growth": 36,
+    "horizon_wall_s": 1500.0,
+    "time_scale": 120.0,
+    "ambulances": 10,
+    "route_chooser": "dijkstra (shortest weighted path)",
+    "blockage_start_range": [
+      0.05,
+      0.25
+    ],
+    "shelter_closed_per_run": 1
+  },
+  "graph": {
+    "junctions": 624,
+    "roads": 611,
+    "shelters": 10,
+    "depots": 6
+  },
+  "code": {
+    "commit": "7d13dacead6224b3e3b66715e77f70df86b237d8",
+    "dirty_worktree": true
+  },
+  "summary": {
+    "nearest_depot": {
+      "people": 2700,
+      "served": 2700,
+      "censored": 0,
+      "time_to_pickup_min": {
+        "n": 2700,
+        "mean": 24.84,
+        "p50": 20.0,
+        "p90": 44.0
+      },
+      "time_to_safety_min": {
+        "n": 2700,
+        "mean": 38.88,
+        "p50": 32.0,
+        "p90": 65.9
+      },
+      "ambulance_cases_time_to_safety_min": {
+        "n": 1399,
+        "mean": 41.82,
+        "p50": 32.6,
+        "p90": 69.3
+      },
+      "by_vulnerability": {
+        "chest-deep": {
+          "n": 401,
+          "mean": 40.95,
+          "p50": 32.2,
+          "p90": 69.5
+        },
+        "child": {
+          "n": 425,
+          "mean": 42.78,
+          "p50": 36.0,
+          "p90": 72.0
+        },
+        "elderly": {
+          "n": 573,
+          "mean": 41.72,
+          "p50": 32.0,
+          "p90": 68.4
+        },
+        "standard": {
+          "n": 1301,
+          "mean": 35.72,
+          "p50": 28.9,
+          "p90": 57.9
+        }
+      }
+    },
+    "first_free": {
+      "people": 2700,
+      "served": 2700,
+      "censored": 0,
+      "time_to_pickup_min": {
+        "n": 2700,
+        "mean": 33.67,
+        "p50": 24.0,
+        "p90": 68.0
+      },
+      "time_to_safety_min": {
+        "n": 2700,
+        "mean": 47.61,
+        "p50": 36.4,
+        "p90": 88.0
+      },
+      "ambulance_cases_time_to_safety_min": {
+        "n": 1399,
+        "mean": 58.66,
+        "p50": 51.2,
+        "p90": 101.8
+      },
+      "by_vulnerability": {
+        "chest-deep": {
+          "n": 401,
+          "mean": 57.54,
+          "p50": 49.9,
+          "p90": 100.0
+        },
+        "child": {
+          "n": 425,
+          "mean": 59.72,
+          "p50": 52.0,
+          "p90": 103.2
+        },
+        "elderly": {
+          "n": 573,
+          "mean": 58.66,
+          "p50": 51.3,
+          "p90": 101.9
+        },
+        "standard": {
+          "n": 1301,
+          "mean": 35.72,
+          "p50": 28.9,
+          "p90": 57.9
+        }
+      }
+    },
+    "greedy": {
+      "people": 2700,
+      "served": 2700,
+      "censored": 0,
+      "time_to_pickup_min": {
+        "n": 2700,
+        "mean": 32.44,
+        "p50": 24.0,
+        "p90": 64.0
+      },
+      "time_to_safety_min": {
+        "n": 2700,
+        "mean": 46.47,
+        "p50": 36.0,
+        "p90": 84.5
+      },
+      "ambulance_cases_time_to_safety_min": {
+        "n": 1399,
+        "mean": 56.47,
+        "p50": 48.5,
+        "p90": 98.5
+      },
+      "by_vulnerability": {
+        "chest-deep": {
+          "n": 401,
+          "mean": 55.9,
+          "p50": 48.0,
+          "p90": 96.1
+        },
+        "child": {
+          "n": 425,
+          "mean": 57.52,
+          "p50": 51.3,
+          "p90": 103.9
+        },
+        "elderly": {
+          "n": 573,
+          "mean": 56.09,
+          "p50": 48.7,
+          "p90": 96.8
+        },
+        "standard": {
+          "n": 1301,
+          "mean": 35.72,
+          "p50": 28.9,
+          "p90": 57.9
+        }
+      }
+    },
+    "optimal": {
+      "people": 2700,
+      "served": 2700,
+      "censored": 0,
+      "time_to_pickup_min": {
+        "n": 2700,
+        "mean": 31.59,
+        "p50": 24.0,
+        "p90": 60.0
+      },
+      "time_to_safety_min": {
+        "n": 2700,
+        "mean": 45.61,
+        "p50": 36.0,
+        "p90": 82.7
+      },
+      "ambulance_cases_time_to_safety_min": {
+        "n": 1399,
+        "mean": 54.82,
+        "p50": 48.0,
+        "p90": 93.9
+      },
+      "by_vulnerability": {
+        "chest-deep": {
+          "n": 401,
+          "mean": 54.75,
+          "p50": 46.3,
+          "p90": 96.0
+        },
+        "child": {
+          "n": 425,
+          "mean": 55.38,
+          "p50": 48.0,
+          "p90": 94.8
+        },
+        "elderly": {
+          "n": 573,
+          "mean": 54.45,
+          "p50": 48.0,
+          "p90": 92.0
+        },
+        "standard": {
+          "n": 1301,
+          "mean": 35.72,
+          "p50": 28.9,
+          "p90": 57.9
+        }
+      }
+    },
+    "optimal+prepos": {
+      "people": 2700,
+      "served": 2700,
+      "censored": 0,
+      "time_to_pickup_min": {
+        "n": 2700,
+        "mean": 31.61,
+        "p50": 24.0,
+        "p90": 60.0
+      },
+      "time_to_safety_min": {
+        "n": 2700,
+        "mean": 45.64,
+        "p50": 36.0,
+        "p90": 84.0
+      },
+      "ambulance_cases_time_to_safety_min": {
+        "n": 1399,
+        "mean": 54.88,
+        "p50": 48.0,
+        "p90": 96.0
+      },
+      "by_vulnerability": {
+        "chest-deep": {
+          "n": 401,
+          "mean": 56.0,
+          "p50": 46.3,
+          "p90": 100.0
+        },
+        "child": {
+          "n": 425,
+          "mean": 54.45,
+          "p50": 48.0,
+          "p90": 94.4
+        },
+        "elderly": {
+          "n": 573,
+          "mean": 54.4,
+          "p50": 48.0,
+          "p90": 92.0
+        },
+        "standard": {
+          "n": 1301,
+          "mean": 35.72,
+          "p50": 28.9,
+          "p90": 57.9
+        }
+      }
+    }
+  },
+  "paired_vs_first_free": {
+    "greedy": {
+      "runs": 60,
+      "mean_diff_min": -1.14,
+      "ci95_min": [
+        -1.77,
+        -0.5
+      ],
+      "faster_in_pct_of_runs": 61.7
+    },
+    "optimal": {
+      "runs": 60,
+      "mean_diff_min": -1.99,
+      "ci95_min": [
+        -2.64,
+        -1.34
+      ],
+      "faster_in_pct_of_runs": 73.3
+    },
+    "optimal+prepos": {
+      "runs": 60,
+      "mean_diff_min": -1.96,
+      "ci95_min": [
+        -2.67,
+        -1.25
+      ],
+      "faster_in_pct_of_runs": 78.3
+    }
+  },
+  "notes": [
+    "nearest_depot is idealised (an ambulance is launched from the depot nearest the caller wherever it really is); it is reported for reference and is not a fair comparison for the position-aware policies.",
+    "Pre-positioning uses a fixed flood probability of 0.7 for hotspot weights (no ML model runs in the batch).",
+    "All callers, ages, depths, arrival times, closures and the closed shelter are synthetic (seeded)."
+  ]
+}

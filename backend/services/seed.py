@@ -119,6 +119,9 @@ RESCUE_TEAMS = [
     {"team_id": "RT-04", "name": "SDRF North District", "lat": 28.7041, "lon": 77.1025, "status": "AVAILABLE", "capacity": 8},
 ]
 
+# F21: real OSM hospitals of the active city (filled by geo.cities.activate; empty = none mapped).
+HOSPITALS: list[dict] = []
+
 LANDMARKS = {
     "yamuna": {"name": "Yamuna River (ITO)", "lat": 28.6284, "lon": 77.2410, "kind": "river"},
     "hathnikund": {"name": "Hathnikund Barrage", "lat": 30.3139, "lon": 77.5886, "kind": "dam"},
@@ -164,6 +167,10 @@ GRAPH_EDGES = [
     ("AIIMS", "IIT", "R06"),
     ("CWG", "NIZAM", "R04"),
 ]
+
+# Optional per-edge real length + road shape, keyed "U|V" (F7 OSM cities). Empty
+# for this hand-made network, where an edge is the straight line between nodes.
+GRAPH_EDGE_INFO: dict[str, dict] = {}
 
 
 async def seed_if_empty() -> None:

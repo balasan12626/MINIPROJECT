@@ -3,13 +3,22 @@ import { Circle, MapContainer, Marker, Polyline, Popup, TileLayer, useMap, useMa
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "./rescueMap.css";
-import { RESCUE_TEAMS, SEED_SHELTERS, STAGE_COLOR, STAGE_LABEL, STAGE_SHORT, cssToken } from "../../data/rescueAssets.js";
+import {
+  RESCUE_TEAMS,
+  SEED_SHELTERS,
+  STAGE_COLOR,
+  STAGE_LABEL,
+  STAGE_SHORT,
+  cssToken,
+  shelterLocation,
+} from "../../data/rescueAssets.js";
 import { positionAlong, slicePath } from "../../state/rescueOps.js";
 
 const CENTER = [28.6139, 77.209];
-const TILE_URL = "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png";
-const TILE_ATTR =
-  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
+// Same OpenStreetMap tiles as FloodMap / IndiaDamMap (CARTO now demands an
+// API key). Dark mode darkens them in CSS (.lrm-map .leaflet-tile-pane).
+const TILE_URL = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
+const TILE_ATTR = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
 const CLUSTER_CELL_PX = 44;
 const CLUSTER_MAX_ZOOM = 15; // at/above this zoom every SOS is drawn individually
 
@@ -24,6 +33,30 @@ const clamp01 = (v) => (v < 0 ? 0 : v > 1 ? 1 : v);
  * (and its CSS pulse) survives every 1.2 s poll. Leaflet's DivIcon.createIcon()
  * builds a fresh element per marker, so sharing one instance is safe. */
 const ICON_CACHE = new Map();
+/* Planned-leg styles, module-level so react-leaflet never sees new objects. */
+const LEG_A = { color: "#f43f5e", weight: 2, opacity: 0.35, dashArray: "4 6" };
+const LEG_A_SEL = { color: "#f43f5e", weight: 4, opacity: 0.9, dashArray: "8 6" };
+const LEG_B = { color: "#34d399", weight: 2, opacity: 0.35, dashArray: "4 6" };
+const LEG_B_SEL = { color: "#34d399", weight: 4, opacity: 0.9 };
+const LEG_ALT = { color: "#a78bfa", weight: 2, opacity: 0.55, dashArray: "2 6" };
+const LEG_A_GLOW = { color: "#f43f5e", weight: 12, opacity: 0.16, lineCap: "round" };
+const LEG_B_GLOW = { color: "#34d399", weight: 12, opacity: 0.16, lineCap: "round" };
+/* F1 road layer: open / closed-by-flood / operator styles (module-level). */
+const ROAD_OPEN = { color: "#64748b", weight: 5, opacity: 0.45 };
+const ROAD_OPEN_USED = { color: "#38bdf8", weight: 6, opacity: 0.6 };
+const ROAD_FLOOD = { color: "#ef4444", weight: 6, opacity: 0.75, dashArray: "2 8", lineCap: "round" };
+const ROAD_OPERATOR = { color: "#ef4444", weight: 7, opacity: 0.9, dashArray: "10 6" };
+const ROAD_OPERATOR_OPEN = { color: "#22c55e", weight: 6, opacity: 0.7, dashArray: "10 6" };
+// F10: open road the flood rule is forecast to close within 30 sim minutes.
+const ROAD_CLOSING_SOON = { color: "#f59e0b", weight: 4, dashArray: "4 6", opacity: 0.9 };
+
+function roadStyle(r) {
+  if (r.blocked) return r.operator ? ROAD_OPERATOR : ROAD_FLOOD;
+  if (r.operator) return ROAD_OPERATOR_OPEN;
+  if (r.closes_in_sim_min != null && r.closes_in_sim_min <= 30) return ROAD_CLOSING_SOON;
+  return r.active_legs ? ROAD_OPEN_USED : ROAD_OPEN;
+}
+
 function cached(key, make) {
   let ic = ICON_CACHE.get(key);
   if (!ic) {
@@ -81,6 +114,16 @@ function clusterIcon(count) {
 /** Heading is constant for a leg, so it is baked into the (cached) icon in
  * 15° buckets instead of being written to the DOM every frame. */
 function unitIcon(role, bearing) {
+  if (role === "boat") {
+    return cached("unit|boat", () =>
+      L.divIcon({
+        className: "lrm-unit-wrap",
+        html: '<div class="lrm-unit lrm-boat">🚤</div>',
+        iconSize: [22, 22],
+        iconAnchor: [11, 11],
+      })
+    );
+  }
   const b = Number.isFinite(bearing) ? Math.round(bearing / 15) * 15 : 0;
   const amb = role === "ambulance";
   return cached(`unit|${role}|${amb ? 0 : b}`, () =>
@@ -101,11 +144,36 @@ function depotIcon() {
   );
 }
 
-function shelterIcon(used, full) {
-  return cached(`shelter|${used ? 1 : 0}|${full ? 1 : 0}`, () =>
+/** F21: OSM hospital (cached, one instance). */
+function hospitalIcon() {
+  return cached("hospital", () =>
+    L.divIcon({ className: "lrm-hospital-wrap", html: '<div class="lrm-hospital">🏥</div>', iconSize: [18, 18], iconAnchor: [9, 9] })
+  );
+}
+
+/** F28: supply truck (cached, one instance). */
+function truckIcon() {
+  return cached("truck", () =>
+    L.divIcon({ className: "lrm-truck-wrap", html: '<div class="lrm-truck">🚚</div>', iconSize: [18, 18], iconAnchor: [9, 9] })
+  );
+}
+
+function idleAmbulanceIcon(kind) {
+  return cached(`idle|${kind}`, () =>
+    L.divIcon({
+      className: "lrm-idle-wrap",
+      html: `<div class="lrm-idle lrm-idle-${kind}">🚑</div>`,
+      iconSize: [18, 18],
+      iconAnchor: [9, 9],
+    })
+  );
+}
+
+function shelterIcon(used, full, closed) {
+  return cached(`shelter|${used ? 1 : 0}|${full ? 1 : 0}|${closed ? 1 : 0}`, () =>
     L.divIcon({
       className: "lrm-shelter-wrap",
-      html: `<div class="lrm-shelter${used ? " lrm-used" : ""}${full ? " lrm-full" : ""}"></div>`,
+      html: `<div class="lrm-shelter${used ? " lrm-used" : ""}${full ? " lrm-full" : ""}${closed ? " lrm-closed" : ""}">${closed ? "🚫" : ""}</div>`,
       iconSize: [16, 16],
       iconAnchor: [8, 8],
     })
@@ -118,10 +186,11 @@ function unitColor(role) {
   if (!UNIT_COLORS) {
     UNIT_COLORS = {
       ambulance: cssToken("--status-sos", "#ef4444"),
-      rescue: cssToken("--accent", "#facc15"),
+      rescue: cssToken("--accent", "#38bdf8"),
+      boat: "#0284c7",
     };
   }
-  return role === "ambulance" ? UNIT_COLORS.ambulance : UNIT_COLORS.rescue;
+  return UNIT_COLORS[role] || UNIT_COLORS.rescue;
 }
 
 /* --------------------------------------------------------- clustering */
@@ -341,9 +410,95 @@ function PersonPopup({ p }) {
         <dd>{eta}</dd>
       </dl>
       {p.waitReason ? <div style={{ marginTop: 4, color: STAGE_COLOR.queued }}>{p.waitReason}</div> : null}
+      {p.routeAlert ? <div className="lrm-route-alert">⛔ {p.routeAlert.reason}</div> : null}
+      {p.reroutes?.length ? <div className="muted">Re-routed {p.reroutes.length}× this run</div> : null}
     </div>
   );
 }
+
+/** Re-centre once when the run's city changes (MapContainer's `center` only
+ * applies on mount). setView without animation — see CLAUDE.md Leaflet notes. */
+function CityFrame({ cityId, center, zoom }) {
+  const map = useMap();
+  const last = useRef(cityId);
+  useEffect(() => {
+    if (cityId && cityId !== last.current) {
+      last.current = cityId;
+      map.setView(center, zoom, { animate: false });
+    }
+  }, [cityId, center, zoom, map]);
+  return null;
+}
+
+const WATER_STYLES = new Map();
+/** Rivers / coast stronger than canals / ponds; a little bolder as P rises. */
+function waterStyle(kind, p) {
+  const major = kind === "river" || kind === "coastline";
+  const band = p >= 0.75 ? 2 : p >= 0.5 ? 1 : 0;
+  const key = `${major ? 1 : 0}|${band}`;
+  if (!WATER_STYLES.has(key)) {
+    WATER_STYLES.set(key, {
+      color: "#3b82f6",
+      weight: (major ? 3 : 1.2) + band,
+      opacity: major ? 0.55 + 0.1 * band : 0.35,
+    });
+  }
+  return WATER_STYLES.get(key);
+}
+
+/** Roads as clickable lines. The popup offers Block / Open / Back to the
+ * flood rule when the parent passes `onRoad` (Routes + Live maps). */
+const RoadLayer = memo(function RoadLayer({ roads, onRoad }) {
+  const [busy, setBusy] = useState("");
+  const run = async (id, action) => {
+    setBusy(id);
+    try {
+      await onRoad(id, action);
+    } finally {
+      setBusy("");
+    }
+  };
+  return roads.flatMap((r) =>
+    (r.segments || []).map((seg, i) => (
+      <Polyline key={`${r.road_id}|${i}`} positions={seg} pathOptions={roadStyle(r)}>
+        <Popup>
+          <div className="lrm-popup lrm-road-pop">
+            <h4>
+              {r.blocked ? "⛔" : "✅"} {r.road_id} · {r.name}
+            </h4>
+            <div>
+              {r.blocked ? (r.operator ? "Blocked by operator" : "Closed by the flood rule") : r.operator ? "Opened by operator" : "Open"}
+              {" · "}
+              {r.active_legs} active route leg(s)
+              {!r.blocked && r.closes_in_sim_min != null ? (
+                <> · ⚠ forecast to flood in ~{r.closes_in_sim_min} min (simulation rule)</>
+              ) : null}
+            </div>
+            {onRoad ? (
+              <div className="lrm-road-actions">
+                {r.blocked ? (
+                  <button type="button" disabled={!!busy} onClick={() => run(r.road_id, "open")}>
+                    ✅ Open road
+                  </button>
+                ) : (
+                  <button type="button" className="danger" disabled={!!busy} onClick={() => run(r.road_id, "block")}>
+                    ⛔ Block road
+                  </button>
+                )}
+                {r.operator ? (
+                  <button type="button" className="link-btn" disabled={!!busy} onClick={() => run(r.road_id, "clear")}>
+                    Back to flood rule
+                  </button>
+                ) : null}
+                {busy ? <span className="muted">re-planning…</span> : null}
+              </div>
+            ) : null}
+          </div>
+        </Popup>
+      </Polyline>
+    ))
+  );
+});
 
 /* -------------------------------------------------------------- the map */
 
@@ -357,7 +512,19 @@ function LiveRescueMapInner({
   floodProbability = 0,
   toasts = [],
   onToast,
+  plannedRoutes = "none",
+  roads = EMPTY_ROADS,
+  onRoad = null,
+  cityView = null,
+  silentZones = EMPTY_ROADS,
+  supplyTrucks = EMPTY_ROADS,
 }) {
+  // F7: the run's city. Without it (demo network / old payload) the Delhi
+  // mirrors in data/rescueAssets.js are used, exactly as before.
+  const depots = cityView?.rescue_teams?.length ? cityView.rescue_teams : RESCUE_TEAMS;
+  const seedShelters = cityView?.shelters?.length ? cityView.shelters : SEED_SHELTERS;
+  const mapCenter = cityView?.center?.length === 2 ? cityView.center : CENTER;
+  const water = cityView?.water || EMPTY_ROADS;
   const reduced = useMemo(
     () =>
       typeof window !== "undefined" &&
@@ -369,10 +536,13 @@ function LiveRescueMapInner({
   const people = ops?.people || [];
   const units = ops?.units || [];
   const shelters = ops?.shelters || [];
+  const closedShelters = ops?.closedShelters || [];
+  const closedKey = closedShelters.join("|");
   const counters = ops?.counters || {};
   const selected = people.find((p) => p.key === selectedKey) || null;
 
   const [zoom, setZoom] = useState(11);
+  const [legendOpen, setLegendOpen] = useState(false);
   const [dismissedKey, setDismissedKey] = useState(null);
   const selectedRef = useRef(selectedKey);
   selectedRef.current = selectedKey;
@@ -406,7 +576,7 @@ function LiveRescueMapInner({
   // Shelters the run actually uses + the wider seed network for context.
   const shelterPins = useMemo(() => {
     const byName = new Map();
-    for (const s of SEED_SHELTERS) byName.set(s.name, { ...s, full: false, usedThisRun: false });
+    for (const s of seedShelters) byName.set(s.name, { ...s, full: false, usedThisRun: false });
     for (const s of shelters) {
       if (!isValidCoord(s.lat, s.lon)) continue;
       byName.set(s.name, { ...(byName.get(s.name) || {}), ...s });
@@ -416,10 +586,45 @@ function LiveRescueMapInner({
         byName.set(p.shelter, { name: p.shelter, lat: p.shelterLoc.lat, lon: p.shelterLoc.lon, usedThisRun: true });
       }
     }
-    return [...byName.values()].filter((s) => isValidCoord(s.lat, s.lon));
-  }, [shelters, people]);
+    // Operator-closed shelters (F2) always show, with the closed icon.
+    const closed = closedKey ? closedKey.split("|") : [];
+    for (const name of closed) {
+      const loc = byName.get(name) || shelterLocation(name);
+      if (loc) byName.set(name, { name, ...byName.get(name), lat: loc.lat, lon: loc.lon });
+    }
+    return [...byName.values()]
+      .map((s) => ({ ...s, closed: closed.includes(s.name) }))
+      .filter((s) => isValidCoord(s.lat, s.lon));
+  }, [shelters, people, closedKey, seedShelters]);
 
   const p = Number(floodProbability) || 0;
+
+  // Planned legs from the backend's own route polylines: unit base -> person
+  // (to_person) and person -> shelter (to_shelter). "selected" draws the
+  // selected person's two legs; "all" also draws every leg still ahead.
+  const planned = useMemo(() => {
+    if (plannedRoutes === "none") return [];
+    const out = [];
+    for (const q of people) {
+      const sel = q.key === selectedKey;
+      if (!sel && plannedRoutes !== "all") continue;
+      const ahead = (leg) =>
+        sel || (leg === "a" ? ["assigned", "en_route"].includes(q.stage) : ["assigned", "en_route", "to_shelter"].includes(q.stage));
+      // The QAOA candidates it did NOT pick, for the selected person.
+      if (sel && q.quantum) {
+        for (const [leg, qq] of [["a", q.quantum.toPerson], ["b", q.quantum.toShelter]]) {
+          (qq?.candidates || []).forEach((c, i) => {
+            if (i !== qq.chosen && c.points?.length > 1) out.push({ key: `${q.key}|${leg}|alt${i}`, pts: c.points, style: LEG_ALT });
+          });
+        }
+      }
+      if (sel && q.routeToPerson) out.push({ key: `${q.key}|a|glow`, pts: q.routeToPerson, style: LEG_A_GLOW });
+      if (sel && q.routeToShelter) out.push({ key: `${q.key}|b|glow`, pts: q.routeToShelter, style: LEG_B_GLOW });
+      if (q.routeToPerson && ahead("a")) out.push({ key: `${q.key}|a`, pts: q.routeToPerson, style: sel ? LEG_A_SEL : LEG_A });
+      if (q.routeToShelter && ahead("b")) out.push({ key: `${q.key}|b`, pts: q.routeToShelter, style: sel ? LEG_B_SEL : LEG_B });
+    }
+    return out;
+  }, [people, selectedKey, plannedRoutes]);
 
   /* ---- ONE shared animation loop for every unit ----
    * setLatLng on markers ~30 fps; route/trail polylines ~10 fps. No setState
@@ -481,36 +686,87 @@ function LiveRescueMapInner({
 
   return (
     <div className="lrm-shell" ref={shellRef}>
-      <MapContainer center={CENTER} zoom={11} preferCanvas scrollWheelZoom={false} className="lrm-map">
+      <MapContainer center={mapCenter} zoom={cityView?.zoom || 11} preferCanvas scrollWheelZoom={false} className="lrm-map">
         <MapBehaviour visible={onScreen} />
         <MapEvents onZoom={setZoom} onPopupClose={onPopupClose} />
         <PanTo target={panTarget} />
-        <TileLayer attribution={TILE_ATTR} url={TILE_URL} subdomains="abcd" maxZoom={19} />
+        <CityFrame cityId={cityView?.id} center={mapCenter} zoom={cityView?.zoom || 11} />
+        <TileLayer attribution={cityView ? `${TILE_ATTR} · ${cityView.attribution || ""}` : TILE_ATTR} url={TILE_URL} maxZoom={19} />
 
-        {/* Flood extent, scaled by the run's real flood probability. */}
-        {p > 0 ? (
-          <Circle
-            center={CENTER}
-            radius={2000 + p * 9000}
-            interactive={false}
-            pathOptions={{ color: "#4aa8ff", weight: 1, fillColor: "#4aa8ff", fillOpacity: 0.06 }}
-          />
-        ) : null}
+        {/* Real cities: the mapped rivers / coast / canals (OSM) the exposure
+            proxy is computed from. Demo network: the old probability-scaled extent. */}
+        {water.length
+          ? water.map((w, i) => (
+              <Polyline key={`w${i}`} positions={w.pts} interactive={false} pathOptions={waterStyle(w.kind, p)} />
+            ))
+          : p > 0 ? (
+              <Circle
+                center={CENTER}
+                radius={2000 + p * 9000}
+                interactive={false}
+                pathOptions={{ color: "#4aa8ff", weight: 1, fillColor: "#4aa8ff", fillOpacity: 0.06 }}
+              />
+            ) : null}
 
-        {RESCUE_TEAMS.map((t) => (
+        {depots.map((t) => (
           <Marker key={t.team_id} position={[t.lat, t.lon]} icon={depotIcon()} title={`${t.name} (depot)`}>
             <Popup>
               <b>{t.name}</b>
               <br />
-              Rescue depot · {t.capacity} personnel
+              {t.scope ? <>Rescue depot · {t.scope}</> : <>Rescue depot · {t.capacity} personnel</>}
+            </Popup>
+          </Marker>
+        ))}
+
+        {silentZones.map((z) => (
+          <Circle
+            key={`silent|${z.zone_id}`}
+            center={z.centre}
+            radius={Math.max(300, Math.sqrt((z.area_km2 * 1e6) / Math.PI))}
+            pathOptions={{ color: "#a3a3a3", weight: 1, dashArray: "4 4", fillColor: "#525252", fillOpacity: 0.25 }}
+          >
+            <Popup>
+              📵 Silent area near {z.name} · ~{z.area_km2} km² (modelled: towers under the flood)
+            </Popup>
+          </Circle>
+        ))}
+
+        {supplyTrucks.map((t) => (
+          <Marker key={`truck|${t.name}`} position={t.position} icon={truckIcon()} title={`${t.name} (supply truck)`}>
+            <Popup>
+              <b>{t.name}</b> · supply truck (assumed fleet)
+              <br />
+              {t.leg ? `To ${t.leg.to} · ${t.leg.km} km by road` : `Idle · ${t.trips} trip(s) done`}
+            </Popup>
+          </Marker>
+        ))}
+
+        {(cityView?.hospitals || EMPTY_ROADS).map((h) => (
+          <Marker key={`hosp|${h.hospital_id || h.name}`} position={[h.lat, h.lon]} icon={hospitalIcon()} title={`${h.name} (hospital)`}>
+            <Popup>
+              <b>{h.name}</b>
+              <br />
+              Hospital (OpenStreetMap) · beds: {h.beds != null ? `${h.beds} (OSM tag)` : "capacity unknown"}
+            </Popup>
+          </Marker>
+        ))}
+
+        {(ops?.idleUnits || EMPTY_ROADS).map((a) => (
+          <Marker key={`idle|${a.name}`} position={[a.lat, a.lon]} icon={idleAmbulanceIcon(a.kind)} title={`${a.name} — free, ${a.place}`}>
+            <Popup>
+              <b>{a.name}</b> · free
+              <br />
+              {a.place}
+              {a.kind === "staging" ? <> · pre-positioned near predicted hotspots</> : null}
             </Popup>
           </Marker>
         ))}
 
         {shelterPins.map((s) => (
-          <Marker key={s.id || s.name} position={[s.lat, s.lon]} icon={shelterIcon(s.usedThisRun, s.full)} title={s.name}>
+          <Marker key={s.id || s.name} position={[s.lat, s.lon]} icon={shelterIcon(s.usedThisRun, s.full, s.closed)} title={s.name}>
             <Popup>
               <b>{s.name}</b>
+              {s.closed ? <> · 🚫 closed by operator</> : null}
               <br />
               {s.capacity ? `Capacity ${s.capacity}` : "Capacity unknown"}
               {s.backendOccupancy != null ? <> · board occupancy {s.backendOccupancy}</> : null}
@@ -519,6 +775,12 @@ function LiveRescueMapInner({
               {s.inboundThisRun ? <> · inbound {s.inboundThisRun}</> : null}
             </Popup>
           </Marker>
+        ))}
+
+        <RoadLayer roads={roads} onRoad={onRoad} />
+
+        {planned.map((r) => (
+          <Polyline key={r.key} positions={r.pts} pathOptions={r.style} interactive={false} />
         ))}
 
         <SosLayer people={people} selectedKey={selectedKey} zoom={zoom} onPick={pick} />
@@ -562,7 +824,10 @@ function LiveRescueMapInner({
       ) : null}
 
       {/* ---- legend ---- */}
-      <div className="lrm-legend">
+      <button type="button" className="lrm-legend-toggle" aria-expanded={legendOpen} onClick={() => setLegendOpen((v) => !v)}>
+        {legendOpen ? "✕ Hide legend" : "ⓘ Legend"}
+      </button>
+      <div className="lrm-legend" hidden={!legendOpen}>
         {["queued", "assigned", "en_route", "to_shelter", "rescued"].map((s) => (
           <div className="lrm-legend-row" key={s} title={STAGE_LABEL[s]}>
             <i className="lrm-legend-dot" style={{ background: STAGE_COLOR[s] }} />
@@ -575,9 +840,25 @@ function LiveRescueMapInner({
         </div>
         <div className="lrm-legend-row">
           <i className="lrm-legend-dot" style={{ background: "var(--status-sos, #ef4444)" }} /> Ambulance ·{" "}
-          <i className="lrm-legend-dot" style={{ background: "var(--accent, #facc15)", borderRadius: 2 }} /> Rescue team
-          · <i className="lrm-legend-dot" style={{ background: "var(--status-safe, #22c55e)", borderRadius: 2 }} /> Shelter
+          <i className="lrm-legend-dot" style={{ background: "var(--accent, #38bdf8)", borderRadius: 2 }} /> Rescue team ·{" "}
+          <i className="lrm-legend-dot" style={{ background: "#0284c7", borderRadius: 2 }} /> Rescue boat ·{" "}
+          <i className="lrm-legend-dot" style={{ background: "var(--status-safe, #22c55e)", borderRadius: 2 }} /> Shelter
         </div>
+        {plannedRoutes !== "none" ? (
+          <div className="lrm-legend-row">
+            <i className="lrm-legend-dot" style={{ background: "#f43f5e", borderRadius: 2 }} /> Route: unit → person ·{" "}
+            <i className="lrm-legend-dot" style={{ background: "#34d399", borderRadius: 2 }} /> Route: person → shelter ·{" "}
+            <i className="lrm-legend-dot" style={{ background: "#a78bfa", borderRadius: 2 }} /> QAOA candidates not chosen
+          </div>
+        ) : null}
+        {roads.length ? (
+          <div className="lrm-legend-row">
+            <i className="lrm-legend-dot" style={{ background: "#64748b", borderRadius: 2 }} /> Open road ·{" "}
+            <i className="lrm-legend-dot" style={{ background: "#38bdf8", borderRadius: 2 }} /> in use ·{" "}
+            <i className="lrm-legend-dot" style={{ background: "#ef4444", borderRadius: 2 }} /> Closed (dotted = flood,
+            dashed = operator) — click a road to block / open it
+          </div>
+        ) : null}
         <div className="lrm-legend-note">
           Unit positions are interpolated along the backend-computed route from its stage timestamps — derived view,
           not GPS.
@@ -587,6 +868,8 @@ function LiveRescueMapInner({
     </div>
   );
 }
+
+const EMPTY_ROADS = [];
 
 /* The /simulation tree re-renders every 1.2 s. Memoising keeps the map from
  * re-rendering unless its derived inputs actually change. */

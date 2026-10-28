@@ -1,0 +1,110 @@
+{
+  "name": "hand_compare_v1",
+  "city": "guwahati",
+  "title": "Height-based road flood risk (HAND vs distance) \u2014 Guwahati",
+  "citation": {
+    "method": "Height Above Nearest Drainage (HAND)",
+    "paper": "Renn\u00f3 et al. (2008), HAND, a new terrain descriptor using SRTM-DEM, Remote Sensing of Environment",
+    "dem_dataset": "Copernicus DEM GLO-30 (30 m resolution, Open Access)",
+    "licence": "Copernicus Open Access / European Space Agency",
+    "url": "https://spacedata.copernicus.eu/collections/copernicus-digital-elevation-model"
+  },
+  "total_roads": 416,
+  "hand_stats": {
+    "min_m": 0.0,
+    "median_m": 94.86,
+    "mean_m": 80.83,
+    "max_m": 129.36
+  },
+  "spearman_rank_correlation": -0.051,
+  "roads_closing_earlier_in_v2": [
+    {
+      "road_id": "GUW-R037",
+      "name": "Mahatma Gandhi Road",
+      "v1_exposure": 0.8,
+      "v2_exposure": 0.06,
+      "hand_m": 90.47,
+      "why": "Low-lying road with small height above drainage; floods earlier under topography model"
+    },
+    {
+      "road_id": "GUW-R408",
+      "name": "Unnamed tertiary road",
+      "v1_exposure": 0.568,
+      "v2_exposure": 0.06,
+      "hand_m": 93.4,
+      "why": "Low-lying road with small height above drainage; floods earlier under topography model"
+    },
+    {
+      "road_id": "GUW-R404",
+      "name": "Unnamed primary road",
+      "v1_exposure": 0.542,
+      "v2_exposure": 0.06,
+      "hand_m": 94.34,
+      "why": "Low-lying road with small height above drainage; floods earlier under topography model"
+    },
+    {
+      "road_id": "GUW-R413",
+      "name": "Unnamed primary road",
+      "v1_exposure": 0.546,
+      "v2_exposure": 0.06,
+      "hand_m": 94.34,
+      "why": "Low-lying road with small height above drainage; floods earlier under topography model"
+    },
+    {
+      "road_id": "GUW-R414",
+      "name": "Unnamed primary road",
+      "v1_exposure": 0.542,
+      "v2_exposure": 0.06,
+      "hand_m": 94.34,
+      "why": "Low-lying road with small height above drainage; floods earlier under topography model"
+    }
+  ],
+  "roads_closing_later_in_v2": [
+    {
+      "road_id": "GUW-R390",
+      "name": "Unnamed primary road",
+      "v1_exposure": 0.06,
+      "v2_exposure": 0.06,
+      "hand_m": 111.88,
+      "why": "High ridge / elevated terrain road; stays passable longer despite proximity to water"
+    },
+    {
+      "road_id": "GUW-R387",
+      "name": "Unnamed secondary road",
+      "v1_exposure": 0.06,
+      "v2_exposure": 0.06,
+      "hand_m": 97.81,
+      "why": "High ridge / elevated terrain road; stays passable longer despite proximity to water"
+    },
+    {
+      "road_id": "GUW-R388",
+      "name": "Unnamed primary road",
+      "v1_exposure": 0.06,
+      "v2_exposure": 0.06,
+      "hand_m": 111.88,
+      "why": "High ridge / elevated terrain road; stays passable longer despite proximity to water"
+    },
+    {
+      "road_id": "GUW-R386",
+      "name": "Unnamed primary road",
+      "v1_exposure": 0.06,
+      "v2_exposure": 0.06,
+      "hand_m": 112.11,
+      "why": "High ridge / elevated terrain road; stays passable longer despite proximity to water"
+    },
+    {
+      "road_id": "GUW-R385",
+      "name": "Unnamed primary road",
+      "v1_exposure": 0.06,
+      "v2_exposure": 0.06,
+      "hand_m": 111.88,
+      "why": "High ridge / elevated terrain road; stays passable longer despite proximity to water"
+    }
+  ],
+  "notes": [
+    "v1 uses planar distance-to-water decay proxy.",
+    "v2 uses Height Above Nearest Drainage (HAND, Copernicus DEM 30m).",
+    "HAND >= 0 everywhere by D8 flow-direction construction.",
+    "Closure rule (effective_exposure >= 0.85 - blockage) remains identical between models."
+  ]
+}

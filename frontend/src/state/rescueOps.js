@@ -170,9 +170,15 @@ export function deriveRescueOps(sim, nowMs) {
   const people = [];
   const units = [];
 
+  const merged = [];
   for (const c of citizens) {
     const key = personKey(c);
     const log = logByName.get(key) || {};
+    // F30: a merged SOS is the same people as the kept one — not a separate pin.
+    if (c.merged_into || log.merged_into || c.ops_status === "merged") {
+      merged.push({ name: c.citizen_name, into: c.merged_into || log.merged_into || null });
+      continue;
+    }
     const stage = stageOf(c);
     const lat = Number(c.lat);
     const lon = Number(c.lon);
@@ -227,12 +233,41 @@ export function deriveRescueOps(sim, nowMs) {
       etaShelterMin: c.eta_to_shelter_min ?? eta?.eta_to_shelter_min ?? null,
       routeKm: c.route_to_person?.km ?? null,
       shelterKm: c.route_to_shelter?.km ?? null,
+      routeMethod: c.route_to_person?.method ?? null,
+      // Simulated-QAOA diagnostics per leg (backend optimization/qaoa_route.py).
+      quantum:
+        c.route_to_person?.quantum || c.route_to_shelter?.quantum
+          ? { toPerson: c.route_to_person?.quantum || null, toShelter: c.route_to_shelter?.quantum || null }
+          : null,
+      routeToPerson: routePoints(c.route_to_person),
+      routeToShelter: routePoints(c.route_to_shelter),
+      // Dispatch request sent to the unit's driver, and the driver's accept.
+      dispatchRequest: c.dispatch_request || log.dispatch_request || null,
+      accepted: Boolean(c.driver_accepted ?? log.driver_accepted),
+      acceptedAt: parseTs(c.accepted_at ?? log.accepted_at),
       waitReason: c.ops_wait_reason || null,
+      // F1: live re-plans after a road closed / reopened, and "no open road" alerts.
+      reroutes: c.reroutes || log.reroutes || [],
+      routeAlert: c.route_alert || null,
+      shelterChanges: c.shelter_changes || log.shelter_changes || [],
+      shelterWait: Boolean(c.shelter_wait),
+      rejections: c.rejections || log.rejections || [],
+      acceptedVia: c.accepted_via || null,
+      decision: c.decision || log.decision || null,
+      source: c.source || null,
+      photoUrl: c.photo_url || null,
+      accuracyM: c.accuracy_m ?? null,
       calledAt: c.called_at || log.called_at || null,
       answered: c.answered ?? log.answered ?? null,
       rescued: c.rescued ?? log.rescued ?? null,
       journey: c.journey || log.journey || [],
       timestamps: c.timestamps || log.timestamps || {},
+      mergedFrom: c.merged_from || log.merged_from || [],
+      // F21: injured / critical → hospital (OSM); hospitalAlert = none reachable.
+      medical: c.medical || log.medical || "none",
+      destinationKind: c.destination_kind || log.destination_kind || "shelter",
+      hospitalAlert: c.hospital_alert || null,
+      by_boat: Boolean(c.by_boat || log.by_boat || unitRole === "boat"),
       safeSmall: stage === "rescued" && stageStartedAt !== null && nowMs - stageStartedAt > SAFE_SHRINK_MS,
       role: unitRole,
     };
@@ -274,6 +309,44 @@ export function deriveRescueOps(sim, nowMs) {
 
   people.sort((a, b) => (a.rescueOrder || 99) - (b.rescueOrder || 99));
 
+  // ---- free ambulances (F8/F9): positions are DERIVED by the backend ------
+  // A staging move is a real road route with its own start time + length, so
+  // it animates exactly like a job leg; everything else is a parked marker.
+  const idleUnits = [];
+  for (const a of sim?.fleet_board?.ambulances || []) {
+    const p = a.position;
+    if (a.status !== "free" || !p || !isNum(p.lat) || !isNum(p.lon)) continue;
+    const path = p.route ? routePoints({ points: p.route }) : null;
+    const startedAt = parseTs(p.depart_at);
+    const ms = Number(p.seconds) > 0 ? Number(p.seconds) * 1000 : null;
+    if (path && startedAt !== null && ms !== null) {
+      const { cum } = pathMetrics(path);
+      const progress = clamp01((nowMs - startedAt) / ms);
+      units.push({
+        key: `${a.name}|staging|${p.depart_at}`,
+        personKey: null,
+        role: "ambulance",
+        label: a.name,
+        personName: null,
+        people: null,
+        stage: "repositioning",
+        target: p.place,
+        stageStartedAt: startedAt,
+        stageMs: ms,
+        path,
+        cum,
+        from: path[0],
+        to: path[path.length - 1],
+        position: positionAlong(path, cum, progress),
+        progress,
+        moving: progress < 1,
+        bearing: bearingDeg(path[0], path[path.length - 1]),
+      });
+    } else {
+      idleUnits.push({ name: a.name, lat: Number(p.lat), lon: Number(p.lon), place: p.place || "", kind: p.kind || "depot" });
+    }
+  }
+
   // ---- shelters: backend occupancy + what THIS run actually delivered -----
   // The backend's occupancy is a growth curve unrelated to rescues, so the two
   // numbers are reported separately rather than blended.
@@ -292,8 +365,9 @@ export function deriveRescueOps(sim, nowMs) {
     return {
       id: s.shelter_id || s.name,
       name: s.name,
-      lat: loc?.lat ?? null,
-      lon: loc?.lon ?? null,
+      // Backend coordinates first (any city); the Delhi mirror is the fallback.
+      lat: s.lat ?? loc?.lat ?? null,
+      lon: s.lon ?? loc?.lon ?? null,
       capacity: s.capacity ?? loc?.capacity ?? null,
       backendOccupancy: s.occupancy ?? null,
       seatsLeft: s.seats_left ?? null,
@@ -319,7 +393,13 @@ export function deriveRescueOps(sim, nowMs) {
     unitsMoving: units.filter((u) => u.moving).length,
   };
 
-  return { people, units, shelters, counters };
+  // Shelters the operator closed this run (F2, engine.shelter_overrides).
+  const closedShelters = Object.entries(sim?.shelter_overrides || {})
+    .filter(([, o]) => o?.closed)
+    .map(([name]) => name);
+  for (const s of shelters) s.closed = closedShelters.includes(s.name);
+
+  return { people, units, idleUnits, shelters, counters, closedShelters, merged };
 }
 
 /** Unified live event feed: the engine's own events merged with every

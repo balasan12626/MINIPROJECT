@@ -208,6 +208,45 @@ def _alert_level(prob_severe: float) -> str:
     return risk_category(prob_severe) or "LOW"
 
 
+_conformal: dict[str, Any] | None = None
+_conformal_loaded = False
+
+
+def conformal_view(pred_level: float, prob_severe: float) -> dict[str, Any] | None:
+    """F11 — attach the CV-conformal 90 % interval (peak level, metres) and
+    prediction set (alert) computed by scripts/conformal_v2.py. Only for the
+    model it was calibrated on (v3 regressor); otherwise None. Coverage values
+    are the ones MEASURED on held-out gauges, copied from the file."""
+    global _conformal, _conformal_loaded
+    if not _conformal_loaded:
+        _conformal_loaded = True
+        path = Path(__file__).resolve().parents[2] / "models" / "conformal_v2.json"
+        try:
+            _conformal = json.loads(path.read_text(encoding="utf-8"))
+        except Exception:  # noqa: BLE001
+            _conformal = None
+    c = _conformal
+    if not c or str(_v2_meta.get("version", "")).split(".")[0] != "3":
+        return None
+    lvl = c.get("peak_level_abs") or {}
+    alert = c.get("alert") or {}
+    q_m = float(lvl.get("q_m") or 0)
+    q_a = float(alert.get("q") or 1)
+    pred_set = [lab for lab, p in (("no_severe_flood", 1 - prob_severe), ("severe_flood", prob_severe)) if 1 - p <= q_a]
+    return {
+        "level": "90% interval",
+        "peak_level_low_m": round(pred_level - q_m, 1),
+        "peak_level_high_m": round(pred_level + q_m, 1),
+        "half_width_m": round(q_m, 1),
+        "measured_coverage": lvl.get("test_coverage"),
+        "measured_on": f"{(c.get('peak_level') or {}).get('test_gauges')} held-out gauges",
+        "alert_set": pred_set,
+        "alert_set_coverage": alert.get("test_coverage"),
+        "method": c.get("method"),
+        "note": lvl.get("note"),
+    }
+
+
 def predict_peak_level_v2(
     rainfall_24h_mm: float,
     forecast_daily_mm: list[float] | None = None,
@@ -240,6 +279,8 @@ def predict_peak_level_v2(
         "predicted_peak_flood_level_m": round(pred_level, 3),
         "flood_type_probability": round(prob_severe, 4),
         "alert_level": _alert_level(prob_severe),
+        # F11: measured 90 % interval / prediction set (models/conformal_v2.json)
+        "uncertainty": conformal_view(pred_level, prob_severe),
         "stage1_model": (_v2_meta.get("stage1") or {}).get("model"),
         "stage2_model": (_v2_meta.get("stage2") or {}).get("model"),
         "model_version": _v2_meta.get("version"),

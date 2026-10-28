@@ -105,7 +105,7 @@ export const STAGE_SHORT = {
  * only; canvas layers must resolve them with cssToken(). */
 export const STAGE_TOKEN = {
   queued: ["--status-sos", "#ef4444"],
-  assigned: ["--status-assigned", "#f59e0b"],
+  assigned: ["--status-assigned", "#818cf8"],
   en_route: ["--status-enroute", "#f97316"],
   to_shelter: ["--status-transport", "#a855f7"],
   rescued: ["--status-safe", "#22c55e"],

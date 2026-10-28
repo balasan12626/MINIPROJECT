@@ -154,6 +154,25 @@ ax.grid(axis="y", lw=0.3)
 fig.tight_layout(pad=0.3)
 fig.savefig(OUT / "fig_guard.pdf")
 
+import post_p2_v2  # noqa: E402  revision: live LLM study, LLM judge, held-out calibration
+
+_, det = post_p2_v2.extend(put, WORK, OUT, R)
+# Wilson 95% half-widths of the judge column of the injected-error table (40 replies per row)
+half = []
+for kind, vals in det.items():
+    k_, n_ = round(vals[2] * 40 / 100), 40
+    lo_, hi_ = post_p2_v2.wilson(k_, n_)
+    half.append(max(100 * k_ / n_ - lo_, hi_ - 100 * k_ / n_))
+put("JudgeCiMax", f"{max(half):.0f}")
+import post_p2_r2  # noqa: E402  second revision: prompt designs, over-claims, paired tests, gate cost
+
+post_p2_r2.extend(put, WORK, OUT)
+import post_p2_r3  # noqa: E402  third revision: taxonomy, clustered bootstrap, guard ablation, Eq. (4), break-even
+
+post_p2_r3.extend(put, WORK, OUT)
+C2 = json.loads((WORK / "p2_calib.json").read_text(encoding="utf-8"))
+assert abs(d_zero - C2["delta95_cv"]) < 0.05, "text: delta_95 close to the sweep's zero point for both-agree holds"
+
 with open(OUT / "nums.tex", "w", encoding="utf-8") as f:
     for k, v in M.items():
         f.write(f"\\newcommand{{\\{k}}}{{{v}}}\n")

@@ -26,6 +26,33 @@ def _pct(p: Any) -> str:
         return str(p)
 
 
+def _ist(value: Any) -> str:
+    """ISO timestamp -> IST clock, same as the UI."""
+    from datetime import datetime, timedelta, timezone
+
+    if not value:
+        return "-"
+    try:
+        dt = datetime.fromisoformat(str(value).replace("Z", "+00:00"))
+    except ValueError:
+        return _s(value)
+    if dt.tzinfo is None:
+        dt = dt.replace(tzinfo=timezone.utc)
+    return dt.astimezone(timezone(timedelta(hours=5, minutes=30))).strftime("%d %b %Y, %H:%M:%S IST")
+
+
+# Stage timestamps in rescue order, with plain-language labels.
+STAGE_TIMES = [
+    ("queued", "SOS received (queued)"),
+    ("assigned", "Unit + shelter allocated, request sent"),
+    ("rejected", "A unit rejected / did not answer (last time)"),
+    ("accepted", "Driver / crew accepted"),
+    ("en_route", "Unit driving to person"),
+    ("to_shelter", "Picked up, driving to shelter"),
+    ("rescued", "Admitted at shelter"),
+]
+
+
 class PersonPDF(FPDF):
     def footer(self):
         self.set_y(-12)
@@ -125,6 +152,11 @@ def build_person_pdf(report: dict[str, Any]) -> bytes:
             ("K-means cluster", _s(case.get("cluster_id"))),
             ("Assigned rescue team", _s(case.get("assigned_team"))),
             ("Ambulance", _s(case.get("ambulance_name") or case.get("ambulance_id") or "not assigned yet")),
+            ("Dispatched unit", _s(f"{case.get('unit_name')} ({case.get('unit_role')})" if case.get("unit_name") else None, "not assigned yet")),
+            ("Unit dispatched from", _s(case.get("unit_base_name"))),
+            ("Driver accepted", _ist(case.get("accepted_at")) if case.get("driver_accepted") else "pending"),
+            ("Route: unit -> person", _s(f"{case.get('route_to_person_km')} km, {case.get('route_to_person_min')} sim min ({case.get('route_method')})" if case.get("route_to_person_km") is not None else None)),
+            ("Route: person -> shelter", _s(f"{case.get('route_to_shelter_km')} km, {case.get('route_to_shelter_min')} sim min" if case.get("route_to_shelter_km") is not None else None)),
             ("Shelter", _s(case.get("shelter_name") or case.get("shelter_id") or "not assigned yet")),
             ("Ambulances free (system)", _s(report.get("ambulances_free"))),
             ("Shelter vacant seats", _s(report.get("vacant_total"))),
@@ -160,7 +192,9 @@ def build_person_pdf(report: dict[str, Any]) -> bytes:
     ts = case.get("timestamps") or {}
     if ts:
         _section(pdf, "5. Stage timestamps", fill=(60, 60, 90))
-        _kv_table(pdf, [(str(k), str(v)) for k, v in ts.items()])
+        rows = [(label, _ist(ts.get(key))) for key, label in STAGE_TIMES if ts.get(key)]
+        rows += [(str(k), _ist(v)) for k, v in ts.items() if k not in dict(STAGE_TIMES)]
+        _kv_table(pdf, rows)
 
     counts = report.get("message_counts") or {}
     _section(pdf, "6. Messages sent (WhatsApp / Telegram)", fill=(70, 50, 90))

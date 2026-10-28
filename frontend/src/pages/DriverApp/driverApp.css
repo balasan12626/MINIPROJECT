@@ -1,0 +1,188 @@
+/* Phone-first pages (driver app F3, citizen SOS F4). Uses the app's theme tokens. */
+.drv-page {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  color: var(--text);
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+.drv-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+.drv-head h1 {
+  margin: 2px 0 0;
+  font-size: 22px;
+}
+.drv-kicker {
+  margin: 0;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  font-weight: 700;
+}
+.drv-mode {
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--card-2);
+  white-space: nowrap;
+}
+.drv-mode.is-manual {
+  background: color-mix(in srgb, #f59e0b 25%, var(--card-2));
+}
+.drv-card {
+  background: var(--card);
+  border: 1px solid var(--border, rgba(127, 127, 127, 0.25));
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.drv-card.is-request {
+  border-color: #f59e0b;
+  box-shadow: 0 0 0 2px color-mix(in srgb, #f59e0b 35%, transparent);
+}
+.drv-card h2 {
+  margin: 0;
+  font-size: 24px;
+}
+.drv-facts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 12px;
+  margin: 0;
+}
+.drv-facts dt {
+  font-size: 11px;
+  color: var(--muted);
+}
+.drv-facts dd {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+.drv-map {
+  height: 220px;
+  width: 100%;
+  border-radius: 12px;
+}
+.drv-legend {
+  margin: 0;
+  font-size: 12px;
+  color: var(--muted);
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.drv-legend i {
+  display: inline-block;
+  width: 18px;
+  height: 4px;
+  border-radius: 2px;
+}
+.drv-legend .leg-a { background: #f59e0b; }
+.drv-legend .leg-b { background: #34d399; }
+.drv-countdown {
+  margin: 0;
+  font-weight: 700;
+  text-align: center;
+}
+.drv-countdown.is-low { color: var(--status-sos, #ef4444); }
+.drv-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.drv-btn {
+  min-height: 64px;
+  font-size: 20px;
+  font-weight: 800;
+  border-radius: 14px;
+  border: 0;
+  cursor: pointer;
+  color: #fff;
+}
+.drv-btn:disabled { opacity: 0.55; cursor: wait; }
+.drv-btn.accept { background: #16a34a; }
+.drv-btn.reject { background: #dc2626; }
+.drv-reason {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 12px;
+  color: var(--muted);
+}
+.drv-reason select,
+.drv-field input,
+.drv-field select {
+  min-height: 44px;
+  font-size: 16px;
+  border-radius: 10px;
+  padding: 0 10px;
+}
+.drv-banner {
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: var(--card-2);
+  font-size: 14px;
+}
+.drv-banner.is-error { background: color-mix(in srgb, #ef4444 25%, var(--card-2)); }
+.drv-banner.is-ok { background: color-mix(in srgb, #22c55e 22%, var(--card-2)); }
+.drv-muted { margin: 0; color: var(--muted); font-size: 13px; }
+.drv-idle p { margin: 0; }
+.drv-foot { font-size: 11px; color: var(--muted); margin: 8px 0 0; }
+.drv-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 13px;
+  color: var(--muted);
+}
+.sos-locate { background: #2563eb; font-size: 18px; }
+.sos-pin-wrap { background: none !important; border: 0 !important; }
+.sos-pin { font-size: 28px; line-height: 1; }
+.sos-steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+  font-size: 12px;
+  text-align: center;
+}
+.sos-steps li {
+  padding: 8px 2px;
+  border-radius: 8px;
+  background: var(--card-2);
+  color: var(--muted);
+}
+.sos-steps li.is-done { background: color-mix(in srgb, #22c55e 30%, var(--card-2)); color: var(--text); }
+.sos-steps li.is-now { background: color-mix(in srgb, #f59e0b 35%, var(--card-2)); color: var(--text); font-weight: 700; }
+.safe-alert.tier-FIELD { border-color: #ef4444; box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.35); }
+.safe-alert.tier-READY { border-color: #f59e0b; }
+.safe-roads { margin: 0; padding-left: 18px; font-size: 14px; }
+.safe-sos { display: grid; place-items: center; text-decoration: none; }
+.drv-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+/* F24 language picker + SMS fallback */
+.phone-lang { display: flex; flex-direction: column; gap: 4px; margin: 0 0 10px; font-size: 14px; }
+.phone-lang select { margin-left: 6px; }
+.sos-sms { display: block; text-align: center; text-decoration: none; margin-top: 8px; }
+.sos-sms.is-disabled { opacity: 0.55; }
+.sos-share { margin: 10px 0; }

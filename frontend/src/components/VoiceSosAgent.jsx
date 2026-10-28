@@ -4,7 +4,10 @@ import { startVoiceAgent, voiceAgentTurn, fetchVoiceAgentStatus } from "../servi
 /**
  * English Voice SOS — asks ONLY name, then auto-assigns ambulance/team + shelter via GPS defaults.
  */
-export default function VoiceSosAgent({ open, onClose, onSubmitted, onDraft }) {
+const DELHI = { lat: 28.651, lon: 77.262 };
+
+// `fallback` = where the pin goes without GPS: the run's city centre (F7), Delhi by default.
+export default function VoiceSosAgent({ open, onClose, onSubmitted, onDraft, fallback = DELHI }) {
   const [status, setStatus] = useState(null);
   const [phase, setPhase] = useState("idle");
   const [lines, setLines] = useState([]);
@@ -12,7 +15,7 @@ export default function VoiceSosAgent({ open, onClose, onSubmitted, onDraft }) {
   const [draft, setDraft] = useState({});
   const [assignment, setAssignment] = useState(null);
   const [error, setError] = useState("");
-  const [ctx, setCtx] = useState({ lat: 28.651, lon: 77.262, people: 2, water_level_note: "knee-deep" });
+  const [ctx, setCtx] = useState({ lat: fallback.lat, lon: fallback.lon, people: 2, water_level_note: "knee-deep" });
   const recogRef = useRef(null);
   const listeningRef = useRef(false);
   const historyRef = useRef([]);
@@ -48,8 +51,8 @@ export default function VoiceSosAgent({ open, onClose, onSubmitted, onDraft }) {
         );
       });
       const nextCtx = {
-        lat: gps?.lat ?? 28.651,
-        lon: gps?.lon ?? 77.262,
+        lat: gps?.lat ?? fallback.lat,
+        lon: gps?.lon ?? fallback.lon,
         people: 2,
         water_level_note: "knee-deep",
       };

@@ -102,7 +102,7 @@ function DemoRunPanels({ sim, feats, explain, setSim }) {
       {feats.transfer_warning ? (
         <div className="panel transfer-banner">
           <h2>TRANSFER WARNING</h2>
-          <p className="hint">{sim?.transfer_warning || "Model trained on INDOFLOODS (Indonesia), applied to Delhi Yamuna floodplain."}</p>
+          <p className="hint">{sim?.transfer_warning || "Model trained on INDOFLOODS (Indian river gauges), applied to Delhi Yamuna floodplain."}</p>
         </div>
       ) : null}
 

@@ -153,10 +153,23 @@ def build_report_pdf(state: dict[str, Any]) -> bytes:
         pdf.cell(0, 8, _safe_pdf_text("Per-person contact log"), new_x=XPos.LMARGIN, new_y=YPos.NEXT)
         pdf.set_font("Helvetica", size=9)
         for row in log:
+            ts = row.get("timestamps") or {}
+
+            def _t(key: str, ts: dict = ts) -> str:
+                v = _ist(ts.get(key)) if ts.get(key) else "-"
+                return v.split(", ")[-1] if v != "-" else v
+
             _mc(
                 _safe_pdf_text(
                     f"P{row.get('person_index')} {row.get('citizen_name')} age {row.get('age')} "
-                    f"team={row.get('assigned_team')} status={row.get('status')} rescued={row.get('rescued')}"
+                    f"people={row.get('people')} status={row.get('ops_status') or row.get('status')} "
+                    f"unit={row.get('unit_name') or row.get('assigned_team')} shelter={row.get('shelter_name') or '-'}"
+                )
+            )
+            _mc(
+                _safe_pdf_text(
+                    f"    SOS {_t('queued')} | allocated {_t('assigned')} | accepted {_t('accepted')} | "
+                    f"picked up {_t('to_shelter')} | at shelter {_t('rescued')}"
                 )
             )
     # Messages appendix (WhatsApp / Telegram demo counts)

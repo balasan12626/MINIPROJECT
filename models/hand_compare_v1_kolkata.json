@@ -1,0 +1,110 @@
+{
+  "name": "hand_compare_v1",
+  "city": "kolkata",
+  "title": "Height-based road flood risk (HAND vs distance) \u2014 Kolkata",
+  "citation": {
+    "method": "Height Above Nearest Drainage (HAND)",
+    "paper": "Renn\u00f3 et al. (2008), HAND, a new terrain descriptor using SRTM-DEM, Remote Sensing of Environment",
+    "dem_dataset": "Copernicus DEM GLO-30 (30 m resolution, Open Access)",
+    "licence": "Copernicus Open Access / European Space Agency",
+    "url": "https://spacedata.copernicus.eu/collections/copernicus-digital-elevation-model"
+  },
+  "total_roads": 504,
+  "hand_stats": {
+    "min_m": 0.0,
+    "median_m": 2.8,
+    "mean_m": 2.71,
+    "max_m": 4.65
+  },
+  "spearman_rank_correlation": 0.153,
+  "roads_closing_earlier_in_v2": [
+    {
+      "road_id": "KOL-R097",
+      "name": "SH3",
+      "v1_exposure": 0.78,
+      "v2_exposure": 0.206,
+      "hand_m": 4.25,
+      "why": "Low-lying road with small height above drainage; floods earlier under topography model"
+    },
+    {
+      "road_id": "KOL-R197",
+      "name": "Pran Krishna Mukhurjee Rd",
+      "v1_exposure": 0.69,
+      "v2_exposure": 0.21,
+      "hand_m": 4.19,
+      "why": "Low-lying road with small height above drainage; floods earlier under topography model"
+    },
+    {
+      "road_id": "KOL-R051",
+      "name": "Dum Dum Road",
+      "v1_exposure": 0.586,
+      "v2_exposure": 0.18,
+      "hand_m": 4.65,
+      "why": "Low-lying road with small height above drainage; floods earlier under topography model"
+    },
+    {
+      "road_id": "KOL-R259",
+      "name": "Mahatma Sisir Kumar Sarani",
+      "v1_exposure": 0.691,
+      "v2_exposure": 0.211,
+      "hand_m": 4.18,
+      "why": "Low-lying road with small height above drainage; floods earlier under topography model"
+    },
+    {
+      "road_id": "KOL-R015",
+      "name": "Eastern Metropolitan Bypass (part 2)",
+      "v1_exposure": 0.676,
+      "v2_exposure": 0.211,
+      "hand_m": 4.18,
+      "why": "Low-lying road with small height above drainage; floods earlier under topography model"
+    }
+  ],
+  "roads_closing_later_in_v2": [
+    {
+      "road_id": "KOL-R460",
+      "name": "Unnamed secondary road",
+      "v1_exposure": 0.06,
+      "v2_exposure": 0.85,
+      "hand_m": 0.0,
+      "why": "High ridge / elevated terrain road; stays passable longer despite proximity to water"
+    },
+    {
+      "road_id": "KOL-R422",
+      "name": "Unnamed secondary road",
+      "v1_exposure": 0.06,
+      "v2_exposure": 0.85,
+      "hand_m": 0.0,
+      "why": "High ridge / elevated terrain road; stays passable longer despite proximity to water"
+    },
+    {
+      "road_id": "KOL-R258",
+      "name": "Unnamed secondary road",
+      "v1_exposure": 0.06,
+      "v2_exposure": 0.85,
+      "hand_m": 0.0,
+      "why": "High ridge / elevated terrain road; stays passable longer despite proximity to water"
+    },
+    {
+      "road_id": "KOL-R437",
+      "name": "Unnamed secondary road",
+      "v1_exposure": 0.06,
+      "v2_exposure": 0.85,
+      "hand_m": 0.0,
+      "why": "High ridge / elevated terrain road; stays passable longer despite proximity to water"
+    },
+    {
+      "road_id": "KOL-R218",
+      "name": "Unnamed secondary road",
+      "v1_exposure": 0.06,
+      "v2_exposure": 0.579,
+      "hand_m": 1.15,
+      "why": "High ridge / elevated terrain road; stays passable longer despite proximity to water"
+    }
+  ],
+  "notes": [
+    "v1 uses planar distance-to-water decay proxy.",
+    "v2 uses Height Above Nearest Drainage (HAND, Copernicus DEM 30m).",
+    "HAND >= 0 everywhere by D8 flow-direction construction.",
+    "Closure rule (effective_exposure >= 0.85 - blockage) remains identical between models."
+  ]
+}

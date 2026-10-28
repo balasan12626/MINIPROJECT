@@ -38,6 +38,14 @@ PHYSICS_DIVERGENCE_MAX = 0.20
 CHILD_MAX_AGE = 12
 ELDERLY_MIN_AGE = 60
 
+# --- Multi-agent response tiers (agents/mas.py) ---
+# Flood probability below ESCALATION_READY: the Manager hands the decision to
+# the Administrator (human review). At/above it: CRITICAL, every unit is told
+# to be ready. At/above ESCALATION_FIELD: all units on the field.
+# Separate from auto_threshold(), which still gates the automated dispatch.
+ESCALATION_READY = 0.50
+ESCALATION_FIELD = 0.75
+
 # --- Agent narration bands (was: agents/dialogue.py literals) ---
 AGENT_BAND_CALM = 0.40
 AGENT_BAND_WATCH = 0.50
@@ -67,4 +75,6 @@ def as_dict() -> dict:
         "elderly_min_age": ELDERLY_MIN_AGE,
         "agent_band_calm": AGENT_BAND_CALM,
         "agent_band_watch": AGENT_BAND_WATCH,
+        "escalation_ready": ESCALATION_READY,
+        "escalation_field": ESCALATION_FIELD,
     }

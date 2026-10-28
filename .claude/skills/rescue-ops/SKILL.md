@@ -8,9 +8,13 @@ description: Use when working on the live rescue operation view - the animated r
 ## The backend already runs the operation
 
 `backend/services/person_ops.py` is the authority. It advances every person
-`queued → assigned → en_route → to_shelter → rescued`, one stage per
-`STAGE_SECONDS = 12`, stamps `ops_stage_at` at each transition, and records a
-full `journey[]` with timestamps and agent attribution.
+`queued → assigned → en_route → to_shelter → rescued`. Each stage lasts the
+person's own `ops_stage_seconds` (route travel time ÷ `TIME_SCALE`), stamps
+`ops_stage_at` and `timestamps[stage]`, and records a full `journey[]` with
+agent attribution. `assigned` sends the `dispatch_request` to the driver;
+`en_route` is the driver accepting (`driver_accepted`, `accepted_at`,
+`timestamps["accepted"]`). `fleet_board()` / `shelter_allocation_board()` are
+the free-ambulance and live shelter-seat views.
 
 **Do not build a second simulator.** Stages, assignments, shelters, ETAs and
 timestamps are real backend state; inventing them would contradict the
@@ -22,7 +26,7 @@ Position along the backend's own `team_paths` from/to segment, clocked by the
 backend's own stage timestamp:
 
 ```
-progress   = (serverNow - ops_stage_at) / STAGE_SECONDS
+progress   = (serverNow - ops_stage_at) / ops_stage_seconds
 en_route   -> lerp(depot,  person)
 to_shelter -> lerp(person, shelter)
 ```
@@ -56,8 +60,9 @@ every 1.2 s — **never add a second poller**.
   React key for an animated list.
 - Flash on stage change keyed by `${stage}@${ops_stage_at}`, not array identity —
   `sim.citizens` is a fresh array every poll.
-- Pause is **view-only** (freezes polling and animation). The backend's
-  `resume()` re-ingests citizens and destroys progress.
+- Pause is **view-only** (freezes polling and animation). Backend
+  `start`/`pause`/`reset` go through `engine._stop_task()`, which awaits the
+  cancelled loop — never call `task.cancel()` without awaiting it.
 - Bearing is constant for a leg, so bake it into the cached icon rather than
   writing to the DOM every frame.
 
@@ -65,8 +70,15 @@ every 1.2 s — **never add a second poller**.
 
 No hospitals, no phone numbers, no boats, no per-person zone. Units are the
 backend's real `team_paths[].role` (`rescue` or `ambulance`); the table shows
-the K-means `cluster` in place of a zone. `POST /api/simulation/sos` cannot add
-a person mid-run without wiping everyone past `assigned`.
+the K-means `cluster` in place of a zone.
+
+## Adding SOS mid-run
+
+`engine.add_citizen_sos()` (`POST /api/simulation/sos`) appends one person at
+`queued`, attached to the nearest existing cluster — nobody is re-clustered.
+`add_sos_surge(count)` (`POST /api/simulation/sos/surge`, 1–100) adds synthetic
+callers with `quick=True` and one shared ML result, then calls
+`mas.announce_surge`. Surge callers are synthetic — say so in any write-up.
 
 ## Adding assets
 

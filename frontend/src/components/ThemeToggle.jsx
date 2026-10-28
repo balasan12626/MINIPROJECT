@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 const KEY = "flood_theme";
 
-// Dark (black + yellow) is the default. Light mode is the only opt-in:
+// Dark (slate + sky accent) is the default. Light mode is the only opt-in:
 // `body.light-theme` swaps the token values in index.css; `data-theme` on
 // <html> mirrors it so the root background matches before first paint.
 function applyTheme(theme) {

@@ -1,0 +1,25 @@
+{
+ "c_review": 0.2,
+ "r_grid": [
+  1.0,
+  10.0,
+  0.05
+ ],
+ "r_star": 3.25,
+ "single_crossing": true,
+ "gate_beats_none_all_r": true,
+ "t_at_r_star": 0.20999999999999996,
+ "cost_per100_at_1": {
+  "gate": 20.21978021978022,
+  "cal": 24.505494505494507,
+  "none": 24.835164835164836
+ },
+ "boot": {
+  "B": 2000,
+  "ci": [
+   2.25,
+   4.601249999999993
+  ],
+  "share_no_crossing_in_grid": 0.0
+ }
+}

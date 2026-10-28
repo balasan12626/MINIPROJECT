@@ -31,6 +31,9 @@ COLLECTIONS = [
     "audit_logs",
     "human_reviews",
     "pipeline_state",
+    "simulation_frames",
+    "mas_messages",
+    "settings",
 ]
 
 _client: Optional[AsyncIOMotorClient] = None
@@ -76,6 +79,10 @@ def get_db() -> Optional[AsyncIOMotorDatabase]:
     return _db
 
 
+def is_connected() -> bool:
+    return _db is not None
+
+
 async def ensure_indexes(db: AsyncIOMotorDatabase) -> None:
     await db.weather_observations.create_index([("timestamp", DESCENDING)])
     await db.rainfall_observations.create_index([("timestamp", DESCENDING)])
@@ -95,6 +102,10 @@ async def ensure_indexes(db: AsyncIOMotorDatabase) -> None:
     await db.rescue_teams.create_index([("team_id", ASCENDING)], unique=True)
     await db.simulation_runs.create_index([("run_id", ASCENDING)], unique=True)
     await db.simulation_events.create_index([("run_id", ASCENDING), ("sim_time_sec", ASCENDING)])
+    # Replay (F5): frames per run in order; MAS messages per run in order.
+    await db.simulation_frames.create_index([("run_id", ASCENDING), ("seq", ASCENDING)])
+    await db.simulation_frames.create_index([("run_id", ASCENDING), ("tick", ASCENDING)])
+    await db.mas_messages.create_index([("run_id", ASCENDING), ("id", ASCENDING)])
     await db.audit_logs.create_index([("timestamp", DESCENDING)])
     await db.human_reviews.create_index([("incident_id", ASCENDING), ("timestamp", DESCENDING)])
     await db.optimization_runs.create_index([("created_at", DESCENDING)])
@@ -168,6 +179,50 @@ async def find_many(
         return out
     except PyMongoError:
         return []
+
+
+async def find_page(
+    collection: str,
+    query: dict[str, Any],
+    sort: list[tuple[str, int]],
+    skip: int = 0,
+    limit: int = 100,
+    projection: Optional[dict[str, Any]] = None,
+) -> list[dict[str, Any]]:
+    """Paged read with an explicit sort (find_many always sorts one field)."""
+    db = get_db()
+    if db is None:
+        return []
+    try:
+        cursor = db[collection].find(query, projection).sort(sort).skip(max(0, skip)).limit(max(1, limit))
+        out = []
+        async for doc in cursor:
+            doc["_id"] = str(doc["_id"])
+            out.append(doc)
+        return out
+    except PyMongoError:
+        return []
+
+
+async def count(collection: str, query: dict[str, Any]) -> int:
+    db = get_db()
+    if db is None:
+        return 0
+    try:
+        return int(await db[collection].count_documents(query))
+    except PyMongoError:
+        return 0
+
+
+async def delete_many(collection: str, query: dict[str, Any]) -> int:
+    db = get_db()
+    if db is None:
+        return 0
+    try:
+        result = await db[collection].delete_many(query)
+        return int(result.deleted_count)
+    except PyMongoError:
+        return 0
 
 
 async def update_many(collection: str, query: dict[str, Any], doc: dict[str, Any]) -> int:

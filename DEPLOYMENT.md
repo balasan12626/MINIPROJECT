@@ -37,11 +37,28 @@ App URLs after deploy:
 - API health: `http://YOUR_VPS_IP:8000/api/health`
 
 
+## Citizen SOS page (`/sos`) needs HTTPS
+
+Browsers only allow `navigator.geolocation` (and the phone camera) on **HTTPS** pages or on `localhost`.
+On the VPS over plain `http://IP:5173` the *Share my location* button fails, and the citizen has to place the pin by hand.
+
+For a real phone demo put nginx + Let's Encrypt in front of both ports:
+
+1. Point a domain at the VPS (an IP address cannot get a Let's Encrypt certificate).
+2. `apt install nginx certbot python3-certbot-nginx`, then `certbot --nginx -d your.domain`.
+3. Proxy `https://your.domain/` → `http://127.0.0.1:5173` and `https://your.domain/api/` → `http://127.0.0.1:8000/api/`
+   (keep `/ws` upgraded for the websocket), and add `https://your.domain` to `CORS_ORIGINS`.
+
+Citizen photos are written to `uploads/sos/{run_id}/` (git-ignored). They are re-encoded on upload, which strips EXIF
+(including the phone's GPS and model tags). They are personal data: delete them when a demo is finished.
+
 ## Security implemented
 
 - CORS from `CORS_ORIGINS`
 - Pydantic request validation
-- SlowAPI limiter attached (extend per-route as needed)
+- SlowAPI limiter attached (extend per-route as needed); the public `POST /api/public/sos` is limited to 5/minute and
+  10 per device per run, checks the photo's magic bytes (JPEG/PNG/WebP, ≤ 3 MB) and only accepts locations inside the
+  simulated road network
 - JWT login for operators
 - Review/SOS audit logs in Mongo
 - No API keys shipped to the React bundle (browser talks only to this backend)

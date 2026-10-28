@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import asyncio
 import math
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from typing import Any, Optional
 
 from backend.database import mongo
@@ -215,6 +215,125 @@ def _canonical_ml(rain: float) -> tuple[dict[str, Any], dict[str, Any]]:
 
     return predict_live(rain) or {}, dual_model_view(rain)
 
+# F21: synthetic share of injured / critical callers in a demo surge (assumed, labelled).
+SURGE_MEDICAL_SHARE = {"critical": 0.05, "injured": 0.10}
+
+DEMO_DANGER_M = 205.8  # the scenario presets' river / barrage numbers are Delhi metres against this mark
+UPSTREAM_DAM_CITIES = {"delhi_seed", "delhi"}  # Hathnikund Barrage feeds the Yamuna at Delhi
+
+
+def city_hydro_docs(city: dict[str, Any], river: float, dam: float) -> tuple[dict[str, Any], dict[str, Any]]:
+    """River + upstream-dam observation docs for the active city (F7).
+
+    Scenario inputs are in Delhi metres (presets: ~199–206 m). For another
+    gauge they are applied as the SAME height above / below the danger mark
+    (stage = city danger + (input − 205.8)), so "0.5 m over danger" means that
+    everywhere. A city with no INDOFLOODS gauge within 30 km is rainfall-driven:
+    its river doc is unavailable and the risk blend has no stage term."""
+    from backend.geo.cities import LEGACY
+
+    gauge = city.get("gauge") or {}
+    now = utcnow()
+    if city["id"] == LEGACY:
+        river_doc = {
+            "available": True, "source": "simulation", "kind": "river", "value_m": round(river, 3),
+            "danger_level_m": DEMO_DANGER_M, "percent_of_danger": round(100 * river / DEMO_DANGER_M, 2),
+            "station": "Yamuna at ITO / Delhi", "lat": 28.6284, "lon": 77.2410, "timestamp": now,
+        }
+    elif gauge.get("available"):
+        dl = float(gauge["danger_level_m"])
+        stage = dl + (river - DEMO_DANGER_M)
+        river_doc = {
+            "available": True, "source": "simulation", "kind": "river", "value_m": round(stage, 3),
+            "danger_level_m": dl, "warning_level_m": gauge.get("warning_level_m"),
+            "percent_of_danger": round(100 * stage / dl, 2) if dl else None,
+            "station": f"{gauge.get('river')} at {gauge.get('station')}", "gauge_id": gauge.get("gauge_id"),
+            "lat": gauge.get("lat"), "lon": gauge.get("lon"), "timestamp": now,
+            "level_source": gauge.get("source"),
+            "source_url": gauge.get("source_url"),
+            "hfl_m": gauge.get("hfl_m"),
+            "ml_note": gauge.get("ml_note"),
+        }
+    else:
+        river_doc = {
+            "available": False, "source": "simulation", "kind": "river", "value_m": None, "danger_level_m": None,
+            "percent_of_danger": None, "station": None, "timestamp": now,
+            "reason": gauge.get("reason") or "no river gauge for this city — rainfall-driven",
+        }
+    if city["id"] in UPSTREAM_DAM_CITIES:
+        dam_doc = {
+            "available": True, "source": "simulation", "kind": "dam", "value_m": round(dam, 3),
+            "danger_level_m": DEMO_DANGER_M, "percent_of_danger": round(100 * dam / DEMO_DANGER_M, 2),
+            "station": "Hathnikund Barrage", "lat": 30.3139, "lon": 77.5886, "timestamp": now,
+        }
+    else:
+        dam_doc = {
+            "available": False, "source": "simulation", "kind": "dam", "value_m": None, "danger_level_m": None,
+            "percent_of_danger": None, "station": None, "timestamp": now,
+            "reason": "no upstream barrage modelled for this city",
+        }
+    return river_doc, dam_doc
+
+
+def transfer_warning() -> str:
+    """Honest model-transfer caveat for the active city."""
+    from backend.geo.cities import active
+
+    city = active()
+    g = city.get("gauge") or {}
+    if g.get("available") and g.get("catchment"):
+        where = f"catchment features of the {g.get('station')} gauge ({g.get('km_from_centre')} km away)"
+    elif g.get("available") and str(g.get("source") or "").startswith("CWC"):
+        where = (f"the models' default catchment — the CWC gauge {g.get('station')} has no catchment attributes, so the ML "
+                 "model is not specific to it (the river stage card uses the official CWC levels)")
+    elif g.get("available"):
+        where = "the models' default catchment (demo gauge has no INDOFLOODS catchment record)"
+    else:
+        where = "the models' default catchment — no INDOFLOODS gauge within 30 km, so this is a rainfall-only transfer"
+    return (f"Models trained on INDOFLOODS (Indian river gauges), applied to {city['name']} with {where} "
+            "— transfer risk; treat the probability as operational guidance.")
+
+
+def scenario_story(scenario: str | None) -> str | None:
+    """Scenario stories were written for Delhi's Yamuna floodplain; other
+    cities get the same scenario described in their own terms."""
+    from backend.geo.cities import active
+
+    base = SCENARIOS.get(scenario or "", {})
+    city = active()
+    if city["id"] in ("delhi_seed", "delhi") or not base:
+        return base.get("story")
+    driver = "river gauge" if (city.get("gauge") or {}).get("available") else "rainfall (no river gauge modelled)"
+    return f"{base.get('title') or scenario} in {city['name']} — {city.get('why') or ''} Flood driver here: {driver}."
+
+
+def place_in_city(citizens: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """The demo SOS roster is written for Delhi. Outside Delhi each caller is
+    re-placed (deterministically, by name) around one of the active city's OSM
+    flood zones — the roster is synthetic either way and says so."""
+    import random
+
+    from backend.geo.cities import active_id
+    from backend.services.seed import ZONES
+
+    if active_id() in ("delhi_seed", "delhi") or not ZONES:
+        return citizens
+    out = []
+    for i, c in enumerate(citizens):
+        name = str(c.get("citizen_name") or c.get("name") or i)
+        rng = random.Random(f"{active_id()}|{name}")
+        z = ZONES[i % len(ZONES)]
+        out.append(
+            {
+                **c,
+                "lat": round(float(z["lat"]) + rng.gauss(0, 0.004), 6),
+                "lon": round(float(z["lon"]) + rng.gauss(0, 0.004), 6),
+                "location_source": f"synthetic caller placed near {z['name']} (OSM flood zone)",
+            }
+        )
+    return out
+
+
 class SimulationEngine:
     def __init__(self) -> None:
         self.run_id: Optional[str] = None
@@ -238,6 +357,500 @@ class SimulationEngine:
         self._teams_cache: list[dict[str, Any]] = []
         # The ONE K-means result for this run (cluster cards + roster read it).
         self.clusters: dict[str, Any] | None = None
+        # Multi-agent coordination board (agents/mas.py), rebuilt per run.
+        from backend.agents.mas import MultiAgentSystem
+
+        self.mas = MultiAgentSystem()
+        # Road state for THIS run: physics closures (flood rule) + operator
+        # overrides (road_id -> blocked?). The override always wins.
+        self.road_overrides: dict[str, bool] = {}
+        self.auto_blocked: set[str] = set()
+        self.road_log: list[dict[str, Any]] = []
+        # Shelter state for THIS run (F2): name -> {closed, capacity}.
+        self.shelter_overrides: dict[str, dict[str, Any]] = {}
+        self.shelter_log: list[dict[str, Any]] = []
+        # Driver answers (F3): "auto" = simulated crews accept after roll-out;
+        # "manual" = each request waits for Accept / Reject in the driver app.
+        self.accept_mode: str = "auto"
+        # F9: staging moves of idle ambulances {name: {points, depart_at, seconds, to, label}}.
+        self.staging: dict[str, dict[str, Any]] = {}
+        # F18: Open-Meteo hourly forecast for this run (rain_source="forecast").
+        self.rain_forecast: dict[str, Any] | None = None
+        # F30: duplicate pairs the operator said are NOT duplicates (never re-flagged).
+        self.dup_dismissed: set[str] = set()
+        self.merge_log: list[dict[str, Any]] = []
+        # F23: zones warned this run (first warning per zone, with tick).
+        self.zone_warning_log: list[dict[str, Any]] = []
+        # F29: modelled silent areas (towers flooded) — None when the city has no towers file.
+        self.silent_view: dict[str, Any] | None = None
+        # F28: supply runs (assumed truck fleet; None = off).
+        self.supply = None
+
+    async def send_patrol(self, zone_id: str) -> dict[str, Any]:
+        """F29: send the nearest free ambulance to a silent area's centre as a
+        staging move (the F9 mechanism); positions stay derived."""
+        from backend.services.person_ops import _iso, advance_all, ambulance_positions, leg_seconds, road_route
+
+        z = next((x for x in (self.silent_view or {}).get("zones") or [] if x["zone_id"] == zone_id), None)
+        if z is None:
+            raise KeyError(zone_id)
+        ctx = self.ops_ctx()
+        if self.contact_log:
+            advance_all(self.contact_log, ctx)
+        pos = ambulance_positions(self.contact_log, ctx)
+        free = [(a, p) for a, p in pos.items() if p.get("status") == "free" and p.get("lat") is not None]
+        if not free:
+            raise ValueError("no free ambulance for a patrol")
+        target = (float(z["centre"][0]), float(z["centre"][1]))
+        best = None
+        for a, p in free:
+            r = road_route((p["lat"], p["lon"]), target, ctx.get("roads"))
+            if r.get("no_open_road"):
+                continue
+            if best is None or r["sim_minutes"] < best[1]["sim_minutes"]:
+                best = (a, r)
+        if best is None:
+            raise ValueError("no free ambulance has an open road to the silent area")
+        a, r = best
+        self.staging[a] = {"points": r["points"], "km": r["km"], "sim_minutes": r["sim_minutes"], "depart_at": _iso(),
+                           "seconds": leg_seconds(r["sim_minutes"]), "to": list(target), "node": None,
+                           "label": f"patrol: silent area near {z['name']}"}
+        rec = {"zone_id": zone_id, "zone": z["name"], "unit": a, "km": r["km"], "minutes": r["sim_minutes"], "at": utcnow()}
+        await self._log(f"Patrol: {a} to the silent area near {z['name']} ({r['km']} km)", rec)
+        await self._record("patrol")
+        return {**self.state(), "patrol": rec}
+
+    async def merge_sos(self, keep: str, drop: str) -> dict[str, Any]:
+        """F30: operator-confirmed merge (suggestions never merge by themselves).
+        Re-plan before any await (the tick loop interleaves)."""
+        from backend.services.person_ops import advance_all, merge_rows
+
+        if self.contact_log:
+            advance_all(self.contact_log, self.ops_ctx())
+        rec = merge_rows(self.contact_log, keep, drop)  # KeyError / ValueError → 404 / 409
+        advance_all(self.contact_log, self.ops_ctx())  # a freed unit / seats go to the next SOS at once
+        rec["at"] = utcnow()
+        self.merge_log.append(rec)
+        self._sync_citizens()
+        await self._log(f"Operator merged duplicate SOS {drop} into {keep}", rec)
+        await self._record("merge")
+        return {**self.state(), "merge": rec}
+
+    async def dismiss_duplicate(self, a: str, b: str) -> dict[str, Any]:
+        from backend.services.person_ops import dup_key
+
+        self.dup_dismissed.add(dup_key(a, b))
+        await self._log(f"Operator: {a} and {b} are not duplicates", {"a": a, "b": b})
+        return self.state()
+
+    async def _record(self, cause: str) -> None:
+        """Save a replay frame (F5). Never allowed to break the run."""
+        from backend.services.replay import store
+
+        try:
+            await store.record(self, cause)
+        except Exception:  # noqa: BLE001
+            pass
+
+    def zone_warnings(self) -> list[dict[str, Any]]:
+        """F23: zones whose first road (within 1.5 km) the F10 forecast closes
+        within the playbook's `warning_lead_min`, or that a flood already closed."""
+        from backend.agents.mas import PLAYBOOK
+        from backend.geo.cities import active_id
+        from backend.services.ops_sim import zone_road_ids
+        from backend.services.seed import ZONES
+
+        if not self.params or self.status not in ("running", "paused"):
+            return []
+        lead = float(PLAYBOOK.get("warning_lead_min") or 30)
+        ck = (active_id(), len(ZONES))
+        if getattr(self, "_zone_roads_key", None) != ck:
+            self._zone_roads_key, self._zone_roads = ck, zone_road_ids()
+        fc = self.road_forecast()
+        roads = {r["road_id"]: r for r in self.roads_now()}
+        out = []
+        for z in ZONES:
+            cand = []
+            for rid in self._zone_roads.get(str(z["zone_id"]), []):
+                r = roads.get(rid)
+                if r is None:
+                    continue
+                if r["blocked"] and r.get("source") == "flood":
+                    cand.append((0.0, rid))
+                elif rid in fc:
+                    cand.append((float(fc[rid]["closes_in_sim_min"]), rid))
+            if not cand:
+                continue
+            m, rid = min(cand)
+            if m <= lead:
+                out.append({"zone_id": str(z["zone_id"]), "name": z["name"], "lat": z["lat"], "lon": z["lon"],
+                            "closes_in_min": round(m, 1), "road_id": rid, "road_name": roads[rid].get("name") or rid,
+                            "population": z.get("population"), "lead_min": lead})
+        return out
+
+    def _duplicates(self) -> list[dict[str, Any]]:
+        from backend.services.person_ops import duplicate_candidates
+
+        if not self.contact_log:
+            return []
+        n = len(self.contact_log)
+        key = (self.run_id, n, sum(1 for r in self.contact_log if r.get("ops_status") in ("rescued", "merged")),
+               len(self.dup_dismissed))
+        if getattr(self, "_dup_key", None) != key:  # O(n²) — recompute only when the roster changes
+            self._dup_key, self._dup_val = key, duplicate_candidates(self.contact_log, self.dup_dismissed)
+        return self._dup_val
+
+    # ---- live rainfall forecast (F18) ---------------------------------------------
+    def _sim_min_per_tick(self) -> float:
+        from backend.services.person_ops import TIME_SCALE
+
+        return float((self.params or {}).get("tick_seconds") or 2.0) * TIME_SCALE / 60.0
+
+    def _rain_at(self, tick: int) -> dict[str, Any] | None:
+        """Forecast values at a tick's simulated time, or None (scenario rain)."""
+        if (self.params or {}).get("rain_source") != "forecast" or not self.rain_forecast or not self.started_at:
+            return None
+        from backend.services.rain_forecast import at_time
+
+        return at_time(self.rain_forecast, self.started_at + timedelta(minutes=tick * self._sim_min_per_tick()))
+
+    def _rain_view(self) -> dict[str, Any] | None:
+        if (self.params or {}).get("rain_source") != "forecast" or not self.rain_forecast or not self.started_at:
+            return None
+        from backend.services.rain_forecast import series_for_run
+
+        fc = self.rain_forecast
+        ticks = int(self.params.get("ticks") or 36)
+        return {k: fc.get(k) for k in ("source", "attribution", "fetched_at", "lat", "lon", "url")} | {
+            "per_tick": series_for_run(fc, self.started_at, ticks, self._sim_min_per_tick()),
+            "hourly": fc.get("hourly"),
+            "unit": "rainfall_mm = forecast 24-h total from the tick's simulated time",
+        }
+
+    # ---- road flood-time forecast (F10) ------------------------------------------
+    def road_forecast(self) -> dict[str, dict[str, Any]]:
+        """When each open road will be closed by the engine's OWN flood rule
+        (flood_exposure >= 0.85 - blockage(t)), evaluated on the scenario's
+        future ticks. A forecast of the simulation's rule — not a hydraulic
+        model. Operator-controlled roads are left out (the operator decides)."""
+        from backend.services.person_ops import TIME_SCALE
+
+        if not self.params or self.status not in ("running", "paused"):
+            return {}
+        ticks = int(self.params.get("ticks") or 36)
+        key = (self.run_id, self.tick, ticks, tuple(sorted(self.road_overrides)), tuple(sorted(self.auto_blocked)))
+        if getattr(self, "_forecast_key", None) == key:
+            return self._forecast
+        delay = float(self.params.get("tick_seconds") or 2.0)
+        sim_min_per_tick = delay * TIME_SCALE / 60.0
+        series = [float(self._evolve(t)["blockage"]) for t in range(self.tick + 1, ticks)]
+        out: dict[str, dict[str, Any]] = {}
+        exposure_model = (self.params or {}).get("exposure_model") or "distance"
+        for r in self.roads_now():
+            rid = r["road_id"]
+            if r["blocked"] or rid in self.road_overrides:
+                continue
+            exp = float(r.get("flood_exposure_v2") if exposure_model == "hand" else r.get("flood_exposure") or 0)
+            k = next((i for i, b in enumerate(series, start=1) if exp >= 0.85 - b), None)
+            if k is not None:
+                out[rid] = {"closes_in_ticks": k, "closes_in_sim_min": round(k * sim_min_per_tick, 1)}
+        self._forecast_key, self._forecast = key, out
+        return out
+
+    def _stage_idle(self) -> int:
+        """F9: send idle ambulances to hotspot staging points (if enabled)."""
+        if not (self.params or {}).get("preposition") or not self.contact_log:
+            return 0
+        from backend.services.person_ops import advance_all, plan_staging
+
+        ctx = self.ops_ctx()
+        advance_all(self.contact_log, ctx)  # positions must reflect drop-offs that are already due
+        moves = plan_staging(self.contact_log, ctx, self.current_view().get("flood_probability"))
+        if moves:
+            self.staging.update(moves)
+            self.mas.announce_staging(self.run_id, moves)
+        return len(moves)
+
+    def ops_ctx(self) -> dict[str, Any]:
+        """The context every stage-machine call in this run uses."""
+        return {
+            "teams": self._teams_cache,
+            "roads": self.roads_now(),
+            "shelter_overrides": self.shelter_overrides,
+            "accept_mode": self.accept_mode,
+            "dispatch_policy": (self.params or {}).get("dispatch_policy") or "nearest_depot",
+            "fair_lambda": (self.params or {}).get("fair_lambda"),
+            "staging": self.staging,
+            # F22: assumed boat fleet count (default 0 = off).
+            "boats": int((self.params or {}).get("boats") or 0),
+            # F25: crew shift / fuel rules (assumed; None / off = today's behaviour).
+            "crew_rules": (self.params or {}).get("crew_rules"),
+            # F10: road_id -> sim minutes until the flood rule closes it.
+            "closing": {rid: f["closes_in_sim_min"] for rid, f in self.road_forecast().items()},
+        }
+
+    def _sync_citizens(self) -> None:
+        from backend.services.person_ops import sync_citizen_from_log
+
+        by_name = {c.get("citizen_name"): c for c in self.citizens}
+        for row in self.contact_log:
+            src = by_name.get(row.get("citizen_name"))
+            if src:
+                sync_citizen_from_log(src, row)
+
+    # ---- driver app (F3: Accept / Reject) ---------------------------------------
+    async def set_accept_mode(self, mode: str) -> dict[str, Any]:
+        from backend.services.person_ops import ACCEPT_MODES
+
+        if mode not in ACCEPT_MODES:
+            raise ValueError(mode)
+        if mode != self.accept_mode:
+            # Settle every transition due under the OLD rule first.
+            if self.contact_log:
+                from backend.services.person_ops import advance_all
+
+                advance_all(self.contact_log, self.ops_ctx())
+            self.accept_mode = mode
+            await self._log(
+                "Drivers decide: each request waits for Accept / Reject in the driver app"
+                if mode == "manual"
+                else "Auto-accept: crews accept every request after roll-out",
+                {"accept_mode": mode},
+            )
+        st = self.state()
+        await hub.broadcast("simulation_state", st)
+        await self._record(f"accept mode {mode}")
+        return st
+
+    def unit_view(self, unit_name: str) -> dict[str, Any] | None:
+        from backend.services.person_ops import advance_all, known_units, unit_view
+
+        if unit_name not in known_units(self.contact_log, self._teams_cache):
+            return None
+        if self.contact_log:
+            advance_all(self.contact_log, self.ops_ctx())
+            self._sync_citizens()
+        out = unit_view(self.contact_log, unit_name, self.accept_mode)
+        out["run_id"] = self.run_id
+        out["run_status"] = self.status
+        return jsonable(out)
+
+    async def driver_answer(self, unit_name: str, accepted: bool, reason: str | None = None) -> dict[str, Any]:
+        """Accept / Reject from the driver app. Raises LookupError when this unit
+        has no request waiting (already answered, timed out or moved on)."""
+        from backend.services.person_ops import accept, advance_all, find_job, reject
+
+        if self.contact_log:
+            advance_all(self.contact_log, self.ops_ctx())  # a timeout may have fired already
+        row = find_job(self.contact_log, unit_name, ("assigned",))
+        if row is None:
+            raise LookupError(unit_name)
+        name = row.get("citizen_name")
+        if accepted:
+            accept(row, self.ops_ctx())
+            msg = f"{unit_name} accepted the SOS for {name} (driver app)"
+        else:
+            rec = reject(row, self.contact_log, self.ops_ctx(), reason=(reason or "rejected by driver").strip()[:120])
+            msg = f"{unit_name} rejected the SOS for {name}" + (
+                f" - offered to {rec['next_unit']}" if rec.get("next_unit") else f" - held: {rec.get('wait_reason')}"
+            )
+        self._sync_citizens()
+        await self._log(msg, {"unit": unit_name, "citizen": name, "accepted": accepted})
+        st = self.state()
+        await hub.broadcast("simulation_state", st)
+        await self._record(f"driver {'accept' if accepted else 'reject'} {unit_name}")
+        return st
+
+    # ---- shelters (F2: close / shrink a shelter -> live reallocation) ----------
+    def _reallocate(self, reason: str) -> list[dict[str, Any]]:
+        from backend.services.person_ops import reallocate, sync_citizen_from_log
+
+        if not self.contact_log:
+            return []
+        changes = reallocate(self.contact_log, self.shelter_overrides, self.roads_now(), reason)
+        if changes:
+            by_name = {c.get("citizen_name"): c for c in self.citizens}
+            for row in self.contact_log:
+                src = by_name.get(row.get("citizen_name"))
+                if src:
+                    sync_citizen_from_log(src, row)
+        return changes
+
+    async def set_shelter(
+        self, name: str, closed: bool | None = None, capacity: int | None = None, clear: bool = False
+    ) -> dict[str, Any]:
+        """Operator closes / reopens a shelter, edits its capacity, or resets
+        it. Every active group that can no longer use it moves to the nearest
+        open shelter with seats (and an open road) at once."""
+        from backend.services.person_ops import SHELTER_POOL, shelter_registry
+
+        if name not in SHELTER_POOL:
+            raise KeyError(name)
+        before = shelter_registry(self.shelter_overrides)[name]
+        if clear:
+            self.shelter_overrides.pop(name, None)
+        else:
+            ov = dict(self.shelter_overrides.get(name) or {})
+            if closed is not None:
+                ov["closed"] = bool(closed)
+            if capacity is not None:
+                ov["capacity"] = max(0, int(capacity))
+            self.shelter_overrides[name] = ov
+        after = shelter_registry(self.shelter_overrides)[name]
+        parts = []
+        if before["closed"] != after["closed"]:
+            parts.append("closed" if after["closed"] else "reopened")
+        if before["capacity"] != after["capacity"]:
+            parts.append(f"capacity {before['capacity']} → {after['capacity']}")
+        action = " · ".join(parts) or "unchanged"
+        reason = f"{name} {action} by operator"
+        # Re-plan BEFORE any await, so the tick loop cannot interleave.
+        changes = self._reallocate(reason) if parts else []
+        moved = [c for c in changes if not c.get("no_seats")]
+        stranded = [c for c in changes if c.get("no_seats")]
+        entry = {
+            "at": utcnow(),
+            "name": name,
+            "closed": after["closed"],
+            "capacity": after["capacity"],
+            "base_capacity": after["base_capacity"],
+            "cleared": clear,
+            "action": action,
+            "moved": len(moved),
+            "no_seats": len(stranded),
+        }
+        self.shelter_log.append(entry)
+        await self._log(
+            f"Shelter {name} {action} - {len(moved)} group(s) moved"
+            + (f", {len(stranded)} with no shelter seats" if stranded else ""),
+            {"shelter": name, "moved": len(moved), "no_seats": len(stranded)},
+        )
+        self.mas.announce_shelter_change(self.run_id, name, after["closed"], action, changes, changed=bool(parts))
+        st = self.state()
+        st["shelter_change"] = jsonable({**entry, "changes": changes})
+        await hub.broadcast("simulation_state", st)
+        await self._record(f"shelter {name} {action}")
+        return st
+
+    # ---- roads (F1: block a road -> live reroute) -------------------------------
+    def roads_now(self) -> list[dict[str, Any]]:
+        """The one road list every route in this run is planned on."""
+        from backend.services.seed import ROADS
+
+        out = []
+        for base in ROADS:
+            r = dict(base)
+            rid = r["road_id"]
+            if rid in self.road_overrides:
+                r["blocked"] = bool(self.road_overrides[rid])
+                r["source"] = "operator"
+            else:
+                r["blocked"] = rid in self.auto_blocked
+                r["source"] = "flood" if r["blocked"] else "open"
+            r["accessible"] = not r["blocked"]
+            out.append(r)
+        return out
+
+    def road_status(self) -> list[dict[str, Any]]:
+        """Roads + how many active legs drive on each. Road SHAPES are static
+        per city and come from GET /api/cities/{id} (road_geometry), not from
+        every 1.2 s poll."""
+        used: dict[str, int] = {}
+        forecast = self.road_forecast()
+        for row in self.contact_log:
+            st = row.get("ops_status")
+            if st not in ("assigned", "en_route", "to_shelter"):
+                continue
+            legs = [row.get("route_to_shelter")] if st == "to_shelter" else [row.get("route_to_person"), row.get("route_to_shelter")]
+            for rid in {rid for leg in legs for rid in ((leg or {}).get("road_ids") or [])}:
+                used[rid] = used.get(rid, 0) + 1
+        out = []
+        for r in self.roads_now():
+            rid = r["road_id"]
+            out.append(
+                {
+                    "road_id": rid,
+                    "name": r.get("name"),
+                    "lat": r.get("lat"),
+                    "lon": r.get("lon"),
+                    "blocked": r["blocked"],
+                    "source": r["source"],
+                    "operator": rid in self.road_overrides,
+                    "flood_exposure": r.get("flood_exposure"),
+                    "highway": r.get("highway"),
+                    "active_legs": used.get(rid, 0),
+                    "closes_in_sim_min": (forecast.get(rid) or {}).get("closes_in_sim_min"),
+                }
+            )
+        return out
+
+    async def _sync_roads_db(self) -> None:
+        for r in self.roads_now():
+            await mongo.upsert("roads", {"road_id": r["road_id"]}, {k: v for k, v in r.items() if k != "source"})
+
+    def _reroute(self, reason: str, improve: bool = False) -> list[dict[str, Any]]:
+        from backend.services.person_ops import reroute, sync_citizen_from_log
+
+        if not self.contact_log:
+            return []
+        changes = reroute(self.contact_log, self.roads_now(), reason, improve=improve, closing=self.ops_ctx().get("closing") or None)
+        if changes:
+            by_name = {c.get("citizen_name"): c for c in self.citizens}
+            for row in self.contact_log:
+                src = by_name.get(row.get("citizen_name"))
+                if src:
+                    sync_citizen_from_log(src, row)
+        return changes
+
+    async def set_road(self, road_id: str, blocked: bool | None = None, clear: bool = False) -> dict[str, Any]:
+        """Operator blocks / opens a road, or hands it back to the flood rule.
+        Every active leg on a newly closed road is re-planned at once; opening
+        a road re-plans any leg that it makes at least 0.5 min faster."""
+        from backend.services.seed import ROADS
+
+        road = next((r for r in ROADS if r["road_id"] == road_id), None)
+        if road is None:
+            raise KeyError(road_id)
+        was = next(r for r in self.roads_now() if r["road_id"] == road_id)["blocked"]
+        if clear:
+            self.road_overrides.pop(road_id, None)
+        else:
+            self.road_overrides[road_id] = bool(blocked)
+        now_blocked = next(r for r in self.roads_now() if r["road_id"] == road_id)["blocked"]
+        action = "blocked" if now_blocked else "opened"
+        if clear:
+            action = f"handed back to the flood rule ({'closed' if now_blocked else 'open'})"
+        reason = f"{road['name']} ({road_id}) {action} by operator"
+        # Re-plan BEFORE any await, so the tick loop cannot interleave.
+        changes = self._reroute(reason, improve=was and not now_blocked) if was != now_blocked else []
+        # A shelter the closure cut off: move its groups to one still reachable.
+        moved = self._reallocate(reason) if was != now_blocked else []
+        await self._sync_roads_db()
+        if moved:
+            self.mas.announce_shelter_change(self.run_id, None, False, reason, moved, changed=True)
+        stuck = sum(1 for c in changes if c.get("no_open_road"))
+        entry = {
+            "at": utcnow(),
+            "road_id": road_id,
+            "name": road["name"],
+            "blocked": now_blocked,
+            "by": "operator",
+            "cleared": clear,
+            "rerouted": len(changes) - stuck,
+            "no_open_road": stuck,
+        }
+        self.road_log.append(entry)
+        await self._log(
+            f"Road {road_id} {action} - {entry['rerouted']} route leg(s) re-planned"
+            + (f", {stuck} with no open road" if stuck else ""),
+            {"road_id": road_id, "rerouted": entry["rerouted"], "no_open_road": stuck},
+        )
+        self.mas.announce_road(self.run_id, road_id, road["name"], now_blocked, "operator", changes, changed_state=was != now_blocked)
+        st = self.state()
+        st["road_change"] = jsonable({**entry, "changes": changes})
+        await hub.broadcast("simulation_state", st)
+        await self._record(f"road {road_id} {action}")
+        return st
 
     def features(self) -> dict[str, bool]:
         merged = dict(DEFAULT_FEATURES)
@@ -254,7 +867,15 @@ class SimulationEngine:
             confidence_band,
             disagreement_debate,
         )
-        from backend.services.person_ops import delivered_by_shelter, eta_board, shelter_registry, unit_paths
+        from backend.services.person_ops import (
+            delivered_by_shelter,
+            equity_board,
+            eta_board,
+            fleet_board,
+            shelter_allocation_board,
+            shelter_registry,
+            unit_paths,
+        )
         from backend.services.seed import RESCUE_TEAMS, SHELTERS
 
         snap = snap or {}
@@ -300,6 +921,8 @@ class SimulationEngine:
                 {
                     "shelter_id": s.get("shelter_id"),
                     "name": s.get("name"),
+                    "lat": s.get("lat"),
+                    "lon": s.get("lon"),
                     "capacity": cap,
                     "occupancy": occ,
                     "seats_left": left,
@@ -338,6 +961,10 @@ class SimulationEngine:
             "team_paths": paths,
             "shelter_board": shelter_board,
             "shelter_totals": shelter_totals,
+            # Live fleet + allocator seat counts (person_ops is the authority).
+            "fleet_board": fleet_board(self.contact_log, self.ops_ctx()),
+            "shelter_allocation": shelter_allocation_board(self.contact_log, self.shelter_overrides),
+            "equity": equity_board(self.contact_log),
             "disagreement_debate": disagreement_debate(dual) if dual else [],
             "confidence": confidence_band(dual, pred.get("flood_probability")),
             "after_action_summary": after_action_bullets(st_partial),
@@ -349,7 +976,7 @@ class SimulationEngine:
             "after_flood_p": after_p,
             "checklist": self.checklist,
             "false_alarm": self.false_alarm,
-            "transfer_warning": "Model trained on INDOFLOODS (Indonesia catchments), applied to Delhi Yamuna floodplain — transfer risk.",
+            "transfer_warning": transfer_warning(),
         }
 
     def current_view(self, snap: dict[str, Any] | None = None) -> dict[str, Any]:
@@ -382,16 +1009,18 @@ class SimulationEngine:
         from backend.agents.dialogue import last_conversation
         from backend.services.progress import last_progress
         from backend.services.pipeline import last_snapshot
-        from backend.services.person_ops import advance_all, clock_info, sync_citizen_from_log
+        from backend.geo.cities import active as active_city
+        from backend.geo.cities import summary as _city_summary
+        from backend.services.person_ops import ACCEPT_TIMEOUT_SECONDS, advance_all, clock_info, sync_citizen_from_log
+
+        def city_summary() -> dict[str, Any]:
+            return _city_summary(active_city())
 
         snap = last_snapshot("simulation")
         # Every poll / tick: fire every stage transition that is due. Stage
         # length = real route travel time (person_ops is the stage machine).
         if self.contact_log:
-            advance_all(
-                self.contact_log,
-                {"teams": self._teams_cache, "roads": (snap or {}).get("roads") or None},
-            )
+            advance_all(self.contact_log, self.ops_ctx())
             by_name = {c.get("citizen_name"): c for c in self.citizens}
             for row in self.contact_log:
                 src = by_name.get(row.get("citizen_name"))
@@ -402,6 +1031,18 @@ class SimulationEngine:
         if snap and self.clusters:
             snap = {**snap, "clusters": self.clusters.get("clusters") or []}
         demo = self._demo_payload(snap)
+        multi_agent = self.mas.update(
+            run_id=self.run_id,
+            status=self.status,
+            probability=self.current_view(snap).get("flood_probability"),
+            last=self.history[-1] if self.history else None,
+            rows=self.contact_log,
+            fleet=demo.get("fleet_board") or {},
+            shelters=demo.get("shelter_allocation") or [],
+            prediction=(snap or {}).get("prediction"),
+            prev=self.history[-2] if len(self.history) > 1 else None,
+            card_monitor=(snap or {}).get("card_monitor"),
+        )
         return jsonable(
             {
                 "run_id": self.run_id,
@@ -415,7 +1056,7 @@ class SimulationEngine:
                 "before": self.before,
                 "after": self.after,
                 "started_at": self.started_at,
-                "story": SCENARIOS.get(self.params.get("scenario") or "", {}).get("story"),
+                "story": scenario_story(self.params.get("scenario")),
                 "conversation": last_conversation("simulation"),
                 "progress": last_progress("simulation"),
                 "overrides": self.overrides,
@@ -426,6 +1067,30 @@ class SimulationEngine:
                 "pipeline": snap,
                 "current": self.current_view(snap),
                 "ops_clock": clock_info(),
+                "multi_agent": multi_agent,
+                "road_status": self.road_status(),
+                "road_log": self.road_log[-30:],
+                "shelter_overrides": self.shelter_overrides,
+                "shelter_log": self.shelter_log[-30:],
+                "accept_mode": self.accept_mode,
+                "accept_timeout_seconds": ACCEPT_TIMEOUT_SECONDS,
+                "city": city_summary(),
+                "dispatch_policy": (self.params or {}).get("dispatch_policy") or "nearest_depot",
+                "preposition": bool((self.params or {}).get("preposition")),
+                "road_forecast": self.road_forecast(),
+                # F18: where the run's rainfall comes from (scenario preset or a labelled forecast).
+                "rain_source": (self.params or {}).get("rain_source") or "scenario",
+                "rain_forecast": self._rain_view(),
+                # F30: possible duplicate SOS (suggestions only) + confirmed merges.
+                "duplicate_candidates": self._duplicates(),
+                "merge_log": self.merge_log[-30:],
+                # F23: zones warned this run + the assumed compliance (0 = off, never a finding).
+                "zone_warnings": self.zone_warning_log,
+                "warning_compliance": float((self.params or {}).get("warning_compliance") or 0.0),
+                # F29: None = no towers file for this city (feature off, OPENCELLID_TOKEN needed).
+                "silent_zones": self.silent_view,
+                # F28: None = supply runs off.
+                "supply": self.supply.board(self.contact_log, datetime.now(timezone.utc)) if self.supply else None,
                 **demo,
             }
         )
@@ -442,9 +1107,11 @@ class SimulationEngine:
         await mongo.insert("simulation_events", item)
         await hub.broadcast("simulation_event", item)
 
-    def _evolve(self) -> dict[str, Any]:
+    def _evolve(self, tick: int | None = None) -> dict[str, Any]:
+        """Scenario physics at `tick` (default: now). Pure in params + tick, so
+        the road forecast (F10) can evaluate future ticks."""
         p = self.params
-        t = self.tick
+        t = self.tick if tick is None else tick
         scenario = p.get("scenario")
         rain0 = float(p.get("rainfall_intensity") or 20)
         dam0 = float(p.get("dam_level") or 198)
@@ -457,6 +1124,9 @@ class SimulationEngine:
         rain = rain0 * (0.35 + 1.4 * growth)
         if scenario == "heavy_rainfall":
             rain *= 1.35
+        fc_now = self._rain_at(t)  # F18: the forecast drives rainfall when chosen
+        if fc_now is not None:
+            rain = fc_now["rainfall_mm"]
         river = river0 + 0.12 * rain * growth
         dam = dam0 + 0.08 * rain * growth
         if scenario in {"dam_overflow", "river_rise"}:
@@ -466,46 +1136,31 @@ class SimulationEngine:
         blockage = min(0.95, blockage0 + 0.5 * growth if scenario == "road_blockage" else blockage0 + 0.25 * growth)
         sos = int(sos0 + growth * (18 if scenario == "multiple_sos" else 8))
         occ_factor = 1.0 + (0.8 if scenario == "shelter_congestion" else 0.35) * growth
-        daily = [rain * 0.9, rain * 0.7, rain * 0.5]
+        daily = fc_now["daily"] if fc_now is not None else [rain * 0.9, rain * 0.7, rain * 0.5]
+        from backend.geo.cities import LEGACY, active
+
+        city = active()
+        gauge = city.get("gauge") or {}
+        lat0, lon0 = (city.get("center") or [28.6139, 77.2090])[:2]
+        if city["id"] == LEGACY:
+            lat0, lon0 = 28.6139, 77.2090
         weather = {
             "available": True,
             "source": "simulation",
             "temperature_c": 29.0 - 0.4 * growth,
             "rainfall_mm": rain,
-            "rainfall_1h_mm": rain / 6.0,
+            "rainfall_1h_mm": fc_now["rainfall_1h_mm"] if fc_now is not None else rain / 6.0,
             "humidity_pct": 70 + 20 * growth,
             "wind_mps": 3.5,
             "pressure_hpa": 1004 - 4 * growth,
-            "description": "synthetic monsoon pulse",
-            "lat": 28.6139,
-            "lon": 77.2090,
+            "description": "24-h forecast total, Open-Meteo" if fc_now is not None else "synthetic monsoon pulse",
+            "rain_source": "forecast" if fc_now is not None else "scenario",
+            "lat": lat0,
+            "lon": lon0,
             "timestamp": utcnow(),
             "mode": "simulation",
         }
-        river_doc = {
-            "available": True,
-            "source": "simulation",
-            "kind": "river",
-            "value_m": round(river, 3),
-            "danger_level_m": 205.8,
-            "percent_of_danger": round(100 * river / 205.8, 2),
-            "station": "Yamuna at ITO / Delhi",
-            "lat": 28.6284,
-            "lon": 77.2410,
-            "timestamp": utcnow(),
-        }
-        dam_doc = {
-            "available": True,
-            "source": "simulation",
-            "kind": "dam",
-            "value_m": round(dam, 3),
-            "danger_level_m": 205.8,
-            "percent_of_danger": round(100 * dam / 205.8, 2),
-            "station": "Hathnikund Barrage",
-            "lat": 30.3139,
-            "lon": 77.5886,
-            "timestamp": utcnow(),
-        }
+        river_doc, dam_doc = city_hydro_docs(city, river, dam)
         return {
             "weather": weather,
             "forecast": {"available": True, "source": "simulation", "items": []},
@@ -519,6 +1174,10 @@ class SimulationEngine:
             "features": self.features(),
             "human_dispatch_override": self.human_dispatch_override,
             "skip_talk": not self.features().get("agent_talk", True),
+            # Real INDOFLOODS catchment of the city's gauge for the ML models
+            # (empty → the models' default catchment).
+            "catchment": gauge.get("catchment") or None,
+            "city": city["id"],
         }
 
     async def _loop(self) -> None:
@@ -540,12 +1199,13 @@ class SimulationEngine:
                     await self._log("Water level rising", {"river_m": obs["river"]["value_m"]})
                 from backend.database import mongo as db
                 from backend.services.seed import ROADS, SHELTERS
-                roads = await db.find_many("roads", {}, limit=50) or [dict(r) for r in ROADS]
-                for r in roads:
-                    if float(r.get("flood_exposure") or 0) >= (0.85 - obs["blockage"]):
-                        r["blocked"] = True
-                        r["accessible"] = False
-                    await db.upsert("roads", {"road_id": r["road_id"]}, r)
+                flood_before = set(self.auto_blocked)
+                exposure_model = (self.params or {}).get("exposure_model") or "distance"
+                for r in ROADS:  # flood rule: closures only grow during a run
+                    expo = float(r.get("flood_exposure_v2") if exposure_model == "hand" else r.get("flood_exposure") or 0)
+                    if expo >= (0.85 - obs["blockage"]):
+                        self.auto_blocked.add(r["road_id"])
+                await self._sync_roads_db()
                 shelters = await db.find_many("shelters", {}, limit=50) or [dict(s) for s in SHELTERS]
                 for s in shelters:
                     occ = min(int(s.get("capacity") or 0), int((s.get("occupancy") or 0) * obs["occupancy_factor"] + 8))
@@ -554,6 +1214,25 @@ class SimulationEngine:
                         s["status"] = "full"
                     await db.upsert("shelters", {"shelter_id": s["shelter_id"]}, s)
                 snap = await run_pipeline(mode="simulation", observations=obs)
+                # The pipeline's own rule (exposure >= 0.75 at P >= 55 %) also closes roads.
+                for r in snap.get("roads") or []:
+                    if r.get("blocked") and r.get("road_id") not in self.road_overrides:
+                        self.auto_blocked.add(str(r["road_id"]))
+                # Only NEW flood closures; operator-controlled roads are handled by set_road.
+                newly = sorted((self.auto_blocked - flood_before) - set(self.road_overrides))
+                if newly:
+                    names = ", ".join(newly)
+                    changes = self._reroute(f"Flood closed road {names}")
+                    moved = self._reallocate(f"Flood closed road {names}")
+                    if moved:
+                        self.mas.announce_shelter_change(self.run_id, None, False, f"Flood closed road {names}", moved, changed=True)
+                    stuck = sum(1 for c in changes if c.get("no_open_road"))
+                    self.road_log.append({"at": utcnow(), "road_id": names, "blocked": True, "by": "flood",
+                                          "rerouted": len(changes) - stuck, "no_open_road": stuck})
+                    await self._log(f"Flood closed road {names} - {len(changes)} route leg(s) re-planned", {"roads": newly})
+                    for rid in newly:
+                        name = next((r["name"] for r in ROADS if r["road_id"] == rid), rid)
+                        self.mas.announce_road(self.run_id, rid, name, True, "flood", [c for c in changes if rid in c["blocked_roads"]])
                 p = (snap.get("prediction") or {}).get("flood_probability")
                 action = (snap.get("policy") or {}).get("action")
                 if p is not None:
@@ -621,7 +1300,42 @@ class SimulationEngine:
                     "affected_population": (snap.get("incident") or {}).get("affected_population"),
                     "decision_latency_ms": (snap.get("latencies") or {}).get("end_to_end"),
                 }
+                # F28: supply runs — consumption, deliveries, nearest-need-first dispatch,
+                # re-plan of trucks whose road just closed (shared router, F1 hook).
+                from backend.services import supply as _supply
+                from backend.services.person_ops import shelter_registry
+
+                cfg = _supply.settings(self.params)
+                if cfg:
+                    reg = shelter_registry(self.shelter_overrides)
+                    now_t = datetime.now(timezone.utc)
+                    if self.supply is None:
+                        self.supply = _supply.SupplyOps(cfg, self._teams_cache or [], reg, now_t)
+                    if newly:
+                        self.supply.reroute(self.roads_now(), reg, now_t)
+                    for ev in self.supply.step(self.contact_log, reg, self.roads_now(), now_t, self.ops_ctx().get("closing") or None):
+                        if ev.get("dispatched_to"):
+                            await self._log(f"{ev['truck']} → {ev['dispatched_to']} with supplies ({ev['km']} km)", ev)
+                # F29: modelled silent areas (towers under the flood rule) — only with a towers file.
+                from backend.geo.cities import active as _active_city
+                from backend.services.towers import silent_zones
+
+                self.silent_view = silent_zones(_active_city(), float(obs["blockage"]))
+                if self.mas.announce_silent_zones(self.run_id, self.silent_view):
+                    await self._log("Silent area(s): the modelled flood reached phone towers",
+                                    {"zones": [z["name"] for z in (self.silent_view or {}).get("zones") or []]})
+                # F23: early evacuation warnings from the road forecast (once per zone per run).
+                warned = self.zone_warnings()
+                for w in warned:
+                    if w["zone_id"] not in {x["zone_id"] for x in self.zone_warning_log}:
+                        self.zone_warning_log.append({**w, "at": utcnow(), "tick": self.tick})
+                if self.mas.announce_zone_warnings(self.run_id, warned):
+                    await self._log(f"Evacuation warning issued for {len(warned)} zone(s)", {"zones": [w["name"] for w in warned]})
+                moved = self._stage_idle()
+                if moved:
+                    await self._log(f"Pre-positioning: {moved} idle ambulance(s) moving to hotspot staging points", {"moved": moved})
                 await hub.broadcast("simulation_state", self.state())
+                await self._record("tick")
                 self.tick += 1
                 self.sim_time_sec += delay
                 await asyncio.sleep(delay)
@@ -629,14 +1343,41 @@ class SimulationEngine:
             await self._log("Scenario completed", {"ticks": self.tick})
             await mongo.upsert("simulation_runs", {"run_id": self.run_id}, {"status": self.status, "after": self.after, "before": self.before})
             await hub.broadcast("simulation_state", self.state())
+            await self._record("completed")
         except asyncio.CancelledError:
             self.status = "paused"
             await hub.broadcast("simulation_state", self.state())
             raise
 
+    async def _stop_task(self) -> None:
+        """Cancel the running loop AND wait for it to unwind. Its CancelledError
+        handler writes status="paused"; without the wait that write landed on
+        top of the next run, which then stopped after ~2 ticks (Re-run bug)."""
+        task, self.task = self.task, None
+        if task and not task.done():
+            task.cancel()
+            try:
+                await task
+            except BaseException:  # noqa: BLE001 — CancelledError or a loop error; either way it is gone
+                pass
+
     async def start(self, params: dict[str, Any]) -> dict[str, Any]:
-        if self.task and not self.task.done():
-            self.task.cancel()
+        rain_fc = None
+        if params.get("rain_source") == "forecast":
+            # F18: fetch BEFORE touching the current run; failure → ForecastUnavailable
+            # (HTTP 503) and the run does not start. Never a silent fallback.
+            from backend.geo.cities import load_city
+            from backend.services.rain_forecast import fetch
+
+            lat, lon = (load_city(params.get("city") or "delhi_seed").get("center") or [28.6139, 77.209])[:2]
+            rain_fc = await asyncio.to_thread(fetch, lat, lon)
+        await self._stop_task()
+        from backend.geo.cities import activate
+        from backend.services.whatif import jobs as whatif_jobs
+
+        whatif_jobs.reset()  # F16: results (and a job in flight) belong to the old run
+        # F7: the city this run plans on (unknown id → KeyError → HTTP 400).
+        activate(params.get("city"))
         self.params = params
         self.tick = 0
         self.sim_time_sec = 0.0
@@ -646,6 +1387,20 @@ class SimulationEngine:
         self.after = None
         self.last_obs = None
         self.overrides = {}
+        self.road_overrides = {}
+        self.auto_blocked = set()
+        self.road_log = []
+        self.shelter_overrides = {}
+        self.shelter_log = []
+        # A fresh run starts hands-free; "Drivers decide" is switched on per run.
+        self.accept_mode = "auto"
+        self.staging = {}
+        self.rain_forecast = rain_fc
+        self.dup_dismissed = set()
+        self.merge_log = []
+        self.zone_warning_log = []
+        self.silent_view = None
+        self.supply = None
         self.started_at = datetime.now(timezone.utc)
         self.run_id = f"SIM-{int(self.started_at.timestamp())}"
         self.status = "running"
@@ -669,14 +1424,18 @@ class SimulationEngine:
         self.false_alarm = None
         self._teams_cache = []
         self.clusters = None
+        # Each run starts on the seed road network of its city (closures from
+        # the previous run used to stay in Mongo for good and leak into the next run).
+        from backend.geo.cities import sync_db
+
+        await sync_db()
         await mongo.insert("simulation_runs", {"run_id": self.run_id, "params": params, "status": self.status})
         await publish_progress("simulation", "scenario", "Launching scenario — waiting for first model tick", scenario=params.get("scenario"))
         self.task = asyncio.create_task(self._loop())
         return self.state()
 
     async def pause(self) -> dict[str, Any]:
-        if self.task and not self.task.done():
-            self.task.cancel()
+        await self._stop_task()
         self.status = "paused"
         return self.state()
 
@@ -687,8 +1446,7 @@ class SimulationEngine:
         return self.state()
 
     async def reset(self) -> dict[str, Any]:
-        if self.task and not self.task.done():
-            self.task.cancel()
+        await self._stop_task()
         from backend.agents.dialogue import reset_conversation
         from backend.services.progress import reset_progress
 
@@ -708,22 +1466,29 @@ class SimulationEngine:
         if o.get("rainfall_mm") is not None:
             obs["weather"]["rainfall_mm"] = float(o["rainfall_mm"])
             obs["weather"]["source"] = "simulation+operator"
-        if o.get("river_m") is not None:
+        # A rainfall-driven city has no river gauge / barrage: those overrides do nothing.
+        if o.get("river_m") is not None and obs["river"].get("available", True):
             river = obs["river"]
             river["value_m"] = float(o["river_m"])
             river["percent_of_danger"] = round(100 * river["value_m"] / float(river.get("danger_level_m") or 205.8), 2)
             river["source"] = "simulation+operator"
-        if o.get("dam_m") is not None:
+        if o.get("dam_m") is not None and obs["dam"].get("available", True):
             dam = obs["dam"]
             dam["value_m"] = float(o["dam_m"])
             dam["percent_of_danger"] = round(100 * dam["value_m"] / float(dam.get("danger_level_m") or 205.8), 2)
             dam["source"] = "simulation+operator"
         if o.get("flood_probability") is not None:
             obs["flood_probability_override"] = float(o["flood_probability"])
+        obs["road_overrides"] = dict(self.road_overrides)
         return obs
 
     async def apply_override(self, fields: dict[str, Any]) -> dict[str, Any]:
         allowed = {"rainfall_mm", "river_m", "dam_m", "flood_probability"}
+        cleared = [k for k in (fields.pop("clear", None) or []) if k in allowed]
+        for key in cleared:  # hand the card back to the scenario's own physics
+            self.overrides.pop(key, None)
+        if cleared:
+            self.last_obs = None
         for key, val in fields.items():
             if key in allowed and val is not None:
                 self.overrides[key] = float(val)
@@ -752,10 +1517,13 @@ class SimulationEngine:
         self.after = {**(self.after or {}), "flood_probability": p, "peak_risk": rec["risk_category"]}
         field_labels = {"rainfall_mm": "rainfall", "river_m": "river level", "dam_m": "dam level", "flood_probability": "flood probability"}
         field_units = {"rainfall_mm": "mm", "river_m": "m", "dam_m": "m", "flood_probability": "%"}
-        changes = ", ".join(
-            f"{field_labels.get(k, k)} to {(v * 100) if k == 'flood_probability' else v:.1f} {field_units.get(k, '')}".strip()
-            for k, v in fields.items()
-            if k in allowed and v is not None
+        changes = "; ".join(
+            [f"{field_labels.get(k, k)} back to scenario value" for k in cleared]
+            + [
+                f"{field_labels.get(k, k)} to {(v * 100) if k == 'flood_probability' else v:.1f} {field_units.get(k, '')}".strip()
+                for k, v in fields.items()
+                if k in allowed and v is not None
+            ]
         )
         await self._log(f"Operator override: {changes or 'live cards edited'} — agents recalculating", rec)
         monitor = snap.get("card_monitor") or {}
@@ -765,6 +1533,7 @@ class SimulationEngine:
                 {"alerts": monitor.get("alerts")},
             )
         await hub.broadcast("simulation_state", self.state())
+        await self._record(f"override: {changes or 'cards edited'}")
         return self.state()
 
     async def _ingest_citizens(self) -> None:
@@ -786,6 +1555,7 @@ class SimulationEngine:
             else:
                 citizens = (citizens + roster(n))[:n]
         await mongo.update_many("emergency_requests", {"mode": "simulation", "status": "open"}, {"status": "closed"})
+        citizens = place_in_city(citizens)
         stored = []
         for c in citizens:
             doc = {
@@ -873,7 +1643,9 @@ class SimulationEngine:
             if row.get("id") == item_id:
                 row["done"] = bool(done)
 
-    async def add_citizen_sos(self, body: dict[str, Any]) -> dict[str, Any]:
+    async def add_citizen_sos(
+        self, body: dict[str, Any], quick: bool = False, ml: tuple[dict[str, Any], dict[str, Any]] | None = None
+    ) -> dict[str, Any] | None:
         """Add one SOS mid-run WITHOUT disturbing anyone already in progress.
 
         The new person is attached to the nearest existing K-means cluster
@@ -914,6 +1686,9 @@ class SimulationEngine:
             "run_id": self.run_id,
             "timestamp": utcnow(),
         }
+        # Citizen phone SOS (F4): status ticket, photo, GPS accuracy.
+        extra = {k: body[k] for k in ("ticket", "photo_url", "source", "accuracy_m", "device_key", "medical", "medical_source") if body.get(k) is not None}
+        citizen.update(extra)
         await mongo.insert("emergency_requests", dict(citizen))
 
         teams = self._teams_cache or await mongo.find_many("rescue_teams", {}, limit=20, sort_field="team_id", direction=1) or list(RESCUE_TEAMS)
@@ -970,18 +1745,21 @@ class SimulationEngine:
             "answered": True,
             "status": "queued",
             "rescued": None,
+            **extra,
         }
         ensure_ops(entry, order, queue_position=1)
         self.contact_log.append(entry)  # append — never rebuild
 
         weather = ((self.last_obs or {}).get("weather")) or {}
-        talk = await talk_with_citizen(citizen.get("mode") or "simulation", citizen, weather)
+        # A surge adds many callers at once: skip the per-caller LLM chat.
+        talk = None if quick else await talk_with_citizen(citizen.get("mode") or "simulation", citizen, weather)
 
         # Attach ML snapshot on the new person's journey
         pred = {}
         try:
             rain = float(weather.get("rainfall_mm") or self.params.get("rainfall_intensity") or 55)
-            pred, dual = _canonical_ml(rain)
+            # A surge scores the shared rainfall once and passes it in.
+            pred, dual = ml if ml is not None else _canonical_ml(rain)
             dual = dual if self.features().get("model_disagreement") else {}
         except Exception:  # noqa: BLE001
             dual = {}
@@ -1014,6 +1792,9 @@ class SimulationEngine:
                     }
                 )
 
+        if quick:  # surge: the caller logs once and refreshes the pipeline once
+            return None
+
         # Push into rescue desk (1-at-a-time queue there too)
         try:
             from backend.services.rescue_desk import desk
@@ -1042,11 +1823,69 @@ class SimulationEngine:
         st["conversation"] = talk
         st["added_citizen_name"] = citizen["citizen_name"]
         await hub.broadcast("simulation_state", st)
+        await self._record(f"sos {citizen['citizen_name']}" + (" (citizen app)" if citizen.get("source") == "citizen" else ""))
+        return st
+
+    async def add_sos_surge(self, count: int = 50, seed: int | None = None) -> dict[str, Any]:
+        """Many SOS calls at once (a demo of a sudden surge). Callers are
+        synthetic, spread around the floodplain zones, with mixed ages and
+        water depths so some need ambulances and the pool runs out."""
+        import random
+
+        from backend.services.seed import ZONES
+
+        rng = random.Random(seed if seed is not None else len(self.contact_log) * 7919 + 13)
+        first = ["Aarav", "Diya", "Ishaan", "Kavya", "Rohan", "Ananya", "Vihaan", "Meera", "Arjun", "Saanvi",
+                 "Kabir", "Isha", "Reyansh", "Tara", "Aditya", "Nisha", "Vivaan", "Pooja", "Krishna", "Lakshmi",
+                 "Farhan", "Zoya", "Harpreet", "Gurpreet", "Suresh", "Kamala", "Ravi", "Sunita", "Imran", "Fatima"]
+        last = ["Sharma", "Verma", "Gupta", "Singh", "Khan", "Iyer", "Nair", "Reddy", "Das", "Mehta",
+                "Joshi", "Patel", "Yadav", "Ali", "Kaur", "Bose", "Rao", "Mishra", "Chauhan", "Pillai"]
+        water = ["ankle-deep", "knee-deep", "knee-deep", "waist-deep", "waist-deep", "chest-deep", "chest-deep, water rising"]
+        count = max(1, min(100, int(count)))
+        weather = ((self.last_obs or {}).get("weather")) or {}
+        try:
+            ml = _canonical_ml(float(weather.get("rainfall_mm") or self.params.get("rainfall_intensity") or 55))
+        except Exception:  # noqa: BLE001
+            ml = ({}, {})
+        added = []
+        # F21: a SYNTHETIC medical share (labelled), from its own RNG so names /
+        # places / ages of a surge stay exactly as before.
+        med_rng = random.Random((seed if seed is not None else len(self.contact_log) * 7919 + 13) + 4242)
+        for _ in range(count):
+            z = rng.choice(ZONES)
+            age = rng.choice([rng.randint(3, 11), rng.randint(18, 59), rng.randint(18, 59), rng.randint(60, 88)])
+            body = {
+                "citizen_name": f"{rng.choice(first)} {rng.choice(last)}",
+                "age": age,
+                "people": rng.randint(1, 5),
+                "lat": round(z["lat"] + rng.gauss(0, 0.008), 5),
+                "lon": round(z["lon"] + rng.gauss(0, 0.008), 5),
+                "water_level_note": rng.choice(water),
+                "mode": "simulation",
+            }
+            u = med_rng.random()
+            body["medical"] = "critical" if u < SURGE_MEDICAL_SHARE["critical"] else (
+                "injured" if u < SURGE_MEDICAL_SHARE["critical"] + SURGE_MEDICAL_SHARE["injured"] else "none")
+            body["medical_source"] = "synthetic surge share (assumed)"
+            await self.add_citizen_sos(body, quick=True, ml=ml)
+            added.append(self.contact_log[-1]["citizen_name"])
+        await self._log(
+            f"SOS SURGE: {count} new SOS calls at once — {sum(1 for r in self.contact_log[-count:] if r.get('needs_ambulance'))} need an ambulance",
+            {"count": count},
+        )
+        self.mas.announce_surge(self.run_id, self.contact_log[-count:], len(self.contact_log))
+        snap = await run_pipeline(mode="simulation", observations=self._apply_overrides(self.last_obs or self._evolve()))
+        if snap:
+            snap["emergencies"] = jsonable(self.citizens)
+        st = self.state()
+        st["added_citizen_names"] = added
+        await hub.broadcast("simulation_state", st)
+        await self._record(f"surge +{count} SOS (synthetic)")
         return st
 
     def person_detail(self, citizen_name: str) -> dict[str, Any]:
         from backend.services.pipeline import last_snapshot
-        from backend.services.person_ops import ensure_ops
+        from backend.services.person_ops import ensure_ops, fleet_board, shelter_allocation_board
 
         name = (citizen_name or "").strip()
         name_l = name.lower()
@@ -1105,6 +1944,16 @@ class SimulationEngine:
                 "vulnerability": merged.get("vulnerability"),
                 "triage": merged.get("triage"),
                 "assigned_team": merged.get("assigned_team_name") or merged.get("assigned_team"),
+                "unit_name": merged.get("unit_name"),
+                "unit_role": merged.get("unit_role"),
+                "unit_base_name": merged.get("unit_base_name"),
+                "driver_accepted": merged.get("driver_accepted"),
+                "accepted_at": merged.get("accepted_at"),
+                "route_to_person_km": (merged.get("route_to_person") or {}).get("km"),
+                "route_to_person_min": (merged.get("route_to_person") or {}).get("sim_minutes"),
+                "route_to_shelter_km": (merged.get("route_to_shelter") or {}).get("km"),
+                "route_to_shelter_min": (merged.get("route_to_shelter") or {}).get("sim_minutes"),
+                "route_method": (merged.get("route_to_person") or {}).get("method"),
                 "scenario": self.params.get("scenario"),
             },
             "environment": {
@@ -1120,8 +1969,9 @@ class SimulationEngine:
                 "xgb": dual.get("xgboost"),
             },
             "message_counts": {},
-            "ambulances_free": None,
-            "vacant_total": None,
+            # This run's own fleet / shelter seats — not the rescue desk's.
+            "ambulances_free": fleet_board(self.contact_log)["ambulances_free"],
+            "vacant_total": sum(s["seats_left"] for s in shelter_allocation_board(self.contact_log, self.shelter_overrides)),
         }
 
     async def set_checklist(self, items: list[dict[str, Any]]) -> dict[str, Any]:

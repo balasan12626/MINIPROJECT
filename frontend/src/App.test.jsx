@@ -53,6 +53,11 @@ vi.mock("./services/api.js", async (orig) => {
     fetchSources: () => Promise.resolve({ live_apis: [] }),
     fetchClusters: () => Promise.resolve({ n_sos: 0, clusters: [] }),
     fetchModelsV2: () => Promise.resolve({ available: true, version: "3.0.0" }),
+    fetchCities: () =>
+      Promise.resolve({
+        active: "delhi_seed",
+        cities: [{ id: "delhi", name: "Delhi", state: "Delhi", flood_driver: "river", gauge: { station: "delhi rly bridge" }, counts: {} }],
+      }),
     hqrlState: () => Promise.resolve(hqrlStub),
     hqrlConfigure: () => Promise.resolve(hqrlStub),
     hqrlStart: () => Promise.resolve(hqrlStub),
@@ -71,6 +76,21 @@ describe("routing", () => {
     expect(screen.getAllByText(/Command Center/).length).toBeGreaterThan(0);
   });
 
+  it("has one navbar link (Simulation); old pages are its subtabs", () => {
+    render(
+      <MemoryRouter initialEntries={["/response"]}>
+        <App />
+      </MemoryRouter>
+    );
+    const nav = screen.getByRole("navigation", { name: "Primary" });
+    expect(nav.querySelectorAll("a")).toHaveLength(1);
+    expect(nav.textContent).toMatch(/Simulation/);
+    for (const label of ["Command Center", "Response", "Rescue Route"]) {
+      expect(screen.getByRole("tab", { name: new RegExp(label) })).toBeTruthy();
+    }
+    expect(screen.getByRole("tab", { name: /Response/ }).getAttribute("aria-selected")).toBe("true");
+  });
+
   it("renders the unified simulation page: picker, inputs, one run button", async () => {
     render(
       <MemoryRouter initialEntries={["/simulation"]}>
@@ -87,14 +107,24 @@ describe("routing", () => {
     expect(screen.queryByRole("button", { name: /RUN BENCHMARK/i })).toBeNull();
   });
 
-  it("shows only an empty state before a run", () => {
+  it("opens on Setup with no results section before a run", () => {
     render(
       <MemoryRouter initialEntries={["/simulation"]}>
         <App />
       </MemoryRouter>
     );
-    expect(screen.getByText(/No results yet/i)).toBeTruthy();
-    expect(screen.getByText(/Select a scenario and click/i)).toBeTruthy();
+    expect(screen.getByRole("tab", { name: /Setup & Run/ }).getAttribute("aria-selected")).toBe("true");
+    expect(document.getElementById("scenario-output")).toBeNull();
+  });
+
+  it("shows only an empty state on a results tab before a run", () => {
+    render(
+      <MemoryRouter initialEntries={["/simulation?tab=people"]}>
+        <App />
+      </MemoryRouter>
+    );
+    expect(screen.getByRole("tab", { name: /People/ }).getAttribute("aria-selected")).toBe("true");
+    expect(screen.getByText(/No run yet/i)).toBeTruthy();
   });
 
   it("offers every scenario, grouped, with exactly one selected", () => {

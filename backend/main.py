@@ -7,7 +7,22 @@ from fastapi.responses import JSONResponse
 from slowapi import _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
 
-from backend.api import agents, dams, emergency, health, hqrl, live, ml, response, rescue_desk, simulation, sources, voice_agent
+from backend.api import (
+    agents,
+    benchmark,
+    dams,
+    emergency,
+    health,
+    hqrl,
+    live,
+    ml,
+    public_sos,
+    response,
+    rescue_desk,
+    simulation,
+    sources,
+    voice_agent,
+)
 from backend.config import get_settings
 from backend.database import mongo
 from backend.ml.inference import load_models
@@ -33,6 +48,14 @@ async def lifespan(app: FastAPI):
     await mongo.connect()
     load_models()
     await seed_if_empty()
+    # F5: playbook edits survive restarts; stored replays are bounded.
+    from backend.services.replay import load_playbook, store
+
+    if await load_playbook():
+        print("[replay] playbook loaded from Mongo settings")
+    removed = await store.retention()
+    if removed.get("runs"):
+        print(f"[replay] retention: removed {removed['runs']} old run(s), {removed['frames']} frame(s), {removed['messages']} message(s)")
     ticker = None
     if os.environ.get("FLOOD_LIVE_TICKER", "1") != "0":
         ticker = asyncio.create_task(_live_ticker())
@@ -83,7 +106,7 @@ async def security_headers(request: Request, call_next):
     return response
 
 
-for module in (health, live, ml, agents, response, simulation, hqrl, emergency, sources, rescue_desk, voice_agent, dams):
+for module in (health, live, ml, agents, response, simulation, hqrl, emergency, sources, rescue_desk, voice_agent, dams, public_sos, benchmark):
     app.include_router(module.router)
 
 

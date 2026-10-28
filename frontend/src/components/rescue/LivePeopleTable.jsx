@@ -1,5 +1,7 @@
 import { useMemo, useState } from "react";
 import PdfDownloadButton from "../PdfDownloadButton.jsx";
+import { sosPhotoUrl } from "../../services/api.js";
+import DecisionCard from "./DecisionCard.jsx";
 import { STAGES, STAGE_COLOR, STAGE_LABEL, STAGE_SHORT } from "../../data/rescueAssets.js";
 import { useStageChanges } from "../../hooks/useRescueOps.js";
 import { formatTimeIST } from "../../utils/time.js";
@@ -197,6 +199,11 @@ export default function LivePeopleTable({ people = [], selectedKey, onSelect }) 
                       {open ? "▾" : "▸"}
                     </button>
                     {p.name}
+                    {p.source === "citizen" ? (
+                      <span className="badge citizen-badge" title="SOS sent from the citizen phone page">
+                        📱
+                      </span>
+                    ) : null}
                   </td>
                   <td>{p.age ?? "—"}</td>
                   <td>{p.people ?? "—"}</td>
@@ -209,8 +216,20 @@ export default function LivePeopleTable({ people = [], selectedKey, onSelect }) 
                     </span>
                   </td>
                   <td>{p.team || "—"}</td>
-                  <td>{p.ambulance || "—"}</td>
-                  <td>{p.shelter || "—"}</td>
+                  <td>
+                    {p.by_boat ? (
+                      <span className="road-chip" style={{ background: "rgba(56, 189, 248, 0.15)", color: "#38bdf8", borderColor: "#38bdf8" }} title="Cut off by water — rescued by boat">
+                        🚤 by boat
+                      </span>
+                    ) : (
+                      p.ambulance || "—"
+                    )}
+                  </td>
+                  <td>
+                  {p.destinationKind === "hospital" ? <span className="road-chip">🏥 to hospital</span> : null} {p.shelter || "—"}
+                  {p.medical && p.medical !== "none" ? <span className="badge crit"> {p.medical}</span> : null}
+                  {p.mergedFrom?.length ? <span className="badge warn"> +{p.mergedFrom.length} merged</span> : null}
+                </td>
                   <td>{hhmmss(sosTime)}</td>
                   <td>{hhmmss(p.stageStartedAt)}</td>
                   <td>{etaText(p)}</td>
@@ -228,6 +247,17 @@ export default function LivePeopleTable({ people = [], selectedKey, onSelect }) 
                           <div className="metric"><span>Answered</span><b>{p.answered == null ? "—" : p.answered ? "Yes" : "No"}</b></div>
                           <div className="metric"><span>Rescued</span><b>{p.rescued == null ? "pending" : String(p.rescued)}</b></div>
                           <div className="metric"><span>Water</span><b>{p.waterNote || "—"}</b></div>
+                          {p.source === "citizen" ? (
+                            <div className="metric">
+                              <span>Source</span>
+                              <b>📱 citizen app{p.accuracyM != null ? ` · GPS ±${p.accuracyM} m` : ""}</b>
+                            </div>
+                          ) : null}
+                          {p.photoUrl ? (
+                            <a href={sosPhotoUrl(p.photoUrl)} target="_blank" rel="noreferrer">
+                              <img className="sos-thumb" src={sosPhotoUrl(p.photoUrl)} alt={`Photo sent by ${p.name}`} loading="lazy" />
+                            </a>
+                          ) : null}
                         </div>
                         <div>
                           <b>Unit &amp; ETA</b>
@@ -235,7 +265,7 @@ export default function LivePeopleTable({ people = [], selectedKey, onSelect }) 
                             <span>Unit</span>
                             <b>
                               {p.unitName || "—"}
-                              {p.unitRole ? ` (${p.unitRole === "ambulance" ? "ambulance" : "rescue team"})` : ""}
+                              {p.unitRole ? ` (${p.unitRole === "ambulance" ? "ambulance" : p.unitRole === "boat" ? "rescue boat" : "rescue team"})` : ""}
                             </b>
                           </div>
                           <div className="metric"><span>Dispatched from</span><b>{p.unitBaseName || p.team || "—"}</b></div>
@@ -248,6 +278,7 @@ export default function LivePeopleTable({ people = [], selectedKey, onSelect }) 
                             <b>{p.etaShelterMin != null ? `${p.etaShelterMin} min · ${p.shelterKm ?? "?"} km` : "—"}</b>
                           </div>
                           {p.waitReason ? <p className="counterfactual">{p.waitReason}</p> : null}
+                          <DecisionCard d={p.decision} compact />
                         </div>
                       </div>
                       <div className="rescue-timeline">

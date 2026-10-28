@@ -112,6 +112,11 @@ DAM_REGISTRY: list[dict[str, Any]] = [
         "historical_normal_level_m": 231.19,
         "current_level_m": 234.94,
         "capacity_note": "FRL 120 ft gauge (EL 240.79 m MSL); MDDL 219.456 m; live 93.47 TMC (public reference, approximate)",
+        # Mettur is read on its own dam gauge in feet (full = 120 ft). Gauge
+        # zero is derived from the anchor above: 240.79 m − 120 ft × 0.3048.
+        "gauge_unit": "ft",
+        "gauge_full": 120.0,
+        "gauge_zero_m": 204.214,
         "risk_threshold_pct": 90.0,
         "downstream_region": "Cauvery delta — Salem, Erode, Tiruchirappalli, Thanjavur districts",
         "catchment_profile": _catchment(

@@ -77,7 +77,7 @@ vi.mock("react-leaflet", () => ({
   TileLayer: () => null,
   Marker: ({ children }) => <div>{children}</div>,
   Popup: ({ children }) => <div>{children}</div>,
-  useMap: () => ({ flyTo: () => {}, invalidateSize: () => {} }),
+  useMap: () => ({ flyTo: () => {}, setView: () => {}, invalidateSize: () => {} }),
 }));
 
 vi.mock("../../services/api.js", () => ({

@@ -1,0 +1,110 @@
+{
+  "name": "hand_compare_v1",
+  "city": "mumbai",
+  "title": "Height-based road flood risk (HAND vs distance) \u2014 Mumbai",
+  "citation": {
+    "method": "Height Above Nearest Drainage (HAND)",
+    "paper": "Renn\u00f3 et al. (2008), HAND, a new terrain descriptor using SRTM-DEM, Remote Sensing of Environment",
+    "dem_dataset": "Copernicus DEM GLO-30 (30 m resolution, Open Access)",
+    "licence": "Copernicus Open Access / European Space Agency",
+    "url": "https://spacedata.copernicus.eu/collections/copernicus-digital-elevation-model"
+  },
+  "total_roads": 611,
+  "hand_stats": {
+    "min_m": 0.0,
+    "median_m": 32.53,
+    "mean_m": 35.72,
+    "max_m": 82.24
+  },
+  "spearman_rank_correlation": -0.062,
+  "roads_closing_earlier_in_v2": [
+    {
+      "road_id": "MUM-R009",
+      "name": "Carter Road (part 1)",
+      "v1_exposure": 0.765,
+      "v2_exposure": 0.06,
+      "hand_m": 14.11,
+      "why": "Low-lying road with small height above drainage; floods earlier under topography model"
+    },
+    {
+      "road_id": "MUM-R026",
+      "name": "60 Feet Road",
+      "v1_exposure": 0.777,
+      "v2_exposure": 0.06,
+      "hand_m": 22.8,
+      "why": "Low-lying road with small height above drainage; floods earlier under topography model"
+    },
+    {
+      "road_id": "MUM-R037",
+      "name": "Adi Sankaracharya Marg (part 2)",
+      "v1_exposure": 0.794,
+      "v2_exposure": 0.06,
+      "hand_m": 62.62,
+      "why": "Low-lying road with small height above drainage; floods earlier under topography model"
+    },
+    {
+      "road_id": "MUM-R039",
+      "name": "Baji Pasalkar Marg (Saki Vihar Road) (part 1)",
+      "v1_exposure": 0.756,
+      "v2_exposure": 0.06,
+      "hand_m": 63.93,
+      "why": "Low-lying road with small height above drainage; floods earlier under topography model"
+    },
+    {
+      "road_id": "MUM-R067",
+      "name": "Lady Jamshedji Road (part 2)",
+      "v1_exposure": 0.779,
+      "v2_exposure": 0.06,
+      "hand_m": 22.26,
+      "why": "Low-lying road with small height above drainage; floods earlier under topography model"
+    }
+  ],
+  "roads_closing_later_in_v2": [
+    {
+      "road_id": "MUM-R575",
+      "name": "Unnamed secondary road",
+      "v1_exposure": 0.06,
+      "v2_exposure": 0.06,
+      "hand_m": 69.85,
+      "why": "High ridge / elevated terrain road; stays passable longer despite proximity to water"
+    },
+    {
+      "road_id": "MUM-R566",
+      "name": "Unnamed trunk road",
+      "v1_exposure": 0.06,
+      "v2_exposure": 0.06,
+      "hand_m": 57.74,
+      "why": "High ridge / elevated terrain road; stays passable longer despite proximity to water"
+    },
+    {
+      "road_id": "MUM-R568",
+      "name": "Unnamed trunk road",
+      "v1_exposure": 0.06,
+      "v2_exposure": 0.06,
+      "hand_m": 58.58,
+      "why": "High ridge / elevated terrain road; stays passable longer despite proximity to water"
+    },
+    {
+      "road_id": "MUM-R567",
+      "name": "Unnamed primary road",
+      "v1_exposure": 0.06,
+      "v2_exposure": 0.06,
+      "hand_m": 40.97,
+      "why": "High ridge / elevated terrain road; stays passable longer despite proximity to water"
+    },
+    {
+      "road_id": "MUM-R563",
+      "name": "Unnamed primary road",
+      "v1_exposure": 0.06,
+      "v2_exposure": 0.06,
+      "hand_m": 62.07,
+      "why": "High ridge / elevated terrain road; stays passable longer despite proximity to water"
+    }
+  ],
+  "notes": [
+    "v1 uses planar distance-to-water decay proxy.",
+    "v2 uses Height Above Nearest Drainage (HAND, Copernicus DEM 30m).",
+    "HAND >= 0 everywhere by D8 flow-direction construction.",
+    "Closure rule (effective_exposure >= 0.85 - blockage) remains identical between models."
+  ]
+}

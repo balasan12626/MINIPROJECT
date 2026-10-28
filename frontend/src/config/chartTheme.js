@@ -30,15 +30,15 @@ export const chartTheme = {
     cursor: { stroke: "var(--border)", fill: "var(--accent-soft)" },
   },
   legend: { wrapperStyle: { color: "var(--muted)", fontSize: 12 } },
-  // Neutral series order: accent first, then white/grey, then status hues only
-  // when a series has no semantic meaning of its own.
+  // Categorical series order: theme accents first, then distinct hues that
+  // read in both themes (no white/grey bars).
   series: [
     "var(--accent)",
-    "var(--text)",
-    "var(--muted)",
+    "var(--accent-2)",
     "var(--status-safe)",
     "var(--status-transport)",
     "var(--status-enroute)",
+    "#f472b6",
   ],
   // Semantic colours — use these when the series *means* a status.
   status: {

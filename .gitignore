@@ -25,3 +25,17 @@ mlruns/
 dataset/camels_ind/
 dataset/india_weather_rainfall_data.xlsx
 catboost_info/
+
+# Citizen SOS photos (F4) - personal data, never committed
+uploads/
+# Raw Overpass downloads (rebuild cache for scripts/build_city_data.py)
+backend/data/cities/raw/
+
+frontend/test-results/
+frontend/playwright-report/
+
+# Embedded paper repo
+iee papper fineal/IEE FOLDERGITUP/
+
+dataset/unosat_fl20151123ind/
+backend/data/satellite/

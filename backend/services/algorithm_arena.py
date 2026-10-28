@@ -127,6 +127,7 @@ def _build_graphs(roads: list[dict[str, Any]], flood_boost: float = 1.0) -> tupl
     """Distance-only graph vs flood-aware weighted graph."""
     g_flood = build_graph(roads)
     if flood_boost != 1.0:
+        g_flood = g_flood.copy()  # build_graph's result is a shared cached graph — never edit it in place
         for u, v, data in list(g_flood.edges(data=True)):
             dist = float(data.get("distance_km") or 0.1)
             w = float(data.get("weight") or dist)

@@ -1,0 +1,5873 @@
+{
+ "date_utc": "2026-10-10T13:25:40+00:00",
+ "models": [
+  "openai/gpt-oss-120b"
+ ],
+ "n_states": 150,
+ "temperature": 0.85,
+ "rows": [
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 0,
+   "band": "calm",
+   "ms": 2407.9,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 7,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Current flood probability is 34.3%, rain has reached 34.2\u202fmm, and the Yamuna is at 205.11\u202fm, below the barrage stage of 202.9\u202fm."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Understood, the levels are stable; we will continue monitoring and advise the public not to worry."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "If the probability rises above 40%, we will issue an immediate alert; otherwise maintain routine checks."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, it's 07:57\u202fIST now; please keep the updates coming every hour."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 1,
+   "band": "auto",
+   "ms": 1440.2,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 6,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 98.8%, rain measured 196.9 mm, Yamuna river level now 202.04 m and barrage stage 203.3 m; immediate action required in Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, dispatch ambulance units and NDRF teams to both Yamuna Pushta and Geeta Colony now."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "All rescue crews, proceed to the named zones, prioritize evacuations and medical aid."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Acknowledged, teams en route, will report status at 18:28 IST."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Maintain continuous updates, any change in river level or rain intensity must be reported immediately."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 2,
+   "band": "calm",
+   "ms": 1431.1,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 9,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Current flood probability is 20.9%, well below the 40% threshold, so no immediate danger."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Rainfall measured at 32.1 mm and Yamuna river level at 206.93 m, still below the barrage stage of 203.8 m."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Residents of Yamuna Pushta and Geeta Colony can stay calm, but call us if the probability rises."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Time now is 14:00 IST; continue monitoring the situation."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Model outputs show Random Forest at 25.6% and XGBoost at 20.9%, both indicating low risk."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 3,
+   "band": "auto",
+   "ms": 1534.7,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 7,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 96.2% with rain 171.5 mm, Yamuna river now 202.96\u202fm and barrage at 205.99\u202fm, immediate rescue needed at Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy, dispatch ambulance and NDRF teams to both Yamuna Pushta and Geeta Colony now, ETA 12:16\u202fIST."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Water levels rising fast, prioritize evacuation routes for the zone Yamuna Pushta / Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "All units, confirm receipt and report status back on channel."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Acknowledged, monitoring XGBoost at 96.2% confidence, will update as situation evolves."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 4,
+   "band": "auto",
+   "ms": 1532.9,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 6,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Probability at 76.9% and rain 92.4\u202fmm, Yamuna river at 205.42\u202fm, barrage stage 204.06\u202fm \u2013 flood confirmed in Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, initiate immediate rescue. Dispatch ambulance units to both Yamuna Pushta and Geeta Colony now."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Disaster/NDRF teams, proceed to the same locations, priority one, time now 23:32\u202fIST."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "All units, maintain radio contact, report status every five minutes."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Affirmative, will update as the situation evolves."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 5,
+   "band": "watch",
+   "ms": 1571.7,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 8,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability is at 42.9%, rain measured 27 mm, and Yamuna river level stands at 201.2 m with barrage stage 203.51 m."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, current time 09:29 IST, zone Yamuna Pushta / Geeta Colony remains under watch only, no rescue deployment."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Models show Random Forest 30.2% and XGBoost 42.9% confidence, reinforcing the watch status."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Acknowledged, maintain monitoring and report any change in river level or rain intensity."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Will do, continue to observe Yamuna Pushta and Geeta Colony closely."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 6,
+   "band": "auto",
+   "ms": 1504.1,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 6,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 98.4%, rain measured 180.5 mm, Yamuna river level 206.04 m, barrage stage 201.54 m, time 00:54 IST, situation critical in Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, dispatch ambulance units to both Yamuna Pushta and Geeta Colony immediately."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Also alert disaster response and NDRF teams to commence rescue operations at the two locations now."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "All units en route, will report status as soon as on scene."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Maintain continuous updates, water levels rising fast, stay safe."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 7,
+   "band": "auto",
+   "ms": 1621.4,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": false,
+   "n_numbers": 6,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 96.5%, rain 108.4 mm, Yamuna river level 204.24 m and barrage stage 199.82 m \u2013 water has breached at Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Dispatch ambulance units and NDRF teams to both Yamuna Pushta and Geeta Colony immediately for rescue operations."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, units en route. ETA for first responders is under ten minutes, standing by for further updates."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Current time 18:35 IST, maintain continuous monitoring; alert any rise beyond current levels."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Acknowledged, will keep radio open and report any change in river or barrage readings."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 8,
+   "band": "auto",
+   "ms": 1817.9,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 6,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability 78.7%, rain 129.1 mm, Yamuna river level 204.46 m, barrage stage 204.91 m, immediate rescue required."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy, dispatch ambulance and NDRF to Yamuna Pushta and Geeta Colony now."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Time now 12:58 IST, water rising fast, coordinate rescue teams."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "All units en route, will report status."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Maintain radio check, update as situation evolves."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 9,
+   "band": "auto",
+   "ms": 1395.8,
+   "error": "openai/gpt-oss-120b used numbers not in current state - rejected",
+   "attempts": 1,
+   "parsed": true,
+   "accepted": false,
+   "typed_ok": false,
+   "n_numbers": 7,
+   "unmatched": [
+    "10"
+   ],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 91.0%, rain at 143.2 mm, Yamuna river level 206.84 m, barrage stage 203.03 m\u2014immediate rescue required at Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, dispatching ambulance and NDRF teams to both locations now, ETA 10 minutes."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Time is 16:33 IST, maintain continuous updates on water rise and road conditions."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "All units en route, will report back as soon as they reach the zones."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 10,
+   "band": "auto",
+   "ms": 1587.0,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": false,
+   "n_numbers": 6,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 87.3%, rain at 192.6\u202fmm, Yamuna river now 207.54\u202fm and barrage stage 199.72\u202fm, situation critical in Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, dispatch ambulance and NDRF teams to both Yamuna Pushta and Geeta Colony immediately."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Teams en route, ETA about ten minutes, will report once on scene."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Roger, maintain updates, current time 22:33\u202fIST, keep all channels open."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 11,
+   "band": "auto",
+   "ms": 1722.4,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 7,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 96.6%, rain 157.5 mm, Yamuna river level 207.52 m, barrage stage 204.95 m; water is breaching at Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy, initiate rescue now. Dispatch ambulance and NDRF teams to both Yamuna Pushta and Geeta Colony immediately."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Acknowledged, units en route. Current time 04:30 IST, expect water rise to continue."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Maintain continuous updates, report any change in river or barrage levels."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Will do, monitoring at 96.6% flood risk, will relay new data as soon as available."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 12,
+   "band": "watch",
+   "ms": 1719.6,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 6,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Current flood probability stands at 40.6%, so we are in watch\u2011only status, no rescue deployment at this time."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Understood. Rainfall measured at 34.9\u202fmm, keep monitoring the Yamuna river level."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Yamuna river is at 206.07\u202fm while the barrage stage is 205.72\u202fm; water is still below critical thresholds."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "All units remain on standby; maintain observation of Yamuna Pushta and Geeta Colony zones."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Time check: 21:30\u202fIST, continue surveillance and report any changes immediately."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 13,
+   "band": "auto",
+   "ms": 1984.2,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 6,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 96.0% with rain accumulation 244.8\u202fmm; Yamuna river at 205.69\u202fm and barrage stage 201.15\u202fm, immediate rescue needed at Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy, dispatching ambulance and NDRF teams to Yamuna Pushta and Geeta Colony now, ETA pending."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Time now 17:25\u202fIST, water levels rising fast, keep me posted on team status."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Teams en route, will report arrival times as soon as confirmed."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 14,
+   "band": "auto",
+   "ms": 1948.5,
+   "error": "openai/gpt-oss-120b used numbers not in current state - rejected",
+   "attempts": 1,
+   "parsed": true,
+   "accepted": false,
+   "typed_ok": false,
+   "n_numbers": 7,
+   "unmatched": [
+    "5"
+   ],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability 98.4%, rain 201 mm, Yamuna river level 201.72 m, barrage stage 204.82 m, situation critical."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy, dispatch ambulance and NDRF team to Yamuna Pushta and Geeta Colony now."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Teams en route, ETA approx 5 minutes, stand by for updates."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Time now 12:27 IST, maintain communication."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 15,
+   "band": "auto",
+   "ms": 1939.2,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 6,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability is 73.6% with rain at 7.3 mm, Yamuna river now at 205.08\u202fm and barrage stage 202.21\u202fm, over Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, time 20:56\u202fIST, dispatch ambulance and NDRF teams to both Yamuna Pushta and Geeta Colony immediately."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Affirmative, rescue units en route, standing by for further instructions."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Maintain continuous updates, report any change in river level or rain intensity."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Will do, current conditions unchanged, monitoring now."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 16,
+   "band": "auto",
+   "ms": 2006.6,
+   "error": "openai/gpt-oss-120b used numbers not in current state - rejected",
+   "attempts": 1,
+   "parsed": true,
+   "accepted": false,
+   "typed_ok": false,
+   "n_numbers": 7,
+   "unmatched": [
+    "15"
+   ],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability 88.6%, rain 133.1 mm, Yamuna river level 201.7 m, barrage stage 203.85 m \u2013 water overtopping, initiate rescue at Yamuna Pushta and Geeta Colony now."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy, ambulance and NDRF units en route to Yamuna Pushta and Geeta Colony, ETA 15 minutes."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Time now 11:58 IST, maintain continuous monitoring, report any rise above current levels."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Roger, will update as soon as units are on scene and conditions change."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "All teams, stay on standby for further instructions, safety first."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 17,
+   "band": "auto",
+   "ms": 1835.3,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 6,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 87.2% with rain 119.3 mm, Yamuna river now 205.64\u202fm and barrage stage 199.24\u202fm; flood confirmed in Yamuna Pushta/Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, time 13:35\u202fIST. Dispatch ambulance and NDRF teams to both Yamuna Pushta and Geeta Colony immediately."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Rescue units, prioritize evacuating residents from low\u2011lying zones, water rising fast."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "All units en route, will report status in five minutes."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 18,
+   "band": "auto",
+   "ms": 1629.0,
+   "error": "openai/gpt-oss-120b used numbers not in current state - rejected",
+   "attempts": 1,
+   "parsed": true,
+   "accepted": false,
+   "typed_ok": false,
+   "n_numbers": 6,
+   "unmatched": [
+    "30"
+   ],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 79.6%, rain 76.1 mm, Yamuna river now 205.86\u202fm, barrage stage 204.5\u202fm\u2014flood confirmed in Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, dispatch ambulance units to both zones immediately."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Also alert disaster/NDRF teams, they need to move in now for rescue operations."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "All units en route, ETA 03:30\u202fIST. Stay on channel for updates."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 19,
+   "band": "auto",
+   "ms": 1944.9,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 6,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 85.7%, rain 131.2 mm, Yamuna river level 207.16 m, barrage stage 202.35 m, situation critical."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy, dispatch ambulance and NDRF to Yamuna Pushta and Geeta Colony now."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Units en route, ETA unknown, will report updates."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Maintain radio, monitor river level, keep me posted."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Time now 05:27 IST, water rising fast, advise shelters."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 20,
+   "band": "auto",
+   "ms": 2115.8,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 6,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability 65.2%, river level 200.82\u202fm, barrage stage 204.23\u202fm, rain 20.8\u202fmm, situation critical."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy, initiate rescue. Dispatch ambulance and NDRF to Yamuna Pushta and Geeta Colony now."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Teams en route, ETA unknown due to water levels."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Maintain updates, monitor river rise."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Time now 15:23\u202fIST, continue standby."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 21,
+   "band": "auto",
+   "ms": 2008.6,
+   "error": "openai/gpt-oss-120b used numbers not in current state - rejected",
+   "attempts": 1,
+   "parsed": true,
+   "accepted": false,
+   "typed_ok": false,
+   "n_numbers": 8,
+   "unmatched": [
+    "15"
+   ],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability 96.4%, rain 105.8 mm, Yamuna river level 200 m, barrage stage 203.06 m, initiate rescue ops now."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy, dispatch ambulance to Yamuna Pushta and Geeta Colony immediately."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Also dispatch NDRF disaster teams to both sites now."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Units en route, ETA 00:15 IST, will update as they move."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Time now 00:05 IST, maintain monitoring and keep channel open."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 22,
+   "band": "auto",
+   "ms": 1408.9,
+   "error": "openai/gpt-oss-120b used numbers not in current state - rejected",
+   "attempts": 1,
+   "parsed": true,
+   "accepted": false,
+   "typed_ok": false,
+   "n_numbers": 5,
+   "unmatched": [
+    "5"
+   ],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability 66.9%, rain 233.4 mm, Yamuna river level 201.69 m, barrage stage 199.85 m, situation critical."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy, dispatch ambulance and NDRF to Yamuna Pushta and Geeta Colony now."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Teams en route, ETA 5 minutes, will commence rescue at both locations."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Maintain updates, monitor river levels, standby for further instructions."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 23,
+   "band": "auto",
+   "ms": 1597.4,
+   "error": "openai/gpt-oss-120b used numbers not in current state - rejected",
+   "attempts": 1,
+   "parsed": true,
+   "accepted": false,
+   "typed_ok": false,
+   "n_numbers": 7,
+   "unmatched": [
+    "5"
+   ],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 87.1% with river at 205.4\u202fm and barrage at 200.08\u202fm, rain measured 15.9\u202fmm, immediate action required in Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, dispatching ambulance and NDRF teams now to both locations, ETA 5 minutes."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Ensure rescue units have flood\u2011water gear, water level still rising, time now 21:48 IST."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Roger, units en route, will report status as soon as on scene."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Maintain radio contact, update me on any changes in river level or additional rain."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 24,
+   "band": "auto",
+   "ms": 1412.3,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 6,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Attention all units, flood probability at 80.6%, rain recorded 81.8 mm, Yamuna river level 207.97 m, barrage stage 202.82 m; situation critical in Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Ambulance, proceed immediately to Yamuna Pushta and Geeta Colony for medical evacuation, time now 22:46 IST."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Disaster and NDRF teams, move to the same zones now for rescue operations, coordinate with ambulance."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "All units, maintain continuous updates; water levels rising, prioritize life safety."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy all, standby for further instructions, ensure communication lines open."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 25,
+   "band": "auto",
+   "ms": 1474.4,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 6,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 66.3%, rain 120.9\u202fmm, Yamuna river 205.89\u202fm and barrage 201.03\u202fm \u2013 situation critical."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, time 19:56\u202fIST. Dispatch ambulance and NDRF teams to Yamuna Pushta and Geeta Colony immediately."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Ambulance en route to Yamuna Pushta, NDRF heading to Geeta Colony now."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Acknowledged. Maintain updates every five minutes, confirm safe zones as they are cleared."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Will do. Current status unknown beyond reported figures, will report any changes."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 26,
+   "band": "auto",
+   "ms": 1579.5,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 6,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 90.9%, rain accumulation 107.4 mm, Yamuna river at 206.65 meters, barrage stage 203.1 meters, immediate action required in Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, dispatch ambulance and disaster/NDRF units to Yamuna Pushta now, priority one."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Medical unit, standby at Geeta Colony, prepare for flood casualties."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Time check: 04:50 IST, situation worsening, maintain continuous updates."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "All units, maintain radio silence except for critical updates, proceed with rescue operations."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 27,
+   "band": "auto",
+   "ms": 1538.1,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 6,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Probability at 79.3% and rain 129.4\u202fmm, Yamuna level 206.86\u202fm, barrage 201.63\u202fm \u2013 flood confirmed in Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, time 04:33\u202fIST. Dispatching ambulance and NDRF teams to both locations immediately."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Urgent rescue needed at Yamuna Pushta, water ingress rising fast."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Ambulance en route to Yamuna Pushta, NDRF heading to Geeta Colony now."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Maintain updates, any change in river level or rain intensity report immediately."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 28,
+   "band": "auto",
+   "ms": 1735.2,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 6,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 96.9%, rain 239.9 mm, Yamuna river level 207.09 m, barrage stage 203.52 m, time 02:03 IST, zones Yamuna Pushta and Geeta Colony are under critical flood."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, initiate immediate rescue. Dispatch ambulance to Yamuna Pushta and Geeta Colony now."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Also dispatch NDRF disaster team to both locations for evacuation and rescue operations."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "All units, proceed to Yamuna Pushta and Geeta Colony without delay, water levels rising fast."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 29,
+   "band": "auto",
+   "ms": 2078.3,
+   "error": "openai/gpt-oss-120b used numbers not in current state - rejected",
+   "attempts": 1,
+   "parsed": true,
+   "accepted": false,
+   "typed_ok": false,
+   "n_numbers": 7,
+   "unmatched": [
+    "10"
+   ],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability 66.9%, rain 234\u202fmm, Yamuna river level 204.05\u202fm, barrage stage 203.78\u202fm \u2013 immediate rescue needed at Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, dispatch ambulance and NDRF teams to Yamuna Pushta and Geeta Colony now."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Time 00:32\u202fIST, water rising fast, prioritize evacuation of residents."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Units en route, ETA approx 10\u202fmin, will update status shortly."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 30,
+   "band": "admin",
+   "ms": 1582.5,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 9,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Current flood probability is 50.1% with rain at 115.3\u202fmm, river level 204.86\u202fm and barrage stage 204.63\u202fm."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Acknowledged, but our system cannot auto\u2011predict beyond 50% confidence, so we need manual assessment."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Understood, the zone Yamuna Pushta / Geeta Colony remains at risk, no full rescue deployed yet."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Time now is 15:29\u202fIST; please continue monitoring and advise if conditions change."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Will do, Random Forest model shows 63.7% risk, XGBoost 50.1%; we'll keep you updated."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 31,
+   "band": "auto",
+   "ms": 1672.4,
+   "error": "openai/gpt-oss-120b used numbers not in current state - rejected",
+   "attempts": 1,
+   "parsed": true,
+   "accepted": false,
+   "typed_ok": false,
+   "n_numbers": 8,
+   "unmatched": [
+    "5"
+   ],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood risk at 63.6% with river level 202.86\u202fm and barrage stage 203.19\u202fm; rain recorded 42.7\u202fmm, immediate threat to Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, dispatch ambulance units and NDRF teams to both Yamuna Pushta and Geeta Colony now, priority rescue."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Ambulance and NDRF en route, ETA 5\u202fmin, will report once on scene."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Acknowledged, maintain updates; time now 13:39\u202fIST, keep monitoring river and barrage levels."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Will do, flood probability remains 63.6%, standing by for further instructions."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 32,
+   "band": "auto",
+   "ms": 1901.3,
+   "error": "openai/gpt-oss-120b used numbers not in current state - rejected",
+   "attempts": 1,
+   "parsed": true,
+   "accepted": false,
+   "typed_ok": false,
+   "n_numbers": 7,
+   "unmatched": [
+    "15"
+   ],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 77.2%, rain 171.2\u202fmm, Yamuna river level 200.29\u202fm, barrage stage 203.53\u202fm. Immediate rescue needed at Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy, dispatching ambulance and NDRF teams to both locations now. ETA 15 minutes."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Water ingress observed, evacuation routes compromised. Prioritize medical triage at Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Roger, ambulance en route to Geeta Colony, NDRF to Yamuna Pushta. Current time 17:25 IST."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 33,
+   "band": "watch",
+   "ms": 1253.7,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 6,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Flood risk at 41.5%, rain measured 47.5 mm, current river level 206.42 m, barrage stage 200.32 m."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Acknowledged, probability stays in watch\u2011only band, no rescue dispatch."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Time now 14:55 IST, monitoring zone Yamuna Pushta / Geeta Colony."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Understood, maintain observation, report any change in river or rain readings."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 34,
+   "band": "auto",
+   "ms": 1633.4,
+   "error": "openai/gpt-oss-120b used numbers not in current state - rejected",
+   "attempts": 1,
+   "parsed": true,
+   "accepted": false,
+   "typed_ok": false,
+   "n_numbers": 6,
+   "unmatched": [
+    "15"
+   ],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 82.4%, rain accumulation 179.2\u202fmm, Yamuna river at 204.5\u202fm and barrage stage same, situation critical in Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, dispatch ambulance units to both Yamuna Pushta and Geeta Colony immediately."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Also alert disaster/NDRF teams to move in for rescue ops at the two locations now."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Units en route, ETA about 15\u202fminutes, standing by for further updates."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Current time 04:41\u202fIST, maintain radio watch and report any changes in river level."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 35,
+   "band": "auto",
+   "ms": 1441.2,
+   "error": "openai/gpt-oss-120b used numbers not in current state - rejected",
+   "attempts": 1,
+   "parsed": true,
+   "accepted": false,
+   "typed_ok": false,
+   "n_numbers": 7,
+   "unmatched": [
+    "10"
+   ],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 68.6% with rain at 131.6 mm, Yamuna river at 207.18 m and barrage stage 201.73 m, situation critical in Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, initiate immediate rescue, dispatch ambulance and NDRF teams to both Yamuna Pushta and Geeta Colony now."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Affirmative, units en route, ETA 10 minutes, will report status at 05:42 IST."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Maintain radio contact, update any change in water levels or casualties."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Will do, monitoring continues, standby for further instructions."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 36,
+   "band": "auto",
+   "ms": 1858.1,
+   "error": "openai/gpt-oss-120b used numbers not in current state - rejected",
+   "attempts": 1,
+   "parsed": true,
+   "accepted": false,
+   "typed_ok": false,
+   "n_numbers": 7,
+   "unmatched": [
+    "5"
+   ],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Risk at 95.9%, river level 202.59 m, barrage stage 201.41 m, rain 109.2 mm, flooding confirmed in Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy, dispatch ambulance and NDRF to both locations immediately."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Teams, move now, water rising fast, priority rescue at Geeta Colony first."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Acknowledged, NDRF en route to Geeta Colony, ambulance to Yamuna Pushta, ETA 5 minutes."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Time now 02:24 IST, maintain continuous updates, report any changes."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 37,
+   "band": "auto",
+   "ms": 1783.7,
+   "error": "openai/gpt-oss-120b used numbers not in current state - rejected",
+   "attempts": 1,
+   "parsed": true,
+   "accepted": false,
+   "typed_ok": false,
+   "n_numbers": 5,
+   "unmatched": [
+    "10"
+   ],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability 91.7%, rain 69.5 mm, Yamuna river level 203.98 m, barrage stage 201.28 m, water overtopping\u2014initiate rescue now."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy, dispatch ambulance and NDRF to Yamuna Pushta and Geeta Colony immediately."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Teams, prioritize evacuation from low\u2011lying zones in Yamuna Pushta, water rising fast."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Acknowledged, en route, ETA 10 minutes, will report status."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 38,
+   "band": "calm",
+   "ms": 1224.9,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 6,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Current flood probability is 26.3%, rain has accumulated to 123.1\u202fmm, and the Yamuna river is at 204.46\u202fm."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Understood, the barrage stage is 200.92\u202fm, well below critical levels."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "At this level we advise the public not to worry, just stay alert."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "We'll continue monitoring and will issue updates if the probability rises."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Please remind residents to call the hotline if they notice any sudden change after 16:50\u202fIST."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 39,
+   "band": "calm",
+   "ms": 1365.2,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 9,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Current flood probability is 27.7%, rain has reached 28.2\u202fmm, and Yamuna river level stands at 208.11\u202fm."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Understood, the barrage stage is 205.15\u202fm; we are below the 40% concern threshold, so no immediate action needed."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Please reassure the public in Yamuna Pushta and Geeta Colony not to worry, but advise them to call if the probability rises."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Will do. Time now is 07:00\u202fIST, and we will continue monitoring the Random Forest and XGBoost forecasts at 27.4% and 27.7% respectively."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 40,
+   "band": "auto",
+   "ms": 1655.3,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 6,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 98.1%, rain accumulation 163.2\u202fmm, Yamuna river at 207.09\u202fm and barrage stage 204.92\u202fm; situation critical in Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, initiate immediate rescue. Dispatch ambulance and NDRF teams to both Yamuna Pushta and Geeta Colony now."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "All units, time now 17:50\u202fIST, proceed to the zones; water levels rising fast."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Acknowledged, rescue teams en route, will report status every five minutes."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Maintain radio contact, any change in river or barrage readings will be relayed immediately."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 41,
+   "band": "calm",
+   "ms": 1508.6,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 9,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Current flood probability is 33.7%, rain measured at 49.7 mm, and Yamuna river level stands at 201.33 m."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Understood, the barrage stage is 202.93 m, still above the river level, so we are safe for now."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Yes, with probability below 40% there is no immediate cause for alarm; please monitor and call if it rises."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Will do. Time now is 11:54 IST, we will keep the zone Yamuna Pushta / Geeta Colony under observation."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Good. The Random Forest model shows 45.2% and XGBoost 33.7%, both indicating no critical risk at this moment."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 42,
+   "band": "auto",
+   "ms": 1414.1,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 6,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 81.5%, rain accumulation 145.2\u202fmm, Yamuna river now 206.09\u202fm and barrage at 202.89\u202fm; immediate rescue required at Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, dispatching ambulance and NDRF teams now to both locations, ETA within the next hour."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Current time 03:39\u202fIST, maintain continuous updates on water levels and any further rise."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Roger, will monitor and report any change; teams are en route and will secure evacuation routes."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Affirmative, keep channel open for status; safety of residents is priority."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 43,
+   "band": "auto",
+   "ms": 1756.9,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 4,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 81.0%, rain 144.2 mm, Yamuna river level 204.78 m, barrage stage 203.69 m, situation critical in Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy, dispatch ambulance and NDRF to both Yamuna Pushta and Geeta Colony now."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Teams, move immediately, water rising fast, coordinate rescue operations."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Roger, units en route, maintain radio contact."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 44,
+   "band": "admin",
+   "ms": 1405.4,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": false,
+   "n_numbers": 11,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Current flood probability is 58.6% with rain at 37.5\u202fmm, river level 201.46\u202fm and barrage stage 203.79\u202fm."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "At 03:27\u202fIST I cannot auto\u2011predict beyond the 50\u201160% range, and full rescue deployment is not yet authorized."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Given the 58.6% probability, we should issue a warning for Yamuna Pushta and Geeta Colony zones now."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Acknowledged, I will broadcast an advisory, but confirm that the Random Forest model shows 38.1% while XGBoost aligns with 58.6%."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Proceed with the XGBoost\u2011based alert; the situation remains critical until water levels recede."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 45,
+   "band": "auto",
+   "ms": 1617.9,
+   "error": "openai/gpt-oss-120b used numbers not in current state - rejected",
+   "attempts": 1,
+   "parsed": true,
+   "accepted": false,
+   "typed_ok": false,
+   "n_numbers": 7,
+   "unmatched": [
+    "10"
+   ],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability 97.8%, rain 191 mm, Yamuna river at 200.9 m and barrage stage 201.19 m\u2014flood confirmed in Yamuna Pushta and Geeta Colony as of 20:40 IST."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, dispatch ambulance and NDRF teams to both Yamuna Pushta and Geeta Colony immediately."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Ambulance and disaster units en route, ETA 10 minutes."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Maintain updates, monitor river and barrage levels, keep the zone under watch."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Will do, standing by with continuous readings."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 46,
+   "band": "calm",
+   "ms": 1248.4,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 8,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Current flood probability is 39.6%, rain accumulation 149.1 mm, Yamuna river level at 202.67 m and barrage stage 200.83 m."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Under 40% we are not in immediate danger, please keep monitoring and advise the public not to worry."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Will do, I will issue a reassurance bulletin and remind residents to call if the probability rises above 40%."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Acknowledged, time now is 09:59 IST, continue observation and update if any change occurs."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 47,
+   "band": "auto",
+   "ms": 1549.5,
+   "error": "openai/gpt-oss-120b used numbers not in current state - rejected",
+   "attempts": 1,
+   "parsed": true,
+   "accepted": false,
+   "typed_ok": false,
+   "n_numbers": 8,
+   "unmatched": [
+    "10",
+    "5"
+   ],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 61.3%, Yamuna river level 208.21m, barrage stage 199.4m, rain 20.4mm; situation critical in Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy, initiating ambulance dispatch to both zones now."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Also dispatch NDRF team for rescue operations at Yamuna Pushta and Geeta Colony immediately."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Ambulance en route, ETA 10 minutes, NDRF team mobilizing."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Time now 08:26 IST, maintain updates every 5 minutes."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 48,
+   "band": "auto",
+   "ms": 1441.1,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 6,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability 92.3%, rain 62.6\u202fmm, Yamuna river level 205.83\u202fm, barrage stage 203.04\u202fm, time 03:06\u202fIST, situation critical."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy, dispatch ambulance and NDRF to Yamuna Pushta and Geeta Colony now."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Affirmative, teams en route, water levels rising."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Maintain updates, report any change in river level."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 49,
+   "band": "auto",
+   "ms": 1426.6,
+   "error": "openai/gpt-oss-120b used numbers not in current state - rejected",
+   "attempts": 1,
+   "parsed": true,
+   "accepted": false,
+   "typed_ok": false,
+   "n_numbers": 7,
+   "unmatched": [
+    "5"
+   ],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 96.2%, rain 234.3 mm, Yamuna river at 203.88 m and barrage stage 203.38 m\u2014flood confirmed in Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, dispatch ambulance and NDRF teams to both Yamuna Pushta and Geeta Colony immediately."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Ambulance en route, NDRF units ETA 5 minutes, proceeding to rescue now."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Roger, maintain updates, time now 10:49 IST, keep safety of all personnel top priority."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 50,
+   "band": "auto",
+   "ms": 1531.1,
+   "error": "openai/gpt-oss-120b used numbers not in current state - rejected",
+   "attempts": 1,
+   "parsed": true,
+   "accepted": false,
+   "typed_ok": false,
+   "n_numbers": 8,
+   "unmatched": [
+    "5"
+   ],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 82.6%, rain 180\u202fmm, Yamuna river at 205.17\u202fm and barrage at 203.16\u202fm \u2013 immediate rescue needed at Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy, dispatch ambulance and NDRF teams to both locations now, ETA 5 minutes."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Teams, prioritize evacuation of low\u2011lying areas, water rising fast."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "All units, maintain radio contact, report status every 2 minutes, time now 12:20\u202fIST."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 51,
+   "band": "auto",
+   "ms": 1295.4,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 6,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 68.8%, rain 109.4 mm, Yamuna river at 207.32 m and barrage stage 203.77 m\u2014immediate flood confirmed in Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, dispatch ambulance units to Yamuna Pushta and Geeta Colony now, prioritize injured."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Disaster response, move teams to both zones immediately for rescue operations."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Current time 21:23 IST, maintain continuous monitoring, report any changes."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 52,
+   "band": "auto",
+   "ms": 1257.7,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 8,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 96.8%, rain 231.3\u202fmm, Yamuna river at 203.03\u202fm, barrage stage 204.15\u202fm, time 09:52\u202fIST."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that. Dispatch ambulance and NDRF to Yamuna Pushta and Geeta Colony immediately."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Ambulance and disaster teams en route to both locations, ETA pending."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Maintain updates every five minutes, over."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Will do. Current forest model confidence 75.4%, XGBoost 96.8% for flood spread."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 53,
+   "band": "auto",
+   "ms": 1457.3,
+   "error": "openai/gpt-oss-120b used numbers not in current state - rejected",
+   "attempts": 1,
+   "parsed": true,
+   "accepted": false,
+   "typed_ok": false,
+   "n_numbers": 7,
+   "unmatched": [
+    "15"
+   ],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 61.6%, Yamuna river at 202.81\u202fm and barrage at 204.09\u202fm, rain 112\u202fmm\u2014immediate rescue required at Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy, dispatching ambulance and NDRF teams now, ETA 15\u202fmin, stand by for updates."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Current time 09:44\u202fIST, maintain flood monitoring, report any rise in river level."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Roger, will relay real\u2011time data, ensure safety per protocol."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "All units, prioritize evacuation of vulnerable zones in Yamuna Pushta and Geeta Colony, coordinate with local authorities."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 54,
+   "band": "auto",
+   "ms": 1277.3,
+   "error": "openai/gpt-oss-120b used numbers not in current state - rejected",
+   "attempts": 1,
+   "parsed": true,
+   "accepted": false,
+   "typed_ok": false,
+   "n_numbers": 10,
+   "unmatched": [
+    "10",
+    "12"
+   ],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 86.1%, rain 193.4 mm, Yamuna river level 203.54 m, barrage stage 203.1 m, proceeding to flood now."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, initiate rescue. Dispatch ambulance and disaster/NDRF teams to Yamuna Pushta and Geeta Colony immediately."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Ambulance en route to Yamuna Pushta, ETA 10 minutes; NDRF team heading to Geeta Colony, ETA 12 minutes."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Roger, maintain continuous updates. Time now 09:49 IST, keep monitoring river and barrage levels."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Will do. Random Forest model 69.3%, XGBoost 86.1% confirm high risk. Await further instructions."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 55,
+   "band": "auto",
+   "ms": 1507.1,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 6,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 87.3% with river level 200.48\u202fm and barrage stage 205.98\u202fm, rain at 10\u202fmm; we have confirmed inundation in Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, initiate rescue now. Dispatch ambulance units to both Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Also send Disaster/NDRF teams to the same zones for immediate evacuation."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Roger, units en route. Current time 06:35\u202fIST, standing by for status updates."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Maintain radio contact, report any change in water levels or casualties as soon as observed."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 56,
+   "band": "watch",
+   "ms": 1617.8,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 8,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Current time 03:02 IST, flood probability is 45.6% for Yamuna Pushta and Geeta Colony, maintain watch only."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Rainfall recorded at 44.7 mm, river level 201.07 m, barrage stage 201.48 m, no rescue deployment required."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Confirm all field units continue monitoring and report any change in the 45.6% risk level."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Affirmative, units on standby, will update if probability shifts from 45.6%."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy, maintain communication on the Yamuna Pushta / Geeta Colony zone."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 57,
+   "band": "auto",
+   "ms": 1263.7,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 6,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 97.6% with 163.7 mm rain, Yamuna level 204.91 m and barrage at 201.49 m, situation critical in Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, dispatch ambulance and NDRF teams to both Yamuna Pushta and Geeta Colony now, time 00:27 IST."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "All units, proceed to rescue immediately, water rising fast, maintain safety protocols."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Acknowledged, teams en route, will report back on status."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 58,
+   "band": "auto",
+   "ms": 1657.1,
+   "error": "openai/gpt-oss-120b used numbers not in current state - rejected",
+   "attempts": 1,
+   "parsed": true,
+   "accepted": false,
+   "typed_ok": false,
+   "n_numbers": 7,
+   "unmatched": [
+    "10"
+   ],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 91.7%, rain accumulation 99.1 mm, Yamuna river at 201.87 meters and barrage stage 199.88 meters; immediate rescue required in Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, dispatching ambulance units and NDRF teams to both locations now, ETA 10 minutes."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "All routes are waterlogged, advise teams to use high\u2011ground access points and avoid the main road near the barrage."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Acknowledged, will route via the secondary road; teams to report status every five minutes."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Time now 13:42 IST, keep me posted on casualties and any rise in river level."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 59,
+   "band": "auto",
+   "ms": 1537.2,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 6,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 90.1% with 138\u202fmm rain, Yamuna river at 201.26\u202fm and barrage stage 199.16\u202fm, situation critical in Yamuna Pushta and Geeta Colony as of 08:50 IST."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, dispatch ambulance units and NDRF teams to both Yamuna Pushta and Geeta Colony immediately for rescue ops."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Ambulance and NDRF en route, will report arrival times shortly."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Maintain radio contact, update on any change in river level or additional rainfall."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Will do, monitoring continues, no further data beyond current figures."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 60,
+   "band": "auto",
+   "ms": 1523.5,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 6,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 83.7%, rain measured 72.8 mm, Yamuna river now 208.15 meters, barrage stage 199.97 meters \u2013 situation critical in Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, dispatch ambulance units to both Yamuna Pushta and Geeta Colony immediately."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Also alert disaster and NDRF teams to move in for rescue operations at the named locations now."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "All units, proceed to zone Yamuna Pushta / Geeta Colony, time now 13:16 IST, coordinate with local command."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Roger, will maintain updates on water levels and any changes."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 61,
+   "band": "auto",
+   "ms": 1594.6,
+   "error": "openai/gpt-oss-120b used numbers not in current state - rejected",
+   "attempts": 1,
+   "parsed": true,
+   "accepted": false,
+   "typed_ok": false,
+   "n_numbers": 7,
+   "unmatched": [
+    "10"
+   ],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability 60.9%, rain 158.6 mm, Yamuna level 200.32 m, barrage stage 205.06 m, initiating rescue."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy, dispatch ambulance to Yamuna Pushta and Geeta Colony now."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Also send NDRF teams to both sites, water rising fast."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Acknowledged, units en route, ETA 10 mins."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Time now 05:35 IST, maintain continuous updates."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 62,
+   "band": "auto",
+   "ms": 1718.1,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 6,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability 97.7%, river level 204.42 m, barrage stage 204.2 m, rain 206.8 mm, time 10:40 IST \u2013 initiate rescue now at Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy, dispatch ambulance and NDRF teams to both locations immediately."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Ensure teams have boats, water level rising, prioritize stranded residents."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Acknowledged, units en route, will report ETA."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Maintain radio contact, update on any changes, over."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 63,
+   "band": "admin",
+   "ms": 1188.7,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 8,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Current flood probability is 54.4% with rain at 18.8 mm, river level 204\u202fm and barrage at 205.79\u202fm."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Understood, the models show Random Forest at 57.8% and XGBoost at 54.4%, but we still cannot auto\u2011predict full rescue needs."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Given the 20:15\u202fIST timestamp, we should issue a warning for Yamuna Pushta and Geeta Colony zones now."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Agreed, I will broadcast the alert; the situation remains uncertain but we must act before water rises further."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 64,
+   "band": "auto",
+   "ms": 1447.4,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 7,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 96.2%, rain accumulation 171.4\u202fmm, Yamuna river at 207.41\u202fm and barrage stage 203.95\u202fm\u2014flood confirmed in Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, dispatch ambulance units to both Yamuna Pushta and Geeta Colony immediately."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Also alert NDRF, disaster response teams to move in now for rescue operations at the two sites."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "All units, proceed, time now 23:57\u202fIST, coordinate with local command, prioritize stranded residents."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Roger, will maintain updates, current model confidence 96.2% from XGBoost, proceeding with rescue."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 65,
+   "band": "auto",
+   "ms": 1525.6,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 6,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 87.2%, rain accumulation 93.2 mm, Yamuna river now 202.34\u202fm and barrage at 205.03\u202fm, immediate rescue required in Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy, dispatching ambulance units and NDRF teams to both Yamuna Pushta and Geeta Colony now."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Teams, be advised the zone is Yamuna Pushta / Geeta Colony, time stamp 17:53\u202fIST, proceed with evacuation and rescue protocols."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Acknowledged, rescue assets en route, will report status in five minutes."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 66,
+   "band": "auto",
+   "ms": 1706.9,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 7,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability 90.7%, rain 96.8 mm, Yamuna river level 204.66 m, barrage stage 202.32 m; situation above 60%, flood occurred."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy, dispatching ambulance and NDRF team to Yamuna Pushta and Geeta Colony now."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Time now 20:29 IST, prioritize evacuation of all low\u2011lying zones in Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Ambulance en route, NDRF mobilizing; ETA unknown due to conditions."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Maintain radio silence on this channel except for critical updates, over."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 67,
+   "band": "auto",
+   "ms": 1541.4,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": false,
+   "n_numbers": 7,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood risk at 98.5% confirmed, rain accumulation 198.2 mm, Yamuna river at 205.34 m and barrage stage 200.08 m\u2014flood has breached in Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy, flood confirmed. Dispatch ambulance and NDRF teams to both Yamuna Pushta and Geeta Colony immediately."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Teams en route, ETA 10 minutes. Water rising fast, maintain rescue priority."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Roger that, stand by for further instructions. Current time 06:10 IST, maintain situational updates."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 68,
+   "band": "auto",
+   "ms": 1804.2,
+   "error": "openai/gpt-oss-120b used numbers not in current state - rejected",
+   "attempts": 1,
+   "parsed": true,
+   "accepted": false,
+   "typed_ok": false,
+   "n_numbers": 9,
+   "unmatched": [
+    "5",
+    "50"
+   ],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 97.7%, rain 224 mm, Yamuna river level 203.47 m, barrage stage 199.26 m, situation critical."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, initiate immediate rescue. Dispatch ambulance to Yamuna Pushta and Geeta Colony now."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Also dispatch NDRF team to both locations for water rescue."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Ambulance en route, ETA 5 minutes, NDRF team mobilizing, will be on site by 16:50 IST."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Time now 16:44 IST, maintain continuous updates."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 69,
+   "band": "watch",
+   "ms": 1497.2,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 6,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Current flood probability is 45.3 percent with rain at 47.3 mm, river level 206.21 meters, barrage stage 199.97 meters as of 11:34 IST."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Acknowledged, zone Yamuna Pushta / Geeta Colony is under watch only, no rescue deployment at this level."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Monitoring will continue; any rise beyond current readings will trigger escalation."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, maintain situational updates and keep all units on standby."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 70,
+   "band": "auto",
+   "ms": 1392.7,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 6,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Attention all units, flood probability now at 84.3%, rain total 186.2 mm, Yamuna river level 207.22 meters, barrage stage 203.87 meters."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, dispatch ambulance and disaster/NDRF teams to Yamuna Pushta and Geeta Colony immediately."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Proceed to Yamuna Pushta first, water ingress severe, then Geeta Colony, time now 17:13 IST."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "All units, maintain communication, report status every five minutes, over."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 71,
+   "band": "auto",
+   "ms": 1592.1,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 6,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 88.0%, river level 204.58\u202fm and barrage at 205.8\u202fm, rain gauge reading 80.1\u202fmm \u2013 immediate rescue needed at Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, dispatching ambulance and NDRF units now to both Yamuna Pushta and Geeta Colony, ETA pending."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Time stamp 12:24\u202fIST, confirm all teams have flood\u2011risk gear and water\u2011rescue equipment."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "All units confirmed, proceeding with rescue ops, will update status as soon as contact made."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Maintain radio check every five minutes, report any changes in river or barrage levels."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 72,
+   "band": "auto",
+   "ms": 1344.6,
+   "error": "openai/gpt-oss-120b used numbers not in current state - rejected",
+   "attempts": 1,
+   "parsed": true,
+   "accepted": false,
+   "typed_ok": false,
+   "n_numbers": 7,
+   "unmatched": [
+    "10"
+   ],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 96.3%, rain accumulation 204\u202fmm, Yamuna river level now 200.73\u202fm, barrage stage 204.13\u202fm; immediate rescue required at Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy, dispatching ambulance and NDRF teams to both locations now, ETA 10 minutes."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Affirmative, maintain continuous monitoring, report any rise above current levels."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Will do, current time 16:06\u202fIST, will update as soon as teams are on scene."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Proceed, keep channel open for status checks, over."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 73,
+   "band": "auto",
+   "ms": 1337.3,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 6,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability 81.5%, rain 86.7 mm, Yamuna river level 206.27 m, barrage stage 203.64 m, situation critical at Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy, dispatch ambulance and NDRF to Yamuna Pushta and Geeta Colony now, ETA unknown."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "All units, proceed immediately, water rising fast."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Roger, will report back at 09:02 IST."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 74,
+   "band": "calm",
+   "ms": 1261.6,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 7,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Current flood probability is 35.7%, rain has reached 51.5 mm, and Yamuna river level is 202.43\u202fm."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Understood, the barrage stage is 199.94\u202fm; we are still below the critical threshold."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "At 09:34\u202fIST the situation remains stable, no immediate action required."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Please keep monitoring; if the probability rises above 40% we will initiate alerts."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Will do, residents of Yamuna Pushta and Geeta Colony are advised not to worry for now."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 75,
+   "band": "auto",
+   "ms": 1279.3,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 6,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 70.3%, rain 100.2 mm, Yamuna river at 204.08 m and barrage stage 201.96 m\u2014immediate action required."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy, dispatch ambulance and NDRF teams to Yamuna Pushta and Geeta Colony now, ETA 19:41 IST."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Ambulance en route, NDRF units mobilizing, will report status in five minutes."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Acknowledged, maintain updates, prioritize evacuations at both zones."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Will do, current conditions stable for now, continue monitoring."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 76,
+   "band": "auto",
+   "ms": 1014.6,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": false,
+   "n_numbers": 6,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 96.3%, rain tally 204 mm, Yamuna river now 200.25\u202fm and barrage stage 201.2\u202fm, immediate rescue required at Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy, dispatching ambulance units and NDRF teams to both Yamuna Pushta and Geeta Colony now."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Time stamp 23:33\u202fIST, ensure evacuation routes are cleared and coordinate with local command."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Acknowledged, teams en route, will report status in ten minutes."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Maintain continuous updates, any rise above current levels will trigger further action."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 77,
+   "band": "admin",
+   "ms": 1255.6,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 6,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Current flood probability stands at 52.9% with rain accumulation of 40.5\u202fmm."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Understood, Yamuna river level is 205.68\u202fm and the barrage is at 203.93\u202fm."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Given these readings at 03:32\u202fIST, we cannot auto\u2011predict a full rescue yet."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Proceed with heightened monitoring in Yamuna Pushta and Geeta Colony zones."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Will keep the simulation active and update as conditions evolve."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 78,
+   "band": "auto",
+   "ms": 1047.2,
+   "error": "openai/gpt-oss-120b used numbers not in current state - rejected",
+   "attempts": 1,
+   "parsed": true,
+   "accepted": false,
+   "typed_ok": false,
+   "n_numbers": 6,
+   "unmatched": [
+    "30"
+   ],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 98.8%, rain 192.9 mm, Yamuna river at 202.57 m and barrage stage 202.72 m \u2013 immediate action required."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, dispatching ambulance and NDRF teams to Yamuna Pushta and Geeta Colony now."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Both zones are under severe risk, coordinate rescue at both places concurrently."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Units en route, ETA within minutes, will report status at 02:30 IST."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 79,
+   "band": "auto",
+   "ms": 1141.7,
+   "error": "openai/gpt-oss-120b used numbers not in current state - rejected",
+   "attempts": 1,
+   "parsed": true,
+   "accepted": false,
+   "typed_ok": false,
+   "n_numbers": 7,
+   "unmatched": [
+    "15"
+   ],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 87.5%, rain 151.9\u202fmm, Yamuna river 208.37\u202fm and barrage 202.39\u202fm; situation critical in Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, time 04:06\u202fIST. Initiate immediate rescue, dispatch ambulance and NDRF teams to both locations now."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Ambulance en route to Geeta Colony, NDRF heading to Yamuna Pushta, ETA 15 minutes."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Acknowledged, maintain continuous updates on water levels and any further rise."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Water levels steady for now, will alert if any change. Over."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 80,
+   "band": "auto",
+   "ms": 1075.3,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 6,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 76.7% with 219.1\u202fmm rain, Yamuna river at 205.24\u202fm and barrage stage 203.53\u202fm. Immediate action required."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, dispatching ambulance units to Yamuna Pushta and Geeta Colony now."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Also alerting disaster/NDRF teams to move in for rescue at both locations."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Ambulance en route, NDRF mobilizing. ETA unknown, will update as soon as possible."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Time now 12:16\u202fIST, continue monitoring river and barrage levels, report any changes."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 81,
+   "band": "auto",
+   "ms": 1405.1,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 6,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 80.5%, rain measured 90.2 mm, Yamuna river level 204.41 m and barrage stage 204.8 m; situation critical in Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, initiating rescue. Dispatch ambulance and NDRF teams to both Yamuna Pushta and Geeta Colony now."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "All units, proceed immediately; time now 03:35 IST, water levels rising fast."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Roger, teams en route, will report status as soon as on site."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 82,
+   "band": "auto",
+   "ms": 1332.0,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 4,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability 98.3%, rain 172.5 mm, Yamuna river level 200.7 m, barrage stage 204.45 m, situation critical."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy, dispatch ambulance and NDRF to Yamuna Pushta and Geeta Colony now."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Water ingress confirmed at both places, rescue needed immediately."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Ambulance en route, NDRF teams mobilizing, ETA pending."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 83,
+   "band": "calm",
+   "ms": 1339.5,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 7,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "At 09:16 IST the flood probability is 32.6%, rain measured 26.5 mm, Yamuna river level 206.4 m and barrage stage 200.58 m."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "With probability below 40% we are stable; no immediate danger, stay calm."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Confirm the zone status for Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Both Yamuna Pushta and Geeta Colony are within safe limits; monitor but no action needed now."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "If the probability rises, alert us immediately."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 84,
+   "band": "auto",
+   "ms": 1447.2,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": false,
+   "n_numbers": 7,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 82.0% with rain 84.6 mm, Yamuna river now 207.63\u202fm and barrage stage 203.6\u202fm, immediate rescue required at Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, dispatching ambulance units and NDRF disaster team to both locations now, ETA 10 minutes."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Time is 10:58\u202fIST, water rising fast, prioritize evacuations in Yamuna Pushta first."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Understood, NDRF will start at Yamuna Pushta, ambulance to Geeta Colony, will report back on status."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Maintain radio contact, report any change in river level or new hotspots."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 85,
+   "band": "auto",
+   "ms": 1462.0,
+   "error": "openai/gpt-oss-120b used numbers not in current state - rejected",
+   "attempts": 1,
+   "parsed": true,
+   "accepted": false,
+   "typed_ok": false,
+   "n_numbers": 7,
+   "unmatched": [
+    "10"
+   ],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "At 05:12 IST flood probability is 68.7%, rain has hit 125.8\u202fmm, Yamuna river is at 206.85\u202fm and barrage stage 200.54\u202fm \u2013 flood confirmed in Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, dispatch ambulance and NDRF teams to Yamuna Pushta and Geeta Colony immediately for rescue."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Ambulance and NDRF units are en route now, ETA under 10 minutes."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "All units, proceed to the named zones now, prioritize evacuation and medical aid."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Understood, rescue operations underway, will report status as soon as possible."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 86,
+   "band": "auto",
+   "ms": 1292.8,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 6,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Probability at 97.8%, rain 173.8 mm, Yamuna river at 207.07 m and barrage stage 203.13 m\u2014flood confirmed in Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Dispatch ambulance to Yamuna Pushta immediately, casualties expected."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Disaster/NDRF, move to Geeta Colony now for rescue operations."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Time now 11:26 IST, maintain flood watch, report any changes."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Proceed with rescue, keep channel clear for updates."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 87,
+   "band": "auto",
+   "ms": 1494.0,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 7,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability 64.1%, rain 57.2 mm, Yamuna river level 205.58 m, barrage stage 199.89 m, over 60% now."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy, dispatch ambulance and NDRF to Yamuna Pushta and Geeta Colony immediately."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Both zones Yamuna Pushta / Geeta Colony are under threat, need rescue now."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Units en route, ETA unknown, will update."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Time now 23:36 IST, keep me posted."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 88,
+   "band": "auto",
+   "ms": 1206.0,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": false,
+   "n_numbers": 7,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 91.1%, rain accumulation 70.6\u202fmm, Yamuna river at 207.15\u202fm and barrage stage 202.11\u202fm \u2013 flood confirmed in Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, dispatch ambulance and NDRF units to both Yamuna Pushta and Geeta Colony immediately."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Rescue teams en route, ETA 10 minutes, standby for further updates."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Roger, maintain continuous monitoring, report any change in river level or rainfall."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Will do, current time 10:17\u202fIST, situation stable for now."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 89,
+   "band": "auto",
+   "ms": 1364.3,
+   "error": "openai/gpt-oss-120b used numbers not in current state - rejected",
+   "attempts": 1,
+   "parsed": true,
+   "accepted": false,
+   "typed_ok": false,
+   "n_numbers": 8,
+   "unmatched": [
+    "15",
+    "5"
+   ],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 66.3%, rain measured 40.6\u202fmm, Yamuna river now 208.26\u202fm and barrage at 202.93\u202fm, time 07:21\u202fIST."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, initiate rescue. Dispatch ambulance and NDRF to Yamuna Pushta and Geeta Colony immediately."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Ambulance en route to Yamuna Pushta, NDRF team moving to Geeta Colony, ETA 15 minutes."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Roger, maintain updates every 5 minutes, monitor any rise in river level."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Will do, current status stable, will report any change."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 90,
+   "band": "admin",
+   "ms": 1428.4,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 8,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Current flood probability stands at 54.8% with rain accumulation of 35.2 mm."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, I cannot auto\u2011predict beyond this, and no full rescue deployment is in place yet."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Yamuna river level is 205.38\u202fm, while the barrage stage is at 201.8\u202fm."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Understood, time now is 18:29\u202fIST; we must keep monitoring the models\u2014Random Forest at 30.3% and XGBoost at 54.8%."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Affirmative, zones Yamuna Pushta and Geeta Colony remain at risk; advise caution and standby for further orders."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 91,
+   "band": "auto",
+   "ms": 1229.2,
+   "error": "openai/gpt-oss-120b used numbers not in current state - rejected",
+   "attempts": 1,
+   "parsed": true,
+   "accepted": false,
+   "typed_ok": false,
+   "n_numbers": 8,
+   "unmatched": [
+    "5",
+    "16"
+   ],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 83.9%, rain total 139.7\u202fmm, Yamuna river now 202.86\u202fm and barrage stage 203.75\u202fm, situation critical in Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, dispatching ambulance and NDRF teams to both Yamuna Pushta and Geeta Colony immediately, ETA 5\u202fmin."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "All units, maintain radio silence on civilian channels, use channel 16 for updates, time now 21:26\u202fIST."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Acknowledged, will keep you posted on rescue progress, standby for further intel."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 92,
+   "band": "auto",
+   "ms": 1396.4,
+   "error": "openai/gpt-oss-120b used numbers not in current state - rejected",
+   "attempts": 1,
+   "parsed": true,
+   "accepted": false,
+   "typed_ok": false,
+   "n_numbers": 7,
+   "unmatched": [
+    "15"
+   ],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 93.2%, rain accumulation 231.1 mm, Yamuna river now 205.51\u202fm and barrage stage 199.42\u202fm, time 13:22 IST."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, situation critical in Yamuna Pushta and Geeta Colony. Dispatch ambulance and NDRF teams to both locations immediately."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "All units, proceed to Yamuna Pushta first, then Geeta Colony, prioritize evacuation of low\u2011lying residents."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Roger, NDRF en route, ambulance on standby. Estimated arrival in 15 minutes."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Maintain updates every five minutes, over."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 93,
+   "band": "auto",
+   "ms": 1190.0,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 6,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 91.6%, rain 102.9 mm, Yamuna river 204.75 m and barrage at 200.77 m \u2013 situation critical."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, initiate immediate rescue; dispatch ambulance and disaster/NDRF teams to Yamuna Pushta and Geeta Colony now."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Units, proceed to Yamuna Pushta first; water levels rising fast, time now 00:17 IST."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Acknowledged, NDRF en route to Geeta Colony as secondary; ambulance standby at both sites."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Maintain radio contact, report any changes in river or barrage levels immediately."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 94,
+   "band": "auto",
+   "ms": 1534.1,
+   "error": "openai/gpt-oss-120b used numbers not in current state - rejected",
+   "attempts": 1,
+   "parsed": true,
+   "accepted": false,
+   "typed_ok": false,
+   "n_numbers": 7,
+   "unmatched": [
+    "5"
+   ],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood risk at 78.0%, river level 207.56m, barrage stage 201.37m, rain 86.8mm; flood confirmed in Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy, dispatch ambulance and NDRF to both sites now, ETA 5 minutes."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "All units, proceed to Yamuna Pushta first, water rising fast."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Acknowledged, NDRF en route to Geeta Colony, ambulance heading to Yamuna Pushta, time now 15:54 IST."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Maintain continuous updates, situation critical."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 95,
+   "band": "auto",
+   "ms": 1379.6,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 7,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood risk now 82.8%, river at 205.62 m and barrage at 205.59 m, rain 14.2 mm, flood confirmed in Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, dispatch ambulance and NDRF teams to both locations immediately."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Time 20:07 IST, teams en route, standing by for status updates."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Roger, keep monitoring river levels and report any changes."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Will do, maintain vigilance on the 82.8% probability and current readings."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 96,
+   "band": "auto",
+   "ms": 1109.6,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 6,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 89.1%, rain 85\u202fmm, Yamuna river at 202.35\u202fm and barrage stage 203.41\u202fm; immediate rescue required at Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, dispatching ambulance units to both locations now."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Also notifying disaster response and NDRF teams to commence rescue operations at Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Acknowledged, standby for further updates. Time now 14:32\u202fIST."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 97,
+   "band": "calm",
+   "ms": 1221.8,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 7,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Current flood probability is 28.4%, rain measured at 24.4\u202fmm, and Yamuna river stands at 200.1\u202fm, below the barrage stage of 199.67\u202fm."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "All clear for now, the situation is below the 40% threshold; no immediate action required."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "We will continue monitoring; please inform the public in Yamuna Pushta and Geeta Colony to stay calm."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Reassure them that conditions are stable at 17:49\u202fIST and advise to call if probability rises."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 98,
+   "band": "auto",
+   "ms": 1268.9,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 6,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 87.5%, rain 85.8\u202fmm, Yamuna river at 205.15\u202fm and barrage stage 200.2\u202fm; situation critical in Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, initiating rescue. Dispatch ambulance and NDRF teams to both locations now."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "All units, proceed immediately, time now 14:13\u202fIST, water levels rising fast."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Roger, units en route, will report arrival times as soon as possible."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 99,
+   "band": "auto",
+   "ms": 1337.6,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 6,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 80.5%, rain 80.8 mm, Yamuna river at 205.79\u202fm and barrage stage 202.91\u202fm \u2013 we have a confirmed flood in Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, initiate immediate rescue. Dispatch ambulance and NDRF teams to both Yamuna Pushta and Geeta Colony now."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Ambulance and disaster units en route, ETA under five minutes, standing by for further intel."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Roger, keep monitoring river levels and rain; report any change after 22:33 IST."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Will do. Current metrics hold steady; will alert if thresholds shift."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 100,
+   "band": "watch",
+   "ms": 1197.3,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 8,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Current flood probability stands at 48.2%, we are in watch\u2011only status, no rescue deployment."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Acknowledged. Rainfall measured at 31.5\u202fmm, monitor any increase."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Yamuna river level is 201.57\u202fm, below the barrage stage of 204.14\u202fm."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Time check: 13:02\u202fIST, continue surveillance over Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Model outputs: Random Forest 26.8%, XGBoost 48.2%\u2014both align with current probability."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 101,
+   "band": "auto",
+   "ms": 1428.1,
+   "error": "openai/gpt-oss-120b used numbers not in current state - rejected",
+   "attempts": 1,
+   "parsed": true,
+   "accepted": false,
+   "typed_ok": false,
+   "n_numbers": 7,
+   "unmatched": [
+    "10"
+   ],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 96.9% with 247.2\u202fmm rain, Yamuna river at 202.9\u202fm and barrage stage 201.43\u202fm; flood confirmed in Yamuna Pushta and Geeta Colony as of 21:42 IST."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, initiate immediate rescue; dispatch ambulance and NDRF teams to both Yamuna Pushta and Geeta Colony now."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Ambulance en route to Yamuna Pushta, NDRF team heading to Geeta Colony, ETA 10 minutes."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Roger, maintain continuous updates on water levels and any new hotspots."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Will do, monitoring shows no change in river level; will report any shift promptly."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 102,
+   "band": "auto",
+   "ms": 1163.2,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 6,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 94.6%, rain 153.6 mm, Yamuna river at 202.78 m and barrage stage 200.75 m. Immediate rescue needed at Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, dispatching ambulance and NDRF teams now to both locations."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Time now 15:56 IST, water levels rising fast, keep me posted on team ETA."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Ambulance en route, NDRF on standby, will update as they move into the zones."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Acknowledged, maintain continuous radio contact, safety of residents is priority."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 103,
+   "band": "auto",
+   "ms": 1364.1,
+   "error": "openai/gpt-oss-120b used numbers not in current state - rejected",
+   "attempts": 1,
+   "parsed": true,
+   "accepted": false,
+   "typed_ok": false,
+   "n_numbers": 7,
+   "unmatched": [
+    "5",
+    "35"
+   ],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 95.7%, rain 162.7 mm, Yamuna river at 206.88\u202fm and barrage stage 200.78\u202fm; situation critical in Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, dispatch ambulance units to both Yamuna Pushta and Geeta Colony immediately."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Also send NDRF disaster teams to rescue trapped residents now, priority over all other calls."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Roger, units en route, ETA 5 minutes, will report back at 00:35 IST."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Maintain radio silence on non\u2011essential traffic, keep me updated on rescue progress."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 104,
+   "band": "auto",
+   "ms": 1227.1,
+   "error": "openai/gpt-oss-120b used numbers not in current state - rejected",
+   "attempts": 1,
+   "parsed": true,
+   "accepted": false,
+   "typed_ok": false,
+   "n_numbers": 6,
+   "unmatched": [
+    "20"
+   ],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability 97.8%, rain 190 mm, Yamuna level 204.35 m, barrage 204.13 m, initiate rescue now at Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy, dispatching ambulance to Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Also dispatch NDRF teams to both locations immediately."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "All units en route, ETA 11:20 IST."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Situation critical, keep me posted with updates."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 105,
+   "band": "auto",
+   "ms": 1611.7,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 6,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability 85.8%, river level 200.55\u202fm, barrage stage 204.05\u202fm, rain 79.5\u202fmm \u2013 situation critical in Yamuna Pushta/Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy, dispatch ambulance to Yamuna Pushta now."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Also send NDRF disaster team to Geeta Colony for immediate rescue."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Units en route, ETA about five minutes."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Time now 13:55\u202fIST, keep me posted on progress."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 106,
+   "band": "auto",
+   "ms": 1218.2,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 6,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 98.2%, rain 167 mm, Yamuna river level 200.77 m and barrage stage 202.57 m; water has breached at Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, initiate rescue. Dispatch ambulance and disaster/NDRF teams to both Yamuna Pushta and Geeta Colony now."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Teams en route, ETA pending due to current conditions."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Maintain updates every five minutes, time now 15:39 IST."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 107,
+   "band": "auto",
+   "ms": 1171.4,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 8,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Attention all units, flood probability now at 85.3 percent with rain total 133 mm, Yamuna river at 205.61 meters and barrage stage 201.52 meters."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Rescue, proceed to Yamuna Pushta and Geeta Colony immediately, evacuate civilians."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Ambulance, standby for casualties from Yamuna Pushta and Geeta Colony, ETA 15:20 IST."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Disaster and NDRF teams, mobilize to both zones now, coordinate with rescue on site."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "All units, maintain situational updates, current time 15:20 IST, continue monitoring river and barrage levels."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 108,
+   "band": "calm",
+   "ms": 1309.1,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 9,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Current flood probability is 29.7%, rain has reached 24.1\u202fmm, and Yamuna river level is 204.49\u202fm, below the barrage stage of 205.08\u202fm."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Understood, the risk remains below 40%; we will keep monitoring and advise the public not to worry at this time."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Model outputs show Random Forest at 32.4% and XGBoost at 29.7%, both confirming the low risk."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Please continue updates; if the probability rises above the threshold, we will issue an alert immediately."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Will do. Current time is 08:55\u202fIST, zone Yamuna Pushta / Geeta Colony, all systems normal."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 109,
+   "band": "auto",
+   "ms": 1380.6,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 6,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 93.0%, rain 159.5 mm, Yamuna river level 202.05 m, barrage stage 202 m, situation critical."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy, initiate rescue. Dispatch ambulance and NDRF to Yamuna Pushta and Geeta Colony now."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Both zones under Yamuna Pushta / Geeta Colony, water rising fast, time 00:29 IST, proceed immediately."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Ambulance en route, NDRF mobilizing, will report status."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 110,
+   "band": "auto",
+   "ms": 1196.0,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 6,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 96.0% with rain accumulation 214.6 mm, Yamuna river now at 206.73 m and barrage stage 200.89 m."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, time 16:13 IST, situation critical in Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Dispatch ambulance units to both zones immediately for water\u2011related injuries."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Also send NDRF disaster teams to rescue trapped residents in Yamuna Pushta and Geeta Colony now."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "All units acknowledged, moving out now."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 111,
+   "band": "auto",
+   "ms": 1179.9,
+   "error": "openai/gpt-oss-120b used numbers not in current state - rejected",
+   "attempts": 1,
+   "parsed": true,
+   "accepted": false,
+   "typed_ok": false,
+   "n_numbers": 9,
+   "unmatched": [
+    "10"
+   ],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 98.1%, rain accumulation 219.1\u202fmm, Yamuna river at 205.77\u202fm and barrage stage 205\u202fm, situation critical."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, dispatch ambulance and NDRF units to Yamuna Pushta and Geeta Colony immediately."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Ambulance and disaster teams en route, ETA 10\u202fminutes, will report once on site."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Time now 04:35\u202fIST, maintain updates every five minutes until rescue complete."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Understood, will monitor Random Forest 75.6% and XGBoost 98.1% model outputs for any change."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 112,
+   "band": "auto",
+   "ms": 1409.6,
+   "error": "openai/gpt-oss-120b used numbers not in current state - rejected",
+   "attempts": 1,
+   "parsed": true,
+   "accepted": false,
+   "typed_ok": false,
+   "n_numbers": 7,
+   "unmatched": [
+    "15"
+   ],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 79.0%, rain 94.1 mm, Yamuna river level 206.17\u202fm, barrage stage 200.32\u202fm, situation critical."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy, dispatch ambulance and NDRF to Yamuna Pushta and Geeta Colony now."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Ambulance en route to Geeta Colony, NDRF heading to Yamuna Pushta, ETA 15 minutes."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Roger, maintain updates, time now 17:39\u202fIST."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "All units, stay on channel, monitor water rise."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 113,
+   "band": "auto",
+   "ms": 1061.6,
+   "error": "openai/gpt-oss-120b used numbers not in current state - rejected",
+   "attempts": 1,
+   "parsed": true,
+   "accepted": false,
+   "typed_ok": false,
+   "n_numbers": 7,
+   "unmatched": [
+    "5",
+    "15"
+   ],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 89.1%, rain 153.7\u202fmm, Yamuna river at 201.12\u202fm and barrage stage 204.71\u202fm\u2014immediate water ingress in Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, dispatching ambulance and NDRF teams to both Yamuna Pushta and Geeta Colony now, ETA 5\u202fminutes."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "All units, proceed with rescue ops; water levels rising, maintain safety per protocol."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Roger, teams en route, will report status at 23:15 IST."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 114,
+   "band": "auto",
+   "ms": 1408.2,
+   "error": "openai/gpt-oss-120b used numbers not in current state - rejected",
+   "attempts": 1,
+   "parsed": true,
+   "accepted": false,
+   "typed_ok": false,
+   "n_numbers": 7,
+   "unmatched": [
+    "5"
+   ],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Probability 77.8%, rain 166 mm, Yamuna river level 200.29 m, barrage stage 204.53 m\u2014flood confirmed at Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy, dispatch ambulance and NDRF teams to both sites now, ETA about 5 minutes."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Water rising fast, time now 21:55 IST, ensure safety protocols for responders."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Acknowledged, on\u2011scene command established, will update you with any changes."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 115,
+   "band": "auto",
+   "ms": 1299.6,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": false,
+   "n_numbers": 6,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood risk at 93.6%, rain total 235.5 mm, Yamuna river at 208.19\u202fm and barrage stage 203.85\u202fm, time 04:17\u202fIST, zone Yamuna Pushta/Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, risk confirmed. Initiate immediate deployment of ambulance and NDRF teams to Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "All units, proceed now, water levels rising fast, maintain safety per protocol."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Roger, teams en route, will report status in ten minutes."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Stay on this frequency, keep me posted on rescue progress."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 116,
+   "band": "auto",
+   "ms": 1376.3,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 6,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability 64.5%, rain 36.4mm, Yamuna river level 200.46m, barrage stage 200.3m at 05:44 IST, flood confirmed in Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy, dispatch ambulance and NDRF disaster team to Yamuna Pushta and Geeta Colony now, prioritize evacuation."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Roger, ambulance and NDRF en route to both locations, standing by for further orders."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Maintain radio contact, report any change in river level or rain intensity immediately."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Will do, current figures unchanged, will update as soon as we have new data."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 117,
+   "band": "watch",
+   "ms": 1126.9,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": false,
+   "n_numbers": 8,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Current flood probability stands at 45.3%, rain accumulation is 42.7 mm."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "River Yamuna level is 202.56 m, barrage stage at 202.6 m, still below critical."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Given the 40-50% watch\u2011only zone, no rescue deployment is ordered at this time."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Acknowledged, maintain monitoring in Yamuna Pushta and Geeta Colony until further notice."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Time now is 17:01 IST, continue visual checks and update if conditions change."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 118,
+   "band": "auto",
+   "ms": 1274.3,
+   "error": "openai/gpt-oss-120b used numbers not in current state - rejected",
+   "attempts": 1,
+   "parsed": true,
+   "accepted": false,
+   "typed_ok": false,
+   "n_numbers": 8,
+   "unmatched": [
+    "5",
+    "5"
+   ],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 76.5%, rain 222.6 mm, Yamuna river at 206.35 m and barrage stage 200.09 m; immediate rescue needed at Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, dispatching ambulance units and NDRF teams to both locations now, ETA 5 minutes."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Time now 14:43 IST, water levels rising fast, maintain continuous monitoring."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Acknowledged, will update status every 5 minutes, keep channel open."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "All units, proceed with caution, prioritize evacuation of residents in Yamuna Pushta and Geeta Colony."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 119,
+   "band": "auto",
+   "ms": 1495.5,
+   "error": "openai/gpt-oss-120b used numbers not in current state - rejected",
+   "attempts": 1,
+   "parsed": true,
+   "accepted": false,
+   "typed_ok": false,
+   "n_numbers": 7,
+   "unmatched": [
+    "10"
+   ],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Probability 72.5%, rain 84.5 mm, Yamuna level 200.49 m, barrage stage 201.47 m, flood confirmed."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy, dispatch ambulance and NDRF to Yamuna Pushta and Geeta Colony now."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Teams en route, ETA 10 min, coordinate at 15:00 IST."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Maintain updates, monitor river level, no further changes."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "All units, proceed, safety first."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 120,
+   "band": "auto",
+   "ms": 1279.3,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 6,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood at 97.8% probability confirmed, rain 211.7 mm, Yamuna river at 200.24 m and barrage stage 202.52 m, immediate rescue needed at Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, dispatching ambulance and disaster NDRF teams now, ETA unknown."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "All units, prioritize evacuation of vulnerable zones, water level rising fast."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Acknowledged, coordination with local command, maintain updates at 10:48 IST."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Will report any change, current status stands as reported."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 121,
+   "band": "auto",
+   "ms": 1018.6,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 6,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 76.7%, rain 217.9\u202fmm, Yamuna river level 203.68\u202fm, barrage stage 204.83\u202fm, time 13:42 IST. Immediate rescue required."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, dispatching ambulance to Yamuna Pushta now."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Disaster unit, proceed to Geeta Colony for evacuation, priority one."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Both zones under critical flood, maintain radio contact and report status every five minutes."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 122,
+   "band": "admin",
+   "ms": 1312.0,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 8,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Current flood probability is 52.8% with rain at 46.8\u202fmm, river level 201.81\u202fm and barrage stage 200.11\u202fm as of 21:31\u202fIST."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Understood, the auto\u2011predict function is unavailable; we still lack a full rescue deployment."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Model outputs show Random Forest at 45.7% and XGBoost at 52.8% confidence for the same zone."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Given the XGBoost reading matches the overall probability, prioritize alerts for Yamuna Pushta and Geeta Colony now."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Will issue the warnings and monitor any changes in the river level and rainfall."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 123,
+   "band": "auto",
+   "ms": 1158.5,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 7,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood confirmed, probability 96.9%, rain 248\u202fmm, Yamuna river at 203.9\u202fm and barrage stage 201.54\u202fm, time 23:27 IST."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, initiating rescue. Dispatch ambulance and NDRF teams to Yamuna Pushta and Geeta Colony now."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Ambulance en route to Yamuna Pushta, NDRF heading to Geeta Colony, ETA pending."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Roger, maintain continuous updates, water levels rising fast."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Will do, monitoring river at 203.9\u202fm, will report any change."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 124,
+   "band": "auto",
+   "ms": 1004.6,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 8,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Attention all, flood confirmed in Yamuna Pushta and Geeta Colony, probability at 64.1%, rain measured 56.2 mm."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Ambulance, proceed immediately to Yamuna Pushta, casualties expected, time 20:47 IST."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Disaster/NDRF, move to Geeta Colony now, water level 203.74 m, barrage stage 205.64 m, rescue needed."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "River Yamuna at 203.74 m, barrage at 205.64 m, situation critical, maintain radio contact."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy all, continue updates, standby for further instructions."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 125,
+   "band": "admin",
+   "ms": 1107.7,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 8,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Current flood probability is at 50.0% with rain accumulation of 153.6 mm."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Noted, Yamuna river level reads 201.66 m and barrage stage is 204.29 m."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Random Forest model suggests 63.4% risk, XGBoost stays at 50.0%."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "At 06:47 IST we still lack full rescue deployment; auto\u2011prediction remains unavailable."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Understood, monitoring zone Yamuna Pushta / Geeta Colony for any change."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 126,
+   "band": "auto",
+   "ms": 1230.1,
+   "error": "openai/gpt-oss-120b used numbers not in current state - rejected",
+   "attempts": 1,
+   "parsed": true,
+   "accepted": false,
+   "typed_ok": false,
+   "n_numbers": 11,
+   "unmatched": [
+    "10",
+    "15",
+    "5"
+   ],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability 87.4% and rain 91.7\u202fmm have pushed Yamuna river to 201.73\u202fm, barrage stage 202.04\u202fm at 03:11\u202fIST; immediate rescue needed at Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy, dispatching ambulance units and NDRF teams to both sites now, ETA 10\u201115\u202fmin."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Confirm all teams have flood\u2011ready gear; water levels are critical."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "All units equipped, proceeding to zone Yamuna Pushta / Geeta Colony, will report status every 5\u202fmin."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Roger, maintain continuous updates; monitor river at 201.73\u202fm and barrage at 202.04\u202fm."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 127,
+   "band": "auto",
+   "ms": 1334.1,
+   "error": "openai/gpt-oss-120b used numbers not in current state - rejected",
+   "attempts": 1,
+   "parsed": true,
+   "accepted": false,
+   "typed_ok": false,
+   "n_numbers": 7,
+   "unmatched": [
+    "10"
+   ],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 98.1% with rain 225.4 mm, Yamuna river at 208.25 m and barrage stage 203.54 m, immediate rescue needed at Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy, dispatching NDRF teams and ambulance units now to both locations, ETA 10 minutes."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Time now 00:35 IST, water levels rising fast, prioritize evacuation of low\u2011lying zones."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Acknowledged, all units en route, will report status every five minutes."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Maintain radio silence on non\u2011essential chatter, focus on rescue ops at Yamuna Pushta and Geeta Colony."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 128,
+   "band": "auto",
+   "ms": 1511.6,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 6,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Attention all units, flood probability at 96.0% with rain accumulation 228.8 mm, Yamuna river level now 203.1 meters and barrage stage 199.07 meters."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy, dispatch ambulance and disaster/NDRF teams to Yamuna Pushta and Geeta Colony immediately."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Proceed now, water levels rising fast, prioritize evacuation of residents in both zones."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Time check: 09:47 IST, maintain continuous updates on rescue progress."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "All units, maintain radio silence unless reporting status, safety first."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 129,
+   "band": "auto",
+   "ms": 1520.9,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 6,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Probability 84.4%, rain 132.6 mm, Yamuna river level 208.37 m, barrage stage 199.75 m, flood confirmed at Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy, dispatching ambulance and NDRF teams to both places now."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Time now 11:31 IST, proceed with rescue operations immediately."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Acknowledged, units en route, will update as they arrive."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 130,
+   "band": "auto",
+   "ms": 1197.0,
+   "error": "openai/gpt-oss-120b used numbers not in current state - rejected",
+   "attempts": 1,
+   "parsed": true,
+   "accepted": false,
+   "typed_ok": false,
+   "n_numbers": 7,
+   "unmatched": [
+    "5",
+    "35"
+   ],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 70.7%, rain 40.3 mm, Yamuna river at 203.21 m and barrage at 203.43 m. Immediate rescue required at Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy. Dispatching ambulance and NDRF teams now to both locations. ETA 5 minutes."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "All units, proceed with highest priority, water levels rising fast. Maintain safety protocols."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Roger that. Teams en route, will report status at 11:35 IST."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 131,
+   "band": "auto",
+   "ms": 1028.1,
+   "error": "openai/gpt-oss-120b used numbers not in current state - rejected",
+   "attempts": 1,
+   "parsed": true,
+   "accepted": false,
+   "typed_ok": false,
+   "n_numbers": 6,
+   "unmatched": [
+    "45"
+   ],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 88.5%, rain measured 16.8 mm, Yamuna river now 200.67 meters and barrage stage 202.28 meters, immediate rescue required at Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, dispatching ambulance units and NDRF teams to both locations now, ETA 08:45 IST."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Confirm, maintain radio watch, water levels rising fast."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "All units, proceed with caution, report any changes."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 132,
+   "band": "calm",
+   "ms": 1165.0,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 10,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Current flood probability is 38.5%, rain measured at 138.8\u202fmm, and Yamuna river level stands at 200.32\u202fm."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Under 40% we stay calm; no immediate action needed, just monitor the barrage at 203.13\u202fm."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Exactly, keep an eye on the 38.5% threshold and call if it climbs higher."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Will do. Time now is 08:18\u202fIST, and both Yamuna Pushta and Geeta Colony remain safe for now."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Reassure the locals; the Random Forest model shows 55.0% confidence but the XGBoost aligns with our 38.5% risk."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 133,
+   "band": "admin",
+   "ms": 1253.8,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 8,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Current flood probability is 52.6% with rain at 22.2\u202fmm, river level 203.28\u202fm and barrage stage 203.52\u202fm."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "At 18:06\u202fIST I still cannot auto\u2011predict the outcome, so we need manual assessment."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Both Random Forest and XGBoost models show 39.8% and 52.6% respectively, confirming moderate risk."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Proceed with precautionary alerts for Yamuna Pushta and Geeta Colony while we await full rescue deployment."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Understood, I will broadcast the warning and monitor any changes in river level."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 134,
+   "band": "auto",
+   "ms": 1302.3,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 6,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 93.8% with rain 145.9\u202fmm, Yamuna river at 204.6\u202fm and barrage stage 200.07\u202fm as of 19:30\u202fIST, zone Yamuna Pushta/Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, dispatch ambulance units to both Yamuna Pushta and Geeta Colony immediately."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Also alert disaster/NDRF teams to start rescue ops at those locations now."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "All units en route, will report status in five minutes."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 135,
+   "band": "auto",
+   "ms": 1298.4,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 6,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability 76.4%, rain 83 mm, Yamuna river level 200.78 m, barrage stage 202.74 m, immediate rescue required at Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy, dispatch ambulance and NDRF teams to both sites now, ETA pending."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Time now 03:25 IST, water rising fast, maintain comms."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Roger, will update status, keep monitoring."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 136,
+   "band": "auto",
+   "ms": 1220.6,
+   "error": "openai/gpt-oss-120b used numbers not in current state - rejected",
+   "attempts": 1,
+   "parsed": true,
+   "accepted": false,
+   "typed_ok": false,
+   "n_numbers": 7,
+   "unmatched": [
+    "10"
+   ],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 91.6%, river level 206.4\u202fm and barrage stage 202.65\u202fm; immediate rescue needed at Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, dispatching ambulance and NDRF teams now, ETA 10 minutes."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Rainfall recorded at 67.5\u202fmm, situation critical, maintain standby for further updates."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Teams en route, confirming time now 23:04\u202fIST, will report back on arrival."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 137,
+   "band": "auto",
+   "ms": 1587.9,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 6,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 98.4%, rain 184.4 mm, Yamuna river level 202.61 m, barrage stage 202.3 m, immediate action required."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy, initiating ambulance dispatch to Yamuna Pushta and Geeta Colony now."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Also dispatch NDRF disaster team to both locations for rescue."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Ambulance en route, ETA unknown, NDRF team mobilizing."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Time now 22:09 IST, maintain updates."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 138,
+   "band": "auto",
+   "ms": 1213.7,
+   "error": "openai/gpt-oss-120b used numbers not in current state - rejected",
+   "attempts": 1,
+   "parsed": true,
+   "accepted": false,
+   "typed_ok": false,
+   "n_numbers": 9,
+   "unmatched": [
+    "10",
+    "25"
+   ],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 78.4%, rain 84mm, Yamuna river at 203.4m and barrage stage 202.6m\u2014situation critical in Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, dispatch ambulance and NDRF teams to both Yamuna Pushta and Geeta Colony now, priority rescue."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "All units, be advised the Random Forest model shows 70.2% risk, XGBoost 78.4%\u2014move fast, water levels rising."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Acknowledged, rescue units en route, ETA 10 minutes, will report back at 22:25 IST."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Maintain radio silence on non\u2011essential chatter, keep channel clear for updates."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 139,
+   "band": "auto",
+   "ms": 1237.5,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 8,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Probability at 98.2%, rain 212.9 mm, Yamuna river 202.12 m, barrage 200.29 m \u2013 flood confirmed in Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Dispatch ambulance and NDRF units to Yamuna Pushta now, priority rescue."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Proceed to Geeta Colony immediately, water levels still rising."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Time now 01:31 IST, maintain continuous updates on casualties and road status."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Monitor Random Forest 75.4% and XGBoost 98.2% model outputs, keep channel open for further instructions."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 140,
+   "band": "calm",
+   "ms": 1097.4,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 9,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Current flood probability stands at 33.4%, rain accumulation is 51.2\u202fmm, and the Yamuna river level is 205.02\u202fm."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Understood, the barrage stage is 202.38\u202fm; we are well below critical thresholds."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "The model outputs show Random Forest at 48.3% and XGBoost at 33.4%, both indicating low risk."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "At 18:30\u202fIST we will continue monitoring; no immediate action required."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Please call us if the probability rises above 40%."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 141,
+   "band": "auto",
+   "ms": 1427.2,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 6,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 83.7%, rain 9 mm, Yamuna river at 200.29\u202fm and barrage stage 202.26\u202fm, situation critical in Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, initiating rescue. Dispatch ambulance and NDRF teams to both Yamuna Pushta and Geeta Colony now."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Teams en route, ETA unknown due to water levels, keep me posted on any changes."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Will monitor, time now 12:46\u202fIST, standby for updates."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "All units, maintain safety, report any casualties immediately."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 142,
+   "band": "auto",
+   "ms": 1329.5,
+   "error": "openai/gpt-oss-120b used numbers not in current state - rejected",
+   "attempts": 1,
+   "parsed": true,
+   "accepted": false,
+   "typed_ok": false,
+   "n_numbers": 5,
+   "unmatched": [
+    "10"
+   ],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood confirmed, probability 72.4%, rain 39.4mm, Yamuna level 202.27m, barrage 202.02m; dispatch ambulance and NDRF to Yamuna Pushta and Geeta Colony now."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy, ambulance and disaster team moving to Yamuna Pushta and Geeta Colony, ETA approx 10 minutes."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Proceed, water rising fast, maintain continuous updates."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Units en route, will report status as they arrive."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 143,
+   "band": "auto",
+   "ms": 1170.3,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 6,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 83.3%, rain accumulation 185.1\u202fmm, Yamuna river at 207.39\u202fm and barrage stage 200.16\u202fm, situation critical in Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, initiating rescue. Ambulance units, proceed to Yamuna Pushta now."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Disaster/NDRF teams, move to Geeta Colony immediately for evacuation."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "All units, time now 11:38\u202fIST, coordinate entry points and report status every five minutes."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 144,
+   "band": "auto",
+   "ms": 1021.4,
+   "error": "openai/gpt-oss-120b used numbers not in current state - rejected",
+   "attempts": 1,
+   "parsed": true,
+   "accepted": false,
+   "typed_ok": false,
+   "n_numbers": 8,
+   "unmatched": [
+    "5",
+    "10"
+   ],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 86.7%, rain 134.9\u202fmm, Yamuna river level 200.65\u202fm, barrage stage 200.19\u202fm at 06:37\u202fIST."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, situation critical. Dispatch ambulance and NDRF teams to Yamuna Pushta and Geeta Colony immediately."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Teams en route, estimated arrival 5\u201110\u202fmin, water rising fast."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Maintain updates, prioritize evacuations, keep channels open."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 145,
+   "band": "auto",
+   "ms": 1410.8,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 6,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability 70.1%, rain 104.3 mm, Yamuna river level 208.41 m, barrage stage 201.81 m, situation critical."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, dispatch ambulance and NDRF teams to Yamuna Pushta and Geeta Colony now."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Units are moving, current time 03:51 IST."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Keep me posted, monitor river and barrage levels continuously."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 146,
+   "band": "auto",
+   "ms": 1167.5,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 6,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 66.5%, river at 206.39\u202fm and barrage at 200.18\u202fm, rain 6.4\u202fmm; flood confirmed in Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "All units, proceed now to Yamuna Pushta and Geeta Colony, evacuate civilians, coordinate with ambulance and NDRF."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Time stamp 01:16\u202fIST, situation stable for immediate dispatch."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Maintain radio check every five minutes, report any casualties."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Copy, will monitor river level and rain updates, standby for further intel."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 147,
+   "band": "auto",
+   "ms": 1279.6,
+   "error": "openai/gpt-oss-120b used numbers not in current state - rejected",
+   "attempts": 1,
+   "parsed": true,
+   "accepted": false,
+   "typed_ok": false,
+   "n_numbers": 7,
+   "unmatched": [
+    "15"
+   ],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 92.8%, rain recorded 70.3 mm, Yamuna river at 201.42 meters, barrage stage 205.38 meters."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, zone Yamuna Pushta and Geeta Colony are under critical alert."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Dispatch ambulance and NDRF teams to both Yamuna Pushta and Geeta Colony now, immediate rescue required."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Roger, units en route, ETA 15 minutes, standby for further updates."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Time now 02:16 IST, maintain communication on status of rescue ops."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 148,
+   "band": "auto",
+   "ms": 1213.4,
+   "error": null,
+   "attempts": 1,
+   "parsed": true,
+   "accepted": true,
+   "typed_ok": true,
+   "n_numbers": 6,
+   "unmatched": [],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 74.2%, Yamuna river at 205.67 meters and barrage at 201.49 meters, heavy rain 58.5 mm\u2014situation critical in Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy that, Flood Risk. Deploy ambulance and NDRF teams to both Yamuna Pushta and Geeta Colony immediately, commence rescue operations."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Acknowledged, units en route. Time now 14:35 IST, maintain continuous updates on water rise."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "All units, confirm receipt and status reports every five minutes, prioritize evacuations."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Will do, monitoring river and barrage levels, will alert if thresholds exceed current readings."
+    }
+   ]
+  },
+  {
+   "model": "openai/gpt-oss-120b",
+   "i": 149,
+   "band": "auto",
+   "ms": 1071.0,
+   "error": "openai/gpt-oss-120b used numbers not in current state - rejected",
+   "attempts": 1,
+   "parsed": true,
+   "accepted": false,
+   "typed_ok": false,
+   "n_numbers": 7,
+   "unmatched": [
+    "10"
+   ],
+   "turns": [
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Flood probability at 98.2%, rain 221.3\u202fmm, Yamuna river now 207.94\u202fm and barrage at 205.7\u202fm\u2014immediate rescue required at Yamuna Pushta and Geeta Colony."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Copy, dispatching ambulance units and NDRF teams to both locations now, ETA 10 minutes."
+    },
+    {
+     "from": "Flood Risk Agent",
+     "to": "Administrator Agent",
+     "text": "Time is 16:40\u202fIST, water levels still rising, maintain high alert."
+    },
+    {
+     "from": "Administrator Agent",
+     "to": "Flood Risk Agent",
+     "text": "Acknowledged, will keep teams on standby and update as situation evolves."
+    }
+   ]
+  }
+ ]
+}

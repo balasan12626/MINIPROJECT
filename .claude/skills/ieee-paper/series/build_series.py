@@ -24,6 +24,8 @@ PAPERS = {
     "p1": ("p1_quantum", "Paper1_Quantum_QAOA"),
     "p2": ("p2_agentic", "Paper2_Agentic_AI"),
     "p3": ("p3_qagentic", "Paper3_Agentic_Quantum"),
+    "p4": ("p4_forecast", "Paper4_Forecasting_CAMELS_IND"),
+    "p5": ("p5_merged", "Paper5_Merged_FailClosed_Chain"),
 }
 AUTHOR_TOKENS = (r"\bSona\b", "gmail", r"\bSalem\b", "github", "Nandhakumar", "Balakarthikeyan", "Gowthaman",
                  "Abhishek", "AquaSentinel")

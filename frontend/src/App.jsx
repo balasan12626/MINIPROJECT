@@ -1,15 +1,38 @@
-import { useEffect, useState } from "react";
+import { Suspense, lazy, useEffect, useState } from "react";
 import { NavLink, Navigate, Route, Routes, useLocation } from "react-router-dom";
-import LiveCommandCenter from "./pages/LiveCommandCenter/LiveCommandCenter.jsx";
-import LiveResponse from "./pages/LiveResponse/LiveResponse.jsx";
 import SimulationLab from "./pages/SimulationLab/SimulationLab.jsx";
-import RescueRoute from "./pages/RescueRoute/RescueRoute.jsx";
 import ThemeToggle from "./components/ThemeToggle.jsx";
 import { fetchModelsV2 } from "./services/api.js";
 
+// Phone pages (no app chrome, lazy-loaded): driver app (F3), citizen SOS (F4).
+const DriverApp = lazy(() => import("./pages/DriverApp/DriverApp.jsx"));
+const CitizenSos = lazy(() => import("./pages/CitizenSos/CitizenSos.jsx"));
+const SafePage = lazy(() => import("./pages/SafePage/SafePage.jsx"));
+const FindPage = lazy(() => import("./pages/FindPage/FindPage.jsx"));
+const PHONE_PAGES = ["/driver/", "/sos", "/safe", "/find"];
+
 export default function App() {
   const location = useLocation();
-  const isSimulation = location.pathname.startsWith("/simulation");
+  if (PHONE_PAGES.some((p) => location.pathname.startsWith(p))) {
+    return (
+      <Suspense fallback={<p className="hint">Loading…</p>}>
+        <Routes>
+          <Route path="/driver/:unit" element={<DriverApp />} />
+          <Route path="/sos" element={<CitizenSos />} />
+          <Route path="/safe" element={<SafePage />} />
+          <Route path="/find" element={<FindPage />} />
+        </Routes>
+      </Suspense>
+    );
+  }
+  return <MainApp location={location} />;
+}
+
+function MainApp({ location }) {
+  // Command Center and Response are live-ops views even though they now live
+  // as subtabs of /simulation.
+  const tab = new URLSearchParams(location.search).get("tab");
+  const isSimulation = location.pathname.startsWith("/simulation") && tab !== "command" && tab !== "response";
   const [model, setModel] = useState(null);
 
   useEffect(() => {
@@ -55,22 +78,19 @@ export default function App() {
           </div>
           <ThemeToggle />
           <nav className="nav" aria-label="Primary">
-            <NavLink to="/" end>
-              Command Center
-            </NavLink>
-            <NavLink to="/response">Response</NavLink>
             <NavLink to="/simulation">Simulation</NavLink>
-            <NavLink to="/rescue">Rescue Route</NavLink>
           </nav>
         </div>
       </header>
       <main className="app-main">
         <Routes>
-          <Route path="/" element={<LiveCommandCenter />} />
-          <Route path="/response" element={<LiveResponse />} />
+          {/* Everything lives in /simulation; the old pages are its subtabs. */}
           <Route path="/simulation" element={<SimulationLab />} />
+          <Route path="/" element={<Navigate to="/simulation?tab=command" replace />} />
+          <Route path="/response" element={<Navigate to="/simulation?tab=response" replace />} />
+          <Route path="/rescue" element={<Navigate to="/simulation?tab=rescue" replace />} />
           <Route path="/simulation/run" element={<Navigate to="/simulation" replace />} />
-          <Route path="/rescue" element={<RescueRoute />} />
+          <Route path="*" element={<Navigate to="/simulation" replace />} />
         </Routes>
       </main>
     </div>

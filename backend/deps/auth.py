@@ -1,6 +1,5 @@
 """Auth disabled for this private IEEE demo — mutations never require JWT."""
 
-from __future__ import annotations
 
 from typing import Annotated
 

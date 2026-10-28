@@ -278,7 +278,7 @@
   padding: 12px 14px;
   border-radius: 10px;
   border: 1px solid var(--hq-warn);
-  background: rgba(245, 158, 11, 0.08);
+  background: rgba(251, 146, 60, 0.08);
 }
 .hqrl-notify.critical {
   border-color: var(--hq-bad);

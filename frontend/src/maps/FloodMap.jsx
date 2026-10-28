@@ -62,7 +62,7 @@ const focusDamIcon = () => {
   if (!FOCUS_DAM_ICON) {
     FOCUS_DAM_ICON = L.divIcon({
       className: "",
-      html: `<div style="width:22px;height:22px;border-radius:50%;background:var(--accent);border:2px solid var(--text);box-shadow:0 0 0 5px rgba(250,204,21,0.4)"></div>`,
+      html: `<div style="width:22px;height:22px;border-radius:50%;background:var(--accent);border:2px solid var(--text);box-shadow:0 0 0 5px rgba(56,189,248,0.4)"></div>`,
       iconSize: [22, 22],
     });
   }
@@ -214,6 +214,14 @@ function FocusDam({ dam }) {
   );
 }
 
+/** F19: population with its source; null = unknown (never guessed). */
+export function zonePopulationText(z) {
+  if (z?.population == null) return "Population: unknown";
+  const src = z.population_source;
+  const s = src && typeof src === "object" ? `WorldPop ${src.year}` : src || "seed data";
+  return `Population: ${Number(z.population).toLocaleString("en-IN")} (${s}${z.population_method ? `, ${z.population_method}` : ""})`;
+}
+
 // `tv` (theme version) is only a re-render trigger for the memoised layers.
 const ZoneCircles = memo(function ZoneCircles({ zones, p, beforeP, afterP, beforeAfter, tv }) {
   const floodRadius = 400 + p * 2800;
@@ -242,7 +250,11 @@ const ZoneCircles = memo(function ZoneCircles({ zones, p, beforeP, afterP, befor
   }
   return zones.map((z) => (
     <Circle key={z.zone_id} center={[z.lat, z.lon]} radius={floodRadius} pathOptions={nowStyle}>
-      <Popup>{z.name} · flood {(p * 100).toFixed(1)}%</Popup>
+      <Popup>
+        {z.name} · flood {(p * 100).toFixed(1)}%
+        <br />
+        {zonePopulationText(z)}
+      </Popup>
     </Circle>
   ));
 });

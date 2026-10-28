@@ -1,0 +1,185 @@
+{
+  "city": "chennai",
+  "event": "Chennai 2015 floods (November\u2013December 2015)",
+  "ground_truth_source": "osm_crowdsource",
+  "ground_truth": {
+    "source": "OSM-India crowdsourced flooded-streets layer \u2014 Chennai, December 2015",
+    "repository": "https://github.com/osm-in/flood-map",
+    "file": "data/chennai-flooded-streets-Dec2.geojson",
+    "licence": "CC0 / OpenStreetMap contributors",
+    "event": "Chennai 2015 floods (November\u2013December 2015)",
+    "note": "Crowdsourced map of streets reported flooded by volunteers during the event. Roads within 0.35 km of a flooded-street coordinate = observed flooded."
+  },
+  "snap_km": 0.35,
+  "default_blockage": 0.35,
+  "metrics_at_default_blockage": {
+    "tp": 204,
+    "fp": 14,
+    "fn": 345,
+    "tn": 40,
+    "precision": 0.9358,
+    "recall": 0.3716,
+    "f1": 0.5319,
+    "observed_flooded": 549,
+    "predicted_closed": 218,
+    "total_roads": 603
+  },
+  "metrics_by_road_class": {
+    "primary": {
+      "count": 283,
+      "observed_flooded": 254,
+      "precision": 0.9118,
+      "recall": 0.3661,
+      "f1": 0.5225
+    },
+    "secondary": {
+      "count": 313,
+      "observed_flooded": 291,
+      "precision": 0.9649,
+      "recall": 0.378,
+      "f1": 0.5432
+    },
+    "trunk": {
+      "count": 7,
+      "observed_flooded": 4,
+      "precision": 0.5,
+      "recall": 0.25,
+      "f1": 0.3333
+    }
+  },
+  "threshold_sweep": [
+    {
+      "blockage": 0.0,
+      "precision": null,
+      "recall": 0.0,
+      "f1": null,
+      "predicted_closed": 0,
+      "observed_flooded": 549
+    },
+    {
+      "blockage": 0.05,
+      "precision": 1.0,
+      "recall": 0.0073,
+      "f1": 0.0145,
+      "predicted_closed": 4,
+      "observed_flooded": 549
+    },
+    {
+      "blockage": 0.1,
+      "precision": 0.9592,
+      "recall": 0.0856,
+      "f1": 0.1572,
+      "predicted_closed": 49,
+      "observed_flooded": 549
+    },
+    {
+      "blockage": 0.15,
+      "precision": 0.973,
+      "recall": 0.1311,
+      "f1": 0.2311,
+      "predicted_closed": 74,
+      "observed_flooded": 549
+    },
+    {
+      "blockage": 0.2,
+      "precision": 0.9674,
+      "recall": 0.1621,
+      "f1": 0.2777,
+      "predicted_closed": 92,
+      "observed_flooded": 549
+    },
+    {
+      "blockage": 0.25,
+      "precision": 0.968,
+      "recall": 0.2204,
+      "f1": 0.3591,
+      "predicted_closed": 125,
+      "observed_flooded": 549
+    },
+    {
+      "blockage": 0.3,
+      "precision": 0.9357,
+      "recall": 0.2914,
+      "f1": 0.4444,
+      "predicted_closed": 171,
+      "observed_flooded": 549
+    },
+    {
+      "blockage": 0.35,
+      "precision": 0.9358,
+      "recall": 0.3716,
+      "f1": 0.5319,
+      "predicted_closed": 218,
+      "observed_flooded": 549
+    },
+    {
+      "blockage": 0.4,
+      "precision": 0.9305,
+      "recall": 0.439,
+      "f1": 0.5965,
+      "predicted_closed": 259,
+      "observed_flooded": 549
+    },
+    {
+      "blockage": 0.45,
+      "precision": 0.9316,
+      "recall": 0.5209,
+      "f1": 0.6682,
+      "predicted_closed": 307,
+      "observed_flooded": 549
+    },
+    {
+      "blockage": 0.5,
+      "precision": 0.9342,
+      "recall": 0.6721,
+      "f1": 0.7818,
+      "predicted_closed": 395,
+      "observed_flooded": 549
+    },
+    {
+      "blockage": 0.55,
+      "precision": 0.9347,
+      "recall": 0.7304,
+      "f1": 0.82,
+      "predicted_closed": 429,
+      "observed_flooded": 549
+    },
+    {
+      "blockage": 0.6,
+      "precision": 0.9286,
+      "recall": 0.7814,
+      "f1": 0.8487,
+      "predicted_closed": 462,
+      "observed_flooded": 549
+    },
+    {
+      "blockage": 0.65,
+      "precision": 0.924,
+      "recall": 0.8197,
+      "f1": 0.8687,
+      "predicted_closed": 487,
+      "observed_flooded": 549
+    },
+    {
+      "blockage": 0.7,
+      "precision": 0.9247,
+      "recall": 0.8725,
+      "f1": 0.8978,
+      "predicted_closed": 518,
+      "observed_flooded": 549
+    }
+  ],
+  "best_f1": {
+    "blockage": 0.7,
+    "f1": 0.8978,
+    "precision": 0.9247,
+    "recall": 0.8725
+  },
+  "notes": [
+    "Ground truth: osm_crowdsource.",
+    "Closure rule: flood_exposure >= 0.85 - blockage (same as live engine in ops_sim.roads_at).",
+    "Threshold sweep is reported, not tuned \u2014 precision/recall measured at each blockage.",
+    "Total roads in chennai network: 603. Observed-flooded: 549.",
+    "Best measured F1=0.8978 at blockage=0.7 (Precision=0.9247, Recall=0.8725)."
+  ]
+}

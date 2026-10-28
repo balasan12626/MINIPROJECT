@@ -1,0 +1,38 @@
+{
+ "delhi": {
+  "zones": 6,
+  "shelters": 10,
+  "pairs_open": 0.9,
+  "zones_cut_off": 0
+ },
+ "chennai": {
+  "zones": 6,
+  "shelters": 10,
+  "pairs_open": 1.0,
+  "zones_cut_off": 0
+ },
+ "mumbai": {
+  "zones": 6,
+  "shelters": 10,
+  "pairs_open": 1.0,
+  "zones_cut_off": 0
+ },
+ "kolkata": {
+  "zones": 6,
+  "shelters": 10,
+  "pairs_open": 0.8333333333333334,
+  "zones_cut_off": 1
+ },
+ "guwahati": {
+  "zones": 6,
+  "shelters": 10,
+  "pairs_open": 0.9,
+  "zones_cut_off": 0
+ },
+ "patna": {
+  "zones": 6,
+  "shelters": 10,
+  "pairs_open": 1.0,
+  "zones_cut_off": 0
+ }
+}

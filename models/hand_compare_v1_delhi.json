@@ -1,0 +1,110 @@
+{
+  "name": "hand_compare_v1",
+  "city": "delhi",
+  "title": "Height-based road flood risk (HAND vs distance) \u2014 Delhi",
+  "citation": {
+    "method": "Height Above Nearest Drainage (HAND)",
+    "paper": "Renn\u00f3 et al. (2008), HAND, a new terrain descriptor using SRTM-DEM, Remote Sensing of Environment",
+    "dem_dataset": "Copernicus DEM GLO-30 (30 m resolution, Open Access)",
+    "licence": "Copernicus Open Access / European Space Agency",
+    "url": "https://spacedata.copernicus.eu/collections/copernicus-digital-elevation-model"
+  },
+  "total_roads": 880,
+  "hand_stats": {
+    "min_m": 0.0,
+    "median_m": 9.73,
+    "mean_m": 10.83,
+    "max_m": 22.32
+  },
+  "spearman_rank_correlation": -0.219,
+  "roads_closing_earlier_in_v2": [
+    {
+      "road_id": "DEL-R012",
+      "name": "Ghazipur Road (part 2)",
+      "v1_exposure": 0.79,
+      "v2_exposure": 0.06,
+      "hand_m": 19.32,
+      "why": "Low-lying road with small height above drainage; floods earlier under topography model"
+    },
+    {
+      "road_id": "DEL-R015",
+      "name": "Road Number 57 (part 1)",
+      "v1_exposure": 0.788,
+      "v2_exposure": 0.06,
+      "hand_m": 18.4,
+      "why": "Low-lying road with small height above drainage; floods earlier under topography model"
+    },
+    {
+      "road_id": "DEL-R035",
+      "name": "NH9",
+      "v1_exposure": 0.726,
+      "v2_exposure": 0.06,
+      "hand_m": 15.6,
+      "why": "Low-lying road with small height above drainage; floods earlier under topography model"
+    },
+    {
+      "road_id": "DEL-R016",
+      "name": "GD Birla Marg",
+      "v1_exposure": 0.776,
+      "v2_exposure": 0.06,
+      "hand_m": 13.55,
+      "why": "Low-lying road with small height above drainage; floods earlier under topography model"
+    },
+    {
+      "road_id": "DEL-R838",
+      "name": "Unnamed secondary road",
+      "v1_exposure": 0.698,
+      "v2_exposure": 0.06,
+      "hand_m": 15.31,
+      "why": "Low-lying road with small height above drainage; floods earlier under topography model"
+    }
+  ],
+  "roads_closing_later_in_v2": [
+    {
+      "road_id": "DEL-R270",
+      "name": "Shankar Road (part 2)",
+      "v1_exposure": 0.06,
+      "v2_exposure": 0.441,
+      "hand_m": 1.97,
+      "why": "High ridge / elevated terrain road; stays passable longer despite proximity to water"
+    },
+    {
+      "road_id": "DEL-R036",
+      "name": "Aruna Asaf Ali Marg",
+      "v1_exposure": 0.06,
+      "v2_exposure": 0.811,
+      "hand_m": 0.14,
+      "why": "High ridge / elevated terrain road; stays passable longer despite proximity to water"
+    },
+    {
+      "road_id": "DEL-R261",
+      "name": "Vedant Deshika Marg",
+      "v1_exposure": 0.06,
+      "v2_exposure": 0.415,
+      "hand_m": 2.15,
+      "why": "High ridge / elevated terrain road; stays passable longer despite proximity to water"
+    },
+    {
+      "road_id": "DEL-R347",
+      "name": "Nelson Mandela Marg",
+      "v1_exposure": 0.06,
+      "v2_exposure": 0.394,
+      "hand_m": 2.31,
+      "why": "High ridge / elevated terrain road; stays passable longer despite proximity to water"
+    },
+    {
+      "road_id": "DEL-R862",
+      "name": "Unnamed secondary road",
+      "v1_exposure": 0.06,
+      "v2_exposure": 0.291,
+      "hand_m": 3.22,
+      "why": "High ridge / elevated terrain road; stays passable longer despite proximity to water"
+    }
+  ],
+  "notes": [
+    "v1 uses planar distance-to-water decay proxy.",
+    "v2 uses Height Above Nearest Drainage (HAND, Copernicus DEM 30m).",
+    "HAND >= 0 everywhere by D8 flow-direction construction.",
+    "Closure rule (effective_exposure >= 0.85 - blockage) remains identical between models."
+  ]
+}

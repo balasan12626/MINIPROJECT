@@ -202,3 +202,60 @@ def test_arena_star_equals_referee_pick():
     assert winners[0]["label"] in out["agent_verdict"]["rescue_agent"]
     for r in out["scoreboard"]:
         assert r["avg_eta_min"] < 240, r
+
+
+def test_driver_request_then_accept_is_logged_in_order():
+    row = _row(age=6)  # child -> needs an ambulance
+    ctx = {"teams": RESCUE_TEAMS}
+    advance_all([row], ctx, now=T0 + timedelta(seconds=DISPATCH_SECONDS))
+    assert row["ops_status"] == "assigned"
+    assert row["driver_accepted"] is False
+    req = row["dispatch_request"]
+    assert req["to"] == row["unit_name"] and req["citizen_name"] == row["citizen_name"]
+    assert req["shelter_name"] == row["shelter_name"]
+    assert any(j["event"] == "REQUEST_SENT" for j in row["journey"])
+
+    advance_all([row], ctx, now=T0 + timedelta(seconds=DISPATCH_SECONDS + MOBILISE_SECONDS))
+    assert row["ops_status"] == "en_route"
+    assert row["driver_accepted"] is True
+    ts = row["timestamps"]
+    assert _parse(ts["assigned"]) <= _parse(ts["accepted"]) == _parse(ts["en_route"])
+    events = [j["event"] for j in row["journey"]]
+    assert events.index("REQUEST_SENT") < events.index("ACCEPTED") < events.index("EN_ROUTE")
+
+
+def test_fleet_and_shelter_boards_follow_the_stage_machine():
+    rows = [_row(f"Child {i}", age=6, people=2) for i in range(3)]
+    ctx = {"teams": RESCUE_TEAMS}
+    advance_all(rows, ctx, now=T0 + timedelta(seconds=DISPATCH_SECONDS * 3))
+    fleet = person_ops.fleet_board(rows)
+    busy = [a for a in fleet["ambulances"] if a["status"] == "busy"]
+    assert fleet["ambulances_busy"] == len(busy) == sum(1 for r in rows if r["ops_status"] in person_ops.ACTIVE_STAGES)
+    assert fleet["ambulances_free"] == len(AMBULANCE_POOL) - len(busy)
+
+    board = {s["name"]: s for s in person_ops.shelter_allocation_board(rows)}
+    reg = shelter_registry()
+    for r in rows:
+        if r.get("shelter_name"):
+            s = board[r["shelter_name"]]
+            expect = reg[s["name"]]["capacity"] - reg[s["name"]]["occupancy"] - s["allocated_this_run"]
+            assert s["seats_left"] == max(0, expect)
+
+    advance_all(rows, ctx, now=T0 + timedelta(hours=3))
+    fleet = person_ops.fleet_board(rows)
+    assert fleet["ambulances_busy"] == 0
+    assert sum(a["trips_completed"] for a in fleet["ambulances"]) == len(rows)
+    delivered = sum(s["delivered_this_run"] for s in person_ops.shelter_allocation_board(rows))
+    assert delivered == sum(r["people"] for r in rows)
+
+
+def test_optimal_dispatch_unreachable_person_is_json_safe(monkeypatch):
+    """Regression: no open road to the person → road time inf leaked into
+    row["decision"] and GET /api/simulation/state failed with HTTP 500."""
+    import json
+
+    monkeypatch.setattr(person_ops, "_road_minutes", lambda o, t, r: [[float("inf")] * len(t) for _ in o])
+    row = {"ops_status": "queued", "needs_ambulance": True, "lat": 28.6, "lon": 77.2, "person_index": 0}
+    _, info = person_ops._optimal_choice(row, [row], {}, T0, ["Ambulance-1"], [(28.61, 77.21)])
+    assert info["minutes_for_this_person"] is None
+    json.dumps(info, allow_nan=False)

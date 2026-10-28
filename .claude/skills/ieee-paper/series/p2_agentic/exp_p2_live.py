@@ -28,7 +28,7 @@ WORK = Path(sys.argv[1] if len(sys.argv) > 1 else ".")
 N = int(sys.argv[2]) if len(sys.argv) > 2 else 150
 MODELS = [sys.argv[3]] if len(sys.argv) > 3 else ["openai/gpt-oss-20b"]
 TAG = MODELS[0].split("/")[-1]
-PACE_S = 14.0  # ~2k tokens per call against an 8k tokens-per-minute limit
+PACE_S = float(__import__("os").environ.get("PACE_S", "14"))  # ~2k tokens/call vs an 8k tokens-per-minute limit
 
 # same state generator and seed as exp_p2.py
 rng = random.Random(2026)
@@ -110,11 +110,24 @@ def recording_grounded(turns, facts_text, extra=()):
 D.grounded = recording_grounded
 settings = get_settings()
 ctxs = [make_ctx() for _ in range(N)]
-rows = []
+OUT_F = WORK / f"p2_live_{TAG}.json"
+
+
+def save(rows):  # checkpoint, so an interrupted run resumes instead of starting over
+    out = {"date_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"), "models": MODELS, "n_states": N,
+           "temperature": 0.85, "rows": rows}
+    OUT_F.write_text(json.dumps(out, indent=1), encoding="utf-8")
+
+
+rows = json.loads(OUT_F.read_text(encoding="utf-8"))["rows"] if OUT_F.exists() else []
+done = {(r["model"], r["i"]) for r in rows if r["parsed"] or not (r["error"] and "429" in r["error"])}
+rows = [r for r in rows if (r["model"], r["i"]) in done]
 for mi, model in enumerate(MODELS):
     settings.groq_model = model
     D.GROQ_MODELS = [model]  # no cross-model fallback: one request per (state, model)
     for i, c in enumerate(ctxs):
+        if (model, i) in done:
+            continue
         for attempt in range(4):
             captured.clear()
             t0 = time.perf_counter()
@@ -131,12 +144,13 @@ for mi, model in enumerate(MODELS):
                "unmatched": captured.get("unmatched", []),
                "turns": parsed}
         rows.append(row)
+        if i % 10 == 0:
+            save(rows)
         if i % 20 == 0:
             print(f"{model} {i}/{N} accepted={row['accepted']} err={err}", flush=True)
         time.sleep(PACE_S)
-out = {"date_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"), "models": MODELS, "n_states": N,
-       "temperature": 0.85, "rows": rows}
-(WORK / f"p2_live_{TAG}.json").write_text(json.dumps(out, indent=1), encoding="utf-8")
+rows.sort(key=lambda r: (r["model"], r["i"]))
+save(rows)
 for m in MODELS:
     rr = [r for r in rows if r["model"] == m]
     parsed = [r for r in rr if r["parsed"]]

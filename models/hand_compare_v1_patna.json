@@ -1,0 +1,110 @@
+{
+  "name": "hand_compare_v1",
+  "city": "patna",
+  "title": "Height-based road flood risk (HAND vs distance) \u2014 Patna",
+  "citation": {
+    "method": "Height Above Nearest Drainage (HAND)",
+    "paper": "Renn\u00f3 et al. (2008), HAND, a new terrain descriptor using SRTM-DEM, Remote Sensing of Environment",
+    "dem_dataset": "Copernicus DEM GLO-30 (30 m resolution, Open Access)",
+    "licence": "Copernicus Open Access / European Space Agency",
+    "url": "https://spacedata.copernicus.eu/collections/copernicus-digital-elevation-model"
+  },
+  "total_roads": 336,
+  "hand_stats": {
+    "min_m": 0.0,
+    "median_m": 3.58,
+    "mean_m": 3.37,
+    "max_m": 7.2
+  },
+  "spearman_rank_correlation": -0.348,
+  "roads_closing_earlier_in_v2": [
+    {
+      "road_id": "PAT-R044",
+      "name": "NH31 (part 1)",
+      "v1_exposure": 0.771,
+      "v2_exposure": 0.131,
+      "hand_m": 5.62,
+      "why": "Low-lying road with small height above drainage; floods earlier under topography model"
+    },
+    {
+      "road_id": "PAT-R115",
+      "name": "Unnamed primary road",
+      "v1_exposure": 0.752,
+      "v2_exposure": 0.151,
+      "hand_m": 5.19,
+      "why": "Low-lying road with small height above drainage; floods earlier under topography model"
+    },
+    {
+      "road_id": "PAT-R007",
+      "name": "NH31 (part 2)",
+      "v1_exposure": 0.744,
+      "v2_exposure": 0.149,
+      "hand_m": 5.23,
+      "why": "Low-lying road with small height above drainage; floods earlier under topography model"
+    },
+    {
+      "road_id": "PAT-R166",
+      "name": "Unnamed motorway road",
+      "v1_exposure": 0.721,
+      "v2_exposure": 0.151,
+      "hand_m": 5.18,
+      "why": "Low-lying road with small height above drainage; floods earlier under topography model"
+    },
+    {
+      "road_id": "PAT-R200",
+      "name": "Unnamed motorway road",
+      "v1_exposure": 0.759,
+      "v2_exposure": 0.16,
+      "hand_m": 5.01,
+      "why": "Low-lying road with small height above drainage; floods earlier under topography model"
+    }
+  ],
+  "roads_closing_later_in_v2": [
+    {
+      "road_id": "PAT-R090",
+      "name": "NH922 (part 4)",
+      "v1_exposure": 0.06,
+      "v2_exposure": 0.844,
+      "hand_m": 0.02,
+      "why": "High ridge / elevated terrain road; stays passable longer despite proximity to water"
+    },
+    {
+      "road_id": "PAT-R105",
+      "name": "Unnamed secondary road",
+      "v1_exposure": 0.06,
+      "v2_exposure": 0.551,
+      "hand_m": 1.3,
+      "why": "High ridge / elevated terrain road; stays passable longer despite proximity to water"
+    },
+    {
+      "road_id": "PAT-R086",
+      "name": "Unnamed secondary road",
+      "v1_exposure": 0.06,
+      "v2_exposure": 0.454,
+      "hand_m": 1.88,
+      "why": "High ridge / elevated terrain road; stays passable longer despite proximity to water"
+    },
+    {
+      "road_id": "PAT-R281",
+      "name": "Unnamed primary road",
+      "v1_exposure": 0.06,
+      "v2_exposure": 0.426,
+      "hand_m": 2.07,
+      "why": "High ridge / elevated terrain road; stays passable longer despite proximity to water"
+    },
+    {
+      "road_id": "PAT-R144",
+      "name": "Unnamed secondary road",
+      "v1_exposure": 0.06,
+      "v2_exposure": 0.47,
+      "hand_m": 1.78,
+      "why": "High ridge / elevated terrain road; stays passable longer despite proximity to water"
+    }
+  ],
+  "notes": [
+    "v1 uses planar distance-to-water decay proxy.",
+    "v2 uses Height Above Nearest Drainage (HAND, Copernicus DEM 30m).",
+    "HAND >= 0 everywhere by D8 flow-direction construction.",
+    "Closure rule (effective_exposure >= 0.85 - blockage) remains identical between models."
+  ]
+}

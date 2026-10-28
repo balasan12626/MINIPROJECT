@@ -1,5 +1,5 @@
 import { lazy, memo, Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { pauseSimulation, resumeSimulation, resetSimulation, overrideSimulation, sendSimulationSos, fetchMlExplainV2, downloadSimReport, forceDispatch } from "../../services/api.js";
+import { pauseSimulation, resumeSimulation, resetSimulation, overrideSimulation, sendSimulationSos, sosSurge, fetchMlExplainV2, forceDispatch } from "../../services/api.js";
 import FloodMap from "../../maps/FloodMap.jsx";
 import AgentList from "../../components/AgentList.jsx";
 import ScenarioRunTheater from "../../components/ScenarioRunTheater.jsx";
@@ -12,6 +12,12 @@ import RescueOpsPanel from "../../components/rescue/RescueOpsPanel.jsx";
 import AlgorithmArena from "../../components/AlgorithmArena.jsx";
 import VoiceSosAgent from "../../components/VoiceSosAgent.jsx";
 import NearestDamPanel from "../../components/NearestDamPanel.jsx";
+import AlgorithmsCatalog from "../../components/scenario/AlgorithmsCatalog.jsx";
+import AgentsPanel from "../../components/agents/AgentsPanel.jsx";
+import NotificationCenter from "../../components/agents/NotificationCenter.jsx";
+import LiveControls from "../../components/agents/LiveControls.jsx";
+import WhatIfPanel from "../../components/agents/WhatIfPanel.jsx";
+import RainForecastCard from "../../components/scenario/RainForecastCard.jsx";
 import { collapseFeed } from "../../utils/feed.js";
 import { createSimStore, SimStoreProvider, useSim, useSimFeed, useSimStore } from "./simStore.js";
 
@@ -29,7 +35,7 @@ const EXPLAIN_DEBOUNCE_MS = 800;
  * State lives in a tiny external store (simStore.js) fed by ONE poller +
  * websocket. Every section below subscribes to the slice it renders, so a
  * poll re-renders only the sections whose data changed — not the whole page. */
-export default function SimulationExecution({ runMeta = null }) {
+export default function SimulationExecution({ runMeta = null, tab = "live" }) {
   const storeRef = useRef(null);
   if (!storeRef.current) storeRef.current = createSimStore();
   const store = storeRef.current;
@@ -44,7 +50,7 @@ export default function SimulationExecution({ runMeta = null }) {
 
   return (
     <SimStoreProvider value={store}>
-      <RunView runMeta={runMeta} store={store} />
+      <RunView runMeta={runMeta} store={store} tab={tab} />
     </SimStoreProvider>
   );
 }
@@ -55,7 +61,7 @@ function useFeats(runMeta) {
   return useMemo(() => ({ ...DEFAULT_FEATURES, ...(features || metaFeatures || {}) }), [features, metaFeatures]);
 }
 
-function RunView({ runMeta, store }) {
+function RunView({ runMeta, store, tab }) {
   const setSim = store.setSim;
   const { status, awaitingData, runId } = useSim(({ sim }) => ({
     status: runStatusOf(sim),
@@ -67,12 +73,33 @@ function RunView({ runMeta, store }) {
   const [sos, setSos] = useState({ citizen_name: "Priya Sharma", age: 34, people: 2, lat: 28.651, lon: 77.262, water_level_note: "knee-deep rainwater" });
   const [sosError, setSosError] = useState("");
   const [sosBusy, setSosBusy] = useState(false);
+  const [sosSent, setSosSent] = useState("");
   const [showMap, setShowMap] = useState(true);
   const [replayTick, setReplayTick] = useState(null);
   const [selectedName, setSelectedName] = useState(null);
   const [arenaPaths, setArenaPaths] = useState(null);
   const [voiceOpen, setVoiceOpen] = useState(false);
   const [sosRegionWarning, setSosRegionWarning] = useState("");
+  // F7: the SOS form's region is the run's city (sim.city), not always Delhi.
+  const cityRegion = useSim(({ sim }) => ({
+    id: sim?.city?.id || null,
+    name: sim?.city?.name || null,
+    lat: sim?.city?.center?.[0] ?? null,
+    lon: sim?.city?.center?.[1] ?? null,
+  }));
+  const region = useMemo(
+    () =>
+      cityRegion.id && cityRegion.lat != null
+        ? { lat: cityRegion.lat, lon: cityRegion.lon, label: cityRegion.name }
+        : SCENARIO_CENTER,
+    [cityRegion.id, cityRegion.name, cityRegion.lat, cityRegion.lon]
+  );
+  // A new city: move a default / out-of-area pin to the city centre so a typed
+  // SOS lands inside the run's area (the backend refuses points outside it).
+  useEffect(() => {
+    setSos((s) => (haversineKm(s.lat, s.lon, region.lat, region.lon) > 60 ? { ...s, lat: region.lat, lon: region.lon } : s));
+    setSosRegionWarning("");
+  }, [region]);
 
   useEffect(() => {
     if (status === "completed") setShowMap(true);
@@ -117,6 +144,7 @@ function RunView({ runMeta, store }) {
   async function sendSos() {
     setSosBusy(true);
     setSosError("");
+    setSosSent("");
     try {
       const age = sos.age === "" || sos.age == null ? null : Number(sos.age);
       const next = await sendSimulationSos({ ...sos, age: Number.isFinite(age) ? age : null, people: Math.max(1, Number(sos.people) || 1) });
@@ -124,9 +152,28 @@ function RunView({ runMeta, store }) {
         setSosError(next?.message || next?.detail || "SOS was not accepted by the backend.");
       } else {
         setSim(next);
+        setSosSent(sos.citizen_name);
       }
     } catch (err) {
       setSosError(err?.message || "SOS failed to send.");
+    } finally {
+      setSosBusy(false);
+    }
+  }
+
+  async function sendSurge() {
+    setSosBusy(true);
+    setSosError("");
+    setSosSent("");
+    try {
+      const next = await sosSurge(50);
+      if (!Array.isArray(next?.citizens)) setSosError(next?.message || next?.detail || "Surge was not accepted.");
+      else {
+        setSim(next);
+        setSosSent(`${(next.added_citizen_names || []).length} new callers`);
+      }
+    } catch (err) {
+      setSosError(err?.message || "Surge failed.");
     } finally {
       setSosBusy(false);
     }
@@ -138,10 +185,10 @@ function RunView({ runMeta, store }) {
       const lat = pos.coords.latitude;
       const lon = pos.coords.longitude;
       setSos((s) => ({ ...s, lat, lon }));
-      const distKm = haversineKm(lat, lon, SCENARIO_CENTER.lat, SCENARIO_CENTER.lon);
+      const distKm = haversineKm(lat, lon, region.lat, region.lon);
       setSosRegionWarning(
         distKm > 60
-          ? `This device's location is ~${Math.round(distKm)} km from the simulated region (${SCENARIO_CENTER.label}). The SOS pin will be geographically inconsistent with the map, route, and shelters — edit lat/lon to a point inside the scenario area, or proceed only if you intend a real-world test pin.`
+          ? `This device's location is ~${Math.round(distKm)} km from the simulated region (${region.label}). The SOS pin will be geographically inconsistent with the map, route, and shelters — edit lat/lon to a point inside the scenario area, or proceed only if you intend a real-world test pin.`
           : ""
       );
     });
@@ -151,10 +198,10 @@ function RunView({ runMeta, store }) {
     const value = Number(rawValue);
     const next = { ...sos, [field]: value };
     setSos(next);
-    const distKm = haversineKm(next.lat, next.lon, SCENARIO_CENTER.lat, SCENARIO_CENTER.lon);
+    const distKm = haversineKm(next.lat, next.lon, region.lat, region.lon);
     setSosRegionWarning(
       distKm > 60
-        ? `This point is ~${Math.round(distKm)} km from the simulated region (${SCENARIO_CENTER.label}) — the SOS pin will not line up with the map, route, or shelters.`
+        ? `This point is ~${Math.round(distKm)} km from the simulated region (${region.label}) — the SOS pin will not line up with the map, route, or shelters.`
         : ""
     );
   }
@@ -176,7 +223,7 @@ function RunView({ runMeta, store }) {
   const onVoiceClose = useCallback(() => setVoiceOpen(false), []);
 
   const wantTheater = typeof sessionStorage !== "undefined" && sessionStorage.getItem("flood_run_theater") === "1" && !showMap;
-  const theater = wantTheater && status !== "completed" && status !== "paused" && status !== "idle";
+  const theater = tab === "live" && wantTheater && status !== "completed" && status !== "paused" && status !== "idle";
 
   if (theater) {
     return (
@@ -196,45 +243,68 @@ function RunView({ runMeta, store }) {
     );
   }
 
+  const sosForm = (
+    <div className="panel sos-form-panel">
+      <div className="panel-head">
+        <h3>Send a new SOS</h3>
+        <span className="badge sim">{region.label}</span>
+      </div>
+      <p className="hint">
+        The caller joins the live queue: the nearest K-means cluster, a unit, a route and a shelter are allocated
+        automatically, and the request goes to the unit&apos;s driver.
+      </p>
+      <div className="form-grid sos-form-grid">
+        <label>Citizen name<input value={sos.citizen_name} onChange={(e) => setSos({ ...sos, citizen_name: e.target.value })} /></label>
+        <label>Age<input type="number" min="0" max="120" value={sos.age ?? ""} onChange={(e) => setSos({ ...sos, age: e.target.value })} /></label>
+        <label>People<input type="number" min="1" value={sos.people} onChange={(e) => setSos({ ...sos, people: Number(e.target.value) })} /></label>
+        <label>Latitude<input type="number" step="0.0001" value={sos.lat} onChange={(e) => onSosLatLon("lat", e.target.value)} /></label>
+        <label>Longitude<input type="number" step="0.0001" value={sos.lon} onChange={(e) => onSosLatLon("lon", e.target.value)} /></label>
+        <label>Water around them<input value={sos.water_level_note} onChange={(e) => setSos({ ...sos, water_level_note: e.target.value })} /></label>
+      </div>
+      {sosRegionWarning ? <div className="error-banner" role="alert"><p>{sosRegionWarning}</p></div> : null}
+      {sosError ? <div className="error-banner" role="alert"><p>{sosError}</p></div> : null}
+      {sosSent ? <p className="hint sos-sent" role="status">✓ SOS for <b>{sosSent}</b> sent — watch the driver inbox below.</p> : null}
+      <div className="actions" style={{ marginTop: 10 }}>
+        <button className="danger" type="button" disabled={sosBusy} onClick={sendSos}>{sosBusy ? "SENDING SOS…" : "🆘 SEND SOS"}</button>
+        <button type="button" className="danger surge-btn" disabled={sosBusy} onClick={sendSurge}>{sosBusy ? "…" : "🆘×50 Add 50 SOS at once"}</button>
+        <button type="button" onClick={useMyLocation}>Use my location</button>
+        <button type="button" className="voice-sos-btn" onClick={() => setVoiceOpen(true)}>Voice agent</button>
+      </div>
+    </div>
+  );
+
+  const show = (t) => tab === t;
+
   return (
     <div className="page sim-execution">
       <ExplainController feats={feats} />
+      <NotificationSection />
       <StatusHeader runMeta={runMeta} />
       <ProblemBanner stallError={stallError} onClear={clearStall} onReset={onReset} />
-
-      <div className="hero-status-head">
-        <h2>PRIMARY FLOOD STATUS</h2>
-        <span className="hint">The four numbers that matter most, first — everything below is supporting detail.</span>
-      </div>
-      <PrimaryKpis />
-      <InputsPanel />
-      <div className="actions">
-        {status === "running" ? (
-          <button className="primary" onClick={onFullscreen}>
-            Full-screen running view
-          </button>
+      <div className="actions run-actions">
+        {status === "running" && show("live") ? (
+          <button onClick={onFullscreen}>Full-screen running view</button>
         ) : null}
         <button onClick={onPause}>Pause</button>
         <button onClick={onResume}>Resume</button>
         <button className="danger" onClick={onReset}>Reset</button>
-        <button onClick={() => downloadSimReport().catch((e) => window.alert(e.message))}>Download after-action PDF</button>
       </div>
-      <div className="hero-status-head">
-        <h2>OPERATOR OVERRIDE</h2>
-        <span className="hint">Edit a card to write a new value into the running simulation (what-if testing) — not a second live reading.</span>
-      </div>
-      <OverrideKpis onEdit={editCard} />
-      <MlLayerPanel />
-      <LazyMount minHeight={220}>
-        <Suspense fallback={<div className="panel" style={{ minHeight: 220 }} />}>
-          <ModelBenchmarkPanel />
-        </Suspense>
-      </LazyMount>
-      <CardMonitorPanel />
-      <div className="grid-2">
-        <div className="panel">
-          <h2>SIMULATION MAP</h2>
-          <LazyMount minHeight={520}>
+
+      {/* ------------------------------ Live rescue ------------------------------ */}
+      {show("live") ? <RescueSection view="live" sosSlot={sosForm} /> : null}
+
+      {/* -------------------------------- Agents --------------------------------- */}
+      {show("agents") ? <MultiAgentSection /> : null}
+
+      {/* -------------------------------- People --------------------------------- */}
+      {show("people") ? <RescueSection view="people" /> : null}
+
+      {/* -------------------------------- Routes --------------------------------- */}
+      {show("routes") ? (
+        <>
+          <RescueSection view="routes" />
+          <div className="panel">
+            <h2>Flood map — roads, blocked roads and routes</h2>
             <MapSection
               feats={feats}
               replayTick={replayTick}
@@ -243,70 +313,77 @@ function RunView({ runMeta, store }) {
               arenaPaths={feats.algorithm_arena ? arenaPaths : null}
               focusDam={runMeta?.dam}
             />
-          </LazyMount>
-          <NearestDamPanel focusDam={runMeta?.dam} />
-        </div>
-        <div className="panel">
-          <h2>FLOOD DYNAMICS — LIVE</h2>
-          <LazyMount minHeight={220}>
-            <HistorySection />
-          </LazyMount>
-          <h3 style={{ marginTop: 12 }}>TIMELINE · SIMULATION TIME</h3>
-          <TimelineSection />
-        </div>
-      </div>
-      {feats.run_replay ? <ReplayPanel replayTick={replayTick} onReplayTick={setReplayTick} /> : null}
-      {feats.model_disagreement ? <CrossCheckPanel onForceDispatch={onForceDispatch} /> : null}
-      <div className="grid-2">
-        {feats.explainable_ai ? <ExplainPanel showCounterfactual={feats.counterfactual} /> : <div />}
-        <ClustersPanel vulnerableFirst={feats.vulnerable_first} />
-      </div>
-      {feats.counterfactual && !feats.explainable_ai ? <CounterfactualPanel /> : null}
-      {/* Live rescue operation — map, event feed and the SOS roster. It reads
-          the same store-backed `sim`, so it adds no second poller. */}
-      <RescueSection />
-      {/* The per-person contact log is merged into the Live SOS roster
-          (expandable row details) — no separate copy. */}
-      <div className="panel">
-        <h2>ADD ANOTHER SOS</h2>
-        <p className="hint">
-          Extra caller joins the same queue. Radio uses their name. Or talk live to the Voice Agent.
-          {" "}Scenario region: <b>{SCENARIO_CENTER.label}</b>.
-        </p>
-        <div className="form-grid">
-          <label>Citizen name<input value={sos.citizen_name} onChange={(e) => setSos({ ...sos, citizen_name: e.target.value })} /></label>
-          <label>Age<input type="number" min="0" max="120" value={sos.age ?? ""} onChange={(e) => setSos({ ...sos, age: e.target.value })} /></label>
-          <label>People<input type="number" value={sos.people} onChange={(e) => setSos({ ...sos, people: Number(e.target.value) })} /></label>
-          <label>Latitude<input type="number" step="0.0001" value={sos.lat} onChange={(e) => onSosLatLon("lat", e.target.value)} /></label>
-          <label>Longitude<input type="number" step="0.0001" value={sos.lon} onChange={(e) => onSosLatLon("lon", e.target.value)} /></label>
-          <label>Rainwater around them<input value={sos.water_level_note} onChange={(e) => setSos({ ...sos, water_level_note: e.target.value })} /></label>
-        </div>
-        {sosRegionWarning ? <div className="error-banner" role="alert"><p>{sosRegionWarning}</p></div> : null}
-        {sosError ? <div className="error-banner" role="alert"><p>{sosError}</p></div> : null}
-        <div className="actions" style={{ marginTop: 10 }}>
-          <button type="button" onClick={useMyLocation}>Use my location</button>
-          <button type="button" className="primary voice-sos-btn" onClick={() => setVoiceOpen(true)}>English Voice Agent</button>
-          <button className="danger" type="button" disabled={sosBusy} onClick={sendSos}>{sosBusy ? "SENDING SOS…" : "SEND SOS"}</button>
-        </div>
-      </div>
-      <VoiceSosAgent open={voiceOpen} onClose={onVoiceClose} onDraft={onVoiceDraft} onSubmitted={onVoiceSubmitted} />
-      {feats.algorithm_arena ? <ArenaSection onMapPaths={setArenaPaths} /> : null}
-      <div id="ieee-hqrl-panel" className="sim-hqrl-anchor">
-        <HqrlSection runKey={runMeta?.runId} />
-      </div>
-      <div className="grid-2">
-        <div className="panel">
-          <h2>SIMULATION AGENTS</h2>
-          <AgentsSection />
-        </div>
-        <ResultsPanel />
-      </div>
-      {feats.agent_talk ? <AgentTalkSection /> : null}
-      <LazyMount minHeight={200}>
-        <Suspense fallback={<div className="panel" style={{ minHeight: 200 }} />}>
-          <DemoRunsSection feats={feats} />
-        </Suspense>
-      </LazyMount>
+            <NearestDamPanel focusDam={runMeta?.dam} />
+          </div>
+          {feats.algorithm_arena ? <ArenaSection onMapPaths={setArenaPaths} /> : null}
+        </>
+      ) : null}
+
+      {/* ------------------------------ Prediction ------------------------------- */}
+      {show("prediction") ? (
+        <>
+          <PrimaryKpis />
+          <div className="grid-2">
+            <div className="panel">
+              <h2>Flood dynamics — live</h2>
+              <HistorySection />
+            </div>
+            <div className="panel">
+              <h2>Timeline · simulation time</h2>
+              <TimelineSection />
+            </div>
+          </div>
+          <RainForecastSection />
+          {feats.run_replay ? <ReplayPanel replayTick={replayTick} onReplayTick={setReplayTick} /> : null}
+          <div className="hero-status-head">
+            <h2>What-if: edit a live reading</h2>
+            <span className="hint">Writes a new value into the running simulation (what-if testing) — not a second live reading.</span>
+          </div>
+          <OverrideKpis onEdit={editCard} />
+          <div className="grid-2">
+            <MlLayerPanel />
+            {feats.model_disagreement ? <CrossCheckPanel onForceDispatch={onForceDispatch} /> : <CardMonitorPanel />}
+          </div>
+          {feats.model_disagreement ? <CardMonitorPanel /> : null}
+          {feats.explainable_ai ? <ExplainPanel showCounterfactual={feats.counterfactual} /> : null}
+          {feats.counterfactual && !feats.explainable_ai ? <CounterfactualPanel /> : null}
+          <Suspense fallback={<div className="panel" style={{ minHeight: 220 }} />}>
+            <ModelBenchmarkPanel />
+          </Suspense>
+        </>
+      ) : null}
+
+      {/* ------------------------------ Algorithms ------------------------------- */}
+      {show("algorithms") ? (
+        <>
+          <AlgorithmsSection />
+          <ClustersPanel vulnerableFirst={feats.vulnerable_first} />
+          <div className="panel">
+            <h2>Simulation agents</h2>
+            <AgentsSection />
+          </div>
+          {feats.agent_talk ? <AgentTalkSection /> : null}
+          <div id="ieee-hqrl-panel" className="sim-hqrl-anchor">
+            <HqrlSection runKey={runMeta?.runId} />
+          </div>
+        </>
+      ) : null}
+
+      {/* -------------------------------- Report --------------------------------- */}
+      {show("report") ? (
+        <>
+          <RescueSection view="report" />
+          <ResultsPanel />
+          <details className="panel more-tools">
+            <summary>More demo tools (API health, latency, checklist, what-if)</summary>
+            <Suspense fallback={<div style={{ minHeight: 200 }} />}>
+              <DemoRunsSection feats={feats} />
+            </Suspense>
+          </details>
+        </>
+      ) : null}
+
+      <VoiceSosAgent open={voiceOpen} onClose={onVoiceClose} onDraft={onVoiceDraft} onSubmitted={onVoiceSubmitted} fallback={region} />
     </div>
   );
 }
@@ -331,7 +408,7 @@ const StatusHeader = memo(function StatusHeader({ runMeta }) {
   const scenarioTitle = runMeta?.title || String(scenario || "").replaceAll("_", " ");
   return (
     <div className="status-row">
-      <h2 style={{ margin: 0 }}>2 · SCENARIO OUTPUT</h2>
+      <h2 style={{ margin: 0 }}>Live run</h2>
       {scenarioTitle ? <span className="badge live">{String(scenarioTitle).toUpperCase()}</span> : null}
       <span className="badge">Status: {status || "loading"}</span>
       <span className="badge">Time: {simTime ?? 0}s</span>
@@ -437,41 +514,6 @@ const PrimaryKpis = memo(function PrimaryKpis() {
   );
 });
 
-const InputsPanel = memo(function InputsPanel() {
-  const s = useSim(({ sim }) => {
-    const l = lastOf(sim?.history) || {};
-    return {
-      story: sim?.story,
-      scenario: Boolean(sim?.scenario),
-      rain: l.rainfall_mm != null || sim?.pipeline?.weather?.rainfall_mm != null,
-      river: l.river_m != null || sim?.pipeline?.river?.value_m != null,
-      model: currentProbOf(sim) != null,
-      sos: (sim?.citizens || []).length > 0,
-    };
-  });
-  const steps = [
-    { label: "Scenario", done: s.scenario },
-    { label: "Rainfall", done: s.rain },
-    { label: "River / dam", done: s.river },
-    { label: "Model", done: s.model },
-    { label: "SOS / dispatch", done: s.sos },
-  ];
-  return (
-    <div className="panel">
-      <h2>SIMULATION INPUTS — THIS RUN ONLY</h2>
-      <p className="hint">
-        {s.story || "Rainfall, river water and dam water fed into this scenario. Synthetic simulation input, not live sensor data."}
-        {" "}<b>Scenario region: {SCENARIO_CENTER.label}.</b>
-      </p>
-      <div className="process-steps">
-        {steps.map((st) => (
-          <span key={st.label} className={`stage ${st.done ? "done" : ""}`}>{st.label}</span>
-        ))}
-      </div>
-    </div>
-  );
-});
-
 const OverrideKpis = memo(function OverrideKpis({ onEdit }) {
   const { last, status, prob } = useSim(({ sim }) => ({ last: lastOf(sim?.history), status: runStatusOf(sim), prob: currentProbOf(sim) }));
   const l = last || {};
@@ -498,6 +540,35 @@ const OverrideKpis = memo(function OverrideKpis({ onEdit }) {
   );
 });
 
+const ALERT_LABEL = { severe_flood: "severe flood", no_severe_flood: "not severe" };
+
+/** F11 — the measured uncertainty of the model output above (conformal,
+ * models/conformal_v2.json). Coverage numbers are measured on held-out
+ * gauges, copied from the file; the hybrid probability has no interval. */
+export function UncertaintyBlock({ u }) {
+  if (!u) return null;
+  const set = (u.alert_set || []).map((s) => ALERT_LABEL[s] || s);
+  return (
+    <div className="uncertainty">
+      <div className="metric">
+        <span>Peak level, {u.level}</span>
+        <b>
+          {u.peak_level_low_m} – {u.peak_level_high_m} m <small>(± {u.half_width_m} m)</small>
+        </b>
+      </div>
+      <div className="metric">
+        <span>Alert, 90% prediction set</span>
+        <b>{set.length === 2 ? "either — the model cannot decide at 90%" : set.join(", ") || "—"}</b>
+      </div>
+      <p className="hint">
+        Measured coverage {u.measured_coverage != null ? `${(u.measured_coverage * 100).toFixed(1)}%` : "—"} (interval) and{" "}
+        {u.alert_set_coverage != null ? `${(u.alert_set_coverage * 100).toFixed(1)}%` : "—"} (alert set) on {u.measured_on} never used
+        for training or calibration. {u.note} The operational flood probability is a blend and is not covered by this interval.
+      </p>
+    </div>
+  );
+}
+
 const MlLayerPanel = memo(function MlLayerPanel() {
   const v2 = useSim(({ sim }) => sim?.pipeline?.prediction?.v2) || {};
   return (
@@ -510,6 +581,7 @@ const MlLayerPanel = memo(function MlLayerPanel() {
           <div className="metric"><span>Severe-flood probability</span><b>{pct(v2.flood_type_probability)}</b></div>
           <div className="metric"><span>Alert level</span><b>{v2.alert_level || "n/a"}</b></div>
           <div className="metric"><span>Models</span><b>{v2.stage1_model || "n/a"} → {v2.stage2_model || "n/a"}</b></div>
+          <UncertaintyBlock u={v2.uncertainty} />
         </>
       ) : (
         <p className="hint">{v2.message || "Waiting for simulation — V2 prediction not yet available."}</p>
@@ -779,9 +851,59 @@ function ArenaSection({ onMapPaths }) {
   return <AlgorithmArena enabled onMapPaths={onMapPaths} runKey={runKey} />;
 }
 
-function RescueSection() {
+function RescueSection({ view, sosSlot }) {
+  const store = useSimStore();
   const sim = useSim((s) => s.sim);
-  return <RescueOpsPanel sim={sim} />;
+  return <RescueOpsPanel sim={sim} view={view} sosSlot={sosSlot} onState={store.setSim} />;
+}
+
+/** Bell + drawer + pop-ups, on every tab (it renders through a portal). */
+function NotificationSection() {
+  const { messages, runId } = useSim(({ sim }) => ({ messages: sim?.multi_agent?.messages, runId: sim?.run_id }));
+  return <NotificationCenter messages={messages || EMPTY} runId={runId} />;
+}
+
+/** F18: forecast series that drives the run's rainfall (null = scenario rain). */
+function RainForecastSection() {
+  const { forecast, tick } = useSim(({ sim }) => ({ forecast: sim?.rain_forecast, tick: sim?.tick }));
+  return <RainForecastCard forecast={forecast} tick={tick} />;
+}
+
+function MultiAgentSection() {
+  const store = useSimStore();
+  const { ma, history, current, overrides, roads, city, tick, runId, status, shelters } = useSim(({ sim }) => ({
+    ma: sim?.multi_agent,
+    history: sim?.history,
+    current: sim?.current,
+    overrides: sim?.overrides,
+    roads: sim?.road_status,
+    city: sim?.city,
+    tick: sim?.tick,
+    runId: sim?.run_id,
+    status: sim?.status,
+    shelters: sim?.shelter_allocation,
+  }));
+  const last = history?.length ? history[history.length - 1] : null;
+  return (
+    <>
+      <LiveControls last={last} current={current} overrides={overrides} roads={roads || EMPTY} onState={store.setSim} city={city} />
+      <WhatIfPanel tick={tick} runId={runId} status={status} shelters={shelters || EMPTY} roads={roads || EMPTY} onState={store.setSim} />
+      <AgentsPanel ma={ma} history={history || EMPTY} onState={store.setSim} />
+    </>
+  );
+}
+
+function AlgorithmsSection() {
+  const s = useSim(({ sim }) => ({
+    clusters: sim?.pipeline?.clusters,
+    citizens: sim?.citizens,
+    prediction: sim?.pipeline?.prediction,
+    fleet: sim?.fleet_board,
+    allocation: sim?.shelter_allocation,
+    cardMonitor: sim?.pipeline?.card_monitor,
+    multiAgent: sim?.multi_agent,
+  }));
+  return <AlgorithmsCatalog {...s} />;
 }
 
 /* HQRL: narrowed props only (run key, the params it derives its planner

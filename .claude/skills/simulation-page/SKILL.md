@@ -46,3 +46,21 @@ Append one entry to `SCENARIOS` in `config/scenarios.js` with:
 - Never send `scenario` to `POST /api/simulation/run` — it overwrites every typed input.
 - `Number(null) === 0`, so `Number.isFinite(Number(x))` passes on a missing value. Use `typeof x === "number"` when a field may be absent (this shipped a "0 h" time-to-overflow once).
 - Do not blend backend shelter occupancy with rescues completed this run; show them separately.
+
+## Tabs (`?tab=`)
+
+`setup · live · agents · ai · people · routes · prediction · dam · algorithms · report`
+(`SIM_TABS` in `SimulationLab.jsx`).
+
+- `ScenarioOutputs` is always mounted; `SimulationExecution` sits in a fixed
+  slot that is only **hidden** on `setup` / `dam` / `ai`, so the single
+  1.2 s poller (`simStore.js`) never restarts on a tab switch. Never mount a
+  second poller per tab.
+- `ai` needs no run (it answers from whatever state exists). `dam` uses the
+  dam registry + the run's dam response; `capacity_override_m` /
+  `current_level_m` edits survive a scenario reload (`userPickedDam` ref).
+- Mettur shows its gauge in ft (`gauge_unit/gauge_full/gauge_zero_m` in
+  `backend/data/dams.py`); other dams show m MSL. Never convert one dam's
+  gauge offset to another.
+- Notifications are a portal (`NotificationCenter`) visible on every tab.
+- Agents, QAOA routes, live controls and the AI tab: see the `agents-ai` skill.

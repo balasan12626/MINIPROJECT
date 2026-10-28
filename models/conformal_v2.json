@@ -1,0 +1,51 @@
+{
+  "artifact": "conformal_v2",
+  "built_at": "2026-10-09T16:44:07.454415+00:00",
+  "method": "CV-conformal: GroupKFold(5) out-of-fold scores on TRAINING gauges only; coverage measured once on held-out gauges",
+  "alpha": 0.1,
+  "target_coverage": 0.9,
+  "split": "GroupShuffleSplit 80/20 by GaugeID, random_state=42 (same as training)",
+  "no_test_tuning": true,
+  "peak_level_abs": {
+    "model": "flood_regressor_v3.pkl (LightGBM, log1p target)",
+    "score": "|y - y_hat| (metres)",
+    "q_m": 210.105,
+    "interval": "[y_hat - q_m, y_hat + q_m]",
+    "test_coverage": 0.8642,
+    "test_coverage_median_gauge": 1.0,
+    "test_coverage_min_gauge": 0.0,
+    "test_width_m": 420.21,
+    "oof_mae_m": 85.144,
+    "note": "INDOFLOODS peak levels are gauge elevations (m) at very different datums; an unseen gauge's absolute level is hard to predict, so the interval is wide. Shown as-is."
+  },
+  "peak_level": {
+    "model": "flood_regressor_v3.pkl (LightGBM, log1p target)",
+    "score": "|log1p(y) - log1p(y_hat)|",
+    "q_log": 1.610928,
+    "interval": "[expm1(log1p(y_hat) - q), expm1(log1p(y_hat) + q)]  (multiplicative, metres)",
+    "n_calibration": 3760,
+    "n_calibration_gauges": 124,
+    "test_rows": 788,
+    "test_gauges": 31,
+    "test_coverage": 0.9797,
+    "test_coverage_median_gauge": 1.0,
+    "test_coverage_min_gauge": 0.0,
+    "test_mean_width_m": 773.592,
+    "test_median_width_m": 836.981
+  },
+  "alert": {
+    "model": "flood_alert_model_v2.pkl (fed the v3 predicted level, as at inference)",
+    "score": "1 - p(true class)",
+    "q": 0.760676,
+    "n_calibration": 3760,
+    "test_coverage": 0.9645,
+    "test_singleton_rate": 0.1688,
+    "test_both_classes_rate": 0.8312,
+    "test_empty_rate": 0.0
+  },
+  "caveats": [
+    "Coverage is marginal (on average over gauges like the held-out ones), not guaranteed per gauge or per event.",
+    "Calibrated on INDOFLOODS events; a city far from any gauge is a transfer and the interval is not validated there.",
+    "The operational flood probability is a hybrid blend (rain + stage + ML prior), not this model \u2014 it has no interval."
+  ]
+}
